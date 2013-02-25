@@ -1,21 +1,21 @@
-/* Jug Management is a web application conceived to manage user groups or 
- * communities focused on a certain domain of knowledge, whose members are 
- * constantly sharing information and participating in social and educational 
+/* Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
- * 
- * This application is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by the 
- * Free Software Foundation; either version 2.1 of the License, or (at your 
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
  * option) any later version.
- * 
- * This application is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
- * 
- * There is a full copy of the GNU Lesser General Public License along with 
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
  * this library. Look for the file license.txt at the root level. If you do not
- * find it, write to the Free Software Foundation, Inc., 59 Temple Place, 
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA 02111-1307 USA.
  * */
 package org.cejug.yougi.business;
@@ -45,41 +45,41 @@ import org.cejug.yougi.util.TextUtils;
 
 /**
  * Centralizes the posting of all email messages sent by the system and manage
- * the history of those messages. Each kind of message has a method, which can 
+ * the history of those messages. Each kind of message has a method, which can
  * be involked from different parts of the business logic.
  * @author Hildeberto Mendonca  - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
 public class MessengerBean {
-    
+
     @PersistenceContext
     private EntityManager em;
 
-    @Resource(name = "mail/jug")
+    @Resource(name = "mail/ug")
     private Session mailSession;
 
     @EJB
     private MessageTemplateBsn messageTemplateBsn;
-    
+
     @EJB
     private ApplicationPropertyBsn applicationPropertyBsn;
-    
+
     @EJB
     private MessageHistoryBean messageHistoryBean;
-    
+
     static final Logger logger = Logger.getLogger(MessengerBean.class.getName());
-        
+
     public void sendEmailConfirmationRequest(UserAccount userAccount, String serverAddress) {
         MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("E3F122DCC87D42248872878412B34CEE");
         Map<String, Object> values = new HashMap<>();
         values.put("serverAddress", serverAddress);
         values.put("userAccount.firstName", userAccount.getFirstName());
         values.put("userAccount.confirmationCode", userAccount.getConfirmationCode());
-        
+
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
         emailMessage.setRecipient(userAccount);
-        
+
         try {
             sendEmailMessage(emailMessage);
         }
@@ -94,7 +94,7 @@ public class MessengerBean {
         values.put("userAccount.firstName", userAccount.getFirstName());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
         emailMessage.setRecipient(userAccount);
-        
+
         try {
             sendEmailMessage(emailMessage);
         }
@@ -110,7 +110,7 @@ public class MessengerBean {
         values.put("userAccount.registrationDate", userAccount.getRegistrationDate());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
         emailMessage.setRecipient(userAccount);
-        
+
         try {
             sendEmailMessage(emailMessage);
         }
@@ -149,7 +149,7 @@ public class MessengerBean {
         values.put("userAccount.deactivationReason", userAccount.getDeactivationReason());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
         emailMessage.setRecipient(userAccount);
-        
+
         try {
             sendEmailMessage(emailMessage);
         }
@@ -166,7 +166,7 @@ public class MessengerBean {
         values.put("userAccount.confirmationCode", userAccount.getConfirmationCode());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
         emailMessage.setRecipient(userAccount);
-        
+
         try {
             sendEmailMessage(emailMessage);
         }
@@ -174,7 +174,7 @@ public class MessengerBean {
             logger.log(Level.WARNING, "Error when sending the mail confirmation. The registration was not finalized.", me);
         }
     }
-    
+
     /**
      * Sends a email to the user that requested to change his/her email address,
      * asking him/her to confirm the request by clicking on the informed link. If
@@ -195,7 +195,7 @@ public class MessengerBean {
         values.put("userAccount.confirmationCode", userAccount.getConfirmationCode());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
         emailMessage.setRecipient(userAccount);
-        
+
         try {
             sendEmailMessage(emailMessage);
         }
@@ -211,7 +211,7 @@ public class MessengerBean {
         values.put("accessGroup.name", accessGroup.getName());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
         emailMessage.setRecipient(userAccount);
-        
+
         try {
             sendEmailMessage(emailMessage);
         }
@@ -219,7 +219,7 @@ public class MessengerBean {
             logger.log(Level.WARNING, "Error when sending the group assignment alert to "+ userAccount.getFullName(), me);
         }
     }
-    
+
     public void sendConfirmationEventAttendance(UserAccount userAccount, Event event, String dateFormat, String timeFormat, String timezone) {
         MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("KJDIEJKHFHSDJDUWJHAJSNFNFJHDJSLE");
         Map<String, Object> values = new HashMap<>();
@@ -231,7 +231,7 @@ public class MessengerBean {
         values.put("event.endTime", TextUtils.getFormattedTime(event.getEndTime(), timeFormat, timezone));
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
         emailMessage.setRecipient(userAccount);
-        
+
         try {
             sendEmailMessage(emailMessage);
         }
@@ -239,7 +239,7 @@ public class MessengerBean {
             logger.log(Level.WARNING, "Error when sending the confirmation of event attendance to user "+ userAccount.getPostingEmail(), me);
         }
     }
-    
+
     /**
      * If the application is configured to send emails, it sends the email message
      * based on the message template. The message is saved in the history and an
@@ -253,16 +253,16 @@ public class MessengerBean {
         if(!appProp.sendEmailsEnabled()) {
             return;
         }
-        
+
         MessagingException messagingException = null;
-        
+
         try {
             Transport.send(emailMessage.createMimeMessage(mailSession));
         }
         catch (MessagingException me) {
             messagingException = me;
         }
-        
+
         List<MessageHistory> messagesHistory = MessageHistory.createHistoricMessages(emailMessage);
         for(MessageHistory messageHistory: messagesHistory) {
             if(messagingException == null) {
@@ -274,7 +274,7 @@ public class MessengerBean {
             }
             messageHistoryBean.saveHistoricalMessage(messageHistory);
         }
-        
+
         if(messagingException != null) {
             throw messagingException;
         }

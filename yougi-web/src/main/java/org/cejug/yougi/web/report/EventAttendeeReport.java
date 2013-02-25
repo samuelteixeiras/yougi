@@ -1,4 +1,4 @@
-/* Jug Management is a web application conceived to manage user groups or 
+/* Yougi is a web application conceived to manage user groups or 
  * communities focused on a certain domain of knowledge, whose members are 
  * constantly sharing information and participating in social and educational 
  * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
@@ -51,7 +51,7 @@ public class EventAttendeeReport {
         table.setLockedWidth(true);
         table.setTotalWidth(columnSizes);
 
-        PdfPCell headerCell = new PdfPCell(new Phrase("JUG Management"));
+        PdfPCell headerCell = new PdfPCell(new Phrase("Yougi"));
         headerCell.setColspan(4);
         headerCell.setBackgroundColor(BaseColor.ORANGE);
         headerCell.setPadding(3);

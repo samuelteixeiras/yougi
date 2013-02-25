@@ -1,21 +1,21 @@
-/* Jug Management is a web application conceived to manage user groups or 
- * communities focused on a certain domain of knowledge, whose members are 
- * constantly sharing information and participating in social and educational 
+/* Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
- * 
- * This application is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by the 
- * Free Software Foundation; either version 2.1 of the License, or (at your 
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
  * option) any later version.
- * 
- * This application is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
- * 
- * There is a full copy of the GNU Lesser General Public License along with 
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
  * this library. Look for the file license.txt at the root level. If you do not
- * find it, write to the Free Software Foundation, Inc., 59 Temple Place, 
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA 02111-1307 USA.
  * */
 package org.cejug.yougi.knowledge.business;
@@ -48,21 +48,21 @@ import org.cejug.yougi.util.EntitySupport;
 @Stateless
 @LocalBean
 public class MailingListMessageBsn {
-    
-    @Resource(name = "mail/jug")
+
+    @Resource(name = "mail/ug")
     private Session mailSession;
-    
+
     @EJB
     private MailingListBsn mailingListBsn;
-    
+
     @EJB
     private SubscriptionBsn subscriptionBsn;
-    
+
     @EJB
     private ApplicationPropertyBsn applicationPropertyBsn;
-    
+
     static final Logger logger = Logger.getLogger("org.cejug.knowledge.business.MailingListBsn");
-    
+
     @PersistenceContext
     private EntityManager em;
 
@@ -97,7 +97,7 @@ public class MailingListMessageBsn {
                     mailingListMessage.setId(EntitySupport.INSTANCE.generateEntityId());
                     mailingListMessage.setMailingList(mailingList);
                     mailingListMessage.setSubject(message[i].getSubject());
-                    
+
                     /* Get the email address of the 'from' field and set the sender. */
                     from = message[i].getFrom()[0].toString();
                     if(from.indexOf("<") >= 0) {
@@ -106,7 +106,7 @@ public class MailingListMessageBsn {
                     from = from.toLowerCase();
                     MailingListSubscription mailingListSubscription = subscriptionBsn.findMailingListSubscription(mailingList, from);
                     mailingListMessage.setSender(mailingListSubscription);
-                    
+
                     /* This part tries to get the full content of the message to
                     * store in the database. For that, a simple OutputStream
                     * implementation writes the whole content of the message in a
@@ -131,10 +131,10 @@ public class MailingListMessageBsn {
                     mailingListMessage.setDateReceived(message[i].getReceivedDate());
 
                     em.persist(mailingListMessage);
-                    
+
                     logger.log(Level.INFO, "Message -{0}- sent by -{1}- saved.", new Object[]{mailingListMessage.getSubject(),mailingListMessage.getSender()});
                 }
-                
+
                 // Once persisted, the message is flagged to be deleted from the server.
                 message[i].setFlag(Flags.Flag.DELETED, true);
             }
@@ -150,7 +150,7 @@ public class MailingListMessageBsn {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
-    
+
     /** Check the recipients to detect which mailing lists were in the recipient
      * of the message. */
     private List<MailingList> figureOutMailingLists(Address[] extendedListAddresses) {

@@ -114,7 +114,7 @@
   </security-constraint>
   <login-config>
     <auth-method>FORM</auth-method>
-    <realm-name>jug-realm</realm-name>
+    <realm-name>ug-realm</realm-name>
     <form-login-config>
       <form-login-page>/login.xhtml</form-login-page>
       <form-error-page>/login_error.xhtml</form-error-page>
