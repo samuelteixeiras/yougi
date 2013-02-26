@@ -154,7 +154,7 @@ When the event has passed, no information about the event can be changed anymore
 
 \chapter{Architecture}
 
-Yougi should be deployed in an Application Server (AS). This platform is responsible for the system execution, the connectivity to several resources available in the environment and the availability for several users and systems. For the moment, Glassfish 3.0.1 is the standard AS for this application. This JEE Server has gained lots of attention for constantly run towards the state-of-the-art of the Java server side technology. It has an aggressive roadmap, being always the first product on the market to fully implement the last version of the JEE specification.
+Yougi should be deployed in an Application Server (AS). This platform is responsible for the system execution, the connectivity to several resources available in the environment and the availability for several users and systems. For the moment, Glassfish 3.1.2 is the standard AS for this application. This JEE Server has gained lots of attention for constantly run towards the state-of-the-art of the Java server side technology. It has an aggressive roadmap, being always the first product on the market to fully implement the last version of the JEE specification.
 
 One of the main advantages of using an application server like Glassfish is to keep the application free of complex code, such as a) manual control of database transactions; b) database access configuration; c) security authentication and authorization; e) sending and receiving e-mail messages, among many other complexities that are non-functional requirements, consuming the time we would be spending on functional requirements.
 
@@ -212,7 +212,7 @@ Persistence & JPA & 2.0 \\
 \end{tabular}
 \end{table}
 
-These technologies were selected based on the current needs, resources and knowledge of the development team. We decided to adopt a minimalist approach where most libs needed by the application are also distributed with the AS, such as Eclipse Link and Mojarra, and most configurations are made through the administrative console, such as database connection pool, JavaMail session and Security Realm. For the moment, the only external lib is the Primefaces component library. We make extensive use of annotations and avoid as much as we can XML for configuration purpose. Transactions are fully managed by the container. This way, we keep focused on the source code of the UG community model. Eventually, other technologies out of this table may be adopted if well justified. Therefore, a new technology would be considered in case a very special UG's need must be fulfilled.
+These technologies were selected based on the current needs, resources and knowledge of the development team. We decided to adopt a minimalist approach where most libs needed by the application are also distributed with the AS, such as Eclipse Link and Mojarra, and most configurations are made through the Administrative Console, such as database connection pool, JavaMail session and Security Realm. For the moment, the only external lib is the Primefaces component library. We make extensive use of annotations and avoid as much as we can XML for configuration purpose. Transactions are fully managed by the container. This way, we keep focused on the source code of the UG community model. Eventually, other technologies out of this table may be adopted if well justified. Therefore, a new technology would be considered in case a very special UG's need must be fulfilled.
 
 Going into details about the chosen technologies, we describe each one of them, completing the description of Figure 1:
 
@@ -293,9 +293,9 @@ The initial installation takes some time, but it will guarantee easy updates whe
 
 \section{Creating the MySQL Database}
 
-Yougi has access to only one database. This database is created using the administrative console and a SQL script. As mentioned before, this instructions consider that the MySQL database, version 5.0 or superior, is already installed and configured. In terms of configuration, we also consider that the path of the operating system is pointing to the folder where all MySQL commands are located.
+Yougi has access to only one database. This database is created using the Administrative Console and a SQL script. As mentioned before, this instructions consider that the MySQL database, version 5.0 or superior, is already installed and configured. In terms of configuration, we also consider that the path of the operating system is pointing to the folder where all MySQL commands are located.
 
-The procedure starts executing the administrative console, using the following command:
+The procedure starts executing the console, using the following command:
 
 \begin{verbatim}
 # mysql -u root -p
@@ -335,12 +335,12 @@ The file \textit{mysql\_create.sql} is available within the source code. It is l
 
 \section{Installing the JDBC Driver on Glassfish}
 
-The driver installation consists on saving the driver file in a specific AS lib directory. For this step instructions consider that Glassfish AS, version 3.1 or superior, is already installed and configured. The driver is available to download at MySQL's website (http://www.mysql.com). The downloaded file contains the driver and its documentation. Copy only the driver file, mysql-connector-java-[version]-bin.jar, to the diretory [glassfish\_home]/glassfish/domains/domain1/lib/. Restart the AS to make the driver available.
+The driver installation consists on saving the driver file in a specific AS lib directory. For this step instructions consider that Glassfish AS, version 3.1.2 or superior, is already installed and configured. The driver is available to download at MySQL's website (http://www.mysql.com). The downloaded file contains the driver and its documentation. Copy only the driver file, mysql-connector-java-[version]-bin.jar, to the diretory [glassfish\_home]/glassfish/domains/domain1/lib/. Restart the AS to make the driver available.
 
 \section{Creating a Database Connection Pool}
 \label{sec:creating-database-connection-pool}
 
-The database connection pool is managed by the AS. There are many ways to create a connection pool. We are going to show two possibilities: changing configuration files directly and using the administrative console.
+The database connection pool is managed by the AS. There are many ways to create a connection pool. We are going to show two possibilities: changing configuration files directly and using the Administrative Console.
 
 To create the database connection pool through the configuration file, open the file [glassfish\_home]/glassfish/domains/domain1/config/domain.xml. Go to the element \textless resources\textgreater \ and add the following connection pool and jdbc resource under the last closing \textless /jdbc-connection-pool\textgreater \ element.
 
@@ -366,13 +366,16 @@ To create the database connection pool through the configuration file, open the 
 Now, find the element \textless server name=''server'' config-ref=''server-config''\textgreater \ and put inside the following line after the latest \textless /resource-ref\textgreater element:
 
 \begin{verbatim}
-<resource-ref ref="jdbc/ug"></resource-ref>
+<server name="server" config-ref="server-config">
+   ...
+   <resource-ref ref="jdbc/ug"></resource-ref>
+</server>
 \end{verbatim}
 
-If you prefer to do it in the administrative console, you can go through the following steps:
+If you prefer to do it in the Administrative Console, you can go through the following steps:
 
 \begin{enumerate}
-\item  Enter in the administrative console at http://[servername]:4848/ and navigate to Resources / JDBC / Connection Pools.
+\item  Enter in the Administrative Console at http://[servername]:4848/ and navigate to Resources / JDBC / Connection Pools.
 \item Create a new connection pool with the name jugPool, select the resource type javax.sql.ConnectionPoolDataSource, select the database vendor MySQL and click next.
 \item Select the datasource classname \\ \textit{com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource} and inform the following additional properties:
    \begin{enumerate}
@@ -401,10 +404,42 @@ The only information the application knows about the database is the jdbc resour
 
 \section{Creating a JavaMail Session}
 
-Besides managing the connections to the email server, the JavaMail session stores security parameters, such as user name, password, SSL, the kind of server available and so on. These parameters are defined in a case by case basis, thus the JavaMail service provided by the application server is essential for the distribution of this application. To configure JavaMail, follow the steps below:
+Besides managing the connections to the email server, the JavaMail session stores security parameters, such as user name, password, SSL, the kind of server available and so on. These parameters are defined in a case by case basis, thus the JavaMail service provided by the application server is essential for the distribution of this application.
+
+You can configure JavaMail directly in the domain.xml file, by copying and pasting the xml below after the element \textless jdbc-resource\textgreater, and then change the values according to your email server.
+
+\begin{verbatim}
+<resources>
+   ...
+   </jdbc-connection-pool>
+   <jdbc-resource pool-name="UGPool" description="" 
+                  jndi-name="jdbc/ug"></jdbc-resource>
+
+   <mail-resource host="send.one.com" description="" 
+                  jndi-name="mail/ug" from="your@emailaddress"
+                  user="smtp_user">
+      <property name="mail.smtp.port" value="2525"></property>
+      <property name="mail.smtp.auth" value="true"></property>
+      <property name="mail.smtp.password" value="your_password">
+      </property>
+   </mail-resource>
+</resources>
+\end{verbatim}
+
+Add the element \textless resource-ref\textgreater \ of this new resource after the resource-ref created for the connection pool, as illustrated below:
+
+\begin{verbatim}
+<server name="server" config-ref="server-config">
+   ...
+   <resource-ref ref="jdbc/ug"></resource-ref>
+   <resource-ref ref="mail/ug"></resource-ref>
+</server>
+\end{verbatim}
+
+To configure JavaMail using the Administrative Console, follow the steps below:
 
 \begin{enumerate}
-\item Enter in the administrative console (http://[server-name]:4848/).
+\item Enter in the Administrative Console (http://[server-name]:4848/).
 \item Go to \textit{Resources / JavaMail Sessions}.
 \item create a new JavaMail session and set the following properties:
    \begin{enumerate}
@@ -437,17 +472,42 @@ More supported JavaMail properties can be found on Table \ref{tab:javamail-prope
 
 A realm is a security policy domain available on Glassfish to provide authentication and authorization services for web applications. A realm contains a collection of users and their assignements to groups and roles.
 
-As the connection pool and the JavaMail session, the security realm is also a configuration entirely made in the application server. Since Yougi's users are stored in the database, we have to use a realm based on JDBC. The JDBC Realm uses the data source created in section \ref{sec:creating-database-connection-pool} to access users' data on Yougi's database. Follow the steps below to configure the JDBC Realm:
+As the connection pool and the JavaMail session, the security realm is also a configuration entirely made in the application server. Since Yougi's users are stored in the database, we have to use a realm based on JDBC. The JDBC Realm uses the data source created in section \ref{sec:creating-database-connection-pool} to access users' data on Yougi's database.
+
+As usual, we start with the fastest configuration option, by directly changing the domain.xml file. Copy and paste the xml below within the element \textless security-service\textgreater .
+
+\begin{verbatim}
+<security-service>
+   ...
+   <auth-realm name="ug-realm"
+       classname="com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm">
+       <property name="jaas-context" value="jdbcRealm"></property>
+       <property name="encoding" value="Base64"></property>
+       <property name="user-table" value="authentication"></property>          
+       <property name="password-column" value="password"></property>
+       <property name="datasource-jndi" value="jdbc/ug"></property>
+       <property name="group-table" value="user_group"></property>
+       <property name="group-name-column" value="group_name"></property>
+       <property name="group-table-user-name-column" 
+           value="username"></property>
+       <property name="digest-algorithm" value="MD5"></property>
+       <property name="user-name-column" value="username"></property>
+   </auth-realm>
+   ...
+</security-service>
+\end{verbatim}
+
+If you prefer, you can always use the Adminstrative Console to configure the JDBC Realm. Just follow the steps below:
 
 \begin{enumerate}
-\item Enter in the administrative console (http://[server-name]:4848).
+\item Enter in the Administrative Console (http://[server-name]:4848).
 \item Go to \textit{Configuration/server-config/Security/Realms}, press \textit{New...} and inform the following values:
    \begin{enumerate}
    \item Name: ug-realm
    \item Class Name: com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm
    \item JAAS Context: jdbcRealm
    \item JNDI: jdbc/ug - the data source JNDI name pointing to the connection pool where user data are available
-   \item User Table: user\_account
+   \item User Table: authentication
    \item User Name Column: username
    \item Password Column: password
    \item Group Table: user\_group
@@ -464,7 +524,7 @@ As the connection pool and the JavaMail session, the security realm is also a co
 The installation process takes some time, but all these steps are executed only once, simplifying significantly the development process by going from development to test and production without any specific application customization. The deployment process is also simplified, reducing this final phase, as follows:
 
 \begin{enumerate}
-\item enter in the administrative console (http://[server-name]:4848).
+\item enter in the Administrative Console (http://[server-name]:4848).
 \item Go to \textit{Applications} and press \textit{Deploy...}.
 \item Inform the package \textit{jug.ear} to be uploaded to the server.
 \item Select type \textit{Enterprise Application}.
@@ -475,7 +535,7 @@ The installation process takes some time, but all these steps are executed only 
 Yougi will appear in the list of applications. In case of updating an application already deployed, the process is very simplified because of the initial configuration:
 
 \begin{enumerate}
-\item enter in the administrative console (http://[server-name]:4848).
+\item enter in the Administrative Console (http://[server-name]:4848).
 \item Go to \textit{Applications}.
 \item click on the action \textit{Redeploy} in the row of the jug application;
 \item inform the package “jug.ear” to be uploaded to the server; and

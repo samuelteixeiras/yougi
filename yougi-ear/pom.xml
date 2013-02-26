@@ -30,6 +30,13 @@
                 <configuration>
                     <version>6</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <modules>
+                        <webModule>
+                            <groupId>org.cejug.yougi</groupId>
+                            <artifactId>yougi-web</artifactId>
+                            <contextRoot>/ug</contextRoot>
+                        </webModule>
+                    </modules>
                 </configuration>
             </plugin>
         </plugins>
