@@ -262,8 +262,8 @@ Going into details about the chosen technologies, we describe each one of them, 
 \begin{figure}
 \centering
 \includegraphics[height=10cm, angle=90]{figures/relational-model}
-\caption{Please write your figure caption here}
-\label{fig:1}
+\caption{Database relational model}
+\label{fig:relational-model}
 \end{figure}
 
 \chapter{Installation}
@@ -555,6 +555,8 @@ Before using the application, the database should be initialized with some initi
 
 \chapter{Development}
 
+This chapter explains how to contribute to the source code of the project. It goes from the checkout of the source code to the development of an entire feature.
+
 \section{Preparing the Development Environment}
 
 \subsection{Obtaining the Source Code}
@@ -605,6 +607,37 @@ To push local commit to the server, use:
 \begin{verbatim}
 #git push origin master
 \end{verbatim}
+
+\subsection{Configuring the Eclipse IDE}
+
+Eclipse is the most popular Java IDE. Since it is, basically, a multi-purpose platform, Eclipse should be suficiently extended to allow productive development of a JavaEE application, such as Yougi. In this section we will work with Eclipse Juno (4.2). It is available for download at: http://eclipse.org/downloads.
+
+We start extending Eclipse to work with Git (read Section \ref{ssec:obtaining-source-code} for more details about Git):
+\begin{enumerate}
+\item On the menu, select Help / Install New Software.
+\item In the new dialog, select the option \textit{Juno - http://download.eclipse.org/releases/juno} in the combobox to see several plugins available for the current Eclipse version.
+\item In the filter, type ''git'' to find the plugin that supports Git.
+\item Follow the installation procedure.
+\item Restart the IDE when finished.
+\end{enumerate}
+
+The next step is to import the project into Eclipse:
+\begin{enumerate}
+\item On the menu, select File / Import / Git / Project From Git / URI
+\item Inform the URI https://github.com/htmfilho/yougi and click on ''Next'' twice.
+\item Inform the directory where you want to import the project and click on ''Next''.
+\item Select the option ''Import General Project''.
+\item Click on ''Next'' and then finish.
+\end{enumerate}
+
+Figure \ref{fig:eclipse-project-opened} shows how the project looks like after the import. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=.7]{figures/eclipse-project-opened}
+\caption{The project opened in the Eclipse IDE}
+\label{fig:eclipse-project-opened}
+\end{figure}
 
 \part*{Appendix}
 
