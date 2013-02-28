@@ -1,7 +1,7 @@
-JUG MANAGEMENT
-==============
+YOUGI
+=====
 
-JUG Management is an application conceived to manage online user groups of any kind and domain. This is licensed under GNU Lesser General Public License (LGPL v2). Please, read the license, available on the file LICENSE.txt, before you use or change this application.
+Yougi is an application conceived to manage online user groups of any kind and domain. This is licensed under GNU Lesser General Public License (LGPL v2). Please, read the license, available on the file LICENSE.txt, before you use or change this application.
 
 Contact
 -------
@@ -11,7 +11,7 @@ Contact
                 Member of: CEJUG (Ceara Java User Group) http://www.cejug.org
             Email Address: me at hildeberto.com
    
-          Project Website: https://github.com/htmfilho/jug
+          Project Website: https://yougi.org
 Application used by CEJUG: http://www.cejug.org/jug
 
 Technologies In Use

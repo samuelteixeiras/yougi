@@ -267,6 +267,7 @@ Going into details about the chosen technologies, we describe each one of them, 
 \end{figure}
 
 \chapter{Installation}
+\label{chp:installation}
 
 To install Yougi we need:
 
@@ -311,13 +312,13 @@ mysql> grant all privileges on ug.* to ug_user@'%';
 mysql> flush privileges;
 \end{verbatim}
 
-The database \textit{jug} and the user \textit{jug\_user} are created, and all privileges over the \textit{jug} database are granted to the \textit{jug\_user}. To check if the database was created, execute the following command:
+The database \textit{ug} and the user \textit{ug\_user} are created, and all privileges over the \textit{ug} database are granted to the \textit{ug\_user}. To check if the database was created, execute the following command:
 
 \begin{verbatim}
 mysql> show databases;
 \end{verbatim}
 
-Check if the database \textit{jug} is in the list. Then we have to sign out from this root's session and open a new session for the new user to create the database structure. Follow the sequence of commands below:
+Check if the database \textit{ug} is in the list. Then we have to sign out from this root's session and open a new session for the new user to create the database structure. Follow the sequence of commands below:
 
 \begin{verbatim}
 mysql> quit;
@@ -325,17 +326,17 @@ mysql> quit;
 # mysql -u ug_user -p
 
 mysql> use ug;
-mysql> source [path of the database script]/mysql_create.sql;
+mysql> source [path of the database script]/mysql-create.sql;
 mysql> quit;
 \end{verbatim}
 
 The user \textit{ug\_user} and its password should be used in the configuration of the connection pool. Do not use the \textit{root} user for application purposes.
 
-The file \textit{mysql\_create.sql} is available within the source code. It is located in the folder /yougi-ejb/src/main/resources/META-INF/. To get the source code, follow the instructions described in the section \ref{ssec:obtaining-source-code} or get it from the web at: https://github.com/htmfilho/yougi.
+The file \textit{mysql-create.sql} is available within the source code. It is located in the folder /yougi-ejb/src/main/resources/META-INF/. To get the source code, follow the instructions described in the section \ref{ssec:obtaining-source-code} or get it from the web at: https://github.com/htmfilho/yougi.
 
 \section{Installing the JDBC Driver on Glassfish}
 
-The driver installation consists on saving the driver file in a specific AS lib directory. For this step instructions consider that Glassfish AS, version 3.1.2 or superior, is already installed and configured. The driver is available to download at MySQL's website (http://www.mysql.com). The downloaded file contains the driver and its documentation. Copy only the driver file, mysql-connector-java-[version]-bin.jar, to the diretory [glassfish\_home]/glassfish/domains/domain1/lib/. Restart the AS to make the driver available.
+The driver installation consists on saving the driver file in a specific AS lib directory. For this step instructions consider that Glassfish AS, version 3.1.2 or superior, is already installed and configured. The driver is available to download at MySQL's website (http://www.mysql.com). The downloaded file contains the driver and its documentation. Copy  the driver file mysql-connector-java-[version]-bin.jar to the directory /glassfish/domains/domain1/lib/. The server needs to be restarted to make the driver available.
 
 \section{Creating a Database Connection Pool}
 \label{sec:creating-database-connection-pool}
@@ -376,7 +377,7 @@ If you prefer to do it in the Administrative Console, you can go through the fol
 
 \begin{enumerate}
 \item  Enter in the Administrative Console at http://[servername]:4848/ and navigate to Resources / JDBC / Connection Pools.
-\item Create a new connection pool with the name jugPool, select the resource type javax.sql.ConnectionPoolDataSource, select the database vendor MySQL and click next.
+\item Create a new connection pool with the name UGPool, select the resource type javax.sql.ConnectionPoolDataSource, select the database vendor MySQL and click next.
 \item Select the datasource classname \\ \textit{com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource} and inform the following additional properties:
    \begin{enumerate}
    \item DatabaseName=ug
@@ -562,18 +563,16 @@ This chapter explains how to contribute to the source code of the project. It go
 \subsection{Obtaining the Source Code}
 \label{ssec:obtaining-source-code}
 
-Git is the version control system (VCS) used to control Yougi source code. For being a distributed VCS, Git is not trivial. Its foundations are a bit different from traditional VCSs, such as CVS and SVN. There is a master repository located at http://cejug.java.net, where the main trunk (master) is centralized, but every client is also a full featured VCS, where is possible perform commits off line, create branches and merge with other clients without acknowledging the master.
+Git is the version control system (VCS) used to control Yougi source code. For being a distributed VCS, Git is not trivial. Its foundations are a bit different from traditional VCSs, such as CVS and SVN. There is a master repository located at http://github.com/htmfilho/yougi, where the main trunk (master) is centralized, but every client is also a full featured VCS, where is possible perform commits off line, create branches and merge with other clients without acknowledging the master.
 
-To install and use Yougi is not necessary to start from the source code. The binary package is available at http://cejug.java.net. Just follow the instructions described in chapter 7. On the other hand, if the intention is to contribute to the project, the use of Git to retrieve the source code is necessary. The potential contributor should:
+To install and use Yougi is not necessary to start from the source code. The binary package is available at http://yougi.org/downloads. Just follow the instructions described on Chapter \ref{chp:installation}. On the other hand, if the intention is to contribute to the project, the use of Git to retrieve the source code is necessary. The potential contributor should:
 
 \begin{enumerate}
 \item install Git in the development machine: the installation is dependent of platform, thus the instructions for the target platform are only available on the Git website: http://git-scm.com.
 \item configure Git to access the master repository: Yougi's Git accepts only secure SSH (Security Shell protocol) connection, making the initial steps more complicated than expected. After this initial configuration, the access to the master becomes transparent and secure.
-\item register at java.net:
-\item copy and paste the public key in the java.net personal profile:
-\item register yourself in CEJUG's project at java.net. You will have access to the repository only if you are a member of the project.
-\item When you login on Java.net and go to the source code section, you will be able to see the checkout URI of Yougi's repository. The address contains your username. Example: ssh://[user-name]@git.java.net/cejug~jug-management.
-\item Copy the URI above and go to the command line and type the following command to checkout the code: git clone ssh://[user-name]@git.java.net/cejug~jug-management. It will create a folder "cejug-jug-management" in the directory you ran the command and the full source code will be available there.
+\item register at github.com.
+\item copy and paste the public key in your Github personal profile.
+\item register yourself as a member of the CEJUG Community at \\ http://cejug.org/jug/registration.xhtml. You will have access to the repository only if you are a CEJUG member.
 \end{enumerate}
 
 To make sure that the code in the server branch is perfectly working, we have to update the local copy with the latest changes available on the server, test the system locally with those changes and if everything is working well, the local commits can finally be pushed to its respective branch. Before updating the local, make sure that there is no pending commit using:
