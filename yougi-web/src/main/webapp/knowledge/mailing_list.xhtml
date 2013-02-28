@@ -1,4 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+<!-- Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
+ * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
+ * this library. Look for the file license.txt at the root level. If you do not
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
+ * Suite 330, Boston, MA 02111-1307 USA.
+ * -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -13,7 +33,7 @@
                     <h1>#{bundle.mailingList}</h1>
                     <h:form>
                         <h:messages styleClass="alertMessage"/>
-                        
+
                         <h:panelGrid columns="1">
                             <h:outputText value="#{bundle.name}" styleClass="fieldLabel"/>
                             <h:inputText value="#{mailingListBean.mailingList.name}" size="30" maxlength="50" required="true"/>
@@ -30,14 +50,14 @@
                             <h:outputText value="#{bundle.unsubscribeFrom}" styleClass="fieldLabel"/>
                             <h:inputText value="#{mailingListBean.mailingList.unsubscription}" size="60" maxlength="100"/>
                         </h:panelGrid>
-                                                
+
                         <h:inputHidden id="id" value="#{mailingListBean.mailingList.id}"/>
 
                         <h:panelGrid columns="3">
                             <h:commandButton value="#{bundle.save}" action="#{mailingListBean.save}"/>
                             <h:commandButton value="#{bundle.remove}" action="#{mailingListBean.remove}" rendered="#{! empty mailingListBean.id}">
                                 <f:param name="id" value="#{mailingListBean.mailingList.id}"/>
-                            </h:commandButton>    
+                            </h:commandButton>
                             <h:button value="#{bundle.cancel}" outcome="mailing_lists"/>
                         </h:panelGrid>
                     </h:form>
