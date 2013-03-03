@@ -22,27 +22,27 @@
 package org.cejug.yougi.business;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.embeddable.EJBContainer;
-import org.cejug.yougi.entity.AccessGroup;
-import org.cejug.yougi.entity.Country;
-import org.cejug.yougi.entity.Language;
-import org.cejug.yougi.entity.MessageTemplate;
+import org.cejug.yougi.entity.UpdateHistory;
+import org.cejug.yougi.entity.UpdateHistoryPK;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Test class CommonBsnTest.
+ * Test class UpdateHistoryBsnTest.
  * @author helio frota
  */
-public class CommonBsnTest {
+public class UpdateHistoryBsnTest {
     
     private static EJBContainer ejbContainer;
-    private static CommonBsn commonBsn;
+    private static UpdateHistoryBsn updateHistoryBsn;
 
     /**
-     * Creates the ejbContainer and gets the CommonBsn from embedded glassfish.
+     * Creates the ejbContainer and gets the UpdateHistoryBsn from embedded glassfish.
      * @throws Exception exception
      */
     @BeforeClass
@@ -50,7 +50,7 @@ public class CommonBsnTest {
         Map<Object, Object> properties = new HashMap<>(1);
         properties.put("org.glassfish.ejb.embedded.glassfish.installation.root", "./src/test/resources/glassfish");
         ejbContainer = javax.ejb.embeddable.EJBContainer.createEJBContainer(properties);
-        commonBsn = (CommonBsn) ejbContainer.getContext().lookup("java:global/classes/CommonBsn");
+        updateHistoryBsn = (UpdateHistoryBsn) ejbContainer.getContext().lookup("java:global/classes/UpdateHistoryBsn");
     }
     
     /**
@@ -62,20 +62,15 @@ public class CommonBsnTest {
     }
 
     @Test
-    public void findAllOrderedBy() {
-        
-        // The method findAccessGroups() can be removed.
-        System.out.println(commonBsn.findAllOrderedBy(AccessGroup.class, "name", true));
-        
-        // The method findLanguages() can be removed.
-        System.out.println(commonBsn.findAllOrderedBy(Language.class, "name", true));
-        
-        // The method findCountries() can be removed.
-        System.out.println(commonBsn.findAllOrderedBy(Country.class, "name", true));
-        
-        // The method findMessageTemplates() can be removed.
-        System.out.println(commonBsn.findAllOrderedBy(MessageTemplate.class, "title", true));
-        
+    public void findUpdateHistory() {
+        updateHistoryBsn.findUpdateHistory(null);
+        updateHistoryBsn.findUpdateHistory(new UpdateHistoryPK());
+    }
+    
+    @Test
+    public void findLastUpdate() {
+        List < UpdateHistory > list = updateHistoryBsn.findLastUpdate();
+        Assert.assertNotNull(list);
     }
     
 }

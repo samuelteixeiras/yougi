@@ -20,6 +20,7 @@
  * 
  */
 import org.cejug.yougi.business.CommonBsnTest;
+import org.cejug.yougi.business.UpdateHistoryBsnTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -31,7 +32,8 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(value = Suite.class)
 @SuiteClasses(value = {
-    CommonBsnTest.class
+    CommonBsnTest.class,
+    UpdateHistoryBsnTest.class
 })
 public class AllTests {
     
