@@ -48,7 +48,7 @@ public class UpdateHistoryBsn {
     }
     
     public List<UpdateHistory> findLastUpdate() {
-        return em.createQuery("select uh from UpdateHistory uh where uh.releaseDate = (select max(uh.releaseDate) from UpdateHistory uh)")
+        return em.createQuery("select uh from UpdateHistory uh where uh.releaseDate = (select max(uh1.releaseDate) from UpdateHistory uh1)")
                  .getResultList();
     }
     
