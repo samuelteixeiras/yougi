@@ -21,16 +21,14 @@
  */
 package org.cejug.yougi.business;
 
-import java.util.HashMap;
-import java.util.Map;
-import javax.ejb.embeddable.EJBContainer;
+import org.cejug.yougi.AllTests;
 import org.cejug.yougi.entity.AccessGroup;
 import org.cejug.yougi.entity.Country;
 import org.cejug.yougi.entity.Language;
 import org.cejug.yougi.entity.MessageTemplate;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
+
 
 /**
  * Test class CommonBsnTest.
@@ -38,28 +36,17 @@ import org.junit.Test;
  */
 public class CommonBsnTest {
     
-    private static EJBContainer ejbContainer;
     private static CommonBsn commonBsn;
 
     /**
-     * Creates the ejbContainer and gets the CommonBsn from embedded glassfish.
+     * Lookup for the CommonBsn from embedded server.
      * @throws Exception exception
      */
-    @BeforeClass
-    public static void setUp() throws Exception {
-        Map<Object, Object> properties = new HashMap<>(1);
-        properties.put("org.glassfish.ejb.embedded.glassfish.installation.root", "./src/test/resources/glassfish");
-        ejbContainer = javax.ejb.embeddable.EJBContainer.createEJBContainer(properties);
-        commonBsn = (CommonBsn) ejbContainer.getContext().lookup("java:global/classes/CommonBsn");
+    @Before
+    public void setUp() throws Exception {
+        commonBsn = (CommonBsn) AllTests.ejbContainer.getContext().lookup("java:global/classes/CommonBsn");
     }
     
-    /**
-     * Closes the ejbContainer.
-     */
-    @AfterClass
-    public static void shutdown() {
-        ejbContainer.close();
-    }
 
     @Test
     public void findAllOrderedBy() {

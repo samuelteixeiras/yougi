@@ -21,15 +21,12 @@
  */
 package org.cejug.yougi.business;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import javax.ejb.embeddable.EJBContainer;
+import org.cejug.yougi.AllTests;
 import org.cejug.yougi.entity.UpdateHistory;
 import org.cejug.yougi.entity.UpdateHistoryPK;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -38,29 +35,17 @@ import org.junit.Test;
  */
 public class UpdateHistoryBsnTest {
     
-    private static EJBContainer ejbContainer;
     private static UpdateHistoryBsn updateHistoryBsn;
 
     /**
-     * Creates the ejbContainer and gets the UpdateHistoryBsn from embedded glassfish.
+     * Lookup for the UpdateHistoryBsn from embedded server.
      * @throws Exception exception
      */
-    @BeforeClass
-    public static void setUp() throws Exception {
-        Map<Object, Object> properties = new HashMap<>(1);
-        properties.put("org.glassfish.ejb.embedded.glassfish.installation.root", "./src/test/resources/glassfish");
-        ejbContainer = javax.ejb.embeddable.EJBContainer.createEJBContainer(properties);
-        updateHistoryBsn = (UpdateHistoryBsn) ejbContainer.getContext().lookup("java:global/classes/UpdateHistoryBsn");
+    @Before
+    public void setUp() throws Exception {
+        updateHistoryBsn = (UpdateHistoryBsn) AllTests.ejbContainer.getContext().lookup("java:global/classes/UpdateHistoryBsn");
     }
     
-    /**
-     * Closes the ejbContainer.
-     */
-    @AfterClass
-    public static void shutdown() {
-        ejbContainer.close();
-    }
-
     @Test
     public void findUpdateHistory() {
         updateHistoryBsn.findUpdateHistory(null);

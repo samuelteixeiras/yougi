@@ -1,3 +1,5 @@
+package org.cejug.yougi;
+
 /* Yougi is a web application conceived to manage user groups or 
  * communities focused on a certain domain of knowledge, whose members are 
  * constantly sharing information and participating in social and educational 
@@ -19,36 +21,42 @@
  * Suite 330, Boston, MA 02111-1307 USA.
  * 
  */
-package org.cejug.yougi.business;
+import java.util.HashMap;
+import java.util.Map;
+import javax.ejb.embeddable.EJBContainer;
+import org.cejug.yougi.business.*;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-import org.cejug.yougi.AllTests;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
- * Test class LanguageBsnTest.
+ * Suite class AllTests.
  * @author helio frota
  */
-public class LanguageBsnTest {
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {
+    CommonBsnTest.class,
+    UpdateHistoryBsnTest.class,
+    LanguageBsnTest.class
+})
+public class AllTests {
     
-    private static LanguageBsn languageBsn;
-
-    /**
-     * Lookup for the LanguageBsn from embedded server.
-     * @throws Exception exception
-     */
-    @Before
-    public void setUp() throws Exception {
-        languageBsn = (LanguageBsn) AllTests.ejbContainer.getContext().lookup("java:global/classes/LanguageBsn");
+    public static EJBContainer ejbContainer;
+    
+    @BeforeClass
+    public static void oneTimeSetUp() throws Exception {
+        Map<Object, Object> properties = new HashMap<>(1);
+        properties.put("org.glassfish.ejb.embedded.glassfish.installation.root", "./src/test/resources/glassfish");
+        ejbContainer = javax.ejb.embeddable.EJBContainer.createEJBContainer(properties);
     }
     
-    @Test
-    public void findLanguage() {
-        languageBsn.findLanguage("pt_BR");
+    
+    @AfterClass
+    public static void shutdown() {
+        ejbContainer.close();
     }
     
-    @Test
-    public void findLanguages() {
-        languageBsn.findLanguages();
-    }
 }
