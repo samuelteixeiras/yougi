@@ -59,23 +59,23 @@
                                     <h:outputLabel for="country" value="#{bundle.country}" styleClass="fieldLabel"/>
                                     <h:outputLabel for="province" value="#{bundle.province}" styleClass="fieldLabel"/>
 
-                                    <h:selectOneMenu id="country" label="#{bundle.country}" value="#{locationMBean.selectedCountry}">
+                                    <h:selectOneMenu id="country" label="#{bundle.country}" value="#{locationBean.selectedCountry}">
                                         <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                        <f:selectItems value="#{locationMBean.countries}" var="country" itemLabel="#{country.name}" itemValue="#{country.acronym}"/>
+                                        <f:selectItems value="#{locationBean.countries}" var="country" itemLabel="#{country.name}" itemValue="#{country.acronym}"/>
                                         <f:ajax render="province city"/>
                                     </h:selectOneMenu>
-                                    <h:selectOneMenu id="province" label="#{bundle.province}" value="#{locationMBean.selectedProvince}">
+                                    <h:selectOneMenu id="province" label="#{bundle.province}" value="#{locationBean.selectedProvince}">
                                         <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                        <f:selectItems value="#{locationMBean.provinces}" var="province" itemLabel="#{province.name}" itemValue="#{province.id}"/>
+                                        <f:selectItems value="#{locationBean.provinces}" var="province" itemLabel="#{province.name}" itemValue="#{province.id}"/>
                                         <f:ajax render="city"/>
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="city" value="#{bundle.city}" styleClass="fieldLabel"/>
                                     <h:outputText/>
 
-                                    <h:selectOneMenu id="city" label="#{bundle.city}" value="#{locationMBean.selectedCity}">
+                                    <h:selectOneMenu id="city" label="#{bundle.city}" value="#{locationBean.selectedCity}">
                                         <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                        <f:selectItems value="#{locationMBean.cities}" var="city" itemLabel="#{city.name}" itemValue="#{city.id}"/>
+                                        <f:selectItems value="#{locationBean.cities}" var="city" itemLabel="#{city.name}" itemValue="#{city.id}"/>
                                     </h:selectOneMenu>
                                     <h:outputText/>
 
@@ -109,7 +109,7 @@
                             </h:panelGrid>
                             <h:panelGrid columns="1">
                                 <h:outputLabel for="shortDescription" value="#{bundle.shortDescription}" styleClass="fieldLabel"/>
-                                <h:inputTextarea id="shortDescription" label="#{bundle.shortDescription}" required="false" cols="60" rows="4" value="#{eventBean.event.shortDescription}"/>
+                                <h:inputTextarea id="shortDescription" label="#{bundle.shortDescription}" required="false" cols="60" rows="4" value="#{eventMBean.event.shortDescription}"/>
 
                                 <h:outputLabel for="description" value="#{bundle.description}" styleClass="fieldLabel"/>
                                 <p:editor id="description" required="false" width="500" height="200" value="#{eventMBean.event.description}"/>

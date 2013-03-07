@@ -141,7 +141,10 @@
                         </h:panelGrid>
 
                         <h:inputHidden id="id" value="#{userAccountBean.userAccount.id}"/>
-                        <p></p>
+
+                        <p><p:captcha id="captcha" label="Captcha" theme="white" language="#{bundle.confLanguage}"/></p>
+
+                        <p/>
                         <h:panelGrid columns="2">
                             <h:commandButton value="#{bundle.register}" action="#{userAccountBean.register}"/>
                             <h:button outcome="index" value="#{bundle.cancel}"/>
