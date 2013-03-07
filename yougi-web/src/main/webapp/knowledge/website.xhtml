@@ -86,7 +86,7 @@
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.title}"/></f:facet>
                                         <h:link outcome="article" value="#{article.title}" rendered="#{! empty webSourceMBean.webSource.id}">
-                                            <f:param name="pl" value="#{article.permanentLink}"/>
+                                            <f:param name="id" value="#{article.id}"/>
                                         </h:link>
                                         <h:outputText value="#{article.title}" rendered="#{empty webSourceMBean.webSource.id}"/>
                                     </p:column>

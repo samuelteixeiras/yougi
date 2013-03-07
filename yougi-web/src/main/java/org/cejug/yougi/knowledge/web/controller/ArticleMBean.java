@@ -47,6 +47,9 @@ public class ArticleMBean {
     @ManagedProperty(value="#{unpublishedContentMBean}")
     private UnpublishedContentMBean unpublishedContentMBean;
 
+    @ManagedProperty(value="#{articleStateMBean}")
+    private ArticleStateMBean articleStateMBean;
+
     private Article article;
 
     public String getId() {
@@ -73,6 +76,14 @@ public class ArticleMBean {
         this.unpublishedContentMBean = unpublishedContentMBean;
     }
 
+    public ArticleStateMBean getArticleStateMBean() {
+        return articleStateMBean;
+    }
+
+    public void setArticleStateMBean(ArticleStateMBean articleStateMBean) {
+        this.articleStateMBean = articleStateMBean;
+    }
+
     public Article getArticle() {
         return this.article;
     }
@@ -81,26 +92,39 @@ public class ArticleMBean {
         this.article = article;
     }
 
+    public Boolean getPublished() {
+        return this.articleStateMBean.getState(this.article);
+    }
+
     @PostConstruct
     public void load() {
         if(id != null && !id.isEmpty()) {
             this.article = articleBean.findArticle(id);
+            this.articleStateMBean.setState(this.article, Boolean.TRUE);
         }
         else if(permanentLink != null && !permanentLink.isEmpty()) {
             this.article = this.unpublishedContentMBean.getArticle(this.permanentLink);
+            this.articleStateMBean.setState(this.article, Boolean.FALSE);
         }
         else {
             this.article = new Article();
         }
     }
 
-    public String save() {
-        articleBean.save(this.article);
+    public String publish() {
+        this.unpublishedContentMBean.removeArticle(this.article);
+        articleBean.publish(this.article);
         return "websites?faces-redirect=true";
     }
 
-    public String remove() {
-        articleBean.remove(this.article.getId());
+    public String unpublish() {
+        this.unpublishedContentMBean.addArticle(this.article);
+        articleBean.unpublish(this.article);
+        return "websites?faces-redirect=true";
+    }
+
+    public String save() {
+        articleBean.save(this.article);
         return "websites?faces-redirect=true";
     }
 }

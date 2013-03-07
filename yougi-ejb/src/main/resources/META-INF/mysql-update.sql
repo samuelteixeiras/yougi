@@ -17,7 +17,7 @@ alter table web_source add constraint fk_provider_web_source foreign key (provid
 create table article (
     id               char(32)     not null,
     title            varchar(255) not null,
-    author           char(32)     not null,
+    author           varchar(100) not null,
     web_source       char(32)     not null,
     content          text         not null,
     summary          text             null,
@@ -28,7 +28,6 @@ create table article (
 ) engine innodb;
 
 alter table article add constraint pk_article primary key (id);
-alter table article add constraint fk_author_article foreign key (author) references user_account (id) on delete cascade;
 alter table article add constraint fk_source_article foreign key (web_source) references web_source (id) on delete cascade;
 
 alter table user_account add language varchar(5) null;

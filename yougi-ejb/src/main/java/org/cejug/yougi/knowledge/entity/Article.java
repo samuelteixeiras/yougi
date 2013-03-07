@@ -179,17 +179,17 @@ public class Article implements Serializable, Identified {
         if (!(object instanceof Article)) {
             return false;
         }
+        boolean equals = false;
         Article other = (Article) object;
 
-        if(this.id != null) {
-            return this.id.equals(other.id);
+        if(this.id != null && other.id != null) {
+            equals = this.id.equals(other.id);
         }
         else if(this.permanentLink != null) {
-            return this.permanentLink.equals(other.permanentLink);
+            equals = this.permanentLink.equals(other.permanentLink);
         }
-        else {
-            return false;
-        }
+
+        return equals;
     }
 
     @Override
