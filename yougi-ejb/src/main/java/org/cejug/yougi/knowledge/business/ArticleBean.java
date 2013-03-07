@@ -68,6 +68,15 @@ public class ArticleBean {
                                  .getResultList();
     }
 
+    public void publish(Article article) {
+        article.setPublished(Boolean.TRUE);
+        save(article);
+    }
+
+    public void unpublish(Article article) {
+        remove(article.getId());
+    }
+
     public void save(Article article) {
         if(EntitySupport.INSTANCE.isIdNotValid(article)) {
             article.setId(EntitySupport.INSTANCE.generateEntityId());
@@ -97,7 +106,7 @@ public class ArticleBean {
             if(webSource != null) {
                 webSource.setTitle(feed.getTitle());
             }
-            unpublishedArticles = new ArrayList<>();
+            unpublishedArticles = new ArrayList<Article>();
             Article article;
             for (Iterator i = feed.getEntries().iterator(); i.hasNext();) {
                 SyndEntry entry = (SyndEntry) i.next();
@@ -121,8 +130,12 @@ public class ArticleBean {
 
                 unpublishedArticles.add(article);
             }
-        } catch (IllegalArgumentException | FeedException | IOException ex) {
-            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+        } catch (IllegalArgumentException iae) {
+            LOGGER.log(Level.SEVERE, iae.getMessage(), iae);
+        } catch(FeedException fe) {
+            LOGGER.log(Level.SEVERE, fe.getMessage(), fe);
+        } catch(IOException ioe) {
+            LOGGER.log(Level.SEVERE, ioe.getMessage(), ioe);
         }
 
         // Remove from the list of unpublished articles the ones that are already published.
@@ -167,9 +180,13 @@ public class ArticleBean {
     }
 
     private String retrieveWebsiteContent(WebSource webSource) {
-        StringBuilder content = null;
+        if(webSource == null) {
+            return null;
+        }
+
         String urlWebsite = webSource.getProvider().getWebsite();
 
+        StringBuilder content = null;
         if(!urlWebsite.contains("http")) {
             urlWebsite = "http://" + urlWebsite;
         }

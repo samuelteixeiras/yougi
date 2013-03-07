@@ -1,21 +1,21 @@
-/* Yougi is a web application conceived to manage user groups or 
- * communities focused on a certain domain of knowledge, whose members are 
- * constantly sharing information and participating in social and educational 
+/* Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
- * 
- * This application is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by the 
- * Free Software Foundation; either version 2.1 of the License, or (at your 
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
  * option) any later version.
- * 
- * This application is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
- * 
- * There is a full copy of the GNU Lesser General Public License along with 
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
  * this library. Look for the file license.txt at the root level. If you do not
- * find it, write to the Free Software Foundation, Inc., 59 Temple Place, 
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA 02111-1307 USA.
  * */
 package org.cejug.yougi.partnership.business;
@@ -40,10 +40,10 @@ import org.cejug.yougi.util.EntitySupport;
 @Stateless
 @LocalBean
 public class RepresentativeBsn {
-	
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @EJB
     private PartnerBsn partnerBsn;
 
@@ -55,7 +55,7 @@ public class RepresentativeBsn {
             return null;
         }
     }
-    
+
     public Representative findRepresentative(UserAccount person) {
     	try {
     		return (Representative) em.createQuery("select r from Representative r where r.person = :person")
@@ -66,21 +66,21 @@ public class RepresentativeBsn {
     		return null;
     	}
     }
-    
+
     @SuppressWarnings("unchecked")
 	public List<UserAccount> findRepresentativePersons(Partner partner) {
     	return em.createQuery("select r.person from Representative r where r.partner = :partner order by r.person.firstName asc")
     	         .setParameter("partner", partner)
     	         .getResultList();
     }
-    
+
     @SuppressWarnings("unchecked")
 	public List<Representative> findRepresentatives(Partner partner) {
     	return em.createQuery("select r from Representative r where r.partner = :partner order by r.person.firstName asc")
     	         .setParameter("partner", partner)
     	         .getResultList();
     }
-    
+
     public void save(Representative representative) {
     	if(EntitySupport.INSTANCE.isIdNotValid(representative)) {
             representative.setId(EntitySupport.INSTANCE.generateEntityId());
@@ -90,28 +90,28 @@ public class RepresentativeBsn {
             em.merge(representative);
         }
     }
-    
-    /** 
-     * Update the list of representatives of a partner according to the number 
-     * of persons informed. 
+
+    /**
+     * Update the list of representatives of a partner according to the number
+     * of persons informed.
      * */
     public void save(Partner partner, List<UserAccount> persons) {
-    	
+
     	partnerBsn.save(partner);
-    	
+
     	if(persons == null) {
             return;
         }
-    	
+
     	// Create new representatives using the received parameters.
-        List<Representative> representatives = new ArrayList<>();
+        List<Representative> representatives = new ArrayList<Representative>();
         Representative representative;
         for(UserAccount person: persons) {
         	representative = new Representative(partner, person);
         	representative.setId(EntitySupport.INSTANCE.generateEntityId());
             representatives.add(representative);
         }
-        
+
         /* If no representative was created because no person was informed then
          * it means that the partner does not have representatives anymore, and
          * the existing ones are removed. */
@@ -121,7 +121,7 @@ public class RepresentativeBsn {
                     .executeUpdate();
             return;
         }
-        
+
         List<Representative> currentRepresentatives = findRepresentatives(partner);
 
         for(Representative rep: currentRepresentatives) {

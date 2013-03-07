@@ -20,6 +20,7 @@
  * */
 package org.cejug.yougi.knowledge.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -80,5 +81,22 @@ public class UnpublishedContentMBean {
 
     public void refreshArticles() {
         this.articles = articleBean.findUnpublishedArticles(this.webSource);
+    }
+
+    public void addArticle(Article article) {
+        if(this.articles == null) {
+            this.articles = new ArrayList<Article>();
+        }
+        article.setId(null);
+        article.setPublished(Boolean.FALSE);
+        this.articles.add(article);
+    }
+
+    public void removeArticle(Article article) {
+        if(this.articles == null) {
+            this.articles = new ArrayList<Article>();
+        }
+
+        this.articles.remove(article);
     }
 }

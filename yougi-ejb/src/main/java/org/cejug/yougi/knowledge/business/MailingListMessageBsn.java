@@ -155,7 +155,7 @@ public class MailingListMessageBsn {
      * of the message. */
     private List<MailingList> figureOutMailingLists(Address[] extendedListAddresses) {
         String listAddress;
-        List<MailingList> mailingLists = new ArrayList<>();
+        List<MailingList> mailingLists = new ArrayList<MailingList>();
         MailingList mailingList;
         for(int i = 0;i < extendedListAddresses.length;i++) {
             listAddress = extendedListAddresses[i].toString();

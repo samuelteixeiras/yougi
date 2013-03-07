@@ -148,7 +148,7 @@ public class LocationBsn {
         if(candidates != null && candidates.size() == 1) {
             return candidates.get(0);
         }
-        
+
         return null;
     }
 
@@ -159,7 +159,7 @@ public class LocationBsn {
         String prefix = "UTC";
         String signal = " ";
         String minutes = ":00";
-        List<String> timeZones = new ArrayList<>();
+        List<String> timeZones = new ArrayList<String>();
         for(int i = -12;i <= 14;i++) {
             if(i > 0) {
                 signal = " +";

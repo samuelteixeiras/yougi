@@ -1,21 +1,21 @@
-/* Yougi is a web application conceived to manage user groups or 
- * communities focused on a certain domain of knowledge, whose members are 
- * constantly sharing information and participating in social and educational 
+/* Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
- * 
- * This application is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by the 
- * Free Software Foundation; either version 2.1 of the License, or (at your 
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
  * option) any later version.
- * 
- * This application is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
- * 
- * There is a full copy of the GNU Lesser General Public License along with 
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
  * this library. Look for the file license.txt at the root level. If you do not
- * find it, write to the Free Software Foundation, Inc., 59 Temple Place, 
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA 02111-1307 USA.
  * */
 package org.cejug.yougi.event.web.controller;
@@ -76,13 +76,13 @@ public class EventMBean {
 
     @EJB
     private PartnerBsn partnerBsn;
-    
+
     @EJB
     private UserAccountBsn userAccountBsn;
 
     @EJB
     private MessengerBean messengerBean;
-    
+
     @EJB
     private ApplicationPropertyBsn applicationPropertyBsn;
 
@@ -91,7 +91,7 @@ public class EventMBean {
 
     @ManagedProperty(value = "#{locationBean}")
     private LocationBean locationBean;
-    
+
     @ManagedProperty(value = "#{userProfileBean}")
     private UserProfileBean userProfileBean;
 
@@ -108,7 +108,7 @@ public class EventMBean {
     private Long numberPeopleAttending;
 
     private Long numberPeopleAttended;
-    
+
     private PieChartModel pieChartModel;
 
     private String selectedVenue;
@@ -162,9 +162,9 @@ public class EventMBean {
 
     public void setSelectedVenue(String selectedVenue) {
         this.selectedVenue = selectedVenue;
-        
+
         Partner venue = partnerBsn.findPartner(selectedVenue);
-        
+
         if (this.event.getAddress() == null && venue.getAddress() != null) {
             this.event.setAddress(venue.getAddress());
         }
@@ -178,18 +178,18 @@ public class EventMBean {
             this.locationBean.setSelectedCity(venue.getCity().getId());
         }
     }
-    
+
     /**
      * @return true if the event ocurred on the day before today.
      */
     public Boolean getHappened() {
         TimeZone tz = TimeZone.getTimeZone(userProfileBean.getTimeZone());
         Calendar today = Calendar.getInstance(tz);
-        
+
         if(this.event.getStartDate().before(today.getTime())) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -203,7 +203,7 @@ public class EventMBean {
         }
         return false;
     }
-    
+
     /**
      * @return true if the member actually attended the event.
      */
@@ -250,7 +250,7 @@ public class EventMBean {
     public Long getNumberPeopleAttended() {
         return numberPeopleAttended;
     }
-    
+
     public PieChartModel getAttendanceRateChartModel() {
         pieChartModel = new PieChartModel();
         pieChartModel.set("Registered", numberPeopleAttending);
@@ -371,12 +371,12 @@ public class EventMBean {
 
         return "events?faces-redirect=true";
     }
-    
+
     public void getCertificate() {
         if(!this.attendee.getAttended()) {
             return;
         }
-        
+
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse)context.getExternalContext().getResponse();
         response.setContentType("application/pdf");
@@ -389,14 +389,14 @@ public class EventMBean {
             document.open();
 
             ApplicationProperty fileRepositoryPath = applicationPropertyBsn.findApplicationProperty(Properties.FILE_REPOSITORY_PATH);
-            
+
             EventAttendeeCertificate eventAttendeeCertificate = new EventAttendeeCertificate(document);
             StringBuilder certificateTemplatePath = new StringBuilder();
             certificateTemplatePath.append(fileRepositoryPath.getPropertyValue());
             certificateTemplatePath.append("/");
             certificateTemplatePath.append(event.getCertificateTemplate());
             eventAttendeeCertificate.setCertificateTemplate(writer, certificateTemplatePath.toString());
-            
+
             this.attendee.generateCertificateData();
             this.attendeeBsn.save(this.attendee);
             eventAttendeeCertificate.generateCertificate(this.attendee);
@@ -407,8 +407,10 @@ public class EventMBean {
             response.getOutputStream().flush();
             response.getOutputStream().close();
             context.responseComplete();
-        } catch (IOException | DocumentException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+        } catch (IOException ioe) {
+            logger.log(Level.SEVERE, ioe.getMessage(), ioe);
+        } catch (DocumentException de) {
+            logger.log(Level.SEVERE, de.getMessage(), de);
         }
     }
 

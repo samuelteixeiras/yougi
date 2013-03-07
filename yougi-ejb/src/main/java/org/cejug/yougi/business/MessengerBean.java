@@ -15,7 +15,7 @@
  *
  * There is a full copy of the GNU Lesser General Public License along with
  * this library. Look for the file license.txt at the root level. If you do not
- * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
+ * find it, write to the Fr0D6F96382D91454F8155A720F3326F1Bee Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA 02111-1307 USA.
  * */
 package org.cejug.yougi.business;
@@ -72,7 +72,7 @@ public class MessengerBean {
 
     public void sendEmailConfirmationRequest(UserAccount userAccount, String serverAddress) {
         MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("E3F122DCC87D42248872878412B34CEE");
-        Map<String, Object> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<String, Object>();
         values.put("serverAddress", serverAddress);
         values.put("userAccount.firstName", userAccount.getFirstName());
         values.put("userAccount.confirmationCode", userAccount.getConfirmationCode());
@@ -90,7 +90,7 @@ public class MessengerBean {
 
     public void sendWelcomeMessage(UserAccount userAccount) {
         MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("47DEE5C2E0E14F8BA4605F3126FBFAF4");
-        Map<String, Object> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<String, Object>();
         values.put("userAccount.firstName", userAccount.getFirstName());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
         emailMessage.setRecipient(userAccount);
@@ -105,11 +105,11 @@ public class MessengerBean {
 
     public void sendNewMemberAlertMessage(UserAccount userAccount, List<UserAccount> leaders) {
         MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("0D6F96382D91454F8155A720F3326F1B");
-        Map<String, Object> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<String, Object>();
         values.put("userAccount.fullName", userAccount.getFullName());
         values.put("userAccount.registrationDate", userAccount.getRegistrationDate());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
-        emailMessage.setRecipient(userAccount);
+        emailMessage.setRecipients(leaders);
 
         try {
             sendEmailMessage(emailMessage);
@@ -128,7 +128,7 @@ public class MessengerBean {
             messageTemplate = messageTemplateBsn.findMessageTemplate("IKWMAJSNDOE3F122DCC87D4224887287");
         }
         em.detach(messageTemplate);
-        Map<String, Object> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<String, Object>();
         values.put("userAccount.firstName", userAccount.getFirstName());
         values.put("userAccount.deactivationReason", userAccount.getDeactivationReason());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
@@ -144,11 +144,11 @@ public class MessengerBean {
 
     public void sendDeactivationAlertMessage(UserAccount userAccount, List<UserAccount> leaders) {
         MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("0D6F96382IKEJSUIWOK5A720F3326F1B");
-        Map<String, Object> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<String, Object>();
         values.put("userAccount.fullName", userAccount.getFullName());
         values.put("userAccount.deactivationReason", userAccount.getDeactivationReason());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
-        emailMessage.setRecipient(userAccount);
+        emailMessage.setRecipients(leaders);
 
         try {
             sendEmailMessage(emailMessage);
@@ -160,7 +160,7 @@ public class MessengerBean {
 
     public void sendConfirmationCode(UserAccount userAccount, String serverAddress) {
         MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("67BE6BEBE45945D29109A8D6CD878344");
-        Map<String, Object> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<String, Object>();
         values.put("serverAddress", serverAddress);
         values.put("userAccount.firstName", userAccount.getFirstName());
         values.put("userAccount.confirmationCode", userAccount.getConfirmationCode());
@@ -187,7 +187,7 @@ public class MessengerBean {
      */
     public void sendEmailVerificationRequest(UserAccount userAccount, String serverAddress) {
         MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("KJZISKQBE45945D29109A8D6C92IZJ89");
-        Map<String, Object> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<String, Object>();
         values.put("serverAddress", serverAddress);
         values.put("userAccount.firstName", userAccount.getFirstName());
         values.put("userAccount.email", userAccount.getEmail());
@@ -206,7 +206,7 @@ public class MessengerBean {
 
     public void sendGroupAssignmentAlert(UserAccount userAccount, AccessGroup accessGroup) {
         MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("09JDIIE82O39IDIDOSJCHXUDJJXHCKP0");
-        Map<String, Object> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<String, Object>();
         values.put("userAccount.firstName", userAccount.getFirstName());
         values.put("accessGroup.name", accessGroup.getName());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
@@ -222,7 +222,7 @@ public class MessengerBean {
 
     public void sendConfirmationEventAttendance(UserAccount userAccount, Event event, String dateFormat, String timeFormat, String timezone) {
         MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("KJDIEJKHFHSDJDUWJHAJSNFNFJHDJSLE");
-        Map<String, Object> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<String, Object>();
         values.put("userAccount.firstName", userAccount.getFirstName());
         values.put("event.name", event.getName());
         values.put("event.venue", event.getVenue().getName());
