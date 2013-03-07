@@ -21,48 +21,41 @@
  */
 package org.cejug.yougi.business;
 
+import java.util.List;
 import org.cejug.yougi.AllTests;
-import org.cejug.yougi.entity.AccessGroup;
-import org.cejug.yougi.entity.Country;
-import org.cejug.yougi.entity.Language;
-import org.cejug.yougi.entity.MessageTemplate;
+import org.cejug.yougi.entity.UpdateHistory;
+import org.cejug.yougi.entity.UpdateHistoryPK;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
- * Test class CommonBsnTest.
+ * Test class UpdateHistoryBsnTest.
  * @author helio frota
  */
-public class CommonBsnTest {
+public class UpdateHistoryBsnTest {
     
-    private static CommonBsn commonBsn;
+    private static UpdateHistoryBsn updateHistoryBsn;
 
     /**
-     * Lookup for the CommonBsn from embedded server.
+     * Lookup for the UpdateHistoryBsn from embedded server.
      * @throws Exception exception
      */
     @Before
     public void setUp() throws Exception {
-        commonBsn = (CommonBsn) AllTests.ejbContainer.getContext().lookup("java:global/classes/CommonBsn");
+        updateHistoryBsn = (UpdateHistoryBsn) AllTests.ejbContainer.getContext().lookup("java:global/classes/UpdateHistoryBsn");
     }
     
-
     @Test
-    public void findAllOrderedBy() {
-        
-        // The method findAccessGroups() can be removed.
-        System.out.println(commonBsn.findAllOrderedBy(AccessGroup.class, "name", true));
-        
-        // The method findLanguages() can be removed.
-        System.out.println(commonBsn.findAllOrderedBy(Language.class, "name", true));
-        
-        // The method findCountries() can be removed.
-        System.out.println(commonBsn.findAllOrderedBy(Country.class, "name", true));
-        
-        // The method findMessageTemplates() can be removed.
-        System.out.println(commonBsn.findAllOrderedBy(MessageTemplate.class, "title", true));
-        
+    public void findUpdateHistory() {
+        updateHistoryBsn.findUpdateHistory(null);
+        updateHistoryBsn.findUpdateHistory(new UpdateHistoryPK());
+    }
+    
+    @Test
+    public void findLastUpdate() {
+        List < UpdateHistory > list = updateHistoryBsn.findLastUpdate();
+        Assert.assertNotNull(list);
     }
     
 }

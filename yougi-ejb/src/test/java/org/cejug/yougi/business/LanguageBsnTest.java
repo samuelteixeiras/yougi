@@ -19,20 +19,36 @@
  * Suite 330, Boston, MA 02111-1307 USA.
  * 
  */
-import org.cejug.yougi.business.CommonBsnTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+package org.cejug.yougi.business;
 
+import org.cejug.yougi.AllTests;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * Suite class AllTests.
+ * Test class LanguageBsnTest.
  * @author helio frota
  */
-@RunWith(value = Suite.class)
-@SuiteClasses(value = {
-    CommonBsnTest.class
-})
-public class AllTests {
+public class LanguageBsnTest {
     
+    private static LanguageBsn languageBsn;
+
+    /**
+     * Lookup for the LanguageBsn from embedded server.
+     * @throws Exception exception
+     */
+    @Before
+    public void setUp() throws Exception {
+        languageBsn = (LanguageBsn) AllTests.ejbContainer.getContext().lookup("java:global/classes/LanguageBsn");
+    }
+    
+    @Test
+    public void findLanguage() {
+        languageBsn.findLanguage("pt_BR");
+    }
+    
+    @Test
+    public void findLanguages() {
+        languageBsn.findLanguages();
+    }
 }
