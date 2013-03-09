@@ -33,34 +33,34 @@
                     <h:form>
                         <h:messages styleClass="alertMessage"/>
                         <h:panelGrid columns="2" width="700">
-                            <h:selectBooleanCheckbox id="publicProfile" label="#{bundle.publicProfile}" value="#{userAccountBean.userAccount.publicProfile}"/>
+                            <h:selectBooleanCheckbox id="publicProfile" label="#{bundle.publicProfile}" value="#{userAccountMBean.userAccount.publicProfile}"/>
                             <h:outputText value="#{bundle.publicProfileMessage}"/>
 
-                            <h:selectBooleanCheckbox id="mailingList" label="#{bundle.mailingList}" value="#{userAccountBean.userAccount.mailingList}"/>
+                            <h:selectBooleanCheckbox id="mailingList" label="#{bundle.mailingList}" value="#{userAccountMBean.userAccount.mailingList}"/>
                             <h:outputLabel for="mailingList" value="#{bundle.mailingListMessage}"/>
 
-                            <h:selectBooleanCheckbox id="event" label="#{bundle.event}" value="#{userAccountBean.userAccount.event}"/>
+                            <h:selectBooleanCheckbox id="event" label="#{bundle.event}" value="#{userAccountMBean.userAccount.event}"/>
                             <h:outputLabel for="event" value="#{bundle.eventMessage}"/>
 
-                            <h:selectBooleanCheckbox id="news" label="#{bundle.news}" value="#{userAccountBean.userAccount.news}"/>
+                            <h:selectBooleanCheckbox id="news" label="#{bundle.news}" value="#{userAccountMBean.userAccount.news}"/>
                             <h:outputLabel for="news" value="#{bundle.newsMessage}"/>
 
-                            <h:selectBooleanCheckbox id="generalOffer" label="#{bundle.generalOffer}" value="#{userAccountBean.userAccount.generalOffer}"/>
+                            <h:selectBooleanCheckbox id="generalOffer" label="#{bundle.generalOffer}" value="#{userAccountMBean.userAccount.generalOffer}"/>
                             <h:outputLabel for="generalOffer" value="#{bundle.generalOfferMessage}"/>
 
-                            <h:selectBooleanCheckbox id="jobOffer" label="#{bundle.jobOffer}" value="#{userAccountBean.userAccount.jobOffer}"/>
+                            <h:selectBooleanCheckbox id="jobOffer" label="#{bundle.jobOffer}" value="#{userAccountMBean.userAccount.jobOffer}"/>
                             <h:outputLabel for="jobOffer" value="#{bundle.jobOfferMessage}"/>
 
-                            <h:selectBooleanCheckbox id="sponsor" label="#{bundle.sponsorMessage}" value="#{userAccountBean.userAccount.sponsor}"/>
+                            <h:selectBooleanCheckbox id="sponsor" label="#{bundle.sponsorMessage}" value="#{userAccountMBean.userAccount.sponsor}"/>
                             <h:outputLabel for="sponsor" value="#{bundle.sponsorMessage}"/>
 
-                            <h:selectBooleanCheckbox id="speaker" label="#{bundle.speakerMessage}" value="#{userAccountBean.userAccount.speaker}"/>
+                            <h:selectBooleanCheckbox id="speaker" label="#{bundle.speakerMessage}" value="#{userAccountMBean.userAccount.speaker}"/>
                             <h:outputLabel for="speaker" value="#{bundle.speakerMessage}"/>
                         </h:panelGrid>
-                        <h:inputHidden id="id" value="#{userAccountBean.userAccount.id}"/>
+                        <h:inputHidden id="id" value="#{userAccountMBean.userAccount.id}"/>
                         <p></p>
                         <h:panelGrid columns="2">
-                            <h:commandButton value="#{bundle.save}" action="#{userAccountBean.savePrivacy}">
+                            <h:commandButton value="#{bundle.save}" action="#{userAccountMBean.savePrivacy}">
                                 <f:param name="tab" value="1"/>
                             </h:commandButton>
                             <h:button value="#{bundle.cancel}" outcome="profile">

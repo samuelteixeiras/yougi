@@ -1,21 +1,21 @@
- /* Yougi is a web application conceived to manage user groups or 
- * communities focused on a certain domain of knowledge, whose members are 
- * constantly sharing information and participating in social and educational 
+ /* Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
- * 
- * This application is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by the 
- * Free Software Foundation; either version 2.1 of the License, or (at your 
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
  * option) any later version.
- * 
- * This application is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
- * 
- * There is a full copy of the GNU Lesser General Public License along with 
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
  * this library. Look for the file license.txt at the root level. If you do not
- * find it, write to the Free Software Foundation, Inc., 59 Temple Place, 
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA 02111-1307 USA.
  * */
 package org.cejug.yougi.event.web.controller;
@@ -34,8 +34,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
-import org.cejug.yougi.event.business.AttendeeBsn;
-import org.cejug.yougi.event.business.EventBsn;
+import org.cejug.yougi.event.business.AttendeeBean;
+import org.cejug.yougi.event.business.EventBean;
 import org.cejug.yougi.event.entity.Attendee;
 import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.web.report.EventAttendeeReport;
@@ -48,14 +48,14 @@ import org.cejug.yougi.web.report.EventAttendeeReport;
 public class AttendeeMBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-    static final Logger logger = Logger.getLogger("org.cejug.event.web.controller.AttendeeBean");
+
+    static final Logger logger = Logger.getLogger(AttendeeMBean.class.getName());
 
     @EJB
-    private EventBsn eventBsn;
+    private EventBean eventBean;
 
     @EJB
-    private AttendeeBsn attendeeBsn;
+    private AttendeeBean attendeeBean;
 
     private Event event;
 
@@ -107,10 +107,10 @@ public class AttendeeMBean implements Serializable {
     }
 
     public String load(String eventId) {
-        this.event = eventBsn.findEvent(eventId);
+        this.event = eventBean.findEvent(eventId);
 
-        this.attendees = attendeeBsn.findAttendees(this.event);
-        List<Attendee> confirmedAttendees = attendeeBsn.findConfirmedAttendees(event);
+        this.attendees = attendeeBean.findAttendees(this.event);
+        List<Attendee> confirmedAttendees = attendeeBean.findConfirmedAttendees(event);
         if (confirmedAttendees != null) {
             this.selectedAttendees = new Attendee[confirmedAttendees.size()];
             int i = 0;
@@ -118,15 +118,15 @@ public class AttendeeMBean implements Serializable {
                 this.selectedAttendees[i++] = atd;
             }
         }
-        
-        this.numberPeopleAttending = attendeeBsn.findNumberPeopleAttending(this.event);
-        this.numberPeopleAttended = attendeeBsn.findNumberPeopleAttended(this.event);
-        
+
+        this.numberPeopleAttending = attendeeBean.findNumberPeopleAttending(this.event);
+        this.numberPeopleAttended = attendeeBean.findNumberPeopleAttended(this.event);
+
         return "attendees?faces-redirect=true";
     }
 
     public String confirmMembersAttended() {
-        attendeeBsn.confirmMembersAttendance(this.event, this.selectedAttendees);
+        attendeeBean.confirmMembersAttendance(this.event, this.selectedAttendees);
         removeSessionScoped();
         return "events?faces-redirect=true";
     }
@@ -135,7 +135,7 @@ public class AttendeeMBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getSessionMap().remove("partnerBean");
     }
-    
+
     /**
      * Generates a PDF with the list of registered members in the event.
      */

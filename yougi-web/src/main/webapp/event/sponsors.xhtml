@@ -32,7 +32,7 @@
                 <div class="content">
                     <h1>#{bundle.sponsors}</h1>
                     <h:outputText value="#{eventSponsorMBean.event.name}" style="font-size: 18px; font-weight: bold;"/>
-                    <p><h:link outcome="sponsor" value="#{bundle.newSponsor}" rendered="#{securityBackingBean.isUserLeader}">
+                    <p><h:link outcome="sponsor" value="#{bundle.newSponsor}" rendered="#{securityBackingMBean.isUserLeader}">
                            <f:param name="eventId" value="#{eventSponsorMBean.event.id}"/>
                        </h:link></p>
                     <h:form>

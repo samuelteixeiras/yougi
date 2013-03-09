@@ -34,11 +34,11 @@
                     <h:form>
                         <h:panelGrid rendered="">
                             <h:outputLabel for="confirmationCode" value="#{bundle.confirmationCode} *" styleClass="fieldLabel"/>
-                            <h:inputText id="confirmationCode" value="#{changeEmailBean.confirmationCode}" label="#{bundle.currentEmail}" size="40" maxlength="100" required="true"  onchange="formatEmail(this)"/>
+                            <h:inputText id="confirmationCode" value="#{changeEmailMBean.confirmationCode}" label="#{bundle.currentEmail}" size="40" maxlength="100" required="true"  onchange="formatEmail(this)"/>
                         </h:panelGrid>
                         <p/>
                         <h:panelGrid columns="2">
-                            <h:commandButton value="#{bundle.changeEmail}" action="#{changeEmailBean.changeEmail}"/>
+                            <h:commandButton value="#{bundle.changeEmail}" action="#{changeEmailMBean.changeEmail}"/>
                             <h:button outcome="profile" value="#{bundle.cancel}"/>
                         </h:panelGrid>
                     </h:form>

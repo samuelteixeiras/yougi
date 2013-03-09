@@ -37,26 +37,26 @@
                             <p:fieldset legend="#{bundle.application}">
                                 <h:panelGrid>
                                     <h:outputLabel for="groupName" value="#{bundle.groupName}" styleClass="fieldLabel"/>
-                                    <h:inputText id="groupName" label="#{bundle.groupName}" size="30" maxlength="100" value="#{applicationPropertiesBean.applicationProperties['groupName']}"/>
+                                    <h:inputText id="groupName" label="#{bundle.groupName}" size="30" maxlength="100" value="#{applicationPropertiesMBean.applicationProperties['groupName']}"/>
 
                                     <h:outputLabel for="url" value="#{bundle.url}" styleClass="fieldLabel"/>
-                                    <h:inputText id="url" label="#{bundle.url}" size="30" maxlength="100" value="#{applicationPropertiesBean.applicationProperties['url']}"/>
+                                    <h:inputText id="url" label="#{bundle.url}" size="30" maxlength="100" value="#{applicationPropertiesMBean.applicationProperties['url']}"/>
 
                                     <h:outputLabel for="fileRepositoryPath" value="#{bundle.fileRepositoryPath}" styleClass="fieldLabel"/>
-                                    <h:inputText id="fileRepositoryPath" label="#{bundle.fileRepositoryPath}" size="30" maxlength="100" value="#{applicationPropertiesBean.applicationProperties['fileRepositoryPath']}"/>
+                                    <h:inputText id="fileRepositoryPath" label="#{bundle.fileRepositoryPath}" size="30" maxlength="100" value="#{applicationPropertiesMBean.applicationProperties['fileRepositoryPath']}"/>
                                 </h:panelGrid>
                             </p:fieldset>
 
                             <p:fieldset legend="#{bundle.email}">
                                 <h:panelGrid>
                                     <h:outputLabel for="emailServerType" value="#{bundle.emailServerType}" styleClass="fieldLabel"/>
-                                    <h:selectOneRadio id="emailServerType" label="#{bundle.emailServerType}" value="#{applicationPropertiesBean.applicationProperties['emailServerType']}">
+                                    <h:selectOneRadio id="emailServerType" label="#{bundle.emailServerType}" value="#{applicationPropertiesMBean.applicationProperties['emailServerType']}">
                                         <f:selectItem itemLabel="#{bundle.pop3}" itemValue="pop3"/>
                                         <f:selectItem itemLabel="#{bundle.imap}" itemValue="imap"/>
                                     </h:selectOneRadio>
 
                                     <h:panelGrid columns="2">
-                                        <h:selectBooleanCheckbox id="sendEmails" label="#{bundle.sendEmails}" value="#{applicationPropertiesBean.sendEmails}"/>
+                                        <h:selectBooleanCheckbox id="sendEmails" label="#{bundle.sendEmails}" value="#{applicationPropertiesMBean.sendEmails}"/>
                                         <h:outputLabel for="sendEmails" value="#{bundle.sendEmails}"/>
                                     </h:panelGrid>
                                 </h:panelGrid>
@@ -65,21 +65,21 @@
                             <p:fieldset legend="#{bundle.internationalization}">
                                 <h:panelGrid>
                                     <h:outputLabel for="timeZone" value="#{bundle.timeZone}" style="fieldLabel"/>
-                                    <h:selectOneMenu id="timeZone" label="#{bundle.timeZone}" value="#{applicationPropertiesBean.applicationProperties['timezone']}">
+                                    <h:selectOneMenu id="timeZone" label="#{bundle.timeZone}" value="#{applicationPropertiesMBean.applicationProperties['timezone']}">
                                         <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                        <f:selectItems value="#{applicationPropertiesBean.timeZones}" var="tz" itemLabel="#{tz}" itemValue="#{tz}"/>
+                                        <f:selectItems value="#{applicationPropertiesMBean.timeZones}" var="tz" itemLabel="#{tz}" itemValue="#{tz}"/>
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="language" value="#{bundle.language}" style="fieldLabel"/>
-                                    <h:selectOneMenu id="language" label="#{bundle.language}" value="#{applicationPropertiesBean.applicationProperties['language']}">
+                                    <h:selectOneMenu id="language" label="#{bundle.language}" value="#{applicationPropertiesMBean.applicationProperties['language']}">
                                         <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                        <f:selectItems value="#{applicationPropertiesBean.languages}" var="lang" itemLabel="#{lang.name}" itemValue="#{lang.acronym}"/>
+                                        <f:selectItems value="#{applicationPropertiesMBean.languages}" var="lang" itemLabel="#{lang.name}" itemValue="#{lang.acronym}"/>
                                     </h:selectOneMenu>
                                 </h:panelGrid>
                             </p:fieldset>
                         </h:panelGrid>
                         <p/>
-                        <h:commandButton value="#{bundle.save}" action="#{applicationPropertiesBean.save}"/>
+                        <h:commandButton value="#{bundle.save}" action="#{applicationPropertiesMBean.save}"/>
                     </h:form>
                 </div>
             </ui:define>

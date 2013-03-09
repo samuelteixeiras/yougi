@@ -35,23 +35,23 @@
                     <h:form>
                         <h:panelGrid>
                             <h:outputLabel for="currentEmail" value="#{bundle.currentEmail} *" styleClass="fieldLabel"/>
-                            <h:inputText id="currentEmail" value="#{changeEmailBean.currentEmail}" label="#{bundle.currentEmail}" size="40" maxlength="100" required="true"  onchange="formatEmail(this)">
+                            <h:inputText id="currentEmail" value="#{changeEmailMBean.currentEmail}" label="#{bundle.currentEmail}" size="40" maxlength="100" required="true"  onchange="formatEmail(this)">
                                 <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
                             </h:inputText>
 
                             <h:outputLabel for="newEmail" value="#{bundle.newEmail} *" styleClass="fieldLabel"/>
-                            <h:inputText id="newEmail" label="#{bundle.newEmail}" required="true" size="40" maxlength="100" value="#{changeEmailBean.newEmail}" onchange="formatEmail(this)">
+                            <h:inputText id="newEmail" label="#{bundle.newEmail}" required="true" size="40" maxlength="100" value="#{changeEmailMBean.newEmail}" onchange="formatEmail(this)">
                                 <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
                             </h:inputText>
 
                             <h:outputLabel for="newEmailConfirmation" value="#{bundle.confirmEmail} *" styleClass="fieldLabel"/>
-                            <h:inputText id="newEmailConfirmation" autocomplete="off" label="#{bundle.confirmEmail}" required="true" size="40" maxlength="100" value="#{changeEmailBean.newEmailConfirmation}" onchange="formatEmail(this)">
+                            <h:inputText id="newEmailConfirmation" autocomplete="off" label="#{bundle.confirmEmail}" required="true" size="40" maxlength="100" value="#{changeEmailMBean.newEmailConfirmation}" onchange="formatEmail(this)">
                                 <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
                             </h:inputText>
                         </h:panelGrid>
                         <p/>
                         <h:panelGrid columns="2">
-                            <h:commandButton value="#{bundle.changeEmail}" action="#{changeEmailBean.changeEmail}"/>
+                            <h:commandButton value="#{bundle.changeEmail}" action="#{changeEmailMBean.changeEmail}"/>
                             <h:button outcome="/change_email_confirmation" value="#{bundle.cancel}"/>
                         </h:panelGrid>
                     </h:form>

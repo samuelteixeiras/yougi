@@ -32,7 +32,7 @@
                 <div class="content">
                     <h1>#{bundle.groups}</h1>
                     <h:form>
-                        <p:dataTable value="#{accessGroupBean.groups}" var="group">
+                        <p:dataTable value="#{accessGroupMBean.groups}" var="group">
                             <p:column>
                                 <f:facet name="header"><h:outputText value="#{bundle.name}"/></f:facet>
                                 <h:link outcome="group" value="#{group.name}">
@@ -51,7 +51,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.actions}"/>
                                 </f:facet>
-                                <h:commandLink action="#{accessGroupBean.remove(group.id)}" value="#{bundle.remove}"/>
+                                <h:commandLink action="#{accessGroupMBean.remove(group.id)}" value="#{bundle.remove}"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>

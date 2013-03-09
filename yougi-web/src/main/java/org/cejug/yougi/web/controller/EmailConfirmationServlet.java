@@ -27,7 +27,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.cejug.yougi.business.UserAccountBsn;
+import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.UserAccount;
 
 /**
@@ -39,7 +39,7 @@ public class EmailConfirmationServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    private UserAccountBsn userAccountBsn;
+    private UserAccountBean userAccountBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -75,7 +75,7 @@ public class EmailConfirmationServlet extends HttpServlet {
             }
         }
         try {
-            UserAccount userAccount = userAccountBsn.confirmUser(confirmationCode);
+            UserAccount userAccount = userAccountBean.confirmUser(confirmationCode);
             if(userAccount != null) {
                 response.sendRedirect("login.xhtml");
             }

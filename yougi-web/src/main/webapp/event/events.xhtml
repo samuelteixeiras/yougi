@@ -31,7 +31,7 @@
             <ui:define name="content">
                 <div class="content">
                     <h1>#{bundle.events}</h1>
-                    <p><h:link outcome="event" value="#{bundle.newEvent}" rendered="#{securityBackingBean.isUserLeader}"/></p>
+                    <p><h:link outcome="event" value="#{bundle.newEvent}" rendered="#{securityBackingMBean.isUserLeader}"/></p>
                     <h:form>
 	                    <p:dataGrid var="event" value="#{eventMBean.events}" columns="1" rows="3" paginator="true">
 	                        <p:column>
@@ -51,21 +51,21 @@
 	                                        <f:param value="#{eventMBean.getFormattedEndTime(event.endTime)}"/>
 	                                    </h:outputFormat>
 	                                    <h:panelGrid columns="9">
-		                                <h:link value="#{bundle.edit}" outcome="event" rendered="#{securityBackingBean.isUserLeader}">
+		                                <h:link value="#{bundle.edit}" outcome="event" rendered="#{securityBackingMBean.isUserLeader}">
 	                                            <f:param name="id" value="#{event.id}"/>
 	                                        </h:link>
-                                                <h:outputText value=" | " rendered="#{securityBackingBean.isUserLeader}"/>
-                                                <h:link value="#{bundle.sessions}" outcome="sessions" rendered="#{securityBackingBean.isUserLeader}">
+                                                <h:outputText value=" | " rendered="#{securityBackingMBean.isUserLeader}"/>
+                                                <h:link value="#{bundle.sessions}" outcome="sessions" rendered="#{securityBackingMBean.isUserLeader}">
                                                     <f:param name="eventId" value="#{event.id}"/>
                                                 </h:link>
-                                                <h:outputText value=" | " rendered="#{securityBackingBean.isUserLeader}"/>
-                                                <h:link value="#{bundle.speakers}" outcome="speakers" rendered="#{securityBackingBean.isUserLeader}">
+                                                <h:outputText value=" | " rendered="#{securityBackingMBean.isUserLeader}"/>
+                                                <h:link value="#{bundle.speakers}" outcome="speakers" rendered="#{securityBackingMBean.isUserLeader}">
                                                     <f:param name="eventId" value="#{event.id}"/>
                                                 </h:link>
-                                                <h:outputText value=" | " rendered="#{securityBackingBean.isUserLeader and !event.external}"/>
-                                                <h:commandLink value="#{bundle.attendees}" action="#{attendeeMBean.load(event.id)}" rendered="#{securityBackingBean.isUserLeader and !event.external}"/>
-                                                <h:outputText value=" | " rendered="#{securityBackingBean.isUserLeader and !event.external}"/>
-                                                <h:link value="#{bundle.sponsors}" outcome="sponsors" rendered="#{securityBackingBean.isUserLeader and !event.external}">
+                                                <h:outputText value=" | " rendered="#{securityBackingMBean.isUserLeader and !event.external}"/>
+                                                <h:commandLink value="#{bundle.attendees}" action="#{attendeeMBean.load(event.id)}" rendered="#{securityBackingMBean.isUserLeader and !event.external}"/>
+                                                <h:outputText value=" | " rendered="#{securityBackingMBean.isUserLeader and !event.external}"/>
+                                                <h:link value="#{bundle.sponsors}" outcome="sponsors" rendered="#{securityBackingMBean.isUserLeader and !event.external}">
                                                     <f:param name="eventId" value="#{event.id}"/>
                                                 </h:link>
                                             </h:panelGrid>

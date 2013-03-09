@@ -34,7 +34,7 @@
                     <p><h:link outcome="city" value="#{bundle.new} #{bundle.city}"/></p>
 
                     <h:form>
-                        <p:dataTable id="cities" value="#{cityBean.cities}" var="city">
+                        <p:dataTable id="cities" value="#{cityMBean.cities}" var="city">
                             <p:column>
                                 <f:facet name="header"><h:outputText value="#{bundle.name}"/></f:facet>
                                 <h:link outcome="city" value="#{city.name}">

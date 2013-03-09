@@ -32,7 +32,7 @@
                 <div class="content">
                     <h1>#{bundle.languages}</h1>
                     <h:form>
-                        <p:dataTable value="#{languageBean.languages}" var="language" emptyMessage="#{bundle.noRecordsFound}">
+                        <p:dataTable value="#{languageMBean.languages}" var="language" emptyMessage="#{bundle.noRecordsFound}">
                             <p:column>
                                 <f:facet name="header"><h:outputText value="#{bundle.name}"/></f:facet>
                                 <h:link outcome="language" value="#{language.name}">

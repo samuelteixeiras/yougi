@@ -40,20 +40,20 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.cejug.yougi.business.ApplicationPropertyBsn;
+import org.cejug.yougi.business.ApplicationPropertyBean;
 import org.cejug.yougi.business.MessengerBean;
-import org.cejug.yougi.business.UserAccountBsn;
+import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.ApplicationProperty;
 import org.cejug.yougi.entity.Properties;
 import org.cejug.yougi.entity.UserAccount;
-import org.cejug.yougi.event.business.AttendeeBsn;
-import org.cejug.yougi.event.business.EventBsn;
+import org.cejug.yougi.event.business.AttendeeBean;
+import org.cejug.yougi.event.business.EventBean;
 import org.cejug.yougi.event.entity.Attendee;
 import org.cejug.yougi.event.entity.Event;
-import org.cejug.yougi.partnership.business.PartnerBsn;
+import org.cejug.yougi.partnership.business.PartnerBean;
 import org.cejug.yougi.partnership.entity.Partner;
-import org.cejug.yougi.web.controller.LocationBean;
-import org.cejug.yougi.web.controller.UserProfileBean;
+import org.cejug.yougi.web.controller.LocationMBean;
+import org.cejug.yougi.web.controller.UserProfileMBean;
 import org.cejug.yougi.web.report.EventAttendeeCertificate;
 import org.cejug.yougi.util.ResourceBundleHelper;
 import org.cejug.yougi.util.WebTextUtils;
@@ -69,31 +69,31 @@ public class EventMBean {
     static final Logger logger = Logger.getLogger(EventMBean.class.getName());
 
     @EJB
-    private EventBsn eventBsn;
+    private EventBean eventBean;
 
     @EJB
-    private AttendeeBsn attendeeBsn;
+    private AttendeeBean attendeeBean;
 
     @EJB
-    private PartnerBsn partnerBsn;
+    private PartnerBean partnerBean;
 
     @EJB
-    private UserAccountBsn userAccountBsn;
+    private UserAccountBean userAccountBean;
 
     @EJB
     private MessengerBean messengerBean;
 
     @EJB
-    private ApplicationPropertyBsn applicationPropertyBsn;
+    private ApplicationPropertyBean applicationPropertyBean;
 
     @ManagedProperty(value = "#{param.id}")
     private String id;
 
-    @ManagedProperty(value = "#{locationBean}")
-    private LocationBean locationBean;
+    @ManagedProperty(value = "#{locationMBean}")
+    private LocationMBean locationMBean;
 
-    @ManagedProperty(value = "#{userProfileBean}")
-    private UserProfileBean userProfileBean;
+    @ManagedProperty(value = "#{userProfileMBean}")
+    private UserProfileMBean userProfileMBean;
 
     private Event event;
 
@@ -124,20 +124,20 @@ public class EventMBean {
         this.id = id;
     }
 
-    public LocationBean getLocationBean() {
-        return locationBean;
+    public LocationMBean getLocationMBean() {
+        return locationMBean;
     }
 
-    public void setLocationBean(LocationBean locationBean) {
-        this.locationBean = locationBean;
+    public void setLocationMBean(LocationMBean locationMBean) {
+        this.locationMBean = locationMBean;
     }
 
-    public UserProfileBean getUserProfileBean() {
-        return userProfileBean;
+    public UserProfileMBean getUserProfileMBean() {
+        return userProfileMBean;
     }
 
-    public void setUserProfileBean(UserProfileBean userProfileBean) {
-        this.userProfileBean = userProfileBean;
+    public void setUserProfileMBean(UserProfileMBean userProfileMBean) {
+        this.userProfileMBean = userProfileMBean;
     }
 
     public Event getEvent() {
@@ -163,19 +163,19 @@ public class EventMBean {
     public void setSelectedVenue(String selectedVenue) {
         this.selectedVenue = selectedVenue;
 
-        Partner venue = partnerBsn.findPartner(selectedVenue);
+        Partner venue = partnerBean.findPartner(selectedVenue);
 
         if (this.event.getAddress() == null && venue.getAddress() != null) {
             this.event.setAddress(venue.getAddress());
         }
         if (this.event.getCountry() == null && venue.getCountry() != null) {
-            this.locationBean.setSelectedCountry(venue.getCountry().getAcronym());
+            this.locationMBean.setSelectedCountry(venue.getCountry().getAcronym());
         }
         if (this.event.getProvince() == null && venue.getProvince() != null) {
-            this.locationBean.setSelectedProvince(venue.getProvince().getId());
+            this.locationMBean.setSelectedProvince(venue.getProvince().getId());
         }
         if (this.event.getCity() == null && venue.getCity() != null) {
-            this.locationBean.setSelectedCity(venue.getCity().getId());
+            this.locationMBean.setSelectedCity(venue.getCity().getId());
         }
     }
 
@@ -183,7 +183,7 @@ public class EventMBean {
      * @return true if the event ocurred on the day before today.
      */
     public Boolean getHappened() {
-        TimeZone tz = TimeZone.getTimeZone(userProfileBean.getTimeZone());
+        TimeZone tz = TimeZone.getTimeZone(userProfileMBean.getTimeZone());
         Calendar today = Calendar.getInstance(tz);
 
         if(this.event.getStartDate().before(today.getTime())) {
@@ -216,21 +216,21 @@ public class EventMBean {
 
     public List<Event> getEvents() {
         if (events == null) {
-            events = eventBsn.findEvents();
+            events = eventBean.findEvents();
         }
         return events;
     }
 
     public List<Event> getCommingEvents() {
         if (commingEvents == null) {
-            commingEvents = eventBsn.findCommingEvents();
+            commingEvents = eventBean.findCommingEvents();
         }
         return commingEvents;
     }
 
     public List<Partner> getVenues() {
         if (venues == null) {
-            venues = partnerBsn.findPartners();
+            venues = partnerBean.findPartners();
         }
         return venues;
     }
@@ -279,19 +279,19 @@ public class EventMBean {
     }
 
     public String getFormattedStartTime() {
-        return WebTextUtils.getFormattedTime(event.getStartTime(), userProfileBean.getTimeZone());
+        return WebTextUtils.getFormattedTime(event.getStartTime(), userProfileMBean.getTimeZone());
     }
 
     public String getFormattedStartTime(Date startTime) {
-        return WebTextUtils.getFormattedTime(startTime, userProfileBean.getTimeZone());
+        return WebTextUtils.getFormattedTime(startTime, userProfileMBean.getTimeZone());
     }
 
     public String getFormattedEndTime() {
-        return WebTextUtils.getFormattedTime(event.getEndTime(), userProfileBean.getTimeZone());
+        return WebTextUtils.getFormattedTime(event.getEndTime(), userProfileMBean.getTimeZone());
     }
 
     public String getFormattedEndTime(Date endTime) {
-        return WebTextUtils.getFormattedTime(endTime, userProfileBean.getTimeZone());
+        return WebTextUtils.getFormattedTime(endTime, userProfileMBean.getTimeZone());
     }
 
     public String getFormattedRegistrationDate() {
@@ -304,34 +304,34 @@ public class EventMBean {
     @PostConstruct
     public void load() {
         if (id != null && !id.isEmpty()) {
-            this.event = eventBsn.findEvent(id);
+            this.event = eventBean.findEvent(id);
             this.selectedVenue = this.event.getVenue().getId();
 
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             String username = request.getRemoteUser();
-            UserAccount person = userAccountBsn.findUserAccountByUsername(username);
-            this.attendee = attendeeBsn.findAttendee(this.event, person);
-            this.numberPeopleAttending = attendeeBsn.findNumberPeopleAttending(this.event);
-            this.numberPeopleAttended = attendeeBsn.findNumberPeopleAttended(this.event);
+            UserAccount person = userAccountBean.findUserAccountByUsername(username);
+            this.attendee = attendeeBean.findAttendee(this.event, person);
+            this.numberPeopleAttending = attendeeBean.findNumberPeopleAttending(this.event);
+            this.numberPeopleAttended = attendeeBean.findNumberPeopleAttended(this.event);
 
-            locationBean.initialize();
+            locationMBean.initialize();
 
             if (this.event.getCountry() != null) {
-                locationBean.setSelectedCountry(this.event.getCountry().getAcronym());
+                locationMBean.setSelectedCountry(this.event.getCountry().getAcronym());
             } else {
-                locationBean.setSelectedCountry(null);
+                locationMBean.setSelectedCountry(null);
             }
 
             if (this.event.getProvince() != null) {
-                locationBean.setSelectedProvince(this.event.getProvince().getId());
+                locationMBean.setSelectedProvince(this.event.getProvince().getId());
             } else {
-                locationBean.setSelectedProvince(null);
+                locationMBean.setSelectedProvince(null);
             }
 
             if (this.event.getCity() != null) {
-                locationBean.setSelectedCity(this.event.getCity().getId());
+                locationMBean.setSelectedCity(this.event.getCity().getId());
             } else {
-                locationBean.setSelectedCity(null);
+                locationMBean.setSelectedCity(null);
             }
         } else {
             this.event = new Event();
@@ -341,33 +341,33 @@ public class EventMBean {
     public String confirmAttendance() {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String username = request.getRemoteUser();
-        UserAccount person = userAccountBsn.findUserAccountByUsername(username);
+        UserAccount person = userAccountBean.findUserAccountByUsername(username);
 
-        this.event = eventBsn.findEvent(event.getId());
+        this.event = eventBean.findEvent(event.getId());
 
         Attendee newAttendee = new Attendee();
         newAttendee.setEvent(this.event);
         newAttendee.setAttendee(person);
         newAttendee.setRegistrationDate(Calendar.getInstance().getTime());
-        attendeeBsn.save(newAttendee);
+        attendeeBean.save(newAttendee);
         ResourceBundleHelper rb = new ResourceBundleHelper();
         messengerBean.sendConfirmationEventAttendance(newAttendee.getAttendee(),
                 newAttendee.getEvent(),
                 rb.getMessage("formatDate"),
                 rb.getMessage("formatTime"),
-                userProfileBean.getTimeZone());
+                userProfileMBean.getTimeZone());
         return "events?faces-redirect=true";
     }
 
     public String cancelAttendance() {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String username = request.getRemoteUser();
-        UserAccount person = userAccountBsn.findUserAccountByUsername(username);
+        UserAccount person = userAccountBean.findUserAccountByUsername(username);
 
-        this.event = eventBsn.findEvent(event.getId());
+        this.event = eventBean.findEvent(event.getId());
 
-        Attendee existingAttendee = attendeeBsn.findAttendee(event, person);
-        attendeeBsn.remove(existingAttendee.getId());
+        Attendee existingAttendee = attendeeBean.findAttendee(event, person);
+        attendeeBean.remove(existingAttendee.getId());
 
         return "events?faces-redirect=true";
     }
@@ -388,7 +388,7 @@ public class EventMBean {
             PdfWriter writer = PdfWriter.getInstance(document, output);
             document.open();
 
-            ApplicationProperty fileRepositoryPath = applicationPropertyBsn.findApplicationProperty(Properties.FILE_REPOSITORY_PATH);
+            ApplicationProperty fileRepositoryPath = applicationPropertyBean.findApplicationProperty(Properties.FILE_REPOSITORY_PATH);
 
             EventAttendeeCertificate eventAttendeeCertificate = new EventAttendeeCertificate(document);
             StringBuilder certificateTemplatePath = new StringBuilder();
@@ -398,7 +398,7 @@ public class EventMBean {
             eventAttendeeCertificate.setCertificateTemplate(writer, certificateTemplatePath.toString());
 
             this.attendee.generateCertificateData();
-            this.attendeeBsn.save(this.attendee);
+            this.attendeeBean.save(this.attendee);
             eventAttendeeCertificate.generateCertificate(this.attendee);
 
             document.close();
@@ -415,18 +415,18 @@ public class EventMBean {
     }
 
     public String save() {
-        Partner venue = partnerBsn.findPartner(selectedVenue);
+        Partner venue = partnerBean.findPartner(selectedVenue);
         this.event.setVenue(venue);
-        this.event.setCountry(this.locationBean.getCountry());
-        this.event.setProvince(this.locationBean.getProvince());
-        this.event.setCity(this.locationBean.getCity());
+        this.event.setCountry(this.locationMBean.getCountry());
+        this.event.setProvince(this.locationMBean.getProvince());
+        this.event.setCity(this.locationMBean.getCity());
 
-        eventBsn.save(this.event);
+        eventBean.save(this.event);
         return "events?faces-redirect=true";
     }
 
     public String remove() {
-        eventBsn.remove(this.event.getId());
+        eventBean.remove(this.event.getId());
         return "events?faces-redirect=true";
     }
 }

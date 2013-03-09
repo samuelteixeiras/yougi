@@ -33,18 +33,18 @@
                         <h:messages styleClass="alertMessage"/>
                         <h:panelGrid columns="1">
                             <h:outputLabel for="title" value="#{bundle.title} *" styleClass="fieldLabel"/>
-                            <h:inputText id="title" label="#{bundle.title}" required="true" size="70" maxlength="225" value="#{messageTemplateBean.messageTemplate.title}"/>
+                            <h:inputText id="title" label="#{bundle.title}" required="true" size="70" maxlength="225" value="#{messageTemplateMBean.messageTemplate.title}"/>
 
                             <h:outputLabel for="body" value="#{bundle.body}" styleClass="fieldLabel"/>
-                            <h:inputTextarea id="body" label="#{bundle.body}" required="true" cols="70" rows="10" value="#{messageTemplateBean.messageTemplate.body}"/>
+                            <h:inputTextarea id="body" label="#{bundle.body}" required="true" cols="70" rows="10" value="#{messageTemplateMBean.messageTemplate.body}"/>
 
-                            <h:outputText rendered="#{messageTemplateBean.messageTemplate.id != null}" value="#{bundle.id}" styleClass="fieldLabel"/>
-                            <h:outputText rendered="#{messageTemplateBean.messageTemplate.id != null}" value="#{messageTemplateBean.messageTemplate.id}"/>
+                            <h:outputText rendered="#{messageTemplateMBean.messageTemplate.id != null}" value="#{bundle.id}" styleClass="fieldLabel"/>
+                            <h:outputText rendered="#{messageTemplateMBean.messageTemplate.id != null}" value="#{messageTemplateMBean.messageTemplate.id}"/>
 
-                            <h:inputHidden id="id" value="#{messageTemplateBean.messageTemplate.id}"/>
+                            <h:inputHidden id="id" value="#{messageTemplateMBean.messageTemplate.id}"/>
                             <h:panelGrid columns="3">
-                                <h:commandButton value="#{bundle.save}" action="#{messageTemplateBean.save}"/>
-                                <h:commandButton rendered="#{messageTemplateBean.messageTemplate.id != null}" value="#{bundle.remove}" action="#{messageTemplateBean.remove}"/>
+                                <h:commandButton value="#{bundle.save}" action="#{messageTemplateMBean.save}"/>
+                                <h:commandButton rendered="#{messageTemplateMBean.messageTemplate.id != null}" value="#{bundle.remove}" action="#{messageTemplateMBean.remove}"/>
                                 <h:button outcome="message_templates" value="#{bundle.cancel}"/>
                             </h:panelGrid>
                         </h:panelGrid>

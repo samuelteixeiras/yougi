@@ -44,7 +44,7 @@
                                         <f:param value="#{eventMBean.formattedEndTime}"/>
                                     </h:outputFormat>
 
-                                    <h:outputFormat value="#{bundle.numberPeopleAttendingEvent}" style="font-weight: bold; color: blue;" rendered="#{securityBackingBean.isUserLeader}">
+                                    <h:outputFormat value="#{bundle.numberPeopleAttendingEvent}" style="font-weight: bold; color: blue;" rendered="#{securityBackingMBean.isUserLeader}">
                                         <f:param value="#{eventMBean.numberPeopleAttending}"/>
                                         <f:param value="#{eventMBean.numberPeopleAttended}"/>
                                     </h:outputFormat>
@@ -53,7 +53,7 @@
 
                                     <p:dataList value="#{eventMBean.event.eventSessions}" var="ses" type="definition" style="border-color: white">
                                         <b> <h:outputText value="#{ses.startTime}">
-                                                <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileBean.timeZone}"/>
+                                                <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                             </h:outputText>:
                                             <h:outputText value="#{ses.title}"/>
                                             - <i><h:outputText value="#{ses.speakersName}"/></i></b>
@@ -80,7 +80,7 @@
                                     </h:commandButton>
                                 </c:if>
                             </p:tab>
-                            <p:tab title="#{bundle.statistics}" rendered="#{securityBackingBean.isUserLeader}">
+                            <p:tab title="#{bundle.statistics}" rendered="#{securityBackingMBean.isUserLeader}">
                                 <h:panelGrid>
                                     <p:pieChart value="#{eventMBean.attendanceRateChartModel}" title="#{bundle.attendanceRate}" legendPosition="e" showDataLabels="true"/>
                                 </h:panelGrid>

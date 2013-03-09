@@ -38,22 +38,22 @@
 
                             <h:panelGrid columns="1">
                                 <h:outputLabel for="name" value="#{bundle.name}" styleClass="mandatoryField"/>
-                                <h:inputText id="name" label="#{bundle.name}" required="true" size="30" maxlength="100" value="#{accessGroupBean.group.name}"/>
+                                <h:inputText id="name" label="#{bundle.name}" required="true" size="30" maxlength="100" value="#{accessGroupMBean.group.name}"/>
 
                                 <h:outputLabel for="description" value="#{bundle.description}"/>
-                                <h:inputText id="description" label="#{bundle.description}" size="30" maxlength="100" value="#{accessGroupBean.group.description}"/>
+                                <h:inputText id="description" label="#{bundle.description}" size="30" maxlength="100" value="#{accessGroupMBean.group.description}"/>
 
                                 <h:panelGrid columns="2">
-                                    <h:selectBooleanCheckbox id="default" label="#{bundle.default}" value="#{accessGroupBean.group.userDefault}"/>
+                                    <h:selectBooleanCheckbox id="default" label="#{bundle.default}" value="#{accessGroupMBean.group.userDefault}"/>
                                     <h:outputLabel for="default" value="#{bundle.default}"/>
                                 </h:panelGrid>
                             </h:panelGrid>
-                            <p:pickList value="#{accessGroupBean.members}" var="member" itemLabel="#{member.fullName}" itemValue="#{member.id}" converter="GroupPickListConverter"/>
+                            <p:pickList value="#{accessGroupMBean.members}" var="member" itemLabel="#{member.fullName}" itemValue="#{member.id}" converter="GroupPickListConverter"/>
                         </h:panelGrid>
 
-                        <h:inputHidden id="id" value="#{accessGroupBean.group.id}"/>
+                        <h:inputHidden id="id" value="#{accessGroupMBean.group.id}"/>
                         <h:panelGrid columns="3">
-                            <h:commandButton value="#{bundle.save}" action="#{accessGroupBean.save}"/>
+                            <h:commandButton value="#{bundle.save}" action="#{accessGroupMBean.save}"/>
                             <h:button outcome="groups" value="#{bundle.cancel}"/>
                         </h:panelGrid>
                     </h:form>

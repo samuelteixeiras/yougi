@@ -32,7 +32,7 @@
                 <div class="content">
                     <h1>#{bundle.topics}</h1>
                     <h:form>
-                        <p><h:link outcome="topic" value="#{bundle.newTopic}" rendered="#{securityBackingBean.isUserLeader}"/></p>
+                        <p><h:link outcome="topic" value="#{bundle.newTopic}" rendered="#{securityBackingMBean.isUserLeader}"/></p>
                         <p:dataTable value="#{topicMBean.topics}" var="topic" emptyMessage="#{bundle.noRecordsFound}">
                             <p:column>
                                 <f:facet name="header"><h:outputText value="#{bundle.name}"/></f:facet>

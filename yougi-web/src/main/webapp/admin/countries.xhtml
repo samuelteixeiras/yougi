@@ -33,7 +33,7 @@
                     <h1>#{bundle.countries}</h1>
                     <p><h:link outcome="country" value="#{bundle.new} #{bundle.country}"/></p>
                     <h:form>
-                        <p:dataTable value="#{countryBean.countries}" var="country">
+                        <p:dataTable value="#{countryMBean.countries}" var="country">
                             <p:column>
                                 <f:facet name="header"><h:outputText value="#{bundle.name}"/></f:facet>
                                 <h:link outcome="country" value="#{country.name}">

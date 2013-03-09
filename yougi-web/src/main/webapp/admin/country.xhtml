@@ -33,14 +33,14 @@
                         <h:messages styleClass="alertMessage"/>
                         <h:panelGrid columns="1">
                             <h:outputLabel for="name" value="#{bundle.name}" styleClass="mandatoryField"/>
-                            <h:inputText id="name" label="#{bundle.name}" required="true" size="30" maxlength="100" value="#{countryBean.country.name}"/>
+                            <h:inputText id="name" label="#{bundle.name}" required="true" size="30" maxlength="100" value="#{countryMBean.country.name}"/>
 
                             <h:outputLabel for="acronym" value="#{bundle.acronym}" styleClass="mandatoryField"/>
-                            <h:inputText id="acronym"  label="#{bundle.acronym}" required="true" size="3" maxlength="3" value="#{countryBean.country.acronym}"/>
+                            <h:inputText id="acronym"  label="#{bundle.acronym}" required="true" size="3" maxlength="3" value="#{countryMBean.country.acronym}"/>
 
                             <h:panelGrid columns="3">
-                                <h:commandButton value="#{bundle.save}" action="#{countryBean.save}"/>
-                                <h:commandButton value="#{bundle.remove}" action="#{countryBean.remove}"/>
+                                <h:commandButton value="#{bundle.save}" action="#{countryMBean.save}"/>
+                                <h:commandButton value="#{bundle.remove}" action="#{countryMBean.remove}"/>
                                 <h:button outcome="countries" value="#{bundle.cancel}"/>
                             </h:panelGrid>
                         </h:panelGrid>

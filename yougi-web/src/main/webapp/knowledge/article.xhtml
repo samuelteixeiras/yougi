@@ -43,7 +43,7 @@
                                 <h:outputLabel for="publication" value="#{bundle.publication}" styleClass="fieldLabel"/>
 
                                 <p:inputText id="title" value="#{articleMBean.article.title}" size="83" maxlength="255" required="true"/>
-                                <p:calendar id="publication" value="#{articleMBean.article.publication}" pattern="#{bundle.formatDate}" size="10" timeZone="#{userProfileBean.timeZone}"/>
+                                <p:calendar id="publication" value="#{articleMBean.article.publication}" pattern="#{bundle.formatDate}" size="10" timeZone="#{userProfileMBean.timeZone}"/>
                             </h:panelGrid>
 
                             <h:outputLabel for="author" value="#{bundle.author}" styleClass="fieldLabel"/>

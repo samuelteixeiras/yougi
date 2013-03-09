@@ -73,7 +73,7 @@
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.publication}"/></f:facet>
                                         <h:outputText value="#{article.publication}">
-                                            <f:convertDateTime pattern="#{bundle.formatDateAndTime}" timeZone="#{userProfileBean.timeZone}"/>
+                                            <f:convertDateTime pattern="#{bundle.formatDateAndTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                         </h:outputText>
                                     </p:column>
                                     <p:column>
@@ -97,7 +97,7 @@
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.publication}"/></f:facet>
                                         <h:outputText value="#{article.publication}">
-                                            <f:convertDateTime pattern="#{bundle.formatDateAndTime}" timeZone="#{userProfileBean.timeZone}"/>
+                                            <f:convertDateTime pattern="#{bundle.formatDateAndTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                         </h:outputText>
                                     </p:column>
                                 </p:dataTable>

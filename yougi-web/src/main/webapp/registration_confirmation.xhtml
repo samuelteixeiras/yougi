@@ -32,14 +32,14 @@
                     <h:panelGrid cellpadding="5">
                         <h:messages styleClass="alertMessage" infoClass="infoMessage"/>
                         <h:form>
-                            <h:panelGrid rendered="#{registrationConfirmationBean.validated}">
+                            <h:panelGrid rendered="#{registrationConfirmationMBean.validated}">
                                 <h:outputText value="#{bundle.infoCode0002}" styleClass="infoMessage"/>
                             </h:panelGrid>
 
-                            <h:panelGrid rendered="#{!registrationConfirmationBean.validated}">
+                            <h:panelGrid rendered="#{!registrationConfirmationMBean.validated}">
                                 <h:outputLabel for="informedCode" value="#{bundle.informConfirmationCode}"/>
-                                <h:inputText id="informedCode" value="#{registrationConfirmationBean.informedCode}" maxlength="32" size="40" required="true"/>
-                                <h:commandButton value="#{bundle.confirm}" action="#{registrationConfirmationBean.confirmUser}"/>
+                                <h:inputText id="informedCode" value="#{registrationConfirmationMBean.informedCode}" maxlength="32" size="40" required="true"/>
+                                <h:commandButton value="#{bundle.confirm}" action="#{registrationConfirmationMBean.confirmUser}"/>
                             </h:panelGrid>
                         </h:form>
                     </h:panelGrid>

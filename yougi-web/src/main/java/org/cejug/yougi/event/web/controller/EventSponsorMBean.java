@@ -1,21 +1,21 @@
-/* Yougi is a web application conceived to manage user groups or 
- * communities focused on a certain domain of knowledge, whose members are 
- * constantly sharing information and participating in social and educational 
+/* Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
- * 
- * This application is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by the 
- * Free Software Foundation; either version 2.1 of the License, or (at your 
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
  * option) any later version.
- * 
- * This application is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
- * 
- * There is a full copy of the GNU Lesser General Public License along with 
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
  * this library. Look for the file license.txt at the root level. If you do not
- * find it, write to the Free Software Foundation, Inc., 59 Temple Place, 
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA 02111-1307 USA.
  * */
 package org.cejug.yougi.event.web.controller;
@@ -30,11 +30,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
-import org.cejug.yougi.event.business.EventBsn;
-import org.cejug.yougi.event.business.EventSponsorBsn;
+import org.cejug.yougi.event.business.EventBean;
+import org.cejug.yougi.event.business.EventSponsorBean;
 import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.EventSponsor;
-import org.cejug.yougi.partnership.business.PartnerBsn;
+import org.cejug.yougi.partnership.business.PartnerBean;
 import org.cejug.yougi.partnership.entity.Partner;
 
 /**
@@ -47,13 +47,13 @@ public class EventSponsorMBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    private EventSponsorBsn eventSponsorBsn;
+    private EventSponsorBean eventSponsorBean;
 
     @EJB
-    private EventBsn eventBsn;
+    private EventBean eventBean;
 
     @EJB
-    private PartnerBsn partnerBsn;
+    private PartnerBean partnerBean;
 
     @ManagedProperty(value = "#{param.id}")
     private String id;
@@ -112,11 +112,11 @@ public class EventSponsorMBean implements Serializable {
 
     public List<EventSponsor> getEventSponsors() {
         if (eventSponsors == null) {
-            this.eventSponsors = eventSponsorBsn.findEventSponsors(this.event);
+            this.eventSponsors = eventSponsorBean.findEventSponsors(this.event);
         }
         return this.eventSponsors;
     }
-    
+
     public BigDecimal getSumAmounts() {
         BigDecimal sum = new BigDecimal(0);
         List<EventSponsor> es = getEventSponsors();
@@ -136,7 +136,7 @@ public class EventSponsorMBean implements Serializable {
 
     public List<Event> getEvents() {
         if (this.events == null) {
-            this.events = eventBsn.findEvents();
+            this.events = eventBean.findEvents();
         }
         return this.events;
     }
@@ -151,7 +151,7 @@ public class EventSponsorMBean implements Serializable {
 
     public List<Partner> getPartners() {
         if (this.partners == null) {
-            this.partners = partnerBsn.findPartners();
+            this.partners = partnerBean.findPartners();
         }
         return this.partners;
     }
@@ -159,12 +159,12 @@ public class EventSponsorMBean implements Serializable {
     @PostConstruct
     public void load() {
         if (this.eventId != null && !this.eventId.isEmpty()) {
-            this.event = eventBsn.findEvent(eventId);
+            this.event = eventBean.findEvent(eventId);
             this.selectedEvent = this.event.getId();
         }
 
         if (this.id != null && !this.id.isEmpty()) {
-            this.eventSponsor = eventSponsorBsn.findEventSponsor(id);
+            this.eventSponsor = eventSponsorBean.findEventSponsor(id);
             this.selectedEvent = this.eventSponsor.getEvent().getId();
             this.selectedSponsor = this.eventSponsor.getPartner().getId();
         } else {
@@ -173,18 +173,18 @@ public class EventSponsorMBean implements Serializable {
     }
 
     public String save() {
-        Event evt = eventBsn.findEvent(selectedEvent);
+        Event evt = eventBean.findEvent(selectedEvent);
         this.eventSponsor.setEvent(evt);
 
-        Partner spon = partnerBsn.findPartner(selectedSponsor);
+        Partner spon = partnerBean.findPartner(selectedSponsor);
         this.eventSponsor.setPartner(spon);
 
-        eventSponsorBsn.save(this.eventSponsor);
+        eventSponsorBean.save(this.eventSponsor);
         return "sponsors?faces-redirect=true&eventId=" + evt.getId();
     }
 
     public String remove() {
-        eventSponsorBsn.remove(this.eventSponsor.getId());
+        eventSponsorBean.remove(this.eventSponsor.getId());
         return "sponsors?faces-redirect=true&eventId=" + this.event.getId();
     }
 }

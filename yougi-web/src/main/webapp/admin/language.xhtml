@@ -33,15 +33,15 @@
                         <h:messages styleClass="alertMessage"/>
                         <h:panelGrid columns="1">
                             <h:outputLabel for="name" value="#{bundle.name} *" styleClass="fieldLabel"/>
-                            <h:inputText id="name" label="#{bundle.name}" required="true" size="20" maxlength="20" value="#{languageBean.language.name}"/>
+                            <h:inputText id="name" label="#{bundle.name}" required="true" size="20" maxlength="20" value="#{languageMBean.language.name}"/>
 
                             <h:outputText value="#{bundle.acronym}" styleClass="fieldLabel"/>
-                            <h:outputText value="#{languageBean.language.acronym}"/>
+                            <h:outputText value="#{languageMBean.language.acronym}"/>
 
-                            <h:inputHidden id="acronym" value="#{languageBean.language.acronym}"/>
+                            <h:inputHidden id="acronym" value="#{languageMBean.language.acronym}"/>
                         </h:panelGrid>
                         <h:panelGrid columns="2">
-                            <h:commandButton value="#{bundle.save}" action="#{topicBean.save}"/>
+                            <h:commandButton value="#{bundle.save}" action="#{topicMBean.save}"/>
                             <h:button value="#{bundle.cancel}" outcome="languages"/>
                         </h:panelGrid>
                     </h:form>

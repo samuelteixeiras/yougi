@@ -37,55 +37,55 @@
                             <h:outputLabel for="firstName" value="#{bundle.firstName} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="lastName" value="#{bundle.lastName} *" styleClass="fieldLabel"/>
 
-                            <h:inputText id="firstName" label="#{bundle.firstName}" required="true" size="30" maxlength="50" value="#{userAccountBean.userAccount.firstName}"/>
-                            <h:inputText id="lastName" label="#{bundle.lastName}" required="true" size="30" maxlength="50" value="#{userAccountBean.userAccount.lastName}"/>
+                            <h:inputText id="firstName" label="#{bundle.firstName}" required="true" size="30" maxlength="50" value="#{userAccountMBean.userAccount.firstName}"/>
+                            <h:inputText id="lastName" label="#{bundle.lastName}" required="true" size="30" maxlength="50" value="#{userAccountMBean.userAccount.lastName}"/>
 
                             <h:outputLabel for="gender" value="#{bundle.gender} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="birthDate" value="#{bundle.birthDate}" styleClass="fieldLabel"/>
 
-                            <h:selectOneRadio id="gender" label="#{bundle.gender}" required="true" value="#{userAccountBean.userAccount.gender}">
+                            <h:selectOneRadio id="gender" label="#{bundle.gender}" required="true" value="#{userAccountMBean.userAccount.gender}">
                                 <f:selectItem itemLabel="#{bundle.male}" itemValue="1"/>
                                 <f:selectItem itemLabel="#{bundle.female}" itemValue="0"/>
                             </h:selectOneRadio>
                             <h:panelGrid columns="2">
-                                <p:calendar value="#{userAccountBean.userAccount.birthDate}" id="birthDate" pattern="#{bundle.formatDate}" timeZone="#{userProfileBean.timeZone}"/>
+                                <p:calendar value="#{userAccountMBean.userAccount.birthDate}" id="birthDate" pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
                                 <h:outputText value="#{bundle.formatDateLabel}" styleClass="fieldFormat"/>
                             </h:panelGrid>
 
                             <h:outputLabel for="website" value="#{bundle.website}" styleClass="fieldLabel"/>
                             <h:outputLabel for="twitter" value="#{bundle.twitter}" styleClass="fieldLabel"/>
 
-                            <h:inputText id="website" label="#{bundle.website}" size="30" maxlength="100" value="#{userAccountBean.userAccount.website}"/>
-                            <h:inputText id="twitter" label="#{bundle.twitter}" size="15" maxlength="30" value="#{userAccountBean.userAccount.twitter}"/>
+                            <h:inputText id="website" label="#{bundle.website}" size="30" maxlength="100" value="#{userAccountMBean.userAccount.website}"/>
+                            <h:inputText id="twitter" label="#{bundle.twitter}" size="15" maxlength="30" value="#{userAccountMBean.userAccount.twitter}"/>
 
                             <h:outputLabel for="country" value="#{bundle.country}" styleClass="fieldLabel"/>
                             <h:outputLabel for="province" value="#{bundle.province}" styleClass="fieldLabel"/>
 
-                            <h:selectOneMenu id="country" label="#{bundle.country}" value="#{locationBean.selectedCountry}">
+                            <h:selectOneMenu id="country" label="#{bundle.country}" value="#{locationMBean.selectedCountry}">
                                 <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                <f:selectItems value="#{locationBean.countries}" var="country" itemLabel="#{country.name}" itemValue="#{country.acronym}"/>
+                                <f:selectItems value="#{locationMBean.countries}" var="country" itemLabel="#{country.name}" itemValue="#{country.acronym}"/>
                                 <f:ajax render="province city"/>
                             </h:selectOneMenu>
-                            <h:selectOneMenu id="province" label="#{bundle.province}" value="#{locationBean.selectedProvince}">
+                            <h:selectOneMenu id="province" label="#{bundle.province}" value="#{locationMBean.selectedProvince}">
                                 <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                <f:selectItems value="#{locationBean.provinces}" var="province" itemLabel="#{province.name}" itemValue="#{province.id}"/>
+                                <f:selectItems value="#{locationMBean.provinces}" var="province" itemLabel="#{province.name}" itemValue="#{province.id}"/>
                                 <f:ajax render="city"/>
                             </h:selectOneMenu>
 
                             <h:outputLabel for="city" value="#{bundle.city}" styleClass="fieldLabel"/>
                             <h:outputLabel for="postalCode" value="#{bundle.postalCode}" styleClass="fieldLabel"/>
 
-                            <h:selectOneMenu id="city" label="#{bundle.city}" value="#{locationBean.selectedCity}">
+                            <h:selectOneMenu id="city" label="#{bundle.city}" value="#{locationMBean.selectedCity}">
                                 <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                <f:selectItems value="#{locationBean.cities}" var="city" itemLabel="#{city.name}" itemValue="#{city.id}"/>
+                                <f:selectItems value="#{locationMBean.cities}" var="city" itemLabel="#{city.name}" itemValue="#{city.id}"/>
                             </h:selectOneMenu>
-                            <h:inputText id="postalCode" label="#{bundle.postalCode}" size="10" maxlength="10" value="#{userAccountBean.userAccount.postalCode}"/>
+                            <h:inputText id="postalCode" label="#{bundle.postalCode}" size="10" maxlength="10" value="#{userAccountMBean.userAccount.postalCode}"/>
                         </h:panelGrid>
 
-                        <h:inputHidden id="id" value="#{userAccountBean.userAccount.id}"/>
+                        <h:inputHidden id="id" value="#{userAccountMBean.userAccount.id}"/>
                         <p></p>
                         <h:panelGrid columns="2">
-                            <h:commandButton value="#{bundle.save}" action="#{userAccountBean.savePersonalData}"/>
+                            <h:commandButton value="#{bundle.save}" action="#{userAccountMBean.savePersonalData}"/>
                             <h:button value="#{bundle.cancel}" outcome="profile"/>
                         </h:panelGrid>
                     </h:form>

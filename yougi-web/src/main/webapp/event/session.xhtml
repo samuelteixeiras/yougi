@@ -49,12 +49,12 @@
                                 <h:outputLabel for="endTime" value="#{bundle.end}" styleClass="fieldLabel"/>
                                 <h:outputLabel for="room" value="#{bundle.room}" styleClass="fieldLabel"/>
 
-                                <p:calendar value="#{eventSessionMBean.eventSession.sessionDate}" id="sessionDate" pattern="#{bundle.formatDate}" size="10" timeZone="#{userProfileBean.timeZone}"/>
+                                <p:calendar value="#{eventSessionMBean.eventSession.sessionDate}" id="sessionDate" pattern="#{bundle.formatDate}" size="10" timeZone="#{userProfileMBean.timeZone}"/>
                                 <p:inputMask value="#{eventSessionMBean.eventSession.startTime}" mask="99:99" size="5">
-                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileBean.timeZone}"/>
+                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                 </p:inputMask>
                                 <p:inputMask value="#{eventSessionMBean.eventSession.endTime}" mask="99:99" size="5">
-                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileBean.timeZone}"/>
+                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                 </p:inputMask>
                                 <h:inputText id="room" label="#{bundle.room}" value="#{eventSessionMBean.eventSession.room}" size="17" maxlength="30" class="ui-inputfield ui-state-default ui-corner-all"/>
                             </h:panelGrid>

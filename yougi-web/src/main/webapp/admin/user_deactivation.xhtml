@@ -36,19 +36,19 @@
                                 <h:outputText value="#{bundle.name}" styleClass="fieldLabel"/>
                                 <h:outputText value="#{bundle.email}" styleClass="fieldLabel"/>
 
-                                <h:outputText value="#{memberBean.userAccount.fullName}"/>
-                                <h:outputText value="#{memberBean.userAccount.email}"/>
+                                <h:outputText value="#{memberMBean.userAccount.fullName}"/>
+                                <h:outputText value="#{memberMBean.userAccount.email}"/>
                             </h:panelGrid>
 
                             <h:outputLabel for="reason" value="#{bundle.reason}" styleClass="fieldLabel"/>
-                            <h:inputTextarea id="reason" label="#{bundle.reason}" cols="40" rows="5" value="#{memberBean.userAccount.deactivationReason}"/>
+                            <h:inputTextarea id="reason" label="#{bundle.reason}" cols="40" rows="5" value="#{memberMBean.userAccount.deactivationReason}"/>
                             <h:outputText value="#{bundle.reasonNote}" styleClass="fieldNote"/>
                         </h:panelGrid>
 
-                        <h:inputHidden id="id" value="#{memberBean.userAccount.id}"/>
+                        <h:inputHidden id="id" value="#{memberMBean.userAccount.id}"/>
                         <p></p>
                         <h:panelGrid columns="4">
-                            <h:commandButton value="#{bundle.deactivateMembership}" action="#{memberBean.deactivateMembership}"/>
+                            <h:commandButton value="#{bundle.deactivateMembership}" action="#{memberMBean.deactivateMembership}"/>
                             <h:button outcome="user" value="#{bundle.cancel}"/>
                         </h:panelGrid>
                     </h:form>

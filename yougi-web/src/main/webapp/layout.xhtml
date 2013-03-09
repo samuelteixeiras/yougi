@@ -44,14 +44,14 @@
                     <td align="right">
                         <div class="identification">
                             <c:if test="#{empty request.remoteUser}">
-                                <h:form><h:commandLink action="#{securityBackingBean.login}" value="#{bundle.signIn}"/> |
+                                <h:form><h:commandLink action="#{securityBackingMBean.login}" value="#{bundle.signIn}"/> |
                                 <h:link outcome="registration">#{bundle.register}</h:link></h:form>
                             </c:if>
                             <c:if test="#{! empty request.remoteUser}">
                                 <h:form>
                                     <h:outputText value="#{bundle.hello} "/>
-                                    <h:outputText value="#{userProfileBean.userAccount.firstName} !"/>
-                                    <h:commandLink action="#{securityBackingBean.logout}" value="#{bundle.signOut}"/>
+                                    <h:outputText value="#{userProfileMBean.userAccount.firstName} !"/>
+                                    <h:commandLink action="#{securityBackingMBean.logout}" value="#{bundle.signOut}"/>
                                 </h:form>
                             </c:if>
                         </div>
@@ -63,7 +63,7 @@
             <c:if test="#{! empty request.remoteUser}">
                 <h:form>
                     <p:menubar>
-                        <p:submenu label="#{bundle.knowledge}" rendered="#{securityBackingBean.isUserLeader}">
+                        <p:submenu label="#{bundle.knowledge}" rendered="#{securityBackingMBean.isUserLeader}">
                             <p:menuitem value="#{bundle.websites}" url="/knowledge/websites.xhtml"/>
                             <p:menuitem value="#{bundle.topics}" url="/knowledge/topics.xhtml"/>
                             <p:menuitem value="#{bundle.mailingList}" url="/knowledge/mailing_lists.xhtml"/>
@@ -79,7 +79,7 @@
                             <p:menuitem value="#{bundle.changePassword}" url="/profile/change_password.xhtml"/>
                             <p:menuitem value="#{bundle.changeEmail}" url="/profile/change_email.xhtml"/>
                         </p:submenu>
-                        <p:submenu label="#{bundle.administration}" rendered="#{securityBackingBean.isUserLeader}">
+                        <p:submenu label="#{bundle.administration}" rendered="#{securityBackingMBean.isUserLeader}">
                             <p:menuitem value="#{bundle.users}" url="/admin/users.xhtml"/>
                             <p:menuitem value="#{bundle.groups}" url="/admin/groups.xhtml"/>
                             <p:submenu label="#{bundle.location}">

@@ -47,8 +47,8 @@
                             <h:inputTextarea id="description" label="#{bundle.description}" cols="60" rows="5" value="#{topicMBean.topic.description}"/>
                         </h:panelGrid>
                         <h:panelGrid columns="3">
-                            <h:commandButton value="#{bundle.save}" action="#{topicMBean.save}" rendered="#{securityBackingBean.isUserLeader}"/>
-                            <h:commandButton value="#{bundle.remove}" action="#{topicMBean.remove}" rendered="#{securityBackingBean.isUserLeader}"/>
+                            <h:commandButton value="#{bundle.save}" action="#{topicMBean.save}" rendered="#{securityBackingMBean.isUserLeader}"/>
+                            <h:commandButton value="#{bundle.remove}" action="#{topicMBean.remove}" rendered="#{securityBackingMBean.isUserLeader}"/>
                             <h:button value="#{bundle.cancel}" outcome="topics"/>
                         </h:panelGrid>
                     </h:form>

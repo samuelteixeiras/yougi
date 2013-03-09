@@ -37,66 +37,66 @@
                                 <h:outputText value="#{bundle.firstName}" styleClass="fieldLabel"/>
                                 <h:outputText value="#{bundle.lastName}" styleClass="fieldLabel"/>
 
-                                <h:outputText id="firstName" value="#{profileBean.userAccount.firstName}"/>
-                                <h:outputText id="lastName" value="#{profileBean.userAccount.lastName}"/>
+                                <h:outputText id="firstName" value="#{profileMBean.userAccount.firstName}"/>
+                                <h:outputText id="lastName" value="#{profileMBean.userAccount.lastName}"/>
 
                                 <h:outputText value="#{bundle.gender}" styleClass="fieldLabel"/>
                                 <h:outputText value="#{bundle.birthDate}" styleClass="fieldLabel"/>
 
-                                <h:outputText value="#{profileBean.userAccount.gender}">
+                                <h:outputText value="#{profileMBean.userAccount.gender}">
                                     <f:converter converterId="GenderNumberToString"/>
                                 </h:outputText>
-                                <h:outputText value="#{profileBean.userAccount.birthDate}">
-                                    <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileBean.timeZone}"/>
+                                <h:outputText value="#{profileMBean.userAccount.birthDate}">
+                                    <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
                                 </h:outputText>
 
                                 <h:outputText value="#{bundle.email}" styleClass="fieldLabel"/>
                                 <h:outputText value="#{bundle.age}" styleClass="fieldLabel"/>
 
-                                <h:outputText value="#{profileBean.userAccount.email}"/>
-                                <h:outputText value="#{profileBean.userAccount.age}"/>
+                                <h:outputText value="#{profileMBean.userAccount.email}"/>
+                                <h:outputText value="#{profileMBean.userAccount.age}"/>
 
                                 <h:outputText value="#{bundle.website}" styleClass="fieldLabel"/>
                                 <h:outputText value="#{bundle.twitter}" styleClass="fieldLabel"/>
 
-                                <h:outputLink value="http://#{profileBean.userAccount.website}" target="_blank">#{profileBean.userAccount.website}</h:outputLink>
-                                <h:outputLink value="http://twitter.com/#{profileBean.userAccount.twitter}" target="_blank">#{profileBean.userAccount.twitter}</h:outputLink>
+                                <h:outputLink value="http://#{profileMBean.userAccount.website}" target="_blank">#{profileMBean.userAccount.website}</h:outputLink>
+                                <h:outputLink value="http://twitter.com/#{profileMBean.userAccount.twitter}" target="_blank">#{profileMBean.userAccount.twitter}</h:outputLink>
 
                                 <h:outputText value="#{bundle.country}" styleClass="fieldLabel"/>
                                 <h:outputText value="#{bundle.province}" styleClass="fieldLabel"/>
 
-                                <h:outputText value="#{profileBean.userAccount.country}"/>
-                                <h:outputText value="#{profileBean.userAccount.province}"/>
+                                <h:outputText value="#{profileMBean.userAccount.country}"/>
+                                <h:outputText value="#{profileMBean.userAccount.province}"/>
 
                                 <h:outputText value="#{bundle.city}" styleClass="fieldLabel"/>
                                 <h:outputText value="#{bundle.postalCode}" styleClass="fieldLabel"/>
 
-                                <h:outputText value="#{profileBean.userAccount.city}"/>
-                                <h:outputText value="#{profileBean.userAccount.postalCode}"/>
+                                <h:outputText value="#{profileMBean.userAccount.city}"/>
+                                <h:outputText value="#{profileMBean.userAccount.postalCode}"/>
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="2" width="700">
-                            <h:graphicImage rendered="#{profileBean.userAccount.publicProfile}" url="/images/success-icon.png"/>
-                            <h:outputText rendered="#{profileBean.userAccount.publicProfile}" value="#{bundle.publicProfileMessage}"/>
+                            <h:graphicImage rendered="#{profileMBean.userAccount.publicProfile}" url="/images/success-icon.png"/>
+                            <h:outputText rendered="#{profileMBean.userAccount.publicProfile}" value="#{bundle.publicProfileMessage}"/>
 
-                            <h:graphicImage rendered="#{profileBean.userAccount.mailingList}" url="/images/success-icon.png"/>
-                            <h:outputLabel rendered="#{profileBean.userAccount.mailingList}" for="mailingList" value="#{bundle.mailingListMessage}"/>
+                            <h:graphicImage rendered="#{profileMBean.userAccount.mailingList}" url="/images/success-icon.png"/>
+                            <h:outputLabel rendered="#{profileMBean.userAccount.mailingList}" for="mailingList" value="#{bundle.mailingListMessage}"/>
 
-                            <h:graphicImage rendered="#{profileBean.userAccount.event}" url="/images/success-icon.png"/>
-                            <h:outputLabel rendered="#{profileBean.userAccount.event}" for="event" value="#{bundle.eventMessage}"/>
+                            <h:graphicImage rendered="#{profileMBean.userAccount.event}" url="/images/success-icon.png"/>
+                            <h:outputLabel rendered="#{profileMBean.userAccount.event}" for="event" value="#{bundle.eventMessage}"/>
 
-                            <h:graphicImage rendered="#{profileBean.userAccount.news}" url="/images/success-icon.png"/>
-                            <h:outputLabel rendered="#{profileBean.userAccount.news}" for="news" value="#{bundle.newsMessage}"/>
+                            <h:graphicImage rendered="#{profileMBean.userAccount.news}" url="/images/success-icon.png"/>
+                            <h:outputLabel rendered="#{profileMBean.userAccount.news}" for="news" value="#{bundle.newsMessage}"/>
 
-                            <h:graphicImage rendered="#{profileBean.userAccount.generalOffer}" url="/images/success-icon.png"/>
-                            <h:outputLabel rendered="#{profileBean.userAccount.generalOffer}" for="generalOffer" value="#{bundle.generalOfferMessage}"/>
+                            <h:graphicImage rendered="#{profileMBean.userAccount.generalOffer}" url="/images/success-icon.png"/>
+                            <h:outputLabel rendered="#{profileMBean.userAccount.generalOffer}" for="generalOffer" value="#{bundle.generalOfferMessage}"/>
 
-                            <h:graphicImage rendered="#{profileBean.userAccount.jobOffer}" url="/images/success-icon.png"/>
-                            <h:outputLabel rendered="#{profileBean.userAccount.jobOffer}" for="jobOffer" value="#{bundle.jobOfferMessage}"/>
+                            <h:graphicImage rendered="#{profileMBean.userAccount.jobOffer}" url="/images/success-icon.png"/>
+                            <h:outputLabel rendered="#{profileMBean.userAccount.jobOffer}" for="jobOffer" value="#{bundle.jobOfferMessage}"/>
                         </h:panelGrid>
                         <p></p>
                         <h:panelGrid columns="2">
-                            <h:commandButton value="#{bundle.change}" action="#{memberBean.load(profileBean.userAccount.id)}"/>
+                            <h:commandButton value="#{bundle.change}" action="#{memberMBean.load(profileMBean.userAccount.id)}"/>
                             <h:button outcome="users.xhtml" value="#{bundle.cancel}"/>
                         </h:panelGrid>
                     </h:form>

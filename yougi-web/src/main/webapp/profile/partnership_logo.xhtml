@@ -37,9 +37,9 @@
                             <h:panelGrid>
                                 <p><h:outputText styleClass="fieldLabel" value="#{bundle.uploadLogo}"/></p>
                                 <p:growl id="messages" showDetail="true"/>
-                                <p:fileUpload update="messages logoImage" fileUploadListener="#{partnershipBean.handleLogoFileUpload}" sizeLimit="1024000"/>
+                                <p:fileUpload update="messages logoImage" fileUploadListener="#{partnershipMBean.handleLogoFileUpload}" sizeLimit="1024000"/>
                             </h:panelGrid>
-                            <p:graphicImage value="#{partnershipBean.logoImage}" id="logoImage" rendered="#{! empty partnershipBean.logoImage}"/>
+                            <p:graphicImage value="#{partnershipMBean.logoImage}" id="logoImage" rendered="#{! empty partnershipMBean.logoImage}"/>
                         </h:panelGrid>
                         <p></p>
                         <h:button value="#{bundle.back}" outcome="profile">

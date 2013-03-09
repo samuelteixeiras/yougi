@@ -60,10 +60,10 @@ public class MessengerBean {
     private Session mailSession;
 
     @EJB
-    private MessageTemplateBsn messageTemplateBsn;
+    private MessageTemplateBean messageTemplateBean;
 
     @EJB
-    private ApplicationPropertyBsn applicationPropertyBsn;
+    private ApplicationPropertyBean applicationPropertyBean;
 
     @EJB
     private MessageHistoryBean messageHistoryBean;
@@ -71,7 +71,7 @@ public class MessengerBean {
     static final Logger logger = Logger.getLogger(MessengerBean.class.getName());
 
     public void sendEmailConfirmationRequest(UserAccount userAccount, String serverAddress) {
-        MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("E3F122DCC87D42248872878412B34CEE");
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("E3F122DCC87D42248872878412B34CEE");
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("serverAddress", serverAddress);
         values.put("userAccount.firstName", userAccount.getFirstName());
@@ -89,7 +89,7 @@ public class MessengerBean {
     }
 
     public void sendWelcomeMessage(UserAccount userAccount) {
-        MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("47DEE5C2E0E14F8BA4605F3126FBFAF4");
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("47DEE5C2E0E14F8BA4605F3126FBFAF4");
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("userAccount.firstName", userAccount.getFirstName());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
@@ -104,7 +104,7 @@ public class MessengerBean {
     }
 
     public void sendNewMemberAlertMessage(UserAccount userAccount, List<UserAccount> leaders) {
-        MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("0D6F96382D91454F8155A720F3326F1B");
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("0D6F96382D91454F8155A720F3326F1B");
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("userAccount.fullName", userAccount.getFullName());
         values.put("userAccount.registrationDate", userAccount.getRegistrationDate());
@@ -122,10 +122,10 @@ public class MessengerBean {
     public void sendDeactivationReason(UserAccount userAccount) {
         MessageTemplate messageTemplate;
         if(userAccount.getDeactivationType() == DeactivationType.ADMINISTRATIVE) {
-            messageTemplate = messageTemplateBsn.findMessageTemplate("03BD6F3ACE4C48BD8660411FC8673DB4");
+            messageTemplate = messageTemplateBean.findMessageTemplate("03BD6F3ACE4C48BD8660411FC8673DB4");
         }
         else {
-            messageTemplate = messageTemplateBsn.findMessageTemplate("IKWMAJSNDOE3F122DCC87D4224887287");
+            messageTemplate = messageTemplateBean.findMessageTemplate("IKWMAJSNDOE3F122DCC87D4224887287");
         }
         em.detach(messageTemplate);
         Map<String, Object> values = new HashMap<String, Object>();
@@ -143,7 +143,7 @@ public class MessengerBean {
     }
 
     public void sendDeactivationAlertMessage(UserAccount userAccount, List<UserAccount> leaders) {
-        MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("0D6F96382IKEJSUIWOK5A720F3326F1B");
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("0D6F96382IKEJSUIWOK5A720F3326F1B");
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("userAccount.fullName", userAccount.getFullName());
         values.put("userAccount.deactivationReason", userAccount.getDeactivationReason());
@@ -159,7 +159,7 @@ public class MessengerBean {
     }
 
     public void sendConfirmationCode(UserAccount userAccount, String serverAddress) {
-        MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("67BE6BEBE45945D29109A8D6CD878344");
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("67BE6BEBE45945D29109A8D6CD878344");
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("serverAddress", serverAddress);
         values.put("userAccount.firstName", userAccount.getFirstName());
@@ -186,7 +186,7 @@ public class MessengerBean {
      * email address.
      */
     public void sendEmailVerificationRequest(UserAccount userAccount, String serverAddress) {
-        MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("KJZISKQBE45945D29109A8D6C92IZJ89");
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("KJZISKQBE45945D29109A8D6C92IZJ89");
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("serverAddress", serverAddress);
         values.put("userAccount.firstName", userAccount.getFirstName());
@@ -205,7 +205,7 @@ public class MessengerBean {
     }
 
     public void sendGroupAssignmentAlert(UserAccount userAccount, AccessGroup accessGroup) {
-        MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("09JDIIE82O39IDIDOSJCHXUDJJXHCKP0");
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("09JDIIE82O39IDIDOSJCHXUDJJXHCKP0");
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("userAccount.firstName", userAccount.getFirstName());
         values.put("accessGroup.name", accessGroup.getName());
@@ -221,7 +221,7 @@ public class MessengerBean {
     }
 
     public void sendConfirmationEventAttendance(UserAccount userAccount, Event event, String dateFormat, String timeFormat, String timezone) {
-        MessageTemplate messageTemplate = messageTemplateBsn.findMessageTemplate("KJDIEJKHFHSDJDUWJHAJSNFNFJHDJSLE");
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("KJDIEJKHFHSDJDUWJHAJSNFNFJHDJSLE");
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("userAccount.firstName", userAccount.getFirstName());
         values.put("event.name", event.getName());
@@ -249,7 +249,7 @@ public class MessengerBean {
      * @param emailMessage The message to be sent.
      */
     public void sendEmailMessage(EmailMessage emailMessage) throws MessagingException {
-        ApplicationProperty appProp = applicationPropertyBsn.findApplicationProperty(Properties.SEND_EMAILS);
+        ApplicationProperty appProp = applicationPropertyBean.findApplicationProperty(Properties.SEND_EMAILS);
         if(!appProp.sendEmailsEnabled()) {
             return;
         }
