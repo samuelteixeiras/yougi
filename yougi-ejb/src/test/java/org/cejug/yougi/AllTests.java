@@ -48,7 +48,7 @@ public class AllTests {
     
     @BeforeClass
     public static void oneTimeSetUp() throws Exception {
-        Map<Object, Object> properties = new HashMap<>(1);
+        Map<Object, Object> properties = new HashMap<Object, Object>(1);
         properties.put("org.glassfish.ejb.embedded.glassfish.installation.root", "./src/test/resources/glassfish");
         ejbContainer = javax.ejb.embeddable.EJBContainer.createEJBContainer(properties);
     }
