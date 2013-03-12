@@ -318,6 +318,9 @@ public class UserAccount implements Serializable, Identified {
     }
 
     public void setWebsite(String website) {
+        if(website != null && website.trim().isEmpty()) {
+            this.website = null;
+        }
         this.website = website;
     }
 
