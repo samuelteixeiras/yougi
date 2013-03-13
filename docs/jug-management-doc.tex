@@ -1,4 +1,4 @@
-\documentclass[envcountsame,envcountchap]{svmono}
+\documentclass[envcountsame,envcountchap,letterpaper]{svmono}
 \usepackage{makeidx}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -15,7 +15,7 @@
 
 \author{Hildeberto Mendon\c{c}a}
 \title{Yougi}
-\subtitle{The Rock Solid User Group Application}
+\subtitle{Managing the Knowledge Produced by the Community}
 
 \begin{document}
 
@@ -585,12 +585,13 @@ If there are changed files add them using:
 \end{verbatim}
 Use the command above for each modified file or if they all make sense to be committed together use:
 \begin{verbatim}
-# git commit -a -m “[message]”
+# git commit -a -m [message]
 \end{verbatim}
 to add all changed files and commit right after. If files were added individually use:
 \begin{verbatim}
-# git commit -m “[message]”
+# git commit -m [message]
 \end{verbatim}
+
 After performing the last commits, it is time to update the local copy using:
 \begin{verbatim}
 # git pull
@@ -599,6 +600,12 @@ or
 \begin{verbatim}
 # git fetch
 # git merge FETCH_HEAD
+\end{verbatim}
+
+Note that the pull is done after all commits. It was put on this sequence on purpose because the pull will try to merge the version on the server with the local version, but it can only happen if the files were committed. If there is nothing to merge, then there is no problem, but if something needs to be merged then a problem will occur during the pull operation. Therefore, it is always recommended to commit all local changes before updating the local version. In case you didn't seriously changed your files and don't want to commit those changes, you can discard them, by performing the following command for each changed file:
+
+\begin{verbatim}
+#git checkout -- [file]
 \end{verbatim}
 
 To push local commit to the server, use:
