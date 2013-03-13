@@ -12,7 +12,7 @@ Contact
             Email Address: me at hildeberto.com
    
           Project Website: https://yougi.org
-Application used by CEJUG: http://www.cejug.org/jug
+Application used by CEJUG: http://www.cejug.org/ug
 
 Technologies In Use
 -------------------

@@ -1,4 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+<!-- Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
+ * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
+ * this library. Look for the file license.txt at the root level. If you do not
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
+ * Suite 330, Boston, MA 02111-1307 USA.
+ * -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -17,49 +37,49 @@
                             <p:fieldset legend="#{bundle.application}">
                                 <h:panelGrid>
                                     <h:outputLabel for="groupName" value="#{bundle.groupName}" styleClass="fieldLabel"/>
-                                    <h:inputText id="groupName" label="#{bundle.groupName}" size="30" maxlength="100" value="#{applicationPropertiesBean.applicationProperties['groupName']}"/>
+                                    <h:inputText id="groupName" label="#{bundle.groupName}" size="30" maxlength="100" value="#{applicationPropertiesMBean.applicationProperties['groupName']}"/>
 
                                     <h:outputLabel for="url" value="#{bundle.url}" styleClass="fieldLabel"/>
-                                    <h:inputText id="url" label="#{bundle.url}" size="30" maxlength="100" value="#{applicationPropertiesBean.applicationProperties['url']}"/>
+                                    <h:inputText id="url" label="#{bundle.url}" size="30" maxlength="100" value="#{applicationPropertiesMBean.applicationProperties['url']}"/>
 
                                     <h:outputLabel for="fileRepositoryPath" value="#{bundle.fileRepositoryPath}" styleClass="fieldLabel"/>
-                                    <h:inputText id="fileRepositoryPath" label="#{bundle.fileRepositoryPath}" size="30" maxlength="100" value="#{applicationPropertiesBean.applicationProperties['fileRepositoryPath']}"/>
+                                    <h:inputText id="fileRepositoryPath" label="#{bundle.fileRepositoryPath}" size="30" maxlength="100" value="#{applicationPropertiesMBean.applicationProperties['fileRepositoryPath']}"/>
                                 </h:panelGrid>
                             </p:fieldset>
-                            
+
                             <p:fieldset legend="#{bundle.email}">
                                 <h:panelGrid>
                                     <h:outputLabel for="emailServerType" value="#{bundle.emailServerType}" styleClass="fieldLabel"/>
-                                    <h:selectOneRadio id="emailServerType" label="#{bundle.emailServerType}" value="#{applicationPropertiesBean.applicationProperties['emailServerType']}">
+                                    <h:selectOneRadio id="emailServerType" label="#{bundle.emailServerType}" value="#{applicationPropertiesMBean.applicationProperties['emailServerType']}">
                                         <f:selectItem itemLabel="#{bundle.pop3}" itemValue="pop3"/>
                                         <f:selectItem itemLabel="#{bundle.imap}" itemValue="imap"/>
                                     </h:selectOneRadio>
 
                                     <h:panelGrid columns="2">
-                                        <h:selectBooleanCheckbox id="sendEmails" label="#{bundle.sendEmails}" value="#{applicationPropertiesBean.sendEmails}"/>
+                                        <h:selectBooleanCheckbox id="sendEmails" label="#{bundle.sendEmails}" value="#{applicationPropertiesMBean.sendEmails}"/>
                                         <h:outputLabel for="sendEmails" value="#{bundle.sendEmails}"/>
                                     </h:panelGrid>
                                 </h:panelGrid>
                             </p:fieldset>
-                            
+
                             <p:fieldset legend="#{bundle.internationalization}">
                                 <h:panelGrid>
                                     <h:outputLabel for="timeZone" value="#{bundle.timeZone}" style="fieldLabel"/>
-                                    <h:selectOneMenu id="timeZone" label="#{bundle.timeZone}" value="#{applicationPropertiesBean.applicationProperties['timezone']}">
+                                    <h:selectOneMenu id="timeZone" label="#{bundle.timeZone}" value="#{applicationPropertiesMBean.applicationProperties['timezone']}">
                                         <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                        <f:selectItems value="#{applicationPropertiesBean.timeZones}" var="tz" itemLabel="#{tz}" itemValue="#{tz}"/>
+                                        <f:selectItems value="#{applicationPropertiesMBean.timeZones}" var="tz" itemLabel="#{tz}" itemValue="#{tz}"/>
                                     </h:selectOneMenu>
-                                    
+
                                     <h:outputLabel for="language" value="#{bundle.language}" style="fieldLabel"/>
-                                    <h:selectOneMenu id="language" label="#{bundle.language}" value="#{applicationPropertiesBean.applicationProperties['language']}">
+                                    <h:selectOneMenu id="language" label="#{bundle.language}" value="#{applicationPropertiesMBean.applicationProperties['language']}">
                                         <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                        <f:selectItems value="#{applicationPropertiesBean.languages}" var="lang" itemLabel="#{lang.name}" itemValue="#{lang.acronym}"/>
+                                        <f:selectItems value="#{applicationPropertiesMBean.languages}" var="lang" itemLabel="#{lang.name}" itemValue="#{lang.acronym}"/>
                                     </h:selectOneMenu>
                                 </h:panelGrid>
                             </p:fieldset>
                         </h:panelGrid>
                         <p/>
-                        <h:commandButton value="#{bundle.save}" action="#{applicationPropertiesBean.save}"/>
+                        <h:commandButton value="#{bundle.save}" action="#{applicationPropertiesMBean.save}"/>
                     </h:form>
                 </div>
             </ui:define>

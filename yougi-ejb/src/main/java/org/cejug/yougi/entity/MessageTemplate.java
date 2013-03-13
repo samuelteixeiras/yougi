@@ -43,7 +43,7 @@ public class MessageTemplate implements Serializable, Identified {
 
     @Id
     private String id;
-    
+
     @Column(nullable = false)
     private String title;
 
@@ -124,7 +124,7 @@ public class MessageTemplate implements Serializable, Identified {
 
     private List<String> findVariables(Pattern pattern, CharSequence charSequence) {
         Matcher m = pattern.matcher(charSequence);
-        List<String> matches = new ArrayList<>();
+        List<String> matches = new ArrayList<String>();
         while (m.find()) {
             matches.add(m.group());
         }

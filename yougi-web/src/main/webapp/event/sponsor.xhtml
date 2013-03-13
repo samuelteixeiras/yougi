@@ -1,4 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+<!-- Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
+ * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
+ * this library. Look for the file license.txt at the root level. If you do not
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
+ * Suite 330, Boston, MA 02111-1307 USA.
+ * -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -18,13 +38,13 @@
                                 <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
                                 <f:selectItems value="#{eventSponsorMBean.events}" var="event" itemLabel="#{event.name}" itemValue="#{event.id}"/>
                             </h:selectOneMenu>
-                            
+
                             <h:outputLabel for="sponsor" value="#{bundle.sponsor}" styleClass="fieldLabel"/>
                             <h:selectOneMenu id="sponsor" label="#{bundle.sponsor}" value="#{eventSponsorMBean.selectedSponsor}">
                                 <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
                                 <f:selectItems value="#{eventSponsorMBean.partners}" var="partner" itemLabel="#{partner.name}" itemValue="#{partner.id}"/>
                             </h:selectOneMenu>
-                            
+
                             <h:outputLabel for="amount" value="#{bundle.amount}" styleClass="fieldLabel"/>
                             <h:panelGrid columns="2">
                                 <h:inputText id="amount" label="#{bundle.amount}" size="10" maxlength="13" value="#{eventSponsorMBean.eventSponsor.amount}">
@@ -32,13 +52,13 @@
 	                            </h:inputText>
 	                            <h:outputText value="#{bundle.currencyFormat}" styleClass="fieldFormat"/>
                             </h:panelGrid>
-                            
+
                             <h:outputLabel for="description" value="#{bundle.description}" styleClass="fieldLabel"/>
                             <h:inputTextarea id="description" label="#{bundle.description}" required="false" cols="60" rows="4" value="#{eventSponsorMBean.eventSponsor.description}"/>
                         </h:panelGrid>
 
                         <h:inputHidden id="id" value="#{eventSponsorMBean.eventSponsor.id}"/>
-                        
+
                         <h:panelGrid columns="3">
                             <h:commandButton value="#{bundle.save}" action="#{eventSponsorMBean.save}">
                                 <f:param name="eventId" value="#{eventSponsorMBean.eventSponsor.event.id}"/>

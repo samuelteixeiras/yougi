@@ -1,21 +1,21 @@
-/* Yougi is a web application conceived to manage user groups or 
- * communities focused on a certain domain of knowledge, whose members are 
- * constantly sharing information and participating in social and educational 
+/* Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
- * 
- * This application is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by the 
- * Free Software Foundation; either version 2.1 of the License, or (at your 
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
  * option) any later version.
- * 
- * This application is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
- * 
- * There is a full copy of the GNU Lesser General Public License along with 
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
  * this library. Look for the file license.txt at the root level. If you do not
- * find it, write to the Free Software Foundation, Inc., 59 Temple Place, 
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA 02111-1307 USA.
  * */
 package org.cejug.yougi.web.report;
@@ -28,7 +28,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import org.cejug.yougi.business.UserAccountBsn;
+import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.util.ResourceBundleHelper;
 import org.primefaces.model.chart.CartesianChartModel;
@@ -42,13 +42,13 @@ import org.primefaces.model.chart.ChartSeries;
 @ManagedBean
 @RequestScoped
 public class MembershipGrowth {
-    
+
     @EJB
-    private UserAccountBsn userAccountBsn;
-    
+    private UserAccountBean userAccountBean;
+
     private CartesianChartModel membershipGrowthModel;
     private CartesianChartModel membershipCumulativeGrowthModel;
-    
+
     static final Logger logger = Logger.getLogger("org.cejug.web.report.MembershipGrowth");
 
     public MembershipGrowth() {}
@@ -56,7 +56,7 @@ public class MembershipGrowth {
     public CartesianChartModel getMembershipGrowthModel() {
         return membershipGrowthModel;
     }
-    
+
     public CartesianChartModel getMembershipCumulativeGrowthModel() {
         return membershipCumulativeGrowthModel;
     }
@@ -65,7 +65,7 @@ public class MembershipGrowth {
     public void load() {
         membershipGrowthModel = new CartesianChartModel();
         membershipCumulativeGrowthModel = new CartesianChartModel();
-        
+
         ResourceBundleHelper bundle = new ResourceBundleHelper();
         String[] months = {bundle.getMessage("januaryShort"),
                             bundle.getMessage("februaryShort"),
@@ -79,7 +79,7 @@ public class MembershipGrowth {
                             bundle.getMessage("octoberShort"),
                             bundle.getMessage("novemberShort"),
                             bundle.getMessage("decemberShort")};
-        
+
         Calendar lastDay = Calendar.getInstance();
         lastDay.set(Calendar.MONTH, Calendar.DECEMBER);
         lastDay.set(Calendar.DATE, 31);
@@ -88,7 +88,7 @@ public class MembershipGrowth {
         lastDay.set(Calendar.SECOND, 59);
         lastDay.set(Calendar.AM_PM, Calendar.PM);
         Date to = lastDay.getTime();
-        
+
         Calendar firstDay = lastDay;
         firstDay.add(Calendar.YEAR, -1);
         firstDay.set(Calendar.DAY_OF_MONTH, 1);
@@ -98,9 +98,9 @@ public class MembershipGrowth {
         lastDay.set(Calendar.SECOND, 0);
         lastDay.set(Calendar.AM_PM, Calendar.AM);
         Date from = firstDay.getTime();
-        
-        List<UserAccount> userAccounts = userAccountBsn.findConfirmedUserAccounts(from, to);
-        
+
+        List<UserAccount> userAccounts = userAccountBean.findConfirmedUserAccounts(from, to);
+
         Calendar registrationDate;
         Calendar deactivationDate;
         int[][] data = new int[2][12];
@@ -111,21 +111,21 @@ public class MembershipGrowth {
             if(currentYear == 0) {
                 currentYear = registrationDate.get(Calendar.YEAR);
             }
-            
+
             year = registrationDate.get(Calendar.YEAR) - currentYear;
             month = registrationDate.get(Calendar.MONTH);
             data[year][month] += 1;
-            
+
             if(userAccount.getDeactivationDate() != null) {
                 deactivationDate = Calendar.getInstance();
                 deactivationDate.setTime(userAccount.getDeactivationDate());
-                
+
                 year = deactivationDate.get(Calendar.YEAR) - currentYear;
                 month = deactivationDate.get(Calendar.MONTH);
                 data[year][month] -= 1;
             }
         }
-        
+
         ChartSeries annualSeries;
         for(int i = 0;i < 2;i++) {
             annualSeries = new ChartSeries();
@@ -135,7 +135,7 @@ public class MembershipGrowth {
             }
             membershipGrowthModel.addSeries(annualSeries);
         }
-        
+
         ChartSeries accumulatedSeries;
         int accumulated;
         for(int i = 0;i < 2;i++) {

@@ -1,4 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+<!-- Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
+ * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
+ * this library. Look for the file license.txt at the root level. If you do not
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
+ * Suite 330, Boston, MA 02111-1307 USA.
+ * -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -18,35 +38,35 @@
                             <h:outputLabel for="firstName" value="#{bundle.firstName} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="lastName" value="#{bundle.lastName} *" styleClass="fieldLabel"/>
 
-                            <h:inputText id="firstName" label="#{bundle.firstName}" required="true" size="40" maxlength="50" value="#{userAccountBean.userAccount.firstName}"/>
-                            <h:inputText id="lastName" label="#{bundle.lastName}" required="true" size="40" maxlength="50" value="#{userAccountBean.userAccount.lastName}"/>
+                            <h:inputText id="firstName" label="#{bundle.firstName}" required="true" size="40" maxlength="50" value="#{userAccountMBean.userAccount.firstName}"/>
+                            <h:inputText id="lastName" label="#{bundle.lastName}" required="true" size="40" maxlength="50" value="#{userAccountMBean.userAccount.lastName}"/>
 
                             <h:outputLabel for="email" value="#{bundle.email} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="emailConfirmation" value="#{bundle.confirmEmail} *" styleClass="fieldLabel"/>
 
-                            <h:inputText id="email" label="#{bundle.email}" required="true" size="40" maxlength="100" value="#{userAccountBean.userAccount.unverifiedEmail}" onchange="formatEmail(this)">
+                            <h:inputText id="email" label="#{bundle.email}" required="true" size="40" maxlength="100" value="#{userAccountMBean.userAccount.unverifiedEmail}" onchange="formatEmail(this)">
                                 <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
                             </h:inputText>
-                            <h:inputText id="mailConfirmation" label="#{bundle.confirmEmail}" required="true" size="40" maxlength="100" value="#{userAccountBean.userAccount.emailConfirmation}" onchange="formatEmail(this)">
+                            <h:inputText id="mailConfirmation" label="#{bundle.confirmEmail}" required="true" size="40" maxlength="100" value="#{userAccountMBean.userAccount.emailConfirmation}" onchange="formatEmail(this)">
                                 <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
                             </h:inputText>
 
                             <h:outputLabel for="password" value="#{bundle.password} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="confirmPassword" value="#{bundle.confirmPassword} *" styleClass="fieldLabel"/>
 
-                            <h:inputSecret id="password" autocomplete="off" label="#{bundle.password}" required="true" size="15" maxlength="30" value="#{userAccountBean.password}"/>
-                            <h:inputSecret id="confirmPassword" autocomplete="off" label="#{bundle.passwordConfirmation}" required="true" size="15" maxlength="30" value="#{userAccountBean.passwordConfirmation}"/>
+                            <h:inputSecret id="password" autocomplete="off" label="#{bundle.password}" required="true" size="15" maxlength="30" value="#{userAccountMBean.password}"/>
+                            <h:inputSecret id="confirmPassword" autocomplete="off" label="#{bundle.passwordConfirmation}" required="true" size="15" maxlength="30" value="#{userAccountMBean.passwordConfirmation}"/>
 
                             <h:outputLabel for="gender" value="#{bundle.gender} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="birthDate" value="#{bundle.birthDate}" styleClass="fieldLabel"/>
 
-                            <h:selectOneRadio id="gender" label="#{bundle.gender}" required="true" value="#{userAccountBean.userAccount.gender}">
+                            <h:selectOneRadio id="gender" label="#{bundle.gender}" required="true" value="#{userAccountMBean.userAccount.gender}">
                                 <f:selectItem itemLabel="#{bundle.male}" itemValue="1"/>
                                 <f:selectItem itemLabel="#{bundle.female}" itemValue="0"/>
                             </h:selectOneRadio>
                             <h:panelGrid columns="2">
-                                <p:inputMask value="#{userAccountBean.userAccount.birthDate}" id="birthDate" mask="99/99/9999">
-                                    <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileBean.timeZone}"/>
+                                <p:inputMask value="#{userAccountMBean.userAccount.birthDate}" id="birthDate" mask="99/99/9999">
+                                    <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
                                 </p:inputMask>
                                 <h:outputText value="#{bundle.dateFormat}" styleClass="fieldFormat"/>
                             </h:panelGrid>
@@ -56,24 +76,24 @@
 
                             <h:panelGrid columns="2" cellpadding="0" cellspacing="0">
                                 <h:outputText value="http://"/>
-                                <h:inputText id="website" label="#{bundle.website}" size="35" maxlength="100" value="#{userAccountBean.userAccount.website}"/>
+                                <h:inputText id="website" label="#{bundle.website}" size="35" maxlength="100" value="#{userAccountMBean.userAccount.website}"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2" cellpadding="0" cellspacing="0">
                                 <h:outputText value="@"/>
-                                <h:inputText id="twitter" label="#{bundle.twitter}" size="15" maxlength="30" value="#{userAccountBean.userAccount.twitter}"/>
+                                <h:inputText id="twitter" label="#{bundle.twitter}" size="15" maxlength="30" value="#{userAccountMBean.userAccount.twitter}"/>
                             </h:panelGrid>
-                            <c:if test="#{!userAccountBean.noAccount}">
+                            <c:if test="#{!userAccountMBean.noAccount}">
                                 <h:outputLabel for="country" value="#{bundle.country} *" styleClass="fieldLabel"/>
                                 <h:outputLabel for="province" value="#{bundle.province}" styleClass="fieldLabel"/>
 
-                                <h:selectOneMenu id="country" label="#{bundle.country}" value="#{locationBean.selectedCountry}" required="true">
+                                <h:selectOneMenu id="country" label="#{bundle.country}" value="#{locationMBean.selectedCountry}" required="true">
 	                                <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-	                                <f:selectItems value="#{locationBean.countries}" var="country" itemLabel="#{country.name}" itemValue="#{country.acronym}"/>
+	                                <f:selectItems value="#{locationMBean.countries}" var="country" itemLabel="#{country.name}" itemValue="#{country.acronym}"/>
 	                                <f:ajax render="province city"/>
 	                            </h:selectOneMenu>
-                                <h:selectOneMenu id="province" label="#{bundle.province}" value="#{locationBean.selectedProvince}">
+                                <h:selectOneMenu id="province" label="#{bundle.province}" value="#{locationMBean.selectedProvince}">
 	                                <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-	                                <f:selectItems value="#{locationBean.provinces}" var="province" itemLabel="#{province.name}" itemValue="#{province.id}"/>
+	                                <f:selectItems value="#{locationMBean.provinces}" var="province" itemLabel="#{province.name}" itemValue="#{province.id}"/>
 	                                <f:ajax render="city"/>
 	                            </h:selectOneMenu>
 
@@ -81,49 +101,52 @@
                                 <h:outputLabel for="postalCode" value="#{bundle.postalCode}" styleClass="fieldLabel"/>
 
                                 <h:panelGrid columns="3">
-                                    <h:selectOneMenu id="city" label="#{bundle.city}" value="#{locationBean.selectedCity}">
+                                    <h:selectOneMenu id="city" label="#{bundle.city}" value="#{locationMBean.selectedCity}">
 		                                <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-		                                <f:selectItems value="#{locationBean.cities}" var="city" itemLabel="#{city.name}" itemValue="#{city.id}"/>
+		                                <f:selectItems value="#{locationMBean.cities}" var="city" itemLabel="#{city.name}" itemValue="#{city.id}"/>
 		                            </h:selectOneMenu>
                                     <h:outputText value="#{bundle.oor}"/>
-                                    <p:autoComplete id="cityNotListed" value="#{locationBean.cityNotListed}" completeMethod="#{locationBean.findCitiesStartingWith}"/>
+                                    <p:autoComplete id="cityNotListed" value="#{locationMBean.cityNotListed}" completeMethod="#{locationMBean.findCitiesStartingWith}"/>
                                 </h:panelGrid>
-                                <h:inputText id="postalCode" label="#{bundle.postalCode}" size="10" maxlength="10" value="#{userAccountBean.userAccount.postalCode}"/>
+                                <h:inputText id="postalCode" label="#{bundle.postalCode}" size="10" maxlength="10" value="#{userAccountMBean.userAccount.postalCode}"/>
                             </c:if>
                         </h:panelGrid>
                         <p></p>
                         <h:outputText value="#{bundle.privacy} *" styleClass="fieldLabel"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         (<h:outputText value="#{bundle.selectAtLeastOne}" styleClass="fieldNote"/>)
                         <h:panelGrid columns="2" width="700" columnClasses="panelGridColumn">
-                            <h:selectBooleanCheckbox id="mailingList" label="#{bundle.mailingList}" value="#{userAccountBean.userAccount.mailingList}"/>
+                            <h:selectBooleanCheckbox id="mailingList" label="#{bundle.mailingList}" value="#{userAccountMBean.userAccount.mailingList}"/>
                             <h:outputLabel for="mailingList" value="#{bundle.mailingListMessage}"/>
 
-                            <h:selectBooleanCheckbox id="publicProfile" label="#{bundle.publicProfile}" value="#{userAccountBean.userAccount.publicProfile}"/>
+                            <h:selectBooleanCheckbox id="publicProfile" label="#{bundle.publicProfile}" value="#{userAccountMBean.userAccount.publicProfile}"/>
                             <h:outputText value="#{bundle.publicProfileMessage}"/>
 
-                            <h:selectBooleanCheckbox id="event" label="#{bundle.event}" value="#{userAccountBean.userAccount.event}"/>
+                            <h:selectBooleanCheckbox id="event" label="#{bundle.event}" value="#{userAccountMBean.userAccount.event}"/>
                             <h:outputLabel for="event" value="#{bundle.eventMessage}"/>
 
-                            <h:selectBooleanCheckbox id="news" label="#{bundle.news}" value="#{userAccountBean.userAccount.news}"/>
+                            <h:selectBooleanCheckbox id="news" label="#{bundle.news}" value="#{userAccountMBean.userAccount.news}"/>
                             <h:outputLabel for="news" value="#{bundle.newsMessage}"/>
 
-                            <h:selectBooleanCheckbox id="generalOffer" label="#{bundle.generalOffer}" value="#{userAccountBean.userAccount.generalOffer}"/>
+                            <h:selectBooleanCheckbox id="generalOffer" label="#{bundle.generalOffer}" value="#{userAccountMBean.userAccount.generalOffer}"/>
                             <h:outputLabel for="generalOffer" value="#{bundle.generalOfferMessage}"/>
 
-                            <h:selectBooleanCheckbox id="jobOffer" label="#{bundle.jobOffer}" value="#{userAccountBean.userAccount.jobOffer}"/>
+                            <h:selectBooleanCheckbox id="jobOffer" label="#{bundle.jobOffer}" value="#{userAccountMBean.userAccount.jobOffer}"/>
                             <h:outputLabel for="jobOffer" value="#{bundle.jobOfferMessage}"/>
 
-                            <h:selectBooleanCheckbox id="sponsor" label="#{bundle.sponsorMessage}" value="#{userAccountBean.userAccount.sponsor}"/>
+                            <h:selectBooleanCheckbox id="sponsor" label="#{bundle.sponsorMessage}" value="#{userAccountMBean.userAccount.sponsor}"/>
                             <h:outputLabel for="sponsor" value="#{bundle.sponsorMessage}"/>
-                            
-                            <h:selectBooleanCheckbox id="speaker" label="#{bundle.speakerMessage}" value="#{userAccountBean.userAccount.speaker}"/>
+
+                            <h:selectBooleanCheckbox id="speaker" label="#{bundle.speakerMessage}" value="#{userAccountMBean.userAccount.speaker}"/>
                             <h:outputLabel for="speaker" value="#{bundle.speakerMessage}"/>
                         </h:panelGrid>
 
-                        <h:inputHidden id="id" value="#{userAccountBean.userAccount.id}"/>
-                        <p></p>
+                        <h:inputHidden id="id" value="#{userAccountMBean.userAccount.id}"/>
+
+                        <p><p:captcha id="captcha" label="Captcha" theme="white" language="#{bundle.confLanguage}"/></p>
+
+                        <p/>
                         <h:panelGrid columns="2">
-                            <h:commandButton value="#{bundle.register}" action="#{userAccountBean.register}"/>
+                            <h:commandButton value="#{bundle.register}" action="#{userAccountMBean.register}"/>
                             <h:button outcome="index" value="#{bundle.cancel}"/>
                         </h:panelGrid>
                     </h:form>

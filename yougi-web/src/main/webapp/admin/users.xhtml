@@ -1,4 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+<!-- Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
+ * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
+ * this library. Look for the file license.txt at the root level. If you do not
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
+ * Suite 330, Boston, MA 02111-1307 USA.
+ * -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -16,45 +36,45 @@
                             <p:tab title="#{bundle.allUsers}">
                                 <h:panelGrid columns="3">
                                     <h:outputLabel for="emailCriteria" value="#{bundle.email}" styleClass="fieldLabel"/>
-                                    <h:inputText id="emailCriteria" label="#{bundle.email}" size="30" maxlength="100" value="#{memberBean.emailCriteria}" onchange="formatEmail(this)"/>
-                                    <h:commandButton action="#{memberBean.findUserAccountByEmail}" value="#{bundle.search}"/>
+                                    <h:inputText id="emailCriteria" label="#{bundle.email}" size="30" maxlength="100" value="#{memberMBean.emailCriteria}" onchange="formatEmail(this)"/>
+                                    <h:commandButton action="#{memberMBean.findUserAccountByEmail}" value="#{bundle.search}"/>
                                 </h:panelGrid>
                                 <h:panelGrid columns="26" cellspacing="0" cellpadding="0">
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'A'}" value="A" action="#{memberBean.findUserAccountByFirstLetter('A')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'B'}" value="B" action="#{memberBean.findUserAccountByFirstLetter('B')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'C'}" value="C" action="#{memberBean.findUserAccountByFirstLetter('C')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'D'}" value="D" action="#{memberBean.findUserAccountByFirstLetter('D')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'E'}" value="E" action="#{memberBean.findUserAccountByFirstLetter('E')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'F'}" value="F" action="#{memberBean.findUserAccountByFirstLetter('F')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'G'}" value="G" action="#{memberBean.findUserAccountByFirstLetter('G')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'H'}" value="H" action="#{memberBean.findUserAccountByFirstLetter('H')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'I'}" value="I" action="#{memberBean.findUserAccountByFirstLetter('I')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'J'}" value="J" action="#{memberBean.findUserAccountByFirstLetter('J')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'K'}" value="K" action="#{memberBean.findUserAccountByFirstLetter('K')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'L'}" value="L" action="#{memberBean.findUserAccountByFirstLetter('L')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'M'}" value="M" action="#{memberBean.findUserAccountByFirstLetter('M')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'N'}" value="N" action="#{memberBean.findUserAccountByFirstLetter('N')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'O'}" value="O" action="#{memberBean.findUserAccountByFirstLetter('O')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'P'}" value="P" action="#{memberBean.findUserAccountByFirstLetter('P')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'Q'}" value="Q" action="#{memberBean.findUserAccountByFirstLetter('Q')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'R'}" value="R" action="#{memberBean.findUserAccountByFirstLetter('R')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'S'}" value="S" action="#{memberBean.findUserAccountByFirstLetter('S')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'T'}" value="T" action="#{memberBean.findUserAccountByFirstLetter('T')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'U'}" value="U" action="#{memberBean.findUserAccountByFirstLetter('U')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'V'}" value="V" action="#{memberBean.findUserAccountByFirstLetter('V')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'W'}" value="W" action="#{memberBean.findUserAccountByFirstLetter('W')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'X'}" value="X" action="#{memberBean.findUserAccountByFirstLetter('X')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'Y'}" value="Y" action="#{memberBean.findUserAccountByFirstLetter('Y')}"/>
-                                    <h:commandButton disabled="#{memberBean.firstLetterCriteria == 'Z'}" value="Z" action="#{memberBean.findUserAccountByFirstLetter('Z')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'A'}" value="A" action="#{memberMBean.findUserAccountByFirstLetter('A')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'B'}" value="B" action="#{memberMBean.findUserAccountByFirstLetter('B')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'C'}" value="C" action="#{memberMBean.findUserAccountByFirstLetter('C')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'D'}" value="D" action="#{memberMBean.findUserAccountByFirstLetter('D')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'E'}" value="E" action="#{memberMBean.findUserAccountByFirstLetter('E')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'F'}" value="F" action="#{memberMBean.findUserAccountByFirstLetter('F')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'G'}" value="G" action="#{memberMBean.findUserAccountByFirstLetter('G')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'H'}" value="H" action="#{memberMBean.findUserAccountByFirstLetter('H')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'I'}" value="I" action="#{memberMBean.findUserAccountByFirstLetter('I')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'J'}" value="J" action="#{memberMBean.findUserAccountByFirstLetter('J')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'K'}" value="K" action="#{memberMBean.findUserAccountByFirstLetter('K')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'L'}" value="L" action="#{memberMBean.findUserAccountByFirstLetter('L')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'M'}" value="M" action="#{memberMBean.findUserAccountByFirstLetter('M')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'N'}" value="N" action="#{memberMBean.findUserAccountByFirstLetter('N')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'O'}" value="O" action="#{memberMBean.findUserAccountByFirstLetter('O')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'P'}" value="P" action="#{memberMBean.findUserAccountByFirstLetter('P')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'Q'}" value="Q" action="#{memberMBean.findUserAccountByFirstLetter('Q')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'R'}" value="R" action="#{memberMBean.findUserAccountByFirstLetter('R')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'S'}" value="S" action="#{memberMBean.findUserAccountByFirstLetter('S')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'T'}" value="T" action="#{memberMBean.findUserAccountByFirstLetter('T')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'U'}" value="U" action="#{memberMBean.findUserAccountByFirstLetter('U')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'V'}" value="V" action="#{memberMBean.findUserAccountByFirstLetter('V')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'W'}" value="W" action="#{memberMBean.findUserAccountByFirstLetter('W')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'X'}" value="X" action="#{memberMBean.findUserAccountByFirstLetter('X')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'Y'}" value="Y" action="#{memberMBean.findUserAccountByFirstLetter('Y')}"/>
+                                    <h:commandButton disabled="#{memberMBean.firstLetterCriteria == 'Z'}" value="Z" action="#{memberMBean.findUserAccountByFirstLetter('Z')}"/>
                                 </h:panelGrid>
                                 <p></p>
-                                <p:dataTable value="#{memberBean.userAccounts}" var="member">
+                                <p:dataTable value="#{memberMBean.userAccounts}" var="member">
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.firstName}"/></f:facet>
-                                        <h:commandLink value="#{member.firstName} #{member.lastName}" action="#{memberBean.load(member.id)}"/>
+                                        <h:commandLink value="#{member.firstName} #{member.lastName}" action="#{memberMBean.load(member.id)}"/>
                                     </p:column>
                                     <p:column>
-                                        
+
                                         <h:outputText value="#{member.gender}">
                                             <f:converter converterId="GenderNumberToString"/>
                                         </h:outputText>
@@ -65,7 +85,7 @@
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.email}"/></f:facet>
-                                        <h:outputText value="#{member.email}"/>
+                                        <h:outputText value="#{member.postingEmail}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.age}"/></f:facet>
@@ -80,22 +100,22 @@
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.registrationDate}"/></f:facet>
                                         <h:outputText value="#{member.registrationDate}">
-                                            <f:convertDateTime pattern="#{bundle.formatDateAndTime}" timeZone="#{userProfileBean.timeZone}"/>
+                                            <f:convertDateTime pattern="#{bundle.formatDateAndTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                         </h:outputText>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.lastUpdate}"/></f:facet>
                                         <h:outputText value="#{member.lastUpdate}">
-                                            <f:convertDateTime pattern="#{bundle.formatDateAndTime}" timeZone="#{userProfileBean.timeZone}"/>
+                                            <f:convertDateTime pattern="#{bundle.formatDateAndTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                         </h:outputText>
                                     </p:column>
                                 </p:dataTable>
                             </p:tab>
                             <p:tab title="#{bundle.deactivatedMembers}">
-                                <p:dataTable value="#{memberBean.deactivatedUserAccounts}" var="deactivated">
+                                <p:dataTable value="#{memberMBean.deactivatedUserAccounts}" var="deactivated">
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.firstName}"/></f:facet>
-                                        <h:commandLink value="#{deactivated.firstName} #{deactivated.lastName}" action="#{memberBean.load(deactivated.id)}"/>
+                                        <h:commandLink value="#{deactivated.firstName} #{deactivated.lastName}" action="#{memberMBean.load(deactivated.id)}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.email}"/></f:facet>
@@ -110,7 +130,7 @@
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.date}"/></f:facet>
                                         <h:outputText value="#{deactivated.deactivationDate}">
-                                            <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileBean.timeZone}"/>
+                                            <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
                                         </h:outputText>
                                     </p:column>
                                     <p:column>

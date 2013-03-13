@@ -1,3 +1,23 @@
+# Yougi is a web application conceived to manage user groups or
+# communities focused on a certain domain of knowledge, whose members are
+# constantly sharing information and participating in social and educational
+# events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+#
+# This application is free software; you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published by the
+# Free Software Foundation; either version 2.1 of the License, or (at your
+# option) any later version.
+#
+# This application is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+# or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+# License for more details.
+#
+# There is a full copy of the GNU Lesser General Public License along with
+# this library. Look for the file license.txt at the root level. If you do not
+# find it, write to the Free Software Foundation, Inc., 59 Temple Place,
+# Suite 330, Boston, MA 02111-1307 USA.
+
 insert into update_history (db_version, app_version, db_release_notes, app_release_notes) values
    ('1.9',
     '1.09',
@@ -17,7 +37,7 @@ alter table web_source add constraint fk_provider_web_source foreign key (provid
 create table article (
     id               char(32)     not null,
     title            varchar(255) not null,
-    author           char(32)     not null,
+    author           varchar(100) not null,
     web_source       char(32)     not null,
     content          text         not null,
     summary          text             null,
@@ -28,7 +48,6 @@ create table article (
 ) engine innodb;
 
 alter table article add constraint pk_article primary key (id);
-alter table article add constraint fk_author_article foreign key (author) references user_account (id) on delete cascade;
 alter table article add constraint fk_source_article foreign key (web_source) references web_source (id) on delete cascade;
 
 alter table user_account add language varchar(5) null;

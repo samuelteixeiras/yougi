@@ -1,4 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+<!-- Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
+ * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
+ * this library. Look for the file license.txt at the root level. If you do not
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
+ * Suite 330, Boston, MA 02111-1307 USA.
+ * -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -24,14 +44,14 @@
                     <td align="right">
                         <div class="identification">
                             <c:if test="#{empty request.remoteUser}">
-                                <h:form><h:commandLink action="#{securityBackingBean.login}" value="#{bundle.signIn}"/> |
+                                <h:form><h:commandLink action="#{securityBackingMBean.login}" value="#{bundle.signIn}"/> |
                                 <h:link outcome="registration">#{bundle.register}</h:link></h:form>
                             </c:if>
                             <c:if test="#{! empty request.remoteUser}">
                                 <h:form>
                                     <h:outputText value="#{bundle.hello} "/>
-                                    <h:outputText value="#{userProfileBean.userAccount.firstName} !"/>
-                                    <h:commandLink action="#{securityBackingBean.logout}" value="#{bundle.signOut}"/>
+                                    <h:outputText value="#{userProfileMBean.userAccount.firstName} !"/>
+                                    <h:commandLink action="#{securityBackingMBean.logout}" value="#{bundle.signOut}"/>
                                 </h:form>
                             </c:if>
                         </div>
@@ -43,7 +63,7 @@
             <c:if test="#{! empty request.remoteUser}">
                 <h:form>
                     <p:menubar>
-                        <p:submenu label="#{bundle.knowledge}" rendered="#{securityBackingBean.isUserLeader}">
+                        <p:submenu label="#{bundle.knowledge}" rendered="#{securityBackingMBean.isUserLeader}">
                             <p:menuitem value="#{bundle.websites}" url="/knowledge/websites.xhtml"/>
                             <p:menuitem value="#{bundle.topics}" url="/knowledge/topics.xhtml"/>
                             <p:menuitem value="#{bundle.mailingList}" url="/knowledge/mailing_lists.xhtml"/>
@@ -59,7 +79,7 @@
                             <p:menuitem value="#{bundle.changePassword}" url="/profile/change_password.xhtml"/>
                             <p:menuitem value="#{bundle.changeEmail}" url="/profile/change_email.xhtml"/>
                         </p:submenu>
-                        <p:submenu label="#{bundle.administration}" rendered="#{securityBackingBean.isUserLeader}">
+                        <p:submenu label="#{bundle.administration}" rendered="#{securityBackingMBean.isUserLeader}">
                             <p:menuitem value="#{bundle.users}" url="/admin/users.xhtml"/>
                             <p:menuitem value="#{bundle.groups}" url="/admin/groups.xhtml"/>
                             <p:submenu label="#{bundle.location}">
@@ -83,7 +103,7 @@
         <div id="bottom">
             <div class="footer">
                 <p>Created and maintained by the <a href="http://www.cejug.org" target="_blank">CEJUG</a> Community! - <b><h:link outcome="/about" value="#{bundle.versionNumber}"/></b> -
-                You can also contribute to this project at GitHub. <a href="https://github.com/htmfilho/jug" target="_blank">Fork it now!</a>!
+                You can also contribute to this project at GitHub. <a href="https://github.com/htmfilho/yougi" target="_blank">Fork it now!</a>!
                 <script type="text/javascript" src="http://www.ohloh.net/p/487784/widgets/project_thin_badge.js"></script></p>
             </div>
         </div>

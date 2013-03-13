@@ -1,21 +1,21 @@
-/* Yougi is a web application conceived to manage user groups or 
- * communities focused on a certain domain of knowledge, whose members are 
- * constantly sharing information and participating in social and educational 
+/* Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
- * 
- * This application is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by the 
- * Free Software Foundation; either version 2.1 of the License, or (at your 
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
  * option) any later version.
- * 
- * This application is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
- * 
- * There is a full copy of the GNU Lesser General Public License along with 
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
  * this library. Look for the file license.txt at the root level. If you do not
- * find it, write to the Free Software Foundation, Inc., 59 Temple Place, 
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA 02111-1307 USA.
  * */
 package org.cejug.yougi.event.web.controller;
@@ -27,11 +27,11 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import org.cejug.yougi.business.UserAccountBsn;
+import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.UserAccount;
-import org.cejug.yougi.event.business.EventBsn;
-import org.cejug.yougi.event.business.EventSessionBsn;
-import org.cejug.yougi.event.business.SpeakerBsn;
+import org.cejug.yougi.event.business.EventBean;
+import org.cejug.yougi.event.business.EventSessionBean;
+import org.cejug.yougi.event.business.SpeakerBean;
 import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.EventSession;
 import org.cejug.yougi.event.entity.Speaker;
@@ -46,16 +46,16 @@ public class SpeakerMBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    private SpeakerBsn speakerBsn;
+    private SpeakerBean speakerBean;
 
     @EJB
-    private EventBsn eventBsn;
-    
+    private EventBean eventBean;
+
     @EJB
-    private EventSessionBsn eventSessionBsn;
-    
+    private EventSessionBean eventSessionBean;
+
     @EJB
-    private UserAccountBsn userAccountBsn;
+    private UserAccountBean userAccountBean;
 
     @ManagedProperty(value = "#{param.id}")
     private String id;
@@ -64,21 +64,21 @@ public class SpeakerMBean implements Serializable {
     private String eventId;
 
     private Event event;
-    
+
     private Speaker speaker;
 
     private List<Event> events;
-    
+
     private List<EventSession> eventSessions;
-    
+
     private List<UserAccount> userAccounts;
-    
+
     private List<Speaker> speakers;
 
     private String selectedEvent;
-    
+
     private String selectedEventSession;
-    
+
     private String selectedUserAccount;
 
     public SpeakerMBean() {
@@ -119,7 +119,7 @@ public class SpeakerMBean implements Serializable {
 
     public List<Speaker> getSpeakers() {
         if (this.speakers == null) {
-            this.speakers = speakerBsn.findSpeakers(this.event);
+            this.speakers = speakerBean.findSpeakers(this.event);
         }
         return this.speakers;
     }
@@ -162,11 +162,11 @@ public class SpeakerMBean implements Serializable {
 
     public List<Event> getEvents() {
         if (this.events == null) {
-            this.events = eventBsn.findEvents();
+            this.events = eventBean.findEvents();
         }
         return this.events;
     }
-    
+
     /**
      * @return the eventSessions
      */
@@ -198,39 +198,39 @@ public class SpeakerMBean implements Serializable {
     @PostConstruct
     public void load() {
         if (this.eventId != null && !this.eventId.isEmpty()) {
-            this.event = eventBsn.findEvent(eventId);
+            this.event = eventBean.findEvent(eventId);
             this.speaker.setEvent(this.event);
             this.selectedEvent = this.event.getId();
         }
 
         if (this.id != null && !this.id.isEmpty()) {
-            this.speaker = speakerBsn.findSpeaker(id);
+            this.speaker = speakerBean.findSpeaker(id);
             this.selectedEvent = this.speaker.getEvent().getId();
             this.selectedEventSession = this.speaker.getSession().getId();
             this.selectedUserAccount = this.speaker.getUserAccount().getId();
         }
-        
-        this.events = eventBsn.findEvents();
-        this.eventSessions = eventSessionBsn.findEventSessions(this.event);
-        this.userAccounts = userAccountBsn.findUserAccounts();
+
+        this.events = eventBean.findEvents();
+        this.eventSessions = eventSessionBean.findEventSessions(this.event);
+        this.userAccounts = userAccountBean.findUserAccounts();
     }
 
     public String save() {
-        Event evt = eventBsn.findEvent(selectedEvent);
+        Event evt = eventBean.findEvent(selectedEvent);
         this.speaker.setEvent(evt);
-        
-        EventSession evtSes = eventSessionBsn.findEventSession(selectedEventSession);
+
+        EventSession evtSes = eventSessionBean.findEventSession(selectedEventSession);
         this.speaker.setSession(evtSes);
-        
-        UserAccount usrAcc = userAccountBsn.findUserAccount(selectedUserAccount);
+
+        UserAccount usrAcc = userAccountBean.findUserAccount(selectedUserAccount);
         this.speaker.setUserAccount(usrAcc);
-        
-        speakerBsn.save(this.speaker);
+
+        speakerBean.save(this.speaker);
         return "speakers?faces-redirect=true&eventId=" + evt.getId();
     }
 
     public String remove() {
-        speakerBsn.remove(this.speaker.getId());
+        speakerBean.remove(this.speaker.getId());
         return "speakers?faces-redirect=true&eventId=" + this.event.getId();
     }
 }

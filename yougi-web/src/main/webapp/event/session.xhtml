@@ -1,4 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+<!-- Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
+ * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
+ * this library. Look for the file license.txt at the root level. If you do not
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
+ * Suite 330, Boston, MA 02111-1307 USA.
+ * -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -19,29 +39,29 @@
                                 <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
                                 <f:selectItems value="#{eventSessionMBean.events}" var="event" itemLabel="#{event.name}" itemValue="#{event.id}"/>
                             </h:selectOneMenu>
-                            
+
                             <h:outputLabel for="title" value="#{bundle.title} *" styleClass="fieldLabel"/>
                             <h:inputText id="title" label="#{bundle.title}" value="#{eventSessionMBean.eventSession.title}" size="60" maxlength="255" required="true" class="ui-inputfield ui-state-default ui-corner-all"/>
-                            
+
                             <h:panelGrid columns="4">
                                 <h:outputLabel for="sessionDate" value="#{bundle.date}" styleClass="fieldLabel"/>
                                 <h:outputLabel for="startTime" value="#{bundle.start}" styleClass="fieldLabel"/>
                                 <h:outputLabel for="endTime" value="#{bundle.end}" styleClass="fieldLabel"/>
                                 <h:outputLabel for="room" value="#{bundle.room}" styleClass="fieldLabel"/>
-                                
-                                <p:calendar value="#{eventSessionMBean.eventSession.sessionDate}" id="sessionDate" pattern="#{bundle.formatDate}" size="10" timeZone="#{userProfileBean.timeZone}"/>
+
+                                <p:calendar value="#{eventSessionMBean.eventSession.sessionDate}" id="sessionDate" pattern="#{bundle.formatDate}" size="10" timeZone="#{userProfileMBean.timeZone}"/>
                                 <p:inputMask value="#{eventSessionMBean.eventSession.startTime}" mask="99:99" size="5">
-                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileBean.timeZone}"/>
+                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                 </p:inputMask>
                                 <p:inputMask value="#{eventSessionMBean.eventSession.endTime}" mask="99:99" size="5">
-                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileBean.timeZone}"/>
+                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                 </p:inputMask>
                                 <h:inputText id="room" label="#{bundle.room}" value="#{eventSessionMBean.eventSession.room}" size="17" maxlength="30" class="ui-inputfield ui-state-default ui-corner-all"/>
                             </h:panelGrid>
-                            
+
                             <h:outputLabel for="abstract" value="#{bundle.abstract}" styleClass="fieldLabel"/>
                             <h:inputTextarea id="abstract" value="#{eventSessionMBean.eventSession.abstract}" label="#{bundle.abstract}" rows="4" cols="45" class="ui-inputfield ui-state-default ui-corner-all"/>
-                            
+
                             <h:outputLabel for="topics" value="#{bundle.topics} *" styleClass="fieldLabel"/>
                             <h:inputText id="topics" label="#{bundle.topics}" value="#{eventSessionMBean.eventSession.topics}" size="60" maxlength="255" class="ui-inputfield ui-state-default ui-corner-all"/>
                         </h:panelGrid>

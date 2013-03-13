@@ -1,4 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+<!-- Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
+ * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
+ * this library. Look for the file license.txt at the root level. If you do not
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
+ * Suite 330, Boston, MA 02111-1307 USA.
+ * -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -18,52 +38,52 @@
                             <p:tab title="#{bundle.properties}">
                                 <h:panelGrid columns="1">
                                     <h:outputLabel for="name" value="#{bundle.name}" style="fieldLabel"/>
-                                    <h:inputText id="name" label="#{bundle.name}" required="true" size="30" maxlength="100" value="#{cityBean.city.name}"/>
+                                    <h:inputText id="name" label="#{bundle.name}" required="true" size="30" maxlength="100" value="#{cityMBean.city.name}"/>
 
                                     <h:outputLabel for="country" value="#{bundle.country}" style="fieldLabel"/>
-                                    <h:selectOneMenu id="country" label="#{bundle.country}" value="#{locationBean.selectedCountry}">
+                                    <h:selectOneMenu id="country" label="#{bundle.country}" value="#{locationMBean.selectedCountry}">
                                         <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                        <f:selectItems value="#{locationBean.countries}" var="country" itemLabel="#{country.name}" itemValue="#{country.acronym}"/>
+                                        <f:selectItems value="#{locationMBean.countries}" var="country" itemLabel="#{country.name}" itemValue="#{country.acronym}"/>
                                         <f:ajax render="province"/>
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="province" value="#{bundle.province}" style="fieldLabel"/>
-                                    <h:selectOneMenu id="province" label="#{bundle.province}" value="#{locationBean.selectedProvince}">
+                                    <h:selectOneMenu id="province" label="#{bundle.province}" value="#{locationMBean.selectedProvince}">
                                         <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                        <f:selectItems value="#{locationBean.provinces}" var="province" itemLabel="#{province.name}" itemValue="#{province.id}"/>
+                                        <f:selectItems value="#{locationMBean.provinces}" var="province" itemLabel="#{province.name}" itemValue="#{province.id}"/>
                                     </h:selectOneMenu>
 
                                     <h:panelGrid columns="2">
-                                        <h:selectBooleanCheckbox id="valid" label="#{bundle.valid}" value="#{cityBean.city.valid}"/>
+                                        <h:selectBooleanCheckbox id="valid" label="#{bundle.valid}" value="#{cityMBean.city.valid}"/>
                                         <h:outputLabel for="valid" value="#{bundle.valid}"/>
                                     </h:panelGrid>
-                                    
+
                                     <h:panelGrid columns="3">
                                         <h:outputLabel for="latitude" value="#{bundle.latitude}" style="fieldLabel"/>
                                         <h:outputLabel for="longitude" value="#{bundle.longitude}" style="fieldLabel"/>
                                         <h:outputLabel for="timeZone" value="#{bundle.timeZone}" style="fieldLabel"/>
-                                    
-                                        <h:inputText id="latitude" label="#{bundle.latitude}" size="15" maxlength="15" value="#{cityBean.city.latitude}"/>
-                                        <h:inputText id="longitude" label="#{bundle.longitude}" size="15" maxlength="15" value="#{cityBean.city.longitude}"/>
-                                        <h:selectOneMenu id="timeZone" label="#{bundle.timeZone}" value="#{cityBean.city.timeZone}">
+
+                                        <h:inputText id="latitude" label="#{bundle.latitude}" size="15" maxlength="15" value="#{cityMBean.city.latitude}"/>
+                                        <h:inputText id="longitude" label="#{bundle.longitude}" size="15" maxlength="15" value="#{cityMBean.city.longitude}"/>
+                                        <h:selectOneMenu id="timeZone" label="#{bundle.timeZone}" value="#{cityMBean.city.timeZone}">
                                             <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                            <f:selectItems value="#{cityBean.timeZones}" var="tz" itemLabel="#{tz}" itemValue="#{tz}"/>
+                                            <f:selectItems value="#{cityMBean.timeZones}" var="tz" itemLabel="#{tz}" itemValue="#{tz}"/>
                                         </h:selectOneMenu>
                                     </h:panelGrid>
 
                                     <h:panelGrid columns="3">
-                                        <h:commandButton value="#{bundle.save}" action="#{cityBean.save}"/>
-                                        <h:commandButton value="#{bundle.remove}" action="#{cityBean.remove}"/>
-                                        <h:commandButton value="#{bundle.cancel}" action="#{cityBean.cancel}"/>
+                                        <h:commandButton value="#{bundle.save}" action="#{cityMBean.save}"/>
+                                        <h:commandButton value="#{bundle.remove}" action="#{cityMBean.remove}"/>
+                                        <h:commandButton value="#{bundle.cancel}" action="#{cityMBean.cancel}"/>
                                     </h:panelGrid>
                                 </h:panelGrid>
-                                <h:inputHidden id="id" value="#{cityBean.city.id}"/>
+                                <h:inputHidden id="id" value="#{cityMBean.city.id}"/>
                             </p:tab>
                             <p:tab title="#{bundle.inhabitants}">
-                                <p:dataTable value="#{cityBean.inhabitants}" var="inhabitant">
+                                <p:dataTable value="#{cityMBean.inhabitants}" var="inhabitant">
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.firstName}"/></f:facet>
-                                        <h:commandLink value="#{inhabitant.firstName}" action="#{memberBean.load(inhabitant.id)}"/>
+                                        <h:commandLink value="#{inhabitant.firstName}" action="#{memberMBean.load(inhabitant.id)}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.lastName}"/></f:facet>
@@ -80,13 +100,13 @@
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.registrationDate}"/></f:facet>
                                         <h:outputText value="#{inhabitant.registrationDate}">
-                                            <f:convertDateTime pattern="#{bundle.formatDateAndTime}" timeZone="#{userProfileBean.timeZone}"/>
+                                            <f:convertDateTime pattern="#{bundle.formatDateAndTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                         </h:outputText>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.lastUpdate}"/></f:facet>
                                         <h:outputText value="#{inhabitant.lastUpdate}">
-                                            <f:convertDateTime pattern="#{bundle.formatDateAndTime}" timeZone="#{userProfileBean.timeZone}"/>
+                                            <f:convertDateTime pattern="#{bundle.formatDateAndTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                         </h:outputText>
                                     </p:column>
                                 </p:dataTable>

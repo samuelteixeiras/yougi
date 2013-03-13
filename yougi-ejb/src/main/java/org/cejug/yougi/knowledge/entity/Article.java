@@ -27,6 +27,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.cejug.yougi.entity.Identified;
 
@@ -36,6 +37,7 @@ import org.cejug.yougi.entity.Identified;
  * @author Hildeberto Mendonca  - http://www.hildeberto.com
  */
 @Entity
+@Table(name = "article")
 public class Article implements Serializable, Identified {
     private static final long serialVersionUID = 1L;
 
@@ -179,17 +181,17 @@ public class Article implements Serializable, Identified {
         if (!(object instanceof Article)) {
             return false;
         }
+        boolean equals = false;
         Article other = (Article) object;
 
-        if(this.id != null) {
-            return this.id.equals(other.id);
+        if(this.id != null && other.id != null) {
+            equals = this.id.equals(other.id);
         }
         else if(this.permanentLink != null) {
-            return this.permanentLink.equals(other.permanentLink);
+            equals = this.permanentLink.equals(other.permanentLink);
         }
-        else {
-            return false;
-        }
+
+        return equals;
     }
 
     @Override

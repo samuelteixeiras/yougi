@@ -27,7 +27,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import org.cejug.yougi.business.UserAccountBsn;
+import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.knowledge.business.ArticleBean;
 import org.cejug.yougi.knowledge.business.WebSourceBean;
@@ -44,7 +44,7 @@ public class WebSourceMBean {
     private static final Logger LOGGER = Logger.getLogger(WebSourceMBean.class.getName());
 
     @EJB
-    private UserAccountBsn userAccountBsn;
+    private UserAccountBean userAccountBean;
 
     @EJB
     private WebSourceBean webSourceBean;
@@ -82,7 +82,7 @@ public class WebSourceMBean {
 
     public List<UserAccount> getUsersWithWebsite() {
         if(this.usersWithWebsite == null) {
-            this.usersWithWebsite = userAccountBsn.findUserAccountsWithWebsite();
+            this.usersWithWebsite = userAccountBean.findUserAccountsWithWebsite();
         }
         return this.usersWithWebsite;
     }
@@ -109,7 +109,7 @@ public class WebSourceMBean {
     @PostConstruct
     public void load() {
         if(this.userId != null && !this.userId.isEmpty()) {
-            this.provider = userAccountBsn.findUserAccount(this.userId);
+            this.provider = userAccountBean.findUserAccount(this.userId);
             this.webSource = webSourceBean.findWebSourceByProvider(this.provider);
             if(this.webSource == null) {
                 this.webSource = new WebSource();
