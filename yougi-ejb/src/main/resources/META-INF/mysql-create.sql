@@ -46,7 +46,6 @@ drop table if exists country;
 drop table if exists language;
 drop table if exists message_template;
 drop table if exists application_property;
-drop table if exists update_history;
 
 ###############################################################################
 # Core                                                                        #

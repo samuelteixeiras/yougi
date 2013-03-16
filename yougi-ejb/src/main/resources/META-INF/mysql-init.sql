@@ -46,7 +46,6 @@ delete from country;
 delete from language;
 delete from message_template;
 delete from application_property;
-delete from update_history;
 
 insert into application_property values ('timezone', 'UTC 0:00'),
                                         ('url', 'http://localhost:8080/jug'),
