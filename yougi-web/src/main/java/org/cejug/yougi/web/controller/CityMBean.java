@@ -133,8 +133,4 @@ public class CityMBean implements Serializable {
         locationBean.removeCity(city.getId());
         return "cities?faces-redirect=true";
     }
-
-    public String cancel() {
-        return "cities?faces-redirect=true";
-    }
 }

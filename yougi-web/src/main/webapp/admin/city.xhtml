@@ -37,17 +37,17 @@
                         <p:tabView>
                             <p:tab title="#{bundle.properties}">
                                 <h:panelGrid columns="1">
-                                    <h:outputLabel for="name" value="#{bundle.name}" style="fieldLabel"/>
+                                    <h:outputLabel for="name" value="#{bundle.name} *" styleClass="fieldLabel"/>
                                     <h:inputText id="name" label="#{bundle.name}" required="true" size="30" maxlength="100" value="#{cityMBean.city.name}"/>
 
-                                    <h:outputLabel for="country" value="#{bundle.country}" style="fieldLabel"/>
-                                    <h:selectOneMenu id="country" label="#{bundle.country}" value="#{locationMBean.selectedCountry}">
+                                    <h:outputLabel for="country" value="#{bundle.country} *" styleClass="fieldLabel"/>
+                                    <h:selectOneMenu id="country" label="#{bundle.country}" value="#{locationMBean.selectedCountry}" required="true">
                                         <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
                                         <f:selectItems value="#{locationMBean.countries}" var="country" itemLabel="#{country.name}" itemValue="#{country.acronym}"/>
                                         <f:ajax render="province"/>
                                     </h:selectOneMenu>
 
-                                    <h:outputLabel for="province" value="#{bundle.province}" style="fieldLabel"/>
+                                    <h:outputLabel for="province" value="#{bundle.province}" styleClass="fieldLabel"/>
                                     <h:selectOneMenu id="province" label="#{bundle.province}" value="#{locationMBean.selectedProvince}">
                                         <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
                                         <f:selectItems value="#{locationMBean.provinces}" var="province" itemLabel="#{province.name}" itemValue="#{province.id}"/>
@@ -59,9 +59,9 @@
                                     </h:panelGrid>
 
                                     <h:panelGrid columns="3">
-                                        <h:outputLabel for="latitude" value="#{bundle.latitude}" style="fieldLabel"/>
-                                        <h:outputLabel for="longitude" value="#{bundle.longitude}" style="fieldLabel"/>
-                                        <h:outputLabel for="timeZone" value="#{bundle.timeZone}" style="fieldLabel"/>
+                                        <h:outputLabel for="latitude" value="#{bundle.latitude}" styleClass="fieldLabel"/>
+                                        <h:outputLabel for="longitude" value="#{bundle.longitude}" styleClass="fieldLabel"/>
+                                        <h:outputLabel for="timeZone" value="#{bundle.timeZone}" styleClass="fieldLabel"/>
 
                                         <h:inputText id="latitude" label="#{bundle.latitude}" size="15" maxlength="15" value="#{cityMBean.city.latitude}"/>
                                         <h:inputText id="longitude" label="#{bundle.longitude}" size="15" maxlength="15" value="#{cityMBean.city.longitude}"/>
@@ -74,7 +74,7 @@
                                     <h:panelGrid columns="3">
                                         <h:commandButton value="#{bundle.save}" action="#{cityMBean.save}"/>
                                         <h:commandButton value="#{bundle.remove}" action="#{cityMBean.remove}"/>
-                                        <h:commandButton value="#{bundle.cancel}" action="#{cityMBean.cancel}"/>
+                                        <h:button value="#{bundle.cancel}" outcome="cities"/>
                                     </h:panelGrid>
                                 </h:panelGrid>
                                 <h:inputHidden id="id" value="#{cityMBean.city.id}"/>

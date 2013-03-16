@@ -71,9 +71,7 @@ public class LocationMBean {
     }
 
     public List<Country> getCountries() {
-        if (this.countries == null) {
-            this.countries = locationBean.findCountries();
-        }
+        this.countries = locationBean.findCountries();
         return this.countries;
     }
 
@@ -138,6 +136,22 @@ public class LocationMBean {
         }
     }
 
+    public Province getProvince() {
+        if (this.selectedProvince != null && !this.selectedProvince.isEmpty()) {
+            return locationBean.findProvince(this.selectedProvince);
+        } else {
+            return null;
+        }
+    }
+
+    public City getCity() {
+        if (this.selectedCity != null && !this.selectedCity.isEmpty()) {
+            return locationBean.findCity(this.selectedCity);
+        } else {
+            return null;
+        }
+    }
+
     public String getSelectedCountry() {
         return selectedCountry;
     }
@@ -148,14 +162,6 @@ public class LocationMBean {
         this.selectedCity = null;
     }
 
-    public Province getProvince() {
-        if (this.selectedProvince != null && !this.selectedProvince.isEmpty()) {
-            return locationBean.findProvince(this.selectedProvince);
-        } else {
-            return null;
-        }
-    }
-
     public String getSelectedProvince() {
         return selectedProvince;
     }
@@ -163,14 +169,6 @@ public class LocationMBean {
     public void setSelectedProvince(String selectedProvince) {
         this.selectedProvince = selectedProvince;
         this.selectedCity = null;
-    }
-
-    public City getCity() {
-        if (this.selectedCity != null && !this.selectedCity.isEmpty()) {
-            return locationBean.findCity(this.selectedCity);
-        } else {
-            return null;
-        }
     }
 
     public String getSelectedCity() {
