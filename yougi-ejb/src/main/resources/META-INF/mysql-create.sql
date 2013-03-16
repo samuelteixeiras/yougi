@@ -52,16 +52,6 @@ drop table if exists update_history;
 # Core                                                                        #
 ###############################################################################
 
-create table update_history (
-    db_version        varchar(10) not null,
-    app_version       varchar(10) not null,
-    date_release      timestamp   not null default CURRENT_TIMESTAMP,
-    db_release_notes  text            null,
-    app_release_notes text            null
-) engine = MyISAM;
-
-alter table update_history add constraint pk_update_history primary key (db_version, app_version);
-
 create table application_property (
     property_key   varchar(100) not null,
     property_value text             null
