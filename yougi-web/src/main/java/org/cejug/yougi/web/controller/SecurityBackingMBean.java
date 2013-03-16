@@ -72,6 +72,17 @@ public class SecurityBackingMBean {
         }
     }
 
+    public String register() {
+        if(userAccountBean.thereIsNoAccount()) {
+            ResourceBundleHelper bundle = new ResourceBundleHelper();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getMessage("infoFirstUser"), ""));
+            return "registration";
+        }
+        else {
+            return "registration?faces-redirect=true";
+        }
+    }
+
     /**
      * Perform the logout of the user by removing the user from the session and
      * destroying the session.

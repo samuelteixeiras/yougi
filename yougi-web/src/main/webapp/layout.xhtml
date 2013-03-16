@@ -45,7 +45,7 @@
                         <div class="identification">
                             <c:if test="#{empty request.remoteUser}">
                                 <h:form><h:commandLink action="#{securityBackingMBean.login}" value="#{bundle.signIn}"/> |
-                                <h:link outcome="registration">#{bundle.register}</h:link></h:form>
+                                    <h:commandLink action="#{securityBackingMBean.register}" value="#{bundle.register}"/></h:form>
                             </c:if>
                             <c:if test="#{! empty request.remoteUser}">
                                 <h:form>
