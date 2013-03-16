@@ -33,7 +33,7 @@
                 <div class="content">
                     <h1>#{bundle.registration}</h1>
                     <h:form>
-                        <h:messages styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
+                        <h:messages styleClass="alertMessage" globalOnly="true" infoClass="infoMessage" errorClass="errorMessage"/>
                         <h:panelGrid columns="2">
                             <h:outputLabel for="firstName" value="#{bundle.firstName} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="lastName" value="#{bundle.lastName} *" styleClass="fieldLabel"/>
@@ -41,21 +41,30 @@
                             <h:inputText id="firstName" label="#{bundle.firstName}" required="true" size="40" maxlength="50" value="#{userAccountMBean.userAccount.firstName}"/>
                             <h:inputText id="lastName" label="#{bundle.lastName}" required="true" size="40" maxlength="50" value="#{userAccountMBean.userAccount.lastName}"/>
 
+                            <h:message for="firstName" errorClass="errorMessage"/>
+                            <h:message for="lastName" errorClass="errorMessage"/>
+
                             <h:outputLabel for="email" value="#{bundle.email} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="emailConfirmation" value="#{bundle.confirmEmail} *" styleClass="fieldLabel"/>
 
-                            <h:inputText id="email" label="#{bundle.email}" required="true" validatorMessage="#{bundle.warnCode0004}" size="40" maxlength="100" value="#{userAccountMBean.userAccount.unverifiedEmail}" onchange="formatEmail(this);">
+                            <h:inputText id="email" label="#{bundle.email}" required="true" size="40" maxlength="100" value="#{userAccountMBean.userAccount.unverifiedEmail}" onchange="formatEmail(this);">
                                 <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
                             </h:inputText>
                             <h:inputText id="mailConfirmation" label="#{bundle.confirmEmail}" required="true" size="40" maxlength="100" value="#{userAccountMBean.userAccount.emailConfirmation}" onchange="formatEmail(this);">
                                 <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
                             </h:inputText>
 
+                            <h:message for="email" errorClass="errorMessage"/>
+                            <h:message for="mailConfirmation" errorClass="errorMessage"/>
+
                             <h:outputLabel for="password" value="#{bundle.password} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="confirmPassword" value="#{bundle.confirmPassword} *" styleClass="fieldLabel"/>
 
                             <h:inputSecret id="password" autocomplete="off" label="#{bundle.password}" required="true" size="15" maxlength="30" value="#{userAccountMBean.password}"/>
                             <h:inputSecret id="confirmPassword" autocomplete="off" label="#{bundle.passwordConfirmation}" required="true" size="15" maxlength="30" value="#{userAccountMBean.passwordConfirmation}"/>
+
+                            <h:message for="password" errorClass="errorMessage"/>
+                            <h:message for="confirmPassword" errorClass="errorMessage"/>
 
                             <h:outputLabel for="gender" value="#{bundle.gender} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="birthDate" value="#{bundle.birthDate}" styleClass="fieldLabel"/>
@@ -70,6 +79,9 @@
                                 </p:inputMask>
                                 <h:outputText value="#{bundle.dateFormat}" styleClass="fieldFormat"/>
                             </h:panelGrid>
+
+                            <h:message for="gender" errorClass="errorMessage"/>
+                            <h:outputText/>
 
                             <h:outputLabel for="website" value="#{bundle.website}" styleClass="fieldLabel"/>
                             <h:outputLabel for="twitter" value="#{bundle.twitter}" styleClass="fieldLabel"/>
@@ -97,6 +109,9 @@
 	                                <f:ajax render="city"/>
 	                            </h:selectOneMenu>
 
+                                <h:message for="country" errorClass="errorMessage"/>
+                                <h:outputText/>
+
                                 <h:outputLabel for="city" value="#{bundle.city} *" styleClass="fieldLabel"/>
                                 <h:outputLabel for="postalCode" value="#{bundle.postalCode}" styleClass="fieldLabel"/>
 
@@ -109,6 +124,9 @@
                                     <p:autoComplete id="cityNotListed" value="#{locationMBean.cityNotListed}" completeMethod="#{locationMBean.findCitiesStartingWith}"/>
                                 </h:panelGrid>
                                 <h:inputText id="postalCode" label="#{bundle.postalCode}" size="10" maxlength="10" value="#{userAccountMBean.userAccount.postalCode}"/>
+
+                                <h:message for="city" errorClass="errorMessage"/>
+                                <h:outputText/>
                             </c:if>
                         </h:panelGrid>
                         <p></p>
