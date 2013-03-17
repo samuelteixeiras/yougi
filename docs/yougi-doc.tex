@@ -150,6 +150,8 @@ When the event has passed, no information about the event can be changed anymore
 
 \section{Mailing Lists Management}
 
+\section{Web Content Agregation}
+
 \part{Technical Guide}
 
 \chapter{Architecture}
@@ -265,6 +267,12 @@ Going into details about the chosen technologies, we describe each one of them, 
 \caption{Database relational model}
 \label{fig:relational-model}
 \end{figure}
+
+\subsection{Liquibase}
+
+To keep the database model up-to-date, Yougi uses the Framework Liquibase\footnote{Liquibase. Database Change Management.  http://www.liquibase.org.}. This framework empowers the application to update the database during deployment time. It simplies the upgrade of the application, reducing it to a simple deployment.
+
+During development time, if the database needs to change, the developer should add change sets to one or several xml files located in the module yougi-web, at src/main/resources/org/cejug/yougi/db/changelog.
 
 \chapter{Installation}
 \label{chp:installation}
@@ -675,5 +683,8 @@ mail.smtp.starttls.required & boolean & If true, requires the use of the STARTTL
 \backmatter
 
 \printindex
+
+\begin{thebibliography}{99.}
+\end{thebibliography}
 
 \end{document}
