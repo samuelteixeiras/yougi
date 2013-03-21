@@ -32,18 +32,21 @@
                 <div class="content">
                     <h1>#{bundle.properties}</h1>
                     <h:form>
-                        <h:messages styleClass="alertMessage" infoClass="infoMessage"/>
+                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
                         <h:panelGrid columns="3" columnClasses="panelGridColumn, panelGridColumn, panelGridColumn">
                             <p:fieldset legend="#{bundle.application}">
                                 <h:panelGrid>
                                     <h:outputLabel for="groupName" value="#{bundle.groupName}" styleClass="fieldLabel"/>
                                     <h:inputText id="groupName" label="#{bundle.groupName}" size="30" maxlength="100" value="#{applicationPropertiesMBean.applicationProperties['groupName']}"/>
+                                    <h:message for="groupName" errorClass="errorMessage"/>
 
                                     <h:outputLabel for="url" value="#{bundle.url}" styleClass="fieldLabel"/>
                                     <h:inputText id="url" label="#{bundle.url}" size="30" maxlength="100" value="#{applicationPropertiesMBean.applicationProperties['url']}"/>
+                                    <h:message for="url" errorClass="errorMessage"/>
 
                                     <h:outputLabel for="fileRepositoryPath" value="#{bundle.fileRepositoryPath}" styleClass="fieldLabel"/>
                                     <h:inputText id="fileRepositoryPath" label="#{bundle.fileRepositoryPath}" size="30" maxlength="100" value="#{applicationPropertiesMBean.applicationProperties['fileRepositoryPath']}"/>
+                                    <h:message for="fileRepositoryPath" errorClass="errorMessage"/>
                                 </h:panelGrid>
                             </p:fieldset>
 
@@ -64,13 +67,13 @@
 
                             <p:fieldset legend="#{bundle.internationalization}">
                                 <h:panelGrid>
-                                    <h:outputLabel for="timeZone" value="#{bundle.timeZone}" style="fieldLabel"/>
+                                    <h:outputLabel for="timeZone" value="#{bundle.timeZone}" styleClass="fieldLabel"/>
                                     <h:selectOneMenu id="timeZone" label="#{bundle.timeZone}" value="#{applicationPropertiesMBean.applicationProperties['timezone']}">
                                         <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
                                         <f:selectItems value="#{applicationPropertiesMBean.timeZones}" var="tz" itemLabel="#{tz}" itemValue="#{tz}"/>
                                     </h:selectOneMenu>
 
-                                    <h:outputLabel for="language" value="#{bundle.language}" style="fieldLabel"/>
+                                    <h:outputLabel for="language" value="#{bundle.language}" styleClass="fieldLabel"/>
                                     <h:selectOneMenu id="language" label="#{bundle.language}" value="#{applicationPropertiesMBean.applicationProperties['language']}">
                                         <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
                                         <f:selectItems value="#{applicationPropertiesMBean.languages}" var="lang" itemLabel="#{lang.name}" itemValue="#{lang.acronym}"/>

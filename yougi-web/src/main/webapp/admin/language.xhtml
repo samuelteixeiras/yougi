@@ -30,16 +30,18 @@
                 <div class="content">
                     <h1>#{bundle.language}</h1>
                     <h:form>
-                        <h:messages styleClass="alertMessage"/>
+                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
                         <h:panelGrid columns="1">
                             <h:outputLabel for="name" value="#{bundle.name} *" styleClass="fieldLabel"/>
                             <h:inputText id="name" label="#{bundle.name}" required="true" size="20" maxlength="20" value="#{languageMBean.language.name}"/>
+                            <h:message for="name" errorClass="errorMessage"/>
 
                             <h:outputText value="#{bundle.acronym}" styleClass="fieldLabel"/>
                             <h:outputText value="#{languageMBean.language.acronym}"/>
 
                             <h:inputHidden id="acronym" value="#{languageMBean.language.acronym}"/>
                         </h:panelGrid>
+
                         <h:panelGrid columns="2">
                             <h:commandButton value="#{bundle.save}" action="#{topicMBean.save}"/>
                             <h:button value="#{bundle.cancel}" outcome="languages"/>

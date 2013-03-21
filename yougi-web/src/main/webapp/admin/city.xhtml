@@ -32,13 +32,14 @@
                 <div class="content">
                     <h1>#{bundle.city}</h1>
                     <h:form>
-                        <h:messages styleClass="alertMessage"/>
+                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
 
                         <p:tabView>
                             <p:tab title="#{bundle.properties}">
                                 <h:panelGrid columns="1">
                                     <h:outputLabel for="name" value="#{bundle.name} *" styleClass="fieldLabel"/>
                                     <h:inputText id="name" label="#{bundle.name}" required="true" size="30" maxlength="100" value="#{cityMBean.city.name}"/>
+                                    <h:message for="name" errorClass="errorMessage"/>
 
                                     <h:outputLabel for="country" value="#{bundle.country} *" styleClass="fieldLabel"/>
                                     <h:selectOneMenu id="country" label="#{bundle.country}" value="#{locationMBean.selectedCountry}" required="true">
@@ -46,6 +47,7 @@
                                         <f:selectItems value="#{locationMBean.countries}" var="country" itemLabel="#{country.name}" itemValue="#{country.acronym}"/>
                                         <f:ajax render="province"/>
                                     </h:selectOneMenu>
+                                    <h:message for="country" errorClass="errorMessage"/>
 
                                     <h:outputLabel for="province" value="#{bundle.province}" styleClass="fieldLabel"/>
                                     <h:selectOneMenu id="province" label="#{bundle.province}" value="#{locationMBean.selectedProvince}">
@@ -63,21 +65,30 @@
                                         <h:outputLabel for="longitude" value="#{bundle.longitude}" styleClass="fieldLabel"/>
                                         <h:outputLabel for="timeZone" value="#{bundle.timeZone}" styleClass="fieldLabel"/>
 
-                                        <h:inputText id="latitude" label="#{bundle.latitude}" size="15" maxlength="15" value="#{cityMBean.city.latitude}"/>
-                                        <h:inputText id="longitude" label="#{bundle.longitude}" size="15" maxlength="15" value="#{cityMBean.city.longitude}"/>
-                                        <h:selectOneMenu id="timeZone" label="#{bundle.timeZone}" value="#{cityMBean.city.timeZone}">
-                                            <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                            <f:selectItems value="#{cityMBean.timeZones}" var="tz" itemLabel="#{tz}" itemValue="#{tz}"/>
-                                        </h:selectOneMenu>
-                                    </h:panelGrid>
-
-                                    <h:panelGrid columns="3">
-                                        <h:commandButton value="#{bundle.save}" action="#{cityMBean.save}"/>
-                                        <h:commandButton value="#{bundle.remove}" action="#{cityMBean.remove}"/>
-                                        <h:button value="#{bundle.cancel}" outcome="cities"/>
+                                        <h:panelGroup>
+                                            <h:inputText id="latitude" label="#{bundle.latitude}" size="15" maxlength="15" value="#{cityMBean.city.latitude}"/>
+                                            <br/><h:message for="latitude" errorClass="errorMessage"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup>
+                                            <h:inputText id="longitude" label="#{bundle.longitude}" size="15" maxlength="15" value="#{cityMBean.city.longitude}"/>
+                                            <br/><h:message for="longitude" errorClass="errorMessage"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup>
+                                            <h:selectOneMenu id="timeZone" label="#{bundle.timeZone}" value="#{cityMBean.city.timeZone}">
+                                                <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
+                                                <f:selectItems value="#{cityMBean.timeZones}" var="tz" itemLabel="#{tz}" itemValue="#{tz}"/>
+                                            </h:selectOneMenu>
+                                            <br/><h:message for="timeZone" errorClass="errorMessage"/>
+                                        </h:panelGroup>
                                     </h:panelGrid>
                                 </h:panelGrid>
                                 <h:inputHidden id="id" value="#{cityMBean.city.id}"/>
+
+                                <h:panelGrid columns="3">
+                                    <h:commandButton value="#{bundle.save}" action="#{cityMBean.save}"/>
+                                    <h:commandButton value="#{bundle.remove}" action="#{cityMBean.remove}"/>
+                                    <h:button value="#{bundle.cancel}" outcome="cities"/>
+                                </h:panelGrid>
                             </p:tab>
                             <p:tab title="#{bundle.inhabitants}">
                                 <p:dataTable value="#{cityMBean.inhabitants}" var="inhabitant">

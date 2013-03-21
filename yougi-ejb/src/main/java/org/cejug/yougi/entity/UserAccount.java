@@ -488,11 +488,6 @@ public class UserAccount implements Serializable, Identified {
         }
     }
 
-    private String generateConfirmationCode() {
-        UUID uuid = UUID.randomUUID();
-        return uuid.toString().replaceAll("-", "");
-    }
-
     @Override
     public String toString() {
         return getFullName();

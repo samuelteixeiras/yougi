@@ -38,129 +38,144 @@
                             <h:outputLabel for="firstName" value="#{bundle.firstName} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="lastName" value="#{bundle.lastName} *" styleClass="fieldLabel"/>
 
-                            <h:inputText id="firstName" label="#{bundle.firstName}" required="true" size="40" maxlength="50" value="#{userAccountMBean.userAccount.firstName}"/>
-                            <h:inputText id="lastName" label="#{bundle.lastName}" required="true" size="40" maxlength="50" value="#{userAccountMBean.userAccount.lastName}"/>
-
-                            <h:message for="firstName" errorClass="errorMessage"/>
-                            <h:message for="lastName" errorClass="errorMessage"/>
+                            <h:panelGroup>
+                                <h:inputText id="firstName" label="#{bundle.firstName}" required="true" size="40" maxlength="50" value="#{userAccountMBean.userAccount.firstName}"/>
+                                <h:message for="firstName" errorClass="errorMessage"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:inputText id="lastName" label="#{bundle.lastName}" required="true" size="40" maxlength="50" value="#{userAccountMBean.userAccount.lastName}"/>
+                                <h:message for="lastName" errorClass="errorMessage"/>
+                            </h:panelGroup>
 
                             <h:outputLabel for="email" value="#{bundle.email} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="emailConfirmation" value="#{bundle.confirmEmail} *" styleClass="fieldLabel"/>
 
-                            <h:inputText id="email" label="#{bundle.email}" required="true" size="40" maxlength="100" value="#{userAccountMBean.userAccount.unverifiedEmail}" onchange="formatEmail(this);">
-                                <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
-                            </h:inputText>
-                            <h:inputText id="mailConfirmation" label="#{bundle.confirmEmail}" required="true" size="40" maxlength="100" value="#{userAccountMBean.userAccount.emailConfirmation}" onchange="formatEmail(this);">
-                                <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
-                            </h:inputText>
-
-                            <h:message for="email" errorClass="errorMessage"/>
-                            <h:message for="mailConfirmation" errorClass="errorMessage"/>
+                            <h:panelGroup>
+                                <h:inputText id="email" label="#{bundle.email}" required="true" size="40" maxlength="100" value="#{userAccountMBean.userAccount.unverifiedEmail}" onchange="formatEmail(this);" validator="#{userAccountMBean.validateEmail}">
+                                    <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
+                                </h:inputText>
+                                <h:message for="email" errorClass="errorMessage"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:inputText id="mailConfirmation" label="#{bundle.confirmEmail}" required="true" size="40" maxlength="100" value="#{userAccountMBean.userAccount.emailConfirmation}" onchange="formatEmail(this);" validator="#{userAccountMBean.validateEmailConfirmation}">
+                                    <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
+                                </h:inputText>
+                                <h:message for="mailConfirmation" errorClass="errorMessage"/>
+                            </h:panelGroup>
 
                             <h:outputLabel for="password" value="#{bundle.password} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="confirmPassword" value="#{bundle.confirmPassword} *" styleClass="fieldLabel"/>
 
-                            <h:inputSecret id="password" autocomplete="off" label="#{bundle.password}" required="true" size="15" maxlength="30" value="#{userAccountMBean.password}"/>
-                            <h:inputSecret id="confirmPassword" autocomplete="off" label="#{bundle.passwordConfirmation}" required="true" size="15" maxlength="30" value="#{userAccountMBean.passwordConfirmation}"/>
-
-                            <h:message for="password" errorClass="errorMessage"/>
-                            <h:message for="confirmPassword" errorClass="errorMessage"/>
+                            <h:panelGroup>
+                                <h:inputSecret id="password" autocomplete="off" label="#{bundle.password}" required="true" size="15" maxlength="30" value="#{userAccountMBean.password}" validator="#{userAccountMBean.validatePassword}"/>
+                                <h:message for="password" errorClass="errorMessage"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:inputSecret id="confirmPassword" autocomplete="off" label="#{bundle.passwordConfirmation}" required="true" size="15" maxlength="30" value="#{userAccountMBean.passwordConfirmation}" validator="#{userAccountMBean.validatePasswordConfirmation}"/>
+                                <h:message for="confirmPassword" errorClass="errorMessage"/>
+                            </h:panelGroup>
 
                             <h:outputLabel for="gender" value="#{bundle.gender} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="birthDate" value="#{bundle.birthDate}" styleClass="fieldLabel"/>
 
-                            <h:selectOneRadio id="gender" label="#{bundle.gender}" required="true" value="#{userAccountMBean.userAccount.gender}">
-                                <f:selectItem itemLabel="#{bundle.male}" itemValue="1"/>
-                                <f:selectItem itemLabel="#{bundle.female}" itemValue="0"/>
-                            </h:selectOneRadio>
-                            <h:panelGrid columns="2">
+                            <h:panelGroup>
+                                <h:selectOneRadio id="gender" label="#{bundle.gender}" required="true" value="#{userAccountMBean.userAccount.gender}">
+                                    <f:selectItem itemLabel="#{bundle.male}" itemValue="1"/>
+                                    <f:selectItem itemLabel="#{bundle.female}" itemValue="0"/>
+                                </h:selectOneRadio>
+                                <h:message for="gender" errorClass="errorMessage"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
                                 <p:inputMask value="#{userAccountMBean.userAccount.birthDate}" id="birthDate" mask="99/99/9999">
                                     <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
                                 </p:inputMask>
                                 <h:outputText value="#{bundle.dateFormat}" styleClass="fieldFormat"/>
-                            </h:panelGrid>
-
-                            <h:message for="gender" errorClass="errorMessage"/>
-                            <h:outputText/>
+                                <br/>
+                                <h:message for="birthDate" errorClass="errorMessage"/>
+                            </h:panelGroup>
 
                             <h:outputLabel for="website" value="#{bundle.website}" styleClass="fieldLabel"/>
                             <h:outputLabel for="twitter" value="#{bundle.twitter}" styleClass="fieldLabel"/>
 
-                            <h:panelGrid columns="2" cellpadding="0" cellspacing="0">
+                            <h:panelGroup>
                                 <h:outputText value="http://"/>
                                 <h:inputText id="website" label="#{bundle.website}" size="35" maxlength="100" value="#{userAccountMBean.userAccount.website}"/>
-                            </h:panelGrid>
-                            <h:panelGrid columns="2" cellpadding="0" cellspacing="0">
+                                <h:message for="website" errorClass="errorMessage"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
                                 <h:outputText value="@"/>
                                 <h:inputText id="twitter" label="#{bundle.twitter}" size="15" maxlength="30" value="#{userAccountMBean.userAccount.twitter}"/>
-                            </h:panelGrid>
+                                <h:message for="twitter" errorClass="errorMessage"/>
+                            </h:panelGroup>
+
                             <c:if test="#{!userAccountMBean.noAccount}">
                                 <h:outputLabel for="country" value="#{bundle.country} *" styleClass="fieldLabel"/>
                                 <h:outputLabel for="province" value="#{bundle.province}" styleClass="fieldLabel"/>
 
-                                <h:selectOneMenu id="country" label="#{bundle.country}" value="#{locationMBean.selectedCountry}" required="true">
+                                <h:panelGroup>
+                                    <h:selectOneMenu id="country" label="#{bundle.country}" value="#{locationMBean.selectedCountry}" required="true">
 	                                <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
 	                                <f:selectItems value="#{locationMBean.countries}" var="country" itemLabel="#{country.name}" itemValue="#{country.acronym}"/>
 	                                <f:ajax render="province city"/>
 	                            </h:selectOneMenu>
+                                    <h:message for="country" errorClass="errorMessage"/>
+                                </h:panelGroup>
                                 <h:selectOneMenu id="province" label="#{bundle.province}" value="#{locationMBean.selectedProvince}">
-	                                <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-	                                <f:selectItems value="#{locationMBean.provinces}" var="province" itemLabel="#{province.name}" itemValue="#{province.id}"/>
-	                                <f:ajax render="city"/>
-	                            </h:selectOneMenu>
-
-                                <h:message for="country" errorClass="errorMessage"/>
-                                <h:outputText/>
+                                    <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
+                                    <f:selectItems value="#{locationMBean.provinces}" var="province" itemLabel="#{province.name}" itemValue="#{province.id}"/>
+                                    <f:ajax render="city"/>
+                                </h:selectOneMenu>
 
                                 <h:outputLabel for="city" value="#{bundle.city} *" styleClass="fieldLabel"/>
                                 <h:outputLabel for="postalCode" value="#{bundle.postalCode}" styleClass="fieldLabel"/>
 
-                                <h:panelGrid columns="3">
+                                <h:panelGroup>
                                     <h:selectOneMenu id="city" label="#{bundle.city}" value="#{locationMBean.selectedCity}">
-		                                <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-		                                <f:selectItems value="#{locationMBean.cities}" var="city" itemLabel="#{city.name}" itemValue="#{city.id}"/>
-		                            </h:selectOneMenu>
+                                        <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
+                                        <f:selectItems value="#{locationMBean.cities}" var="city" itemLabel="#{city.name}" itemValue="#{city.id}"/>
+                                    </h:selectOneMenu>
                                     <h:outputText value="#{bundle.oor}"/>
                                     <p:autoComplete id="cityNotListed" value="#{locationMBean.cityNotListed}" completeMethod="#{locationMBean.findCitiesStartingWith}"/>
-                                </h:panelGrid>
+                                    <br/><h:message for="city" errorClass="errorMessage"/>
+                                </h:panelGroup>
                                 <h:inputText id="postalCode" label="#{bundle.postalCode}" size="10" maxlength="10" value="#{userAccountMBean.userAccount.postalCode}"/>
-
-                                <h:message for="city" errorClass="errorMessage"/>
-                                <h:outputText/>
                             </c:if>
                         </h:panelGrid>
                         <p></p>
                         <h:outputText value="#{bundle.privacy} *" styleClass="fieldLabel"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         (<h:outputText value="#{bundle.selectAtLeastOne}" styleClass="fieldNote"/>)
+                        <br/>
+                        <h:message for="speaker" errorClass="errorMessage"/>
                         <h:panelGrid columns="2" width="700" columnClasses="panelGridColumn">
-                            <h:selectBooleanCheckbox id="mailingList" label="#{bundle.mailingList}" value="#{userAccountMBean.userAccount.mailingList}"/>
+                            <h:selectBooleanCheckbox id="mailingList" label="#{bundle.mailingList}" value="#{userAccountMBean.userAccount.mailingList}" validator="#{userAccountMBean.validatePrivacyOption}"/>
                             <h:outputLabel for="mailingList" value="#{bundle.mailingListMessage}"/>
 
-                            <h:selectBooleanCheckbox id="publicProfile" label="#{bundle.publicProfile}" value="#{userAccountMBean.userAccount.publicProfile}"/>
+                            <h:selectBooleanCheckbox id="publicProfile" label="#{bundle.publicProfile}" value="#{userAccountMBean.userAccount.publicProfile}" validator="#{userAccountMBean.validatePrivacyOption}"/>
                             <h:outputText value="#{bundle.publicProfileMessage}"/>
 
-                            <h:selectBooleanCheckbox id="event" label="#{bundle.event}" value="#{userAccountMBean.userAccount.event}"/>
+                            <h:selectBooleanCheckbox id="event" label="#{bundle.event}" value="#{userAccountMBean.userAccount.event}" validator="#{userAccountMBean.validatePrivacyOption}"/>
                             <h:outputLabel for="event" value="#{bundle.eventMessage}"/>
 
-                            <h:selectBooleanCheckbox id="news" label="#{bundle.news}" value="#{userAccountMBean.userAccount.news}"/>
+                            <h:selectBooleanCheckbox id="news" label="#{bundle.news}" value="#{userAccountMBean.userAccount.news}" validator="#{userAccountMBean.validatePrivacyOption}"/>
                             <h:outputLabel for="news" value="#{bundle.newsMessage}"/>
 
-                            <h:selectBooleanCheckbox id="generalOffer" label="#{bundle.generalOffer}" value="#{userAccountMBean.userAccount.generalOffer}"/>
+                            <h:selectBooleanCheckbox id="generalOffer" label="#{bundle.generalOffer}" value="#{userAccountMBean.userAccount.generalOffer}" validator="#{userAccountMBean.validatePrivacyOption}"/>
                             <h:outputLabel for="generalOffer" value="#{bundle.generalOfferMessage}"/>
 
-                            <h:selectBooleanCheckbox id="jobOffer" label="#{bundle.jobOffer}" value="#{userAccountMBean.userAccount.jobOffer}"/>
+                            <h:selectBooleanCheckbox id="jobOffer" label="#{bundle.jobOffer}" value="#{userAccountMBean.userAccount.jobOffer}" validator="#{userAccountMBean.validatePrivacyOption}"/>
                             <h:outputLabel for="jobOffer" value="#{bundle.jobOfferMessage}"/>
 
-                            <h:selectBooleanCheckbox id="sponsor" label="#{bundle.sponsorMessage}" value="#{userAccountMBean.userAccount.sponsor}"/>
+                            <h:selectBooleanCheckbox id="sponsor" label="#{bundle.sponsorMessage}" value="#{userAccountMBean.userAccount.sponsor}" validator="#{userAccountMBean.validatePrivacyOption}"/>
                             <h:outputLabel for="sponsor" value="#{bundle.sponsorMessage}"/>
 
-                            <h:selectBooleanCheckbox id="speaker" label="#{bundle.speakerMessage}" value="#{userAccountMBean.userAccount.speaker}"/>
+                            <h:selectBooleanCheckbox id="speaker" label="#{bundle.speakerMessage}" value="#{userAccountMBean.userAccount.speaker}" validator="#{userAccountMBean.validatePrivacy}"/>
                             <h:outputLabel for="speaker" value="#{bundle.speakerMessage}"/>
                         </h:panelGrid>
 
                         <h:inputHidden id="id" value="#{userAccountMBean.userAccount.id}"/>
 
-                        <p><p:captcha id="captcha" label="Captcha" theme="white" language="#{bundle.confLanguage}"/></p>
+                        <p><p:captcha id="captcha" label="Captcha" theme="white" language="#{bundle.confLanguage}"/>
+                        <h:message for="captcha" errorClass="errorMessage"/></p>
 
                         <p/>
                         <h:panelGrid columns="2">

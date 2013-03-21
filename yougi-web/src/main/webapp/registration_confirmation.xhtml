@@ -30,7 +30,7 @@
                 <div class="content">
                     <h1>#{bundle.registration}</h1>
                     <h:panelGrid cellpadding="5">
-                        <h:messages styleClass="alertMessage" infoClass="infoMessage"/>
+                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
                         <h:form>
                             <h:panelGrid rendered="#{registrationConfirmationMBean.validated}">
                                 <h:outputText value="#{bundle.infoCode0002}" styleClass="infoMessage"/>
@@ -38,7 +38,10 @@
 
                             <h:panelGrid rendered="#{!registrationConfirmationMBean.validated}">
                                 <h:outputLabel for="informedCode" value="#{bundle.informConfirmationCode}"/>
-                                <h:inputText id="informedCode" value="#{registrationConfirmationMBean.informedCode}" maxlength="32" size="40" required="true"/>
+                                <h:panelGroup>
+                                    <h:inputText id="informedCode" value="#{registrationConfirmationMBean.informedCode}" maxlength="32" size="40" required="true"/>
+                                    <h:message for="informedCode" errorClass="errorMessage"/>
+                                </h:panelGroup>
                                 <h:commandButton value="#{bundle.confirm}" action="#{registrationConfirmationMBean.confirmUser}"/>
                             </h:panelGrid>
                         </h:form>

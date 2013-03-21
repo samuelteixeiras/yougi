@@ -35,13 +35,19 @@
                     <h:form>
                         <p:tabView dynamic="false" cache="true">
                             <p:tab title="#{bundle.profile}">
-                                <h:messages styleClass="alertMessage"/>
+                                <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
                                 <h:panelGrid columns="2">
                                     <h:outputLabel for="firstName" value="#{bundle.firstName} *" styleClass="fieldLabel"/>
                                     <h:outputLabel for="lastName" value="#{bundle.lastName} *" styleClass="fieldLabel"/>
 
-                                    <h:inputText id="firstName" label="#{bundle.firstName}" required="true" size="35" maxlength="50" value="#{memberMBean.userAccount.firstName}"/>
-                                    <h:inputText id="lastName" label="#{bundle.lastName}" required="true" size="35" maxlength="50" value="#{memberMBean.userAccount.lastName}"/>
+                                    <h:panelGroup>
+                                        <h:inputText id="firstName" label="#{bundle.firstName}" required="true" size="35" maxlength="50" value="#{memberMBean.userAccount.firstName}"/>
+                                        <h:message for="firstName" errorClass="errorMessage"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:inputText id="lastName" label="#{bundle.lastName}" required="true" size="35" maxlength="50" value="#{memberMBean.userAccount.lastName}"/>
+                                        <h:message for="lastName" errorClass="errorMessage"/>
+                                    </h:panelGroup>
 
                                     <h:outputText value="#{bundle.email} *" styleClass="fieldLabel"/>
                                     <h:outputText value="#{bundle.username} *" styleClass="fieldLabel"/>
@@ -54,16 +60,21 @@
                                     <h:outputLabel for="gender" value="#{bundle.gender} *" styleClass="fieldLabel"/>
                                     <h:outputLabel for="birthDate" value="#{bundle.birthDate}" styleClass="fieldLabel"/>
 
-                                    <h:selectOneRadio id="gender" label="#{bundle.gender}" required="true" value="#{memberMBean.userAccount.gender}">
-                                        <f:selectItem itemLabel="#{bundle.male}" itemValue="1"/>
-                                        <f:selectItem itemLabel="#{bundle.female}" itemValue="0"/>
-                                    </h:selectOneRadio>
-                                    <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <h:selectOneRadio id="gender" label="#{bundle.gender}" required="true" value="#{memberMBean.userAccount.gender}">
+                                            <f:selectItem itemLabel="#{bundle.male}" itemValue="1"/>
+                                            <f:selectItem itemLabel="#{bundle.female}" itemValue="0"/>
+                                        </h:selectOneRadio>
+                                        <h:message for="gender" errorClass="errorMessage"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
                                         <p:inputMask value="#{memberMBean.userAccount.birthDate}" id="birthDate" mask="99/99/9999" size="10">
                                             <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
                                         </p:inputMask>
                                         <h:outputText value="#{bundle.dateFormat}" styleClass="fieldFormat"/>
-                                    </h:panelGrid>
+                                        <br/><h:message for="birthDate" errorClass="errorMessage"/>
+                                    </h:panelGroup>
 
                                     <h:outputText value="#{bundle.registrationDate}" styleClass="fieldLabel"/>
                                     <h:outputText value="#{bundle.lastUpdate}" styleClass="fieldLabel"/>
@@ -78,16 +89,18 @@
                                     <h:outputLabel for="website" value="#{bundle.website}" styleClass="fieldLabel"/>
                                     <h:outputLabel for="twitter" value="#{bundle.twitter}" styleClass="fieldLabel"/>
 
-                                    <h:panelGrid columns="3" cellpadding="1" cellspacing="0">
+                                    <h:panelGroup>
                                         <h:outputText value="http://"/>
                                         <h:inputText id="website" label="#{bundle.website}" size="25" maxlength="100" value="#{memberMBean.userAccount.website}"/>
                                         <h:outputLink value="http://#{memberMBean.userAccount.website}" target="_blank">#{bundle.visit}</h:outputLink>
-                                    </h:panelGrid>
-                                    <h:panelGrid columns="3" cellpadding="1" cellspacing="0">
+                                        <br/><h:message for="website" errorClass="errorMessage"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
                                         <h:outputText value="@"/>
                                         <h:inputText id="twitter" label="#{bundle.twitter}" size="15" maxlength="30" value="#{memberMBean.userAccount.twitter}"/>
                                         <h:outputLink value="http://twitter.com/#{memberMBean.userAccount.twitter}" target="_blank">#{bundle.visit}</h:outputLink>
-                                    </h:panelGrid>
+                                        <br/><h:message for="twitter" errorClass="errorMessage"/>
+                                    </h:panelGroup>
 
                                     <h:outputLabel for="country" value="#{bundle.country}" styleClass="fieldLabel"/>
                                     <h:outputLabel for="province" value="#{bundle.province}" styleClass="fieldLabel"/>

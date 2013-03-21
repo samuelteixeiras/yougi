@@ -27,7 +27,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpServletRequest;
 import org.cejug.yougi.business.ApplicationPropertyBean;
 import org.cejug.yougi.business.UserAccountBean;
@@ -35,6 +37,7 @@ import org.cejug.yougi.entity.ApplicationProperty;
 import org.cejug.yougi.entity.Authentication;
 import org.cejug.yougi.entity.Properties;
 import org.cejug.yougi.entity.UserAccount;
+import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
  * @author Hildeberto Mendonca  - http://www.hildeberto.com
@@ -55,7 +58,8 @@ public class ChangePasswordMBean {
     private String currentPassword;
     private String username;
     private String password;
-    private String confirmPassword;
+    private String passwordConfirmation;
+
     private Boolean invalid;
 
     public ChangePasswordMBean() {}
@@ -84,12 +88,12 @@ public class ChangePasswordMBean {
         this.password = password;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
     }
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
     }
 
     public String getCurrentPassword() {
@@ -107,6 +111,20 @@ public class ChangePasswordMBean {
     public void setInvalid(Boolean invalid) {
         this.invalid = invalid;
     }
+
+    // Beginning of password validation
+    public void validatePassword(FacesContext context, UIComponent component, Object value) {
+        this.password = (String) value;
+    }
+
+    public void validatePasswordConfirmation(FacesContext context, UIComponent component, Object value) {
+        this.passwordConfirmation = (String) value;
+        if(!this.passwordConfirmation.equals(this.password)) {
+            ResourceBundleHelper bundle = new ResourceBundleHelper();
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle.getMessage("errorCode0005"), null));
+        }
+    }
+    // End of password validation
 
     @PostConstruct
     public void load() {
@@ -137,14 +155,6 @@ public class ChangePasswordMBean {
     }
 
     /**
-     * Compares the informed password with its respective confirmation.
-     * @return true if the password matches with its confirmation.
-     */
-    private boolean isPasswordConfirmed() {
-        return password.equals(confirmPassword);
-    }
-
-    /**
      * It changes the password in case the user has forgotten it. It checks whether
      * the confirmation code sent to the user's email is valid before proceeding
      * with the password change.
@@ -155,11 +165,6 @@ public class ChangePasswordMBean {
 
         if(userAccount == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("The confirmation code does not match."));
-            return "change_password";
-        }
-
-        if(!isPasswordConfirmed()) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("The password confirmation does not match."));
             return "change_password";
         }
 
@@ -177,12 +182,6 @@ public class ChangePasswordMBean {
         UserAccount userAccount = userAccountBean.findUserAccountByUsername(username);
         if(!userAccountBean.passwordMatches(userAccount, currentPassword)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("The current password does not match."));
-            return "change_password";
-        }
-
-        // If password doesn't match its confirmation.
-        if(!isPasswordConfirmed()) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("The password confirmation does not match."));
             return "change_password";
         }
 
