@@ -1,4 +1,4 @@
-\documentclass[envcountsame,envcountchap]{svmono}
+\documentclass[envcountsame,envcountchap,letterpaper]{svmono}
 \usepackage{makeidx}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -15,10 +15,9 @@
 
 \makeindex
 
-\author{Hildeberto Mendon\c{c}a}
+\author{Hildeberto Mendonça \\ Manoel Calixto}
 \title{Yougi}
-\subtitle{A Aplicação Sólida como uma Rocha para User Groups}
-
+\subtitle{Gerindo o Conhecimento Produzido pela Comunidade}
 \begin{document}
 
 \maketitle
@@ -541,7 +540,6 @@ Para instalar e usar Yougi não é necessário começar a partir do código font
 \item Copie o URI acima e ir para a linha de comando e digite o seguinte comando para fazer o checkout do git clone ssh://[nome-de-usuario]@git.java.net/cejug~jug-management. Ele vai criar uma pasta "cejug-jug-managemen" no diretório que você executou o comando e o código fonte completo estará disponível lá.
 \end{enumerate}
 
-
 Para se certificar de que o código no branch do servidor está funcionando perfeitamente, temos que atualizar a cópia local com as últimas alterações disponíveis no servidor, testar o sistema localmente com essas mudanças e se tudo está funcionando bem, o commit local pode finalmente ser feito e o push para o seu respectivo branch. Antes de atualizar o local, certifique-se de que não há commit pendente usando:
 \begin{verbatim}
 # git status
@@ -573,6 +571,55 @@ Para empurrar o commit local para o servidor, utilize:
 \begin{verbatim}
 #git push origin master
 \end{verbatim}
+
+\subsection{Configurando e Construindo a Aplicação com Apache Maven}
+	
+\subsubsection{Ciclo de vida de construção}
+
+\begin{enumerate}
+	\item process-resources (processar recursos)
+ 	\item compile (compilar)
+	\item process-test-resources (processar recursos de teste)
+	\item test-compile (testar compilação)
+	\item test (testar)
+	\item package (empacotar)
+	\item install (instalar)
+	\item deploy (implantar)
+\end{enumerate}
+	
+Para instalar o Maven acesse o site http://maven.apache.org/download.cgi baixe o arquivo apache-maven-3.0.5-bin.zip, após concluir a instalação descompacte o arquivo. Mova a pasta descompactada para dentro da pasta ''Arquivos de Programas'' (opcional);
+
+\subsubsection{Configurando as Variáveis de Ambiente}
+
+\begin{enumerate}
+\item Clique com o botão direito no ícone ''Meu Computador” > “Propriedades”.
+\item Clique em “Configurações avançadas dos sistemas”, na nova aba clique em “Avançada” > Clique no botão  "Variáveis de Ambiente";
+\item Na lista, variáveis do sistema clique no botão "Novo..." para criar uma nova variável.
+\item Digite no campo ''Nome da variável'' MAVEN\_HOME e no campo 'Valor da variável' digite o diretório do seu arquivo C:/Arquivos de programas/apache-maven-3.0.4 - ''OK'';
+\item Selecione a variável "Path" na lista de "Variáveis do Sistema" e clique no botão "Editar";
+\item No final do Valor da variável Digite > ;%MAVEN_HOME%\bin > no final do campo. (não se esqueça do ponto e vírgula (;));
+\item Clique no botão "OK" > "OK".
+\end{enumerate}
+
+\subsubsection{Testando no Prompt de comando}
+
+Abra o Prompt digite mvn –version
+Se sua configuração estiver correta vai aparecer à versão do Maven que foi instalado no windows.
+ 
+ 	Possível ERRO
+Em caso do erro “'mvn' não é reconhecido como um comando interno ou externo, um programa operável ou um arquivo em lotes ” verifique a configuração das variáveis se estão correta de acordo com o seu diretório do apache-maven.
+
+\subsubsection{Instalando o Maven no Eclipse}
+	Acesse o menu do Eclipse, Help > Eclipse MarketPlace > no campo Find digite “Maven” > “GO”. Aparecerá varias opções de Maven para downloads procure pelo o Maven “Maven Integration for Eclipse” clique no botão Install para fazer à instalação, depois de concluída a instalação, o Eclipse vai pedir para reiniciar.
+	Depois da reinicialização do eclipse verifique se está com um caractere 'M' em cima do projeto Yougi, caso nao esteja clique com o botão direito em cima do projeto "Configure" > Convert to Maven.
+
+\subsection {Testando o Maven no Eclipse}
+
+Clique com o botão direito em cima do Projeto “Yougi” Run as > Maven Install, para compilar o projeto pelo o Maven. 
+
+\subsection {Testando o Maven no Prompt de controle}
+
+Acesse a pasta do projeto “Yougi” pressione Shift e clique com o botão direito em cima da pasta, clique em “Abri janela de comando aqui” e digite no prompt “Mvn clear Install –U”
 
 \part*{Apêndice}
 

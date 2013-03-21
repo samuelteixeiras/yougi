@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
   <display-name>Yougi</display-name>
+  <!-- JSF -->
   <context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>
     <param-value>Production</param-value>
@@ -14,6 +15,12 @@
     <param-value>true</param-value>
   </context-param>
   <context-param>
+    <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>client</param-value>
+  </context-param>
+  <!-- Primefaces -->
+  <context-param>
     <param-name>primefaces.THEME</param-name>
     <param-value>bootstrap</param-value>
   </context-param>
@@ -25,6 +32,20 @@
     <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
     <param-value></param-value>
   </context-param>
+  <!-- Liquibase -->
+  <context-param>
+    <param-name>liquibase.changelog</param-name>
+    <param-value>org/cejug/yougi/db/changelog.xml</param-value>
+  </context-param>
+  <context-param>
+    <param-name>liquibase.datasource</param-name>
+    <param-value>jdbc/ug</param-value>
+  </context-param>
+  <context-param>
+    <param-name>liquibase.onerror.fail</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
   <servlet>
     <servlet-name>Faces Servlet</servlet-name>
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -33,7 +54,6 @@
   <servlet>
     <servlet-name>EmailConfirmation Servlet</servlet-name>
     <servlet-class>org.cejug.yougi.web.controller.EmailConfirmationServlet</servlet-class>
-    <load-on-startup>2</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
@@ -43,6 +63,7 @@
     <servlet-name>EmailConfirmation Servlet</servlet-name>
     <url-pattern>/EmailConfirmation</url-pattern>
   </servlet-mapping>
+
   <filter>
     <filter-name>PrimeFaces FileUpload Filter</filter-name>
     <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
@@ -51,6 +72,14 @@
     <filter-name>PrimeFaces FileUpload Filter</filter-name>
     <servlet-name>Faces Servlet</servlet-name>
   </filter-mapping>
+
+  <listener>
+    <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>liquibase.integration.servlet.LiquibaseServletListener</listener-class>
+  </listener>
+
   <session-config>
     <session-timeout>60</session-timeout>
   </session-config>
@@ -65,6 +94,7 @@
     <exception-type>javax.faces.application.ViewExpiredException</exception-type>
     <location>/index.xhtml</location>
   </error-page>
+
   <security-constraint>
     <display-name>Leaders Constraints</display-name>
     <web-resource-collection>
@@ -153,16 +183,4 @@
     <description></description>
     <role-name>partner</role-name>
   </security-role>
-  <context-param>
-    <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
-    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-    <param-value>client</param-value>
-  </context-param>
-  <context-param>
-    <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
-    <param-value>resources.application</param-value>
-  </context-param>
-  <listener>
-    <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
-  </listener>
 </web-app>

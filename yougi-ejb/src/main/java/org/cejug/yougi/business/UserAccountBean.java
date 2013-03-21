@@ -158,7 +158,7 @@ public class UserAccountBean {
      * @return All users that informed their websites.
      */
     public List<UserAccount> findUserAccountsWithWebsite() {
-        return em.createQuery("select ua from UserAccount ua where ua.deactivated = false and ua.confirmationCode is null and ua.website is not null order by ua.firstName")
+        return em.createQuery("select ua from UserAccount ua where ua.deactivated = false and ua.confirmationCode is null and ua.website is not null and ua.website <> '' order by ua.firstName")
                  .getResultList();
     }
 

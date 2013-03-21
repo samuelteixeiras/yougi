@@ -31,7 +31,7 @@
             <ui:define name="content">
                 <div class="content">
                     <h1>#{bundle.cities}</h1>
-                    <p><h:link outcome="city" value="#{bundle.new} #{bundle.city}"/></p>
+                    <p><h:link outcome="city" value="#{bundle.newCity}"/></p>
 
                     <h:form>
                         <p:dataTable id="cities" value="#{cityMBean.cities}" var="city">
