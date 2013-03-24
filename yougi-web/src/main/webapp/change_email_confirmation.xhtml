@@ -29,12 +29,13 @@
             <ui:define name="content">
                 <div class="content">
                     <h1>#{bundle.changeEmailConfirmation}</h1>
-                    <p><h:messages styleClass="alertMessage"/></p>
+                    <p><h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/></p>
 
                     <h:form>
-                        <h:panelGrid rendered="">
+                        <h:panelGrid>
                             <h:outputLabel for="confirmationCode" value="#{bundle.confirmationCode} *" styleClass="fieldLabel"/>
-                            <h:inputText id="confirmationCode" value="#{changeEmailMBean.confirmationCode}" label="#{bundle.currentEmail}" size="40" maxlength="100" required="true"  onchange="formatEmail(this)"/>
+                            <h:inputText id="confirmationCode" value="#{changeEmailMBean.confirmationCode}" label="#{bundle.currentEmail}" size="40" maxlength="100" required="true" onchange="formatEmail(this)"/>
+                            <h:message for="confirmationCode" errorClass="errorMessage"/>
                         </h:panelGrid>
                         <p/>
                         <h:panelGrid columns="2">

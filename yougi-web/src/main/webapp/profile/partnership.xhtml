@@ -31,18 +31,21 @@
                 <div class="content">
                     <h1>#{bundle.partnership}</h1>
                     <h:form>
-                        <h:messages styleClass="alertMessage"/>
+                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
                         <h:panelGrid columns="2">
                             <h:outputLabel for="name" value="#{bundle.partnerName} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="url" value="#{bundle.website}" styleClass="fieldLabel"/>
 
-                            <h:inputText id="name" label="#{bundle.partnerName}" required="true" size="30" maxlength="50" value="#{partnershipMBean.representative.partner.name}"/>
-                            <h:inputText id="url" label="#{bundle.website}" required="false" size="30" maxlength="50" value="#{partnershipMBean.representative.partner.url}"/>
+                            <h:panelGroup>
+                                <h:inputText id="name" label="#{bundle.partnerName}" required="true" size="30" maxlength="50" value="#{partnershipMBean.representative.partner.name}"/>
+                                <h:message for="name" errorClass="errorMessage"/>
+                            </h:panelGroup>
+                            <h:inputText id="url" label="#{bundle.website}" size="30" maxlength="50" value="#{partnershipMBean.representative.partner.url}"/>
 
                             <h:outputLabel for="address" value="#{bundle.address}" styleClass="fieldLabel"/>
                             <h:outputLabel for="postalCode" value="#{bundle.postalCode}" styleClass="fieldLabel"/>
 
-                            <h:inputText id="address" label="#{bundle.address}" required="false" size="30" maxlength="255" value="#{partnershipMBean.representative.partner.address}"/>
+                            <h:inputText id="address" label="#{bundle.address}" size="30" maxlength="255" value="#{partnershipMBean.representative.partner.address}"/>
                             <h:inputText id="postalCode" label="#{bundle.postalCode}" size="10" maxlength="10" value="#{partnershipMBean.representative.partner.postalCode}"/>
 
                             <h:outputLabel for="country" value="#{bundle.country}" styleClass="fieldLabel"/>
@@ -75,8 +78,8 @@
                             <h:outputLabel for="phone" value="#{bundle.phone}" styleClass="fieldLabel"/>
 
                             <h:outputText value="#{partnershipMBean.representative.person}"/>
-                            <h:inputText id="position" label="#{bundle.position}" required="false" size="20" maxlength="20" value="#{partnershipMBean.representative.position}"/>
-                            <h:inputText id="phone" label="#{bundle.phone}" required="false" size="15" maxlength="15" value="#{partnershipMBean.representative.phone}"/>
+                            <h:inputText id="position" label="#{bundle.position}" size="20" maxlength="20" value="#{partnershipMBean.representative.position}"/>
+                            <h:inputText id="phone" label="#{bundle.phone}" size="15" maxlength="15" value="#{partnershipMBean.representative.phone}"/>
                         </h:panelGrid>
 
                         <h:panelGrid>

@@ -32,7 +32,7 @@
                 <div class="content">
                     <h1>#{bundle.subscription}</h1>
                     <h:form>
-                        <h:messages styleClass="alertMessage"/>
+                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
                         <h:panelGrid columns="2">
                             <h:outputLabel for="mailingList" value="#{bundle.mailingList}" styleClass="fieldLabel"/>
                             <h:outputText />

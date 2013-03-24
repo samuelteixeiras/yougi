@@ -457,15 +457,6 @@ public class UserAccount implements Serializable, Identified {
         this.emailConfirmation = emailConfirmation;
     }
 
-    public Boolean isEmailConfirmed() {
-        if(this.unverifiedEmail != null) {
-            return emailConfirmation.equals(unverifiedEmail);
-        }
-        else {
-            return emailConfirmation.equals(email);
-        }
-    }
-
     public String getConfirmationCode() {
         return confirmationCode;
     }

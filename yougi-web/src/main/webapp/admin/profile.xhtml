@@ -31,7 +31,7 @@
                 <div class="content">
                     <h1>#{bundle.profile}</h1>
                     <h:form>
-                        <h:messages styleClass="alertMessage"/>
+                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
                         <h:panelGrid columns="2" columnClasses="panelGridColumn">
                             <h:panelGrid columns="2" cellpadding="3" >
                                 <h:outputText value="#{bundle.firstName}" styleClass="fieldLabel"/>

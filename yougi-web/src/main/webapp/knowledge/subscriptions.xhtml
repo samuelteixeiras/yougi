@@ -38,7 +38,7 @@
                     </h:panelGrid>
                     <p/>
                     <h:form>
-                        <h:messages styleClass="alertMessage"/>
+                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
                         <h:panelGrid columns="3">
                             <h:outputText value="#{bundle.email}"/>
                             <h:inputText id="searchCriteria" value="#{subscriptionMBean.emailCriteria}" size="40" maxlength="100"/>

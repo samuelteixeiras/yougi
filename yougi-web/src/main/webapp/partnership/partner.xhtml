@@ -32,18 +32,24 @@
                 <div class="content">
                     <h1>#{bundle.partner}</h1>
                     <h:form>
-                        <h:messages styleClass="alertMessage"/>
+                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
                         <h:panelGrid columns="2">
                             <h:outputLabel for="name" value="#{bundle.partnerName} *" styleClass="fieldLabel"/>
                             <h:outputLabel for="url" value="#{bundle.website}" styleClass="fieldLabel"/>
 
-                            <h:inputText id="name" label="#{bundle.partnerName}" required="true" size="40" maxlength="50" value="#{partnerMBean.partner.name}"/>
-                            <h:inputText id="url" label="#{bundle.website}" required="false" size="30" maxlength="50" value="#{partnerMBean.partner.url}"/>
+                            <h:panelGroup>
+                                <h:inputText id="name" label="#{bundle.partnerName}" required="true" size="40" maxlength="50" value="#{partnerMBean.partner.name}"/>
+                                <h:message for="name" errorClass="errorMessage"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:inputText id="url" label="#{bundle.website}" required="false" size="30" maxlength="50" value="#{partnerMBean.partner.url}"/>
+                                <h:message for="url" errorClass="errorMessage"/>
+                            </h:panelGroup>
 
                             <h:outputLabel for="address" value="#{bundle.address}" styleClass="fieldLabel"/>
                             <h:outputLabel for="postalCode" value="#{bundle.postalCode}" styleClass="fieldLabel"/>
 
-                            <h:inputText id="address" label="#{bundle.address}" required="false" size="40" maxlength="255" value="#{partnerMBean.partner.address}"/>
+                            <h:inputText id="address" label="#{bundle.address}" size="40" maxlength="255" value="#{partnerMBean.partner.address}"/>
                             <h:inputText id="postalCode" label="#{bundle.postalCode}" size="10" maxlength="10" value="#{partnerMBean.partner.postalCode}"/>
 
                             <h:outputLabel for="country" value="#{bundle.country}" styleClass="fieldLabel"/>
@@ -80,7 +86,7 @@
 
                         <h:inputHidden id="id" value="#{partnerMBean.partner.id}"/>
 
-                        <p></p>
+                        <p/>
                         <h:panelGrid columns="3">
                             <h:commandButton value="#{bundle.save}" action="#{partnerMBean.save}"/>
                             <h:commandButton value="#{bundle.remove}" action="#{partnerMBean.remove}" rendered="#{! empty partnerMBean.id}">

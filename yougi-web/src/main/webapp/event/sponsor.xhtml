@@ -31,27 +31,30 @@
                 <div class="content">
                     <h1>#{bundle.sponsor}</h1>
                     <h:form>
-                        <h:messages styleClass="alertMessage"/>
+                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
                         <h:panelGrid>
                             <h:outputLabel for="event" value="#{bundle.event} *" styleClass="fieldLabel"/>
-                            <h:selectOneMenu id="event" label="#{bundle.event}" value="#{eventSponsorMBean.selectedEvent}">
+                            <h:selectOneMenu id="event" label="#{bundle.event}" value="#{eventSponsorMBean.selectedEvent}" required="true">
                                 <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
                                 <f:selectItems value="#{eventSponsorMBean.events}" var="event" itemLabel="#{event.name}" itemValue="#{event.id}"/>
                             </h:selectOneMenu>
+                            <h:message for="event" errorClass="errorMessage"/>
 
                             <h:outputLabel for="sponsor" value="#{bundle.sponsor}" styleClass="fieldLabel"/>
                             <h:selectOneMenu id="sponsor" label="#{bundle.sponsor}" value="#{eventSponsorMBean.selectedSponsor}">
                                 <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
                                 <f:selectItems value="#{eventSponsorMBean.partners}" var="partner" itemLabel="#{partner.name}" itemValue="#{partner.id}"/>
                             </h:selectOneMenu>
+                            <h:message for="sponsor" errorClass="errorMessage"/>
 
                             <h:outputLabel for="amount" value="#{bundle.amount}" styleClass="fieldLabel"/>
-                            <h:panelGrid columns="2">
+                            <h:panelGroup>
                                 <h:inputText id="amount" label="#{bundle.amount}" size="10" maxlength="13" value="#{eventSponsorMBean.eventSponsor.amount}">
-	                                <f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
-	                            </h:inputText>
-	                            <h:outputText value="#{bundle.currencyFormat}" styleClass="fieldFormat"/>
-                            </h:panelGrid>
+	                            <f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
+	                        </h:inputText>
+	                        <h:outputText value="#{bundle.currencyFormat}" styleClass="fieldFormat"/>
+                            </h:panelGroup>
+                            <h:message for="amount" errorClass="errorMessage"/>
 
                             <h:outputLabel for="description" value="#{bundle.description}" styleClass="fieldLabel"/>
                             <h:inputTextarea id="description" label="#{bundle.description}" required="false" cols="60" rows="4" value="#{eventSponsorMBean.eventSponsor.description}"/>

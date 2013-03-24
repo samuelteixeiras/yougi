@@ -31,28 +31,31 @@
                 <div class="content">
                     <h1>#{bundle.speaker}</h1>
                     <h:form>
-                        <h:messages styleClass="alertMessage"/>
+                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
                         <h:panelGrid>
                             <h:outputLabel for="event" value="#{bundle.event} *" styleClass="fieldLabel"/>
                             <h:selectOneMenu id="event" label="#{bundle.event}" value="#{speakerMBean.selectedEvent}">
                                 <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
                                 <f:selectItems value="#{speakerMBean.events}" var="event" itemLabel="#{event.name}" itemValue="#{event.id}"/>
                             </h:selectOneMenu>
+                            <h:message for="event" errorClass="errorMessage"/>
 
                             <h:outputLabel for="eventSession" value="#{bundle.session}" styleClass="fieldLabel"/>
                             <h:selectOneMenu id="eventSession" label="#{bundle.session}" value="#{speakerMBean.selectedEventSession}">
                                 <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
                                 <f:selectItems value="#{speakerMBean.eventSessions}" var="ses" itemLabel="#{ses.title}" itemValue="#{ses.id}"/>
                             </h:selectOneMenu>
+                            <h:message for="eventSession" errorClass="errorMessage"/>
 
                             <h:outputLabel for="userAccount" value="#{bundle.user}" styleClass="fieldLabel"/>
                             <h:selectOneMenu id="userAccount" label="#{bundle.user}" value="#{speakerMBean.selectedUserAccount}">
                                 <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
                                 <f:selectItems value="#{speakerMBean.userAccounts}" var="usr" itemLabel="#{usr.fullName}" itemValue="#{usr.id}"/>
                             </h:selectOneMenu>
+                            <h:message for="userAccount" errorClass="errorMessage"/>
 
                             <h:outputLabel for="shortCv" value="#{bundle.shortCv}" styleClass="fieldLabel"/>
-                            <h:inputTextarea id="shortCv" label="#{bundle.shortCv}" required="false" cols="60" rows="4" value="#{speakerMBean.speaker.shortCv}"/>
+                            <h:inputTextarea id="shortCv" label="#{bundle.shortCv}" cols="60" rows="4" value="#{speakerMBean.speaker.shortCv}"/>
                         </h:panelGrid>
 
                         <h:inputHidden id="id" value="#{speakerMBean.speaker.id}"/>

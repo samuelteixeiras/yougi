@@ -30,7 +30,7 @@
             <ui:define name="content">
                 <div class="content">
                     <h1>#{bundle.changeEmail}</h1>
-                    <p><h:messages styleClass="alertMessage"/></p>
+                    <p><h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/></p>
 
                     <h:form>
                         <h:panelGrid>
@@ -38,16 +38,19 @@
                             <h:inputText id="currentEmail" value="#{changeEmailMBean.currentEmail}" label="#{bundle.currentEmail}" size="40" maxlength="100" required="true"  onchange="formatEmail(this)">
                                 <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
                             </h:inputText>
+                            <h:message for="currentEmail" errorClass="errorMessage"/>
 
                             <h:outputLabel for="newEmail" value="#{bundle.newEmail} *" styleClass="fieldLabel"/>
                             <h:inputText id="newEmail" label="#{bundle.newEmail}" required="true" size="40" maxlength="100" value="#{changeEmailMBean.newEmail}" onchange="formatEmail(this)">
                                 <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
                             </h:inputText>
+                            <h:message for="newEmail" errorClass="errorMessage"/>
 
                             <h:outputLabel for="newEmailConfirmation" value="#{bundle.confirmEmail} *" styleClass="fieldLabel"/>
                             <h:inputText id="newEmailConfirmation" autocomplete="off" label="#{bundle.confirmEmail}" required="true" size="40" maxlength="100" value="#{changeEmailMBean.newEmailConfirmation}" onchange="formatEmail(this)">
                                 <f:validateRegex pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
                             </h:inputText>
+                            <h:message for="newEmailConfirmation" errorClass="errorMessage"/>
                         </h:panelGrid>
                         <p/>
                         <h:panelGrid columns="2">

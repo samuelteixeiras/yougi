@@ -32,16 +32,18 @@
                 <div class="content">
                     <h1>#{bundle.session}</h1>
                     <h:form>
-                        <h:messages styleClass="alertMessage"/>
+                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
                         <h:panelGrid>
                             <h:outputLabel for="event" value="#{bundle.event} *" styleClass="fieldLabel"/>
                             <h:selectOneMenu id="event" label="#{bundle.event}" value="#{eventSessionMBean.selectedEvent}" required="true">
                                 <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
                                 <f:selectItems value="#{eventSessionMBean.events}" var="event" itemLabel="#{event.name}" itemValue="#{event.id}"/>
                             </h:selectOneMenu>
+                            <h:message for="event" errorClass="errorMessage"/>
 
                             <h:outputLabel for="title" value="#{bundle.title} *" styleClass="fieldLabel"/>
                             <h:inputText id="title" label="#{bundle.title}" value="#{eventSessionMBean.eventSession.title}" size="60" maxlength="255" required="true" class="ui-inputfield ui-state-default ui-corner-all"/>
+                            <h:message for="title" errorClass="errorMessage"/>
 
                             <h:panelGrid columns="4">
                                 <h:outputLabel for="sessionDate" value="#{bundle.date}" styleClass="fieldLabel"/>
@@ -50,20 +52,27 @@
                                 <h:outputLabel for="room" value="#{bundle.room}" styleClass="fieldLabel"/>
 
                                 <p:calendar value="#{eventSessionMBean.eventSession.sessionDate}" id="sessionDate" pattern="#{bundle.formatDate}" size="10" timeZone="#{userProfileMBean.timeZone}"/>
-                                <p:inputMask value="#{eventSessionMBean.eventSession.startTime}" mask="99:99" size="5">
+                                <p:inputMask id="startTime" value="#{eventSessionMBean.eventSession.startTime}" mask="99:99" size="5">
                                     <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                 </p:inputMask>
-                                <p:inputMask value="#{eventSessionMBean.eventSession.endTime}" mask="99:99" size="5">
+                                <p:inputMask id="endTime" value="#{eventSessionMBean.eventSession.endTime}" mask="99:99" size="5">
                                     <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                 </p:inputMask>
                                 <h:inputText id="room" label="#{bundle.room}" value="#{eventSessionMBean.eventSession.room}" size="17" maxlength="30" class="ui-inputfield ui-state-default ui-corner-all"/>
+
+                                <h:message for="sessionDate" errorClass="errorMessage"/>
+                                <h:message for="startTime" errorClass="errorMessage"/>
+                                <h:message for="endTime" errorClass="errorMessage"/>
+                                <h:message for="room" errorClass="errorMessage"/>
                             </h:panelGrid>
 
                             <h:outputLabel for="abstract" value="#{bundle.abstract}" styleClass="fieldLabel"/>
                             <h:inputTextarea id="abstract" value="#{eventSessionMBean.eventSession.abstract}" label="#{bundle.abstract}" rows="4" cols="45" class="ui-inputfield ui-state-default ui-corner-all"/>
+                            <h:message for="abstract" errorClass="errorMessage"/>
 
                             <h:outputLabel for="topics" value="#{bundle.topics} *" styleClass="fieldLabel"/>
                             <h:inputText id="topics" label="#{bundle.topics}" value="#{eventSessionMBean.eventSession.topics}" size="60" maxlength="255" class="ui-inputfield ui-state-default ui-corner-all"/>
+                            <h:message for="topics" errorClass="errorMessage"/>
                         </h:panelGrid>
 
                         <h:inputHidden id="id" value="#{eventSessionMBean.eventSession.id}"/>

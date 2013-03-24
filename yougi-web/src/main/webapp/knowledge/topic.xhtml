@@ -30,18 +30,24 @@
                 <div class="content">
                     <h1>#{bundle.topic}</h1>
                     <h:form>
-                        <h:messages styleClass="alertMessage"/>
-                        <h:panelGrid columns="1">
+                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
+                        <h:panelGrid>
                             <h:outputLabel for="name" value="#{bundle.name} *" styleClass="fieldLabel"/>
-                            <h:inputText id="name" label="#{bundle.name}" required="true" size="20" maxlength="20" value="#{topicMBean.topic.name}"/>
+                            <h:panelGroup>
+                                <h:inputText id="name" label="#{bundle.name}" required="true" size="20" maxlength="20" value="#{topicMBean.topic.name}"/>
+                                <h:message for="name" errorClass="errorMessage"/>
+                            </h:panelGroup>
 
                             <h:outputLabel for="label" value="#{bundle.label} *" styleClass="fieldLabel"/>
-                            <h:inputText id="label" label="#{bundle.label}" required="true" size="20" maxlength="20" value="#{topicMBean.topic.label}"/>
+                            <h:panelGroup>
+                                <h:inputText id="label" label="#{bundle.label}" required="true" size="20" maxlength="20" value="#{topicMBean.topic.label}"/>
+                                <h:message for="label" errorClass="errorMessage"/>
+                            </h:panelGroup>
 
-                            <h:panelGrid columns="2">
+                            <h:panelGroup>
                                 <h:selectBooleanCheckbox id="valid" label="#{bundle.valid}" value="#{topicMBean.topic.valid}"/>
                                 <h:outputLabel for="valid" value="#{bundle.valid}"/>
-                            </h:panelGrid>
+                            </h:panelGroup>
 
                             <h:outputLabel for="description" value="#{bundle.description}" styleClass="fieldLabel"/>
                             <h:inputTextarea id="description" label="#{bundle.description}" cols="60" rows="5" value="#{topicMBean.topic.description}"/>
