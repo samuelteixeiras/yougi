@@ -86,7 +86,9 @@
 
                                 <h:panelGrid columns="3">
                                     <h:commandButton value="#{bundle.save}" action="#{cityMBean.save}"/>
-                                    <h:commandButton value="#{bundle.remove}" action="#{cityMBean.remove}"/>
+                                    <h:commandButton value="#{bundle.remove}" rendered="#{not empty param.id}" action="#{cityMBean.remove}">
+                                        <f:param name="id" value="#{cityMBean.city.id}" />
+                                    </h:commandButton>
                                     <h:button value="#{bundle.cancel}" outcome="cities"/>
                                 </h:panelGrid>
                             </p:tab>

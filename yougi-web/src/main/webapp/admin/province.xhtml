@@ -43,10 +43,14 @@
                             </h:selectOneMenu>
                             <h:message for="country" errorClass="errorMessage"/>
                         </h:panelGrid>
+
                         <h:inputHidden id="id" value="#{provinceMBean.province.id}"/>
+
                         <h:panelGrid columns="3">
                             <h:commandButton value="#{bundle.save}" action="#{provinceMBean.save}"/>
-                            <h:commandButton value="#{bundle.remove}" action="#{provinceMBean.remove}"/>
+                            <h:commandButton value="#{bundle.remove}" rendered="#{not empty param.id}" action="#{provinceMBean.remove}">
+                                <f:param name="id" value="#{provinceMBean.province.id}" />
+                            </h:commandButton>
                             <h:button outcome="provinces" value="#{bundle.cancel}"/>
                         </h:panelGrid>
                     </h:form>
