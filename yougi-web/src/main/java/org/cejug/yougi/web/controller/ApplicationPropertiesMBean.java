@@ -53,6 +53,7 @@ public class ApplicationPropertiesMBean implements Serializable {
     private LanguageBean languageBean;
     private Map<String, String> applicationProperties;
     private Boolean sendEmails;
+    private Boolean captchaEnabled;
     private List<Language> languages;
 
     public Map<String, String> getApplicationProperties() {
@@ -71,6 +72,14 @@ public class ApplicationPropertiesMBean implements Serializable {
         this.sendEmails = sendEmails;
     }
 
+    public Boolean getCaptchaEnabled() {
+        return captchaEnabled;
+    }
+
+    public void setCaptchaEnabled(Boolean captchaEnabled) {
+        this.captchaEnabled = captchaEnabled;
+    }
+
     public List<String> getTimeZones() {
         return locationBean.getTimeZones();
     }
@@ -84,6 +93,7 @@ public class ApplicationPropertiesMBean implements Serializable {
 
     public String save() {
         this.applicationProperties.put(Properties.SEND_EMAILS.getKey(), sendEmails.toString());
+        this.applicationProperties.put(Properties.CAPTCHA_ENABLED.getKey(), captchaEnabled.toString());
         applicationPropertyBean.save(this.applicationProperties);
 
         ResourceBundleHelper bundle = new ResourceBundleHelper();
@@ -102,6 +112,10 @@ public class ApplicationPropertiesMBean implements Serializable {
 
         if (applicationProperties.get(Properties.SEND_EMAILS.getKey()).equals("true")) {
             sendEmails = true;
+        }
+
+        if (applicationProperties.get(Properties.CAPTCHA_ENABLED.getKey()).equals("true")) {
+            captchaEnabled = true;
         }
     }
 

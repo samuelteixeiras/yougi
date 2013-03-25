@@ -80,6 +80,23 @@
                                     </h:selectOneMenu>
                                 </h:panelGrid>
                             </p:fieldset>
+
+                            <p:fieldset legend="#{bundle.security}">
+                                <h:panelGrid>
+                                    <h:panelGroup>
+                                        <h:selectBooleanCheckbox id="captchaEnabled" label="#{bundle.captchaEnabled}" value="#{applicationPropertiesMBean.captchaEnabled}"/>
+                                        <h:outputLabel for="captchaEnabled" value="#{bundle.captchaEnabled}"/>
+                                    </h:panelGroup>
+
+                                    <h:outputLabel for="captchaPublicKey" value="#{bundle.publicKey}" styleClass="fieldLabel"/>
+                                    <h:inputText id="captchaPublicKey" label="#{bundle.publicKey}" size="40" maxlength="100" value="#{applicationPropertiesMBean.applicationProperties['captchaPublicKey']}"/>
+                                    <h:message for="captchaPublicKey" errorClass="errorMessage"/>
+
+                                    <h:outputLabel for="captchaPrivateKey" value="#{bundle.privateKey}" styleClass="fieldLabel"/>
+                                    <h:inputText id="captchaPrivateKey" label="#{bundle.privateKey}" size="40" maxlength="100" value="#{applicationPropertiesMBean.applicationProperties['captchaPrivateKey']}"/>
+                                    <h:message for="captchaPrivateKey" errorClass="errorMessage"/>
+                                </h:panelGrid>
+                            </p:fieldset>
                         </h:panelGrid>
                         <p/>
                         <h:commandButton value="#{bundle.save}" action="#{applicationPropertiesMBean.save}"/>

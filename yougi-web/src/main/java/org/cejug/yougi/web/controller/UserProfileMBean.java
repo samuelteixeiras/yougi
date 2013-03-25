@@ -108,12 +108,13 @@ public class UserProfileMBean {
         }
         else {
             ApplicationProperty appPropTimeZone = applicationPropertyBean.findApplicationProperty(Properties.TIMEZONE);
-            if(appPropTimeZone.getPropertyValue().isEmpty()) {
+            if(appPropTimeZone.getPropertyValue() == null || appPropTimeZone.getPropertyValue().isEmpty()) {
                 TimeZone tz = TimeZone.getDefault();
                 return tz.getID();
             }
-            else
+            else {
                 return appPropTimeZone.getPropertyValue();
+            }
         }
     }
 }
