@@ -35,6 +35,7 @@ import org.primefaces.model.chart.ChartSeries;
 /**
  * This class feeds a column chart that shows members' preferences in terms of
  * privacy.
+ *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
@@ -43,10 +44,11 @@ public class CommunicationPrivacyRange implements Serializable {
 
     @EJB
     private UserAccountBean userAccountBean;
-
+    
     private CartesianChartModel communicationPrivacyModel;
 
-    public CommunicationPrivacyRange() {}
+    public CommunicationPrivacyRange() {
+    }
 
     public CartesianChartModel getCommunicationPrivacyModel() {
         return this.communicationPrivacyModel;
@@ -61,30 +63,38 @@ public class CommunicationPrivacyRange implements Serializable {
                 totalSponsor = 0, totalSpeaker = 0;
 
         List<UserAccount> userAccounts = userAccountBean.findUserAccounts();
-        for(UserAccount userAccount: userAccounts) {
-            if(userAccount.getPublicProfile())
+        for (UserAccount userAccount : userAccounts) {
+            if (userAccount.getPublicProfile()) {
                 totalPublicProfile++;
+            }
 
-            if(userAccount.getMailingList())
+            if (userAccount.getMailingList()) {
                 totalMailingList++;
+            }
 
-            if(userAccount.getNews())
+            if (userAccount.getNews()) {
                 totalNews++;
+            }
 
-            if(userAccount.getGeneralOffer())
+            if (userAccount.getGeneralOffer()) {
                 totalGeneralOffer++;
+            }
 
-            if(userAccount.getJobOffer())
+            if (userAccount.getJobOffer()) {
                 totalJobOffer++;
+            }
 
-            if(userAccount.getEvent())
+            if (userAccount.getEvent()) {
                 totalEvent++;
+            }
 
-            if(userAccount.getSponsor())
+            if (userAccount.getSponsor()) {
                 totalSponsor++;
+            }
 
-            if(userAccount.getSpeaker())
+            if (userAccount.getSpeaker()) {
                 totalSpeaker++;
+            }
         }
 
         ResourceBundleHelper bundle = new ResourceBundleHelper();

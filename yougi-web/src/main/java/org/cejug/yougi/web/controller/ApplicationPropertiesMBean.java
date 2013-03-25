@@ -45,20 +45,14 @@ import org.cejug.yougi.util.ResourceBundleHelper;
 public class ApplicationPropertiesMBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     @EJB
     private ApplicationPropertyBean applicationPropertyBean;
-
     @EJB
     private LocationBean locationBean;
-
     @EJB
     private LanguageBean languageBean;
-
     private Map<String, String> applicationProperties;
-
     private Boolean sendEmails;
-
     private List<Language> languages;
 
     public Map<String, String> getApplicationProperties() {
@@ -82,8 +76,9 @@ public class ApplicationPropertiesMBean implements Serializable {
     }
 
     public List<Language> getLanguages() {
-        if(this.languages == null)
+        if (this.languages == null) {
             this.languages = languageBean.findLanguages();
+        }
         return this.languages;
     }
 
@@ -101,11 +96,11 @@ public class ApplicationPropertiesMBean implements Serializable {
     public void load() {
         applicationProperties = applicationPropertyBean.findApplicationProperties();
 
-        if(applicationProperties.get(Properties.URL.getKey()).toString().equals("")) {
+        if (applicationProperties.get(Properties.URL.getKey()).toString().equals("")) {
             applicationProperties.put(Properties.URL.getKey(), getUrl());
         }
 
-        if(applicationProperties.get(Properties.SEND_EMAILS.getKey()).equals("true")) {
+        if (applicationProperties.get(Properties.SEND_EMAILS.getKey()).equals("true")) {
             sendEmails = true;
         }
     }

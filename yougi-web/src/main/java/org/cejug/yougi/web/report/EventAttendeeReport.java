@@ -1,21 +1,21 @@
-/* Yougi is a web application conceived to manage user groups or 
- * communities focused on a certain domain of knowledge, whose members are 
- * constantly sharing information and participating in social and educational 
+/* Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
- * 
- * This application is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by the 
- * Free Software Foundation; either version 2.1 of the License, or (at your 
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
  * option) any later version.
- * 
- * This application is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
- * 
- * There is a full copy of the GNU Lesser General Public License along with 
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
  * this library. Look for the file license.txt at the root level. If you do not
- * find it, write to the Free Software Foundation, Inc., 59 Temple Place, 
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA 02111-1307 USA.
  * */
 package org.cejug.yougi.web.report;
@@ -27,26 +27,27 @@ import java.util.List;
 import org.cejug.yougi.event.entity.Attendee;
 
 /**
- *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 public class EventAttendeeReport {
 
     private Document document;
-    
+
     public EventAttendeeReport(Document document) throws DocumentException {
         this.document = document;
-        
-        if(!this.document.isOpen())
+
+        if (!this.document.isOpen()) {
             this.document.open();
+        }
 
         init();
     }
 
-    private void init() throws DocumentException {}
+    private void init() throws DocumentException {
+    }
 
-    public void printReport(List<Attendee> attendees) throws DocumentException {        
-        float[] columnSizes = {20,220,220,60}; // 520
+    public void printReport(List<Attendee> attendees) throws DocumentException {
+        float[] columnSizes = {20, 220, 220, 60}; // 520
         PdfPTable table = new PdfPTable(columnSizes.length);
         table.setLockedWidth(true);
         table.setTotalWidth(columnSizes);
@@ -79,22 +80,22 @@ public class EventAttendeeReport {
         previousPurchaseCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         previousPurchaseCell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(previousPurchaseCell);
-        
+
         table.getDefaultCell().setBackgroundColor(null);
         table.setHeaderRows(2);
 
         Font font = new Font(Font.FontFamily.HELVETICA, 9);
         int seq = 1;
-        for(Attendee attendee: attendees) {
+        for (Attendee attendee : attendees) {
             table.addCell(new Phrase(String.valueOf(seq++), font));
-            
+
             table.addCell(new Phrase(attendee.getAttendee().getFullName(), font));
 
             table.addCell(new Phrase(attendee.getAttendee().getEmail(), font));
-            
+
             table.addCell(" ");
         }
-        
+
         document.add(table);
     }
 }

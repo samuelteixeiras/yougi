@@ -37,13 +37,12 @@ public class MessageTemplateMBean {
 
     @EJB
     private org.cejug.yougi.business.MessageTemplateBean messageTemplateBean;
-
-    @ManagedProperty(value="#{param.id}")
+    @ManagedProperty(value = "#{param.id}")
     private String id;
-
     private MessageTemplate messageTemplate;
 
-    public MessageTemplateMBean() {}
+    public MessageTemplateMBean() {
+    }
 
     public String getId() {
         return id;
@@ -67,10 +66,9 @@ public class MessageTemplateMBean {
 
     @PostConstruct
     public void load() {
-        if(id != null && !id.isEmpty()) {
+        if (id != null && !id.isEmpty()) {
             this.messageTemplate = messageTemplateBean.findMessageTemplate(id);
-        }
-        else {
+        } else {
             this.messageTemplate = new MessageTemplate();
         }
     }
@@ -81,15 +79,17 @@ public class MessageTemplateMBean {
     }
 
     public String remove() {
-        if(messageTemplate != null)
+        if (messageTemplate != null) {
             messageTemplateBean.remove(messageTemplate.getId());
+        }
         return "message_templates?faces-redirect=true";
     }
 
     public Boolean getExistent() {
-        if(messageTemplate.getId() != null && !messageTemplate.getId().isEmpty())
+        if (messageTemplate.getId() != null && !messageTemplate.getId().isEmpty()) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 }

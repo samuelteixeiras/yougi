@@ -209,8 +209,9 @@ public class SubscriptionMBean {
     public String save() {
         this.subscription.setMailingList(mailingListBean.findMailingList(this.selectedMailingList));
 
-        if(this.selectedUserAccount != null && !this.selectedUserAccount.isEmpty())
+        if(this.selectedUserAccount != null && !this.selectedUserAccount.isEmpty()) {
             this.subscription.setUserAccount(userAccountBean.findUserAccount(this.selectedUserAccount));
+        }
 
         subscriptionBean.save(this.subscription);
         return "mailing_lists?faces-redirect=true";
@@ -224,15 +225,18 @@ public class SubscriptionMBean {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,bundle.getMessage("errorCode0008"),""));
             context.validationFailed();
         }
-        else
+        else {
             this.subscription.setSubscriptionDate(this.subscriptionDate);
+        }
 
-        if(context.isValidationFailed())
+        if(context.isValidationFailed()) {
             return "subscription";
+        }
 
         this.subscription.setMailingList(mailingListBean.findMailingList(this.selectedMailingList));
-        if(this.selectedUserAccount != null && !this.selectedUserAccount.isEmpty())
+        if(this.selectedUserAccount != null && !this.selectedUserAccount.isEmpty()) {
             this.subscription.setUserAccount(userAccountBean.findUserAccount(this.selectedUserAccount));
+        }
 
         subscriptionBean.subscribe(this.subscription.getMailingList(),
                                   this.subscription.getUserAccount(),
@@ -249,15 +253,18 @@ public class SubscriptionMBean {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,bundle.getMessage("errorCode0009"),""));
             context.validationFailed();
         }
-        else
+        else {
             this.subscription.setUnsubscriptionDate(this.unsubscriptionDate);
+        }
 
-        if(context.isValidationFailed())
+        if(context.isValidationFailed()) {
             return "subscription";
+        }
 
         this.subscription.setMailingList(mailingListBean.findMailingList(this.selectedMailingList));
-        if(this.selectedUserAccount != null && !this.selectedUserAccount.isEmpty())
+        if(this.selectedUserAccount != null && !this.selectedUserAccount.isEmpty()) {
             this.subscription.setUserAccount(userAccountBean.findUserAccount(this.selectedUserAccount));
+        }
         subscriptionBean.unsubscribe(this.subscription);
         return "mailing_list_view?faces-redirect=true&id="+ this.subscription.getMailingList().getId();
     }

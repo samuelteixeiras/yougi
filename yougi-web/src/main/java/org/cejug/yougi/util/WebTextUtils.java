@@ -31,86 +31,97 @@ import org.cejug.yougi.entity.Province;
  */
 public final class WebTextUtils extends TextUtils {
 
-	/** This method replaces every line break in the text by a html paragraph.
-     *  Empty lines are ignored. It returns a text that appears formatted in a html page. */
+    /**
+     * This method replaces every line break in the text by a html paragraph.
+     * Empty lines are ignored. It returns a text that appears formatted in a
+     * html page.
+     */
     public static String convertLineBreakToHTMLParagraph(String str) {
-    	if(str == null)
-    		return null;
+        if (str == null) {
+            return null;
+        }
 
-		StringBuilder formattedStr = new StringBuilder();
+        StringBuilder formattedStr = new StringBuilder();
 
-		StringTokenizer st = new StringTokenizer(str, "\n");
-		String token;
-		while(st.hasMoreTokens()) {
-			token = st.nextToken().trim();
-			if(!token.isEmpty()) {
-				formattedStr.append("<p>");
-				formattedStr.append(token);
-				formattedStr.append("</p>");
-			}
-		}
-
-		return formattedStr.toString();
+        StringTokenizer st = new StringTokenizer(str, "\n");
+        String token;
+        while (st.hasMoreTokens()) {
+            token = st.nextToken().trim();
+            if (!token.isEmpty()) {
+                formattedStr.append("<p>");
+                formattedStr.append(token);
+                formattedStr.append("</p>");
+            }
+        }
+        return formattedStr.toString();
     }
 
     public static String getFormattedDate(Date date) {
-    	if(date == null)
-    		return "";
+        if (date == null) {
+            return "";
+        }
 
-    	ResourceBundleHelper rb = new ResourceBundleHelper();
-    	return getFormattedDate(date, rb.getMessage("formatDate"));
+        ResourceBundleHelper rb = new ResourceBundleHelper();
+        return getFormattedDate(date, rb.getMessage("formatDate"));
     }
 
     public static String getFormattedTime(Date time, String timeZone) {
-    	if(time == null)
-    		return "";
+        if (time == null) {
+            return "";
+        }
 
-    	ResourceBundleHelper rb = new ResourceBundleHelper();
-    	return getFormattedTime(time, rb.getMessage("formatTime"), timeZone);
+        ResourceBundleHelper rb = new ResourceBundleHelper();
+        return getFormattedTime(time, rb.getMessage("formatTime"), timeZone);
     }
 
     public static String getFormattedDateTime(Date dateTime, String timeZone) {
-    	if(dateTime == null)
-    		return "";
+        if (dateTime == null) {
+            return "";
+        }
 
-    	ResourceBundleHelper rb = new ResourceBundleHelper();
-    	return getFormattedDateTime(dateTime, rb.getMessage("formatDateTime"), timeZone);
+        ResourceBundleHelper rb = new ResourceBundleHelper();
+        return getFormattedDateTime(dateTime, rb.getMessage("formatDateTime"), timeZone);
     }
 
     public static String printAddress(String address, Country country, Province province, City city, String postalCode) {
         StringBuilder fullAddress = new StringBuilder();
         String commaSeparator = ", ";
-        if(address != null && !address.isEmpty())
+        if (address != null && !address.isEmpty()) {
             fullAddress.append(address);
+        }
 
-        if(city != null) {
-            if(!fullAddress.toString().isEmpty())
+        if (city != null) {
+            if (!fullAddress.toString().isEmpty()) {
                 fullAddress.append(commaSeparator);
+            }
 
             fullAddress.append(city.getName());
         }
 
-        if(province != null) {
-            if(!fullAddress.toString().isEmpty())
+        if (province != null) {
+            if (!fullAddress.toString().isEmpty()) {
                 fullAddress.append(commaSeparator);
+            }
 
             fullAddress.append(province.getName());
         }
 
-        if(country != null) {
-            if(!fullAddress.toString().isEmpty())
+        if (country != null) {
+            if (!fullAddress.toString().isEmpty()) {
                 fullAddress.append(" - ");
+            }
 
             fullAddress.append(country.getName());
         }
 
-        if(postalCode != null) {
-            if(!fullAddress.toString().isEmpty())
+        if (postalCode != null) {
+            if (!fullAddress.toString().isEmpty()) {
                 fullAddress.append(".");
+            }
             ResourceBundleHelper rb = new ResourceBundleHelper();
             fullAddress.append(" ");
             fullAddress.append(rb.getMessage("postalCode"));
-            if(country != null) {
+            if (country != null) {
                 fullAddress.append(": ");
                 fullAddress.append(country.getName());
             }

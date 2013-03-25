@@ -27,8 +27,9 @@ import javax.faces.context.FacesContext;
 
 /**
  * Encapsulates the complexity of getting the resource bundle from the context.
- * Actually, this is so complex that a better approach should be investigated, or
- * a solution presented to spec leaders.
+ * Actually, this is so complex that a better approach should be investigated,
+ * or a solution presented to spec leaders.
+ *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 public class ResourceBundleHelper {
@@ -57,8 +58,9 @@ public class ResourceBundleHelper {
         } catch (MissingResourceException e) {
             return "?";
         }
-        if (bundle == null)
+        if (bundle == null) {
             return "?";
+        }
         try {
             message = bundle.getString(key);
         } catch (Exception e) {
@@ -68,8 +70,9 @@ public class ResourceBundleHelper {
 
     private static ClassLoader getCurrentLoader(Object fallbackClass) {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        if (loader == null)
+        if (loader == null) {
             loader = fallbackClass.getClass().getClassLoader();
+        }
         return loader;
     }
 }

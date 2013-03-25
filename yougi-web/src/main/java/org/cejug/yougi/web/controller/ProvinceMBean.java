@@ -41,15 +41,13 @@ public class ProvinceMBean {
 
     @EJB
     private LocationBean locationBean;
-
-    @ManagedProperty(value="#{param.id}")
+    @ManagedProperty(value = "#{param.id}")
     private String id;
-
     private Country selectedCountry;
-
     private Province province;
 
-    public ProvinceMBean() {}
+    public ProvinceMBean() {
+    }
 
     public String getId() {
         return id;
@@ -72,7 +70,7 @@ public class ProvinceMBean {
         List<SelectItem> selectItems = new ArrayList<SelectItem>();
         SelectItem selectItem = new SelectItem("", "Select...");
         selectItems.add(selectItem);
-        for(Country country: countries) {
+        for (Country country : countries) {
             selectItem = new SelectItem(country.getAcronym(), country.getName());
             selectItems.add(selectItem);
         }
@@ -83,7 +81,7 @@ public class ProvinceMBean {
         List<Country> countries = locationBean.findAssociatedCountries();
         SelectItem[] options = new SelectItem[countries.size() + 1];
         options[0] = new SelectItem("", "Select");
-        for(int i = 0; i < countries.size(); i++) {
+        for (int i = 0; i < countries.size(); i++) {
             options[i + 1] = new SelectItem(countries.get(i), countries.get(i).getName());
         }
         return options;
@@ -94,26 +92,27 @@ public class ProvinceMBean {
     }
 
     public String getSelectedCountry() {
-        if(selectedCountry == null)
+        if (selectedCountry == null) {
             return null;
+        }
 
         return selectedCountry.getAcronym();
     }
 
     public void setSelectedCountry(String acronym) {
-        if(acronym == null || acronym.isEmpty())
+        if (acronym == null || acronym.isEmpty()) {
             return;
+        }
 
         this.selectedCountry = locationBean.findCountry(acronym);
     }
 
     @PostConstruct
     public void load() {
-        if(id != null && !id.isEmpty()) {
+        if (id != null && !id.isEmpty()) {
             this.province = locationBean.findProvince(id);
             this.selectedCountry = this.province.getCountry();
-        }
-        else {
+        } else {
             this.province = new Province();
         }
     }
