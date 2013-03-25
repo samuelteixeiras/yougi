@@ -51,8 +51,8 @@
 
                             <h:panelGroup>
                                 <h:selectOneRadio id="gender" label="#{bundle.gender}" required="true" value="#{userAccountMBean.userAccount.gender}">
-                                    <f:selectItem itemLabel="#{bundle.male}" itemValue="1"/>
-                                    <f:selectItem itemLabel="#{bundle.female}" itemValue="0"/>
+                                    <f:selectItem itemLabel="#{bundle.male}" itemValue="MALE"/>
+                                    <f:selectItem itemLabel="#{bundle.female}" itemValue="FEMALE"/>
                                 </h:selectOneRadio>
                                 <h:message for="gender" errorClass="errorMessage"/>
                             </h:panelGroup>

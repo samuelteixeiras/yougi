@@ -80,8 +80,8 @@
 
                             <h:panelGroup>
                                 <h:selectOneRadio id="gender" label="#{bundle.gender}" required="true" value="#{userAccountMBean.userAccount.gender}">
-                                    <f:selectItem itemLabel="#{bundle.male}" itemValue="1"/>
-                                    <f:selectItem itemLabel="#{bundle.female}" itemValue="0"/>
+                                    <f:selectItem itemLabel="#{bundle.male}" itemValue="MALE"/>
+                                    <f:selectItem itemLabel="#{bundle.female}" itemValue="FEMALE"/>
                                 </h:selectOneRadio>
                                 <h:message for="gender" errorClass="errorMessage"/>
                             </h:panelGroup>
@@ -174,8 +174,10 @@
 
                         <h:inputHidden id="id" value="#{userAccountMBean.userAccount.id}"/>
 
-                        <p><p:captcha id="captcha" label="Captcha" theme="white" language="#{bundle.confLanguage}"/>
-                        <h:message for="captcha" errorClass="errorMessage"/></p>
+                        <h:panelGroup rendered="#{applicationPropertiesMBean.captchaEnabled}">
+                            <p><p:captcha id="captcha" label="Captcha" theme="white" language="#{bundle.confLanguage}"/>
+                            <h:message for="captcha" errorClass="errorMessage"/></p>
+                        </h:panelGroup>
 
                         <p/>
                         <h:panelGrid columns="2">

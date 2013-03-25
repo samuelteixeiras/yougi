@@ -73,15 +73,10 @@
                                         <f:facet name="header"><h:outputText value="#{bundle.firstName}"/></f:facet>
                                         <h:commandLink value="#{member.firstName} #{member.lastName}" action="#{memberMBean.load(member.id)}"/>
                                     </p:column>
-                                    <p:column>
-
-                                        <h:outputText value="#{member.gender}">
-                                            <f:converter converterId="GenderNumberToString"/>
-                                        </h:outputText>
-                                    </p:column>
                                     <p:column style="text-align: center;">
                                         <f:facet name="header"><h:outputText value="#{bundle.gender}"/></f:facet>
-                                        <h:graphicImage url="/images/#{member.strGender}.png"/>
+                                        <h:graphicImage url="/images/male.png" rendered="#{member.gender == 'MALE'}"/>
+                                        <h:graphicImage url="/images/female.png" rendered="#{member.gender == 'FEMALE'}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.email}"/></f:facet>
@@ -89,9 +84,7 @@
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.age}"/></f:facet>
-                                        <h:outputText value="#{member.age}">
-                                            <f:converter converterId="AgeNumberToString"/>
-                                        </h:outputText>
+                                        <h:outputText value="#{member.age}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header"><h:outputText value="#{bundle.confirmed}"/></f:facet>

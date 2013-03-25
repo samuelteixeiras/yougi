@@ -46,8 +46,9 @@ public class UserAccount implements Serializable, Identified {
     @Column(name="last_name", nullable=false)
     private String lastName;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable=false)
-    private Integer gender;
+    private Gender gender;
 
     private String email;
 
@@ -177,20 +178,11 @@ public class UserAccount implements Serializable, Identified {
         return str.toString();
     }
 
-    public Integer getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public String getStrGender() {
-        if(gender == 1) {
-            return "male";
-        }
-        else {
-            return "female";
-        }
-    }
-
-    public void setGender(Integer gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 

@@ -46,7 +46,7 @@
                                     <h:outputText value="#{bundle.birthDate}" styleClass="fieldLabel"/>
 
                                     <h:outputText value="#{userAccountMBean.userAccount.gender}">
-                                        <f:converter converterId="GenderNumberToString"/>
+                                        <f:converter converterId="GenderToString"/>
                                     </h:outputText>
                                     <h:outputText value="#{userAccountMBean.userAccount.birthDate}">
                                         <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
