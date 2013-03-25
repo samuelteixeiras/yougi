@@ -30,7 +30,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

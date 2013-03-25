@@ -25,7 +25,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Embeddable
 public class UserGroupId implements Serializable {

@@ -47,7 +47,7 @@ import org.cejug.yougi.knowledge.business.SubscriptionBean;
 import org.cejug.yougi.util.EntitySupport;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
@@ -166,7 +166,6 @@ public class UserAccountBean {
      * Returns user accounts ordered by registration date and in which the
      * registration date is between the informed period of time.
      */
-    @SuppressWarnings("unchecked")
     public List<UserAccount> findConfirmedUserAccounts(Date from, Date to) {
         return em.createQuery("select ua from UserAccount ua where ua.confirmationCode is null and ua.registrationDate >= :from and ua.registrationDate <= :to order by ua.registrationDate asc")
                  .setParameter("from", from)
@@ -174,7 +173,6 @@ public class UserAccountBean {
                  .getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     public List<UserAccount> findNotVerifiedUsers() {
         return em.createQuery("select ua from UserAccount ua where ua.verified = :verified and ua.deactivated = :deactivated order by ua.registrationDate desc")
                  .setParameter("verified", Boolean.FALSE)
@@ -182,7 +180,6 @@ public class UserAccountBean {
                  .getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     public List<UserAccount> findUserAccountsStartingWith(String firstLetter) {
         return em.createQuery("select ua from UserAccount ua where ua.firstName like '"+ firstLetter +"%' and ua.deactivated = :deactivated order by ua.firstName")
                  .setParameter("deactivated", Boolean.FALSE)
@@ -220,7 +217,6 @@ public class UserAccountBean {
      * Returns all users related to the informed city, independent of their
      * confirmation, validation or deactivation status.
      */
-    @SuppressWarnings("unchecked")
     public List<UserAccount> findInhabitantsFrom(City city) {
         return em.createQuery("select u from UserAccount u where u.city = :city order by u.firstName")
                 .setParameter("city", city)

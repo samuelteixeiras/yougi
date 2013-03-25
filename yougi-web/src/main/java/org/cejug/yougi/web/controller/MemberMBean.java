@@ -47,7 +47,7 @@ import org.cejug.yougi.knowledge.entity.MailingList;
 import org.cejug.yougi.knowledge.entity.MailingListSubscription;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @SessionScoped

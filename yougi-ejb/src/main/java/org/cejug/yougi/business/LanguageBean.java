@@ -28,8 +28,7 @@ import javax.persistence.PersistenceContext;
 import org.cejug.yougi.entity.Language;
 
 /**
- *
- * @author Hildeberto Mendonca
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
@@ -42,8 +41,7 @@ public class LanguageBean {
         return em.find(Language.class, acronym);
     }
 
-    @SuppressWarnings("unchecked")
-	public List<Language> findLanguages() {
+    public List<Language> findLanguages() {
         return em.createQuery("select l from Language l order by l.name asc").getResultList();
     }
 

@@ -36,7 +36,8 @@ import org.cejug.yougi.util.EntitySupport;
  * Manages data of countries, states or provinces and cities because these
  * three entities are strongly related and because they are too simple to
  * have an exclusive business class.
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ *
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
@@ -56,13 +57,11 @@ public class LocationBean {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<Country> findCountries() {
         return em.createQuery("select c from Country c order by c.name asc")
                  .getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     public List<Country> findAssociatedCountries() {
         return em.createQuery("select distinct p.country from Province p order by p.country")
                  .getResultList();
@@ -72,13 +71,11 @@ public class LocationBean {
         return em.find(Province.class, id);
     }
 
-    @SuppressWarnings("unchecked")
     public List<Province> findProvinces() {
         return em.createQuery("select p from Province p order by p.country.name, p.name asc")
                  .getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     public List<Province> findProvinces(Country country) {
         return em.createQuery("select p from Province p where p.country = :country order by p.name asc")
                  .setParameter("country", country)
@@ -89,20 +86,17 @@ public class LocationBean {
         return em.find(City.class, id);
     }
 
-    @SuppressWarnings("unchecked")
     public List<City> findCities() {
         return em.createQuery("select c from City c order by c.country.name, c.name asc")
                  .getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     public List<City> findValidatedCities() {
         return em.createQuery("select c from City c where c.valid = :valid")
         		 .setParameter("valid", true)
                  .getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     public List<City> findCities(Country country, Boolean includingInvalids) {
         if(includingInvalids) {
             return em.createQuery("select c from City c where c.country = :country order by c.name asc")
@@ -117,7 +111,6 @@ public class LocationBean {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<City> findCities(Province province, Boolean includingInvalids) {
         if(includingInvalids) {
             return em.createQuery("select c from City c where c.province = :province order by c.name asc")
@@ -132,7 +125,6 @@ public class LocationBean {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<City> findCitiesStartingWith(String initials) {
         return em.createQuery("select c from City c where c.name like '"+ initials +"%' order by c.name").getResultList();
     }
@@ -159,7 +151,7 @@ public class LocationBean {
         String prefix = "UTC";
         String signal = " ";
         String minutes = ":00";
-        List<String> timeZones = new ArrayList<String>();
+        List<String> timeZones = new ArrayList<>();
         for(int i = -12;i <= 14;i++) {
             if(i > 0) {
                 signal = " +";

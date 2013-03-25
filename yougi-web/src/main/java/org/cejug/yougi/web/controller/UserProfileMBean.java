@@ -37,7 +37,7 @@ import org.cejug.yougi.entity.Properties;
 import org.cejug.yougi.entity.UserAccount;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @SessionScoped

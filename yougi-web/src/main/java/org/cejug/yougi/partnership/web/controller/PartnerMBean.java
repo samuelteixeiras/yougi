@@ -42,7 +42,7 @@ import org.cejug.yougi.web.controller.LocationMBean;
 import org.primefaces.model.DualListModel;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

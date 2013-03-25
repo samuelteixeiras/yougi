@@ -32,7 +32,8 @@ import javax.mail.internet.MimeMessage;
 /**
  * Adapts a mime email message to the application domain, considering a
  * UserAccount as a usual recipient.
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ *
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 public class EmailMessage {
 
@@ -104,9 +105,7 @@ public class EmailMessage {
             msg.setHeader("Content-Type", "text/html;charset=UTF-8");
 
             return msg;
-        } catch (MessagingException me) {
-            throw new RuntimeException("Error when sending the mail confirmation.",me);
-        } catch (UnsupportedEncodingException me) {
+        } catch (MessagingException | UnsupportedEncodingException me) {
             throw new RuntimeException("Error when sending the mail confirmation.",me);
         }
     }

@@ -32,7 +32,8 @@ import org.cejug.yougi.util.EntitySupport;
 
 /**
  * Implements the business logic related to the management of mailing lists.
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ *
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
@@ -47,7 +48,6 @@ public class MailingListBean {
         return em.find(MailingList.class, id);
     }
 
-    @SuppressWarnings("unchecked")
     public List<MailingList> findMailingLists() {
         return em.createQuery("select ml from MailingList ml order by ml.name asc").getResultList();
     }

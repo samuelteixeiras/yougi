@@ -35,7 +35,8 @@ import org.cejug.yougi.util.EntitySupport;
 
 /**
  * Manages partners of the user group.
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ *
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
@@ -59,23 +60,21 @@ public class RepresentativeBean {
     public Representative findRepresentative(UserAccount person) {
     	try {
     		return (Representative) em.createQuery("select r from Representative r where r.person = :person")
-    								  .setParameter("person", person)
-                                      .getSingleResult();
+                                          .setParameter("person", person)
+                                          .getSingleResult();
     	}
     	catch(NoResultException nre) {
     		return null;
     	}
     }
 
-    @SuppressWarnings("unchecked")
-	public List<UserAccount> findRepresentativePersons(Partner partner) {
+    public List<UserAccount> findRepresentativePersons(Partner partner) {
     	return em.createQuery("select r.person from Representative r where r.partner = :partner order by r.person.firstName asc")
     	         .setParameter("partner", partner)
     	         .getResultList();
     }
 
-    @SuppressWarnings("unchecked")
-	public List<Representative> findRepresentatives(Partner partner) {
+    public List<Representative> findRepresentatives(Partner partner) {
     	return em.createQuery("select r from Representative r where r.partner = :partner order by r.person.firstName asc")
     	         .setParameter("partner", partner)
     	         .getResultList();
@@ -104,7 +103,7 @@ public class RepresentativeBean {
         }
 
     	// Create new representatives using the received parameters.
-        List<Representative> representatives = new ArrayList<Representative>();
+        List<Representative> representatives = new ArrayList<>();
         Representative representative;
         for(UserAccount person: persons) {
         	representative = new Representative(partner, person);

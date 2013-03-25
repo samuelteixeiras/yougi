@@ -31,7 +31,7 @@ import org.cejug.yougi.entity.Properties;
 import org.cejug.yougi.exception.BusinessLogicException;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
@@ -40,9 +40,8 @@ public class ApplicationPropertyBean {
     @PersistenceContext
     EntityManager em;
 
-    @SuppressWarnings("unchecked")
     public Map<String, String> findApplicationProperties() {
-        Map<String, String> propertiesMap = new HashMap<String, String>();
+        Map<String, String> propertiesMap = new HashMap<>();
         List<ApplicationProperty> properties = em.createQuery("select ap from ApplicationProperty ap").getResultList();
         for(ApplicationProperty property: properties) {
             propertiesMap.put(property.getPropertyKey(), property.getPropertyValue());
@@ -107,7 +106,6 @@ public class ApplicationPropertyBean {
         return applicationProperty;
     }
 
-    @SuppressWarnings("unchecked")
     public void save(Map<String, String> properties) {
         List<ApplicationProperty> existingProperties = em.createQuery("select ap from ApplicationProperty ap").getResultList();
         String value;

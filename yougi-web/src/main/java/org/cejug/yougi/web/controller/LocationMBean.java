@@ -38,7 +38,7 @@ import org.cejug.yougi.entity.Province;
  * should be used every time at least 2 of the location fields are presented to
  * the user.
  *
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  *
  */
 @ManagedBean

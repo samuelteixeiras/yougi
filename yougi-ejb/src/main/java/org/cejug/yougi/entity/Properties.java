@@ -21,7 +21,7 @@
 package org.cejug.yougi.entity;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 public enum Properties {
     FILE_REPOSITORY_PATH("fileRepositoryPath", ""),

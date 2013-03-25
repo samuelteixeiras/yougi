@@ -1,21 +1,21 @@
-/* Yougi is a web application conceived to manage user groups or 
- * communities focused on a certain domain of knowledge, whose members are 
- * constantly sharing information and participating in social and educational 
+/* Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
- * 
- * This application is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by the 
- * Free Software Foundation; either version 2.1 of the License, or (at your 
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
  * option) any later version.
- * 
- * This application is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
- * 
- * There is a full copy of the GNU Lesser General Public License along with 
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
  * this library. Look for the file license.txt at the root level. If you do not
- * find it, write to the Free Software Foundation, Inc., 59 Temple Place, 
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA 02111-1307 USA.
  * */
 package org.cejug.yougi.event.business;
@@ -31,8 +31,7 @@ import org.cejug.yougi.event.entity.Speaker;
 import org.cejug.yougi.util.EntitySupport;
 
 /**
- *
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
@@ -40,26 +39,26 @@ public class SpeakerBean {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     public Speaker findSpeaker(String id) {
         if (id != null) {
             return em.find(Speaker.class, id);
         }
         return null;
     }
-    
+
     public List<Speaker> findSpeakers(Event event) {
         return em.createQuery("select s from Speaker s where s.session.event = :event order by s.userAccount.firstName asc")
                  .setParameter("event", event)
                  .getResultList();
     }
-    
+
     public List<Speaker> findSpeakers(EventSession session) {
         return em.createQuery("select s from Speaker s where s.session = :session order by s.userAccount.firstName asc")
                  .setParameter("session", session)
                  .getResultList();
     }
-    
+
     public void save(Speaker speaker) {
         if (EntitySupport.INSTANCE.isIdNotValid(speaker)) {
             speaker.setId(EntitySupport.INSTANCE.generateEntityId());

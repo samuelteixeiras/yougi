@@ -30,7 +30,7 @@ import org.cejug.yougi.business.LocationBean;
 import org.cejug.yougi.entity.Country;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

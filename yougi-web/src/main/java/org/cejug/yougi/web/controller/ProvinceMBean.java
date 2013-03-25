@@ -33,7 +33,7 @@ import org.cejug.yougi.entity.Country;
 import org.cejug.yougi.entity.Province;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

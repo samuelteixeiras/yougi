@@ -29,7 +29,7 @@ import org.cejug.yougi.entity.UserAccount;
  * Person with knowledge and experience to give a speech in an event, respecting
  * the scope of subjects in the domain explored by the user group.
  * 
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
 @Table(name = "speaker")

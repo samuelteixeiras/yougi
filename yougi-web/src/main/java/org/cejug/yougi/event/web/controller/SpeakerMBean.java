@@ -37,7 +37,7 @@ import org.cejug.yougi.event.entity.EventSession;
 import org.cejug.yougi.event.entity.Speaker;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

@@ -29,7 +29,8 @@ import org.cejug.yougi.util.TextUtils;
 
 /**
  * Represents the user account of jug members.
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ *
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
 @Table(name="user_account")

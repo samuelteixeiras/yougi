@@ -60,7 +60,7 @@ import org.cejug.yougi.util.WebTextUtils;
 import org.primefaces.model.chart.PieChartModel;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

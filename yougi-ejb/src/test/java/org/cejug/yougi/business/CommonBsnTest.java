@@ -32,7 +32,8 @@ import org.junit.Test;
 
 /**
  * Test class CommonBsnTest.
- * @author helio frota
+ *
+ * @author Helio Frota - http://www.heliofrota.com
  */
 public class CommonBsnTest {
 

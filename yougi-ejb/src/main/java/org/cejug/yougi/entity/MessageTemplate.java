@@ -31,7 +31,7 @@ import javax.persistence.*;
 /**
  * Message template with variables to be fulfilled with object attributes.
  *
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
 @Table(name = "message_template")
@@ -124,7 +124,7 @@ public class MessageTemplate implements Serializable, Identified {
 
     private List<String> findVariables(Pattern pattern, CharSequence charSequence) {
         Matcher m = pattern.matcher(charSequence);
-        List<String> matches = new ArrayList<String>();
+        List<String> matches = new ArrayList<>();
         while (m.find()) {
             matches.add(m.group());
         }

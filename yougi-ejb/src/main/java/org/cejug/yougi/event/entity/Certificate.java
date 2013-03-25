@@ -23,7 +23,7 @@ package org.cejug.yougi.event.entity;
 import java.util.Date;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 public class Certificate {
     private String certificateFullname;

@@ -27,7 +27,7 @@ import javax.persistence.*;
 import org.cejug.yougi.entity.Identified;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
 @Table(name = "mailing_list_message")

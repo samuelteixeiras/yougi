@@ -36,7 +36,7 @@ import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

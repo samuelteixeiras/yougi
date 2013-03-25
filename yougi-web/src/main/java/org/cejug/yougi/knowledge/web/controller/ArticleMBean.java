@@ -29,7 +29,7 @@ import org.cejug.yougi.knowledge.business.ArticleBean;
 import org.cejug.yougi.knowledge.entity.Article;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

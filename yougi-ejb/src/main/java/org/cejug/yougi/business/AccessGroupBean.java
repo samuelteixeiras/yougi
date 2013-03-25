@@ -36,7 +36,7 @@ import org.cejug.yougi.entity.UserGroup;
 import org.cejug.yougi.util.EntitySupport;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
@@ -91,7 +91,6 @@ public class AccessGroupBean {
         return group;
     }
 
-    @SuppressWarnings("unchecked")
     public List<AccessGroup> findAccessGroups() {
         return em.createQuery("select ag from AccessGroup ag order by ag.name").getResultList();
     }
@@ -130,7 +129,7 @@ public class AccessGroupBean {
 
         if(members != null) {
             Authentication auth;
-            List<UserGroup> usersGroup = new ArrayList<UserGroup>();
+            List<UserGroup> usersGroup = new ArrayList<>();
             for(UserAccount member: members) {
                 auth = userAccountBean.findAuthenticationUser(member.getId());
                 usersGroup.add(new UserGroup(accessGroup, auth));

@@ -38,7 +38,7 @@ import org.cejug.yougi.partnership.business.PartnerBean;
 import org.cejug.yougi.partnership.entity.Partner;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

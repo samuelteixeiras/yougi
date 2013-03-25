@@ -27,8 +27,7 @@ import java.util.List;
 import javax.persistence.*;
 
 /**
- *
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
 @Table(name = "historical_message")
@@ -80,7 +79,7 @@ public class MessageHistory implements Serializable, Identified {
      * @return A list of historical messages, one for each recipient of the message.
      */
     public static List<MessageHistory> createHistoricMessages(EmailMessage emailMessage) {
-        List<MessageHistory> messageHistories = new ArrayList<MessageHistory>();
+        List<MessageHistory> messageHistories = new ArrayList<>();
         MessageHistory messageHistory;
 
         for(UserAccount userAccount: emailMessage.getRecipients()) {
@@ -167,7 +166,6 @@ public class MessageHistory implements Serializable, Identified {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof MessageHistory)) {
             return false;
         }

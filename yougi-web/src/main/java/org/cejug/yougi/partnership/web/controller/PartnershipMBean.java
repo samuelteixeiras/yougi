@@ -51,7 +51,7 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

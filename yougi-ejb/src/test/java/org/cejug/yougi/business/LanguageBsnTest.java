@@ -27,7 +27,8 @@ import org.junit.Test;
 
 /**
  * Test class LanguageBsnTest.
- * @author helio frota
+ *
+ * @author Helio Frota - http://www.heliofrota.com
  */
 public class LanguageBsnTest {
 

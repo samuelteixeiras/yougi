@@ -37,7 +37,8 @@ import org.cejug.yougi.util.EntitySupport;
 
 /**
  * Implements the business logic related to the management of mailing lists.
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ *
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
@@ -90,7 +91,6 @@ public class SubscriptionBean {
      * Returns a list of subscriptions in different mailing lists in which the
      * informed user is subscribed.
      */
-    @SuppressWarnings("unchecked")
     public List<MailingListSubscription> findMailingListSubscriptions(UserAccount userAccount) {
         return em.createQuery("select mls from MailingListSubscription mls where mls.emailAddress = :email and mls.unsubscriptionDate is null")
                  .setParameter("email", userAccount.getEmail())
@@ -100,7 +100,6 @@ public class SubscriptionBean {
     /**
      * Returns a list of subscriptions associated with the informed mailing list.
      */
-    @SuppressWarnings("unchecked")
     public List<MailingListSubscription> findMailingListSubscriptions(MailingList mailingList) {
         return em.createQuery("select mls from MailingListSubscription mls where mls.mailingList = :mailingList order by mls.subscriptionDate desc")
                  .setParameter("mailingList", mailingList)
@@ -122,7 +121,6 @@ public class SubscriptionBean {
      * Returns a subscription with the informed email and associated with the
      * informed mailing list.
      */
-    @SuppressWarnings("unchecked")
     public List<MailingListSubscription> findMailingListSubscriptions(MailingList mailingList, String email) {
         return em.createQuery("select mls from MailingListSubscription mls where mls.mailingList = :mailingList and mls.emailAddress = :email order by mls.subscriptionDate desc")
                  .setParameter("mailingList", mailingList)

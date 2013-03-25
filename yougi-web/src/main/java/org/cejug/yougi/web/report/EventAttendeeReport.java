@@ -28,7 +28,7 @@ import org.cejug.yougi.event.entity.Attendee;
 
 /**
  *
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 public class EventAttendeeReport {
 

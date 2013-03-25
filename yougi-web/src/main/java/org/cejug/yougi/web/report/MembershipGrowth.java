@@ -37,7 +37,7 @@ import org.primefaces.model.chart.ChartSeries;
 /**
  * This class feeds the bar chart that shows the growth of the user group in a
  * monthly basis.
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

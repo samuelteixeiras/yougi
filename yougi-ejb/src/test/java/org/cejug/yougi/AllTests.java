@@ -34,7 +34,8 @@ import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * Suite class AllTests.
- * @author helio frota
+ *
+ * @author Helio Frota - http://www.heliofrota.com
  */
 @RunWith(value = Suite.class)
 @SuiteClasses(value = {

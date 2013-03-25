@@ -34,7 +34,7 @@ import org.cejug.yougi.entity.UserAccount;
 import org.primefaces.model.DualListModel;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

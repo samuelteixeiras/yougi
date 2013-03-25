@@ -30,7 +30,7 @@ import org.cejug.yougi.util.ResourceBundleHelper;
 /**
  * DeactivationType is a Enum. This converter is responsible for transforming
  * that Enum in something readable for the end-user, using ResourceBundle.
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @FacesConverter(value="DeactivationTypeEnumToString")
 public class DeactivationTypeEnumToString implements Converter {

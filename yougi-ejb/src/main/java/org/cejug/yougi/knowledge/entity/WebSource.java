@@ -32,7 +32,8 @@ import org.cejug.yougi.entity.UserAccount;
 /**
  * Entity class representing an external website used as a source of content for
  * the community.
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ *
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
 @Table(name = "web_source")

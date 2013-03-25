@@ -47,7 +47,8 @@ import org.cejug.yougi.util.EntitySupport;
 
 /**
  * Business logic dealing with articles from a web source.
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ *
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
@@ -106,7 +107,7 @@ public class ArticleBean {
             if(webSource != null) {
                 webSource.setTitle(feed.getTitle());
             }
-            unpublishedArticles = new ArrayList<Article>();
+            unpublishedArticles = new ArrayList<>();
             Article article;
             for (Iterator i = feed.getEntries().iterator(); i.hasNext();) {
                 SyndEntry entry = (SyndEntry) i.next();
@@ -130,18 +131,14 @@ public class ArticleBean {
 
                 unpublishedArticles.add(article);
             }
-        } catch (IllegalArgumentException iae) {
-            LOGGER.log(Level.SEVERE, iae.getMessage(), iae);
-        } catch(FeedException fe) {
-            LOGGER.log(Level.SEVERE, fe.getMessage(), fe);
-        } catch(IOException ioe) {
-            LOGGER.log(Level.SEVERE, ioe.getMessage(), ioe);
-        }
 
-        // Remove from the list of unpublished articles the ones that are already published.
-        List<Article> publishedArticles = findPublishedArticles(webSource);
-        for(Article publishedArticle: publishedArticles) {
-            unpublishedArticles.remove(publishedArticle);
+            // Remove from the list of unpublished articles the ones that are already published.
+            List<Article> publishedArticles = findPublishedArticles(webSource);
+            for(Article publishedArticle: publishedArticles) {
+                unpublishedArticles.remove(publishedArticle);
+            }
+        } catch (IllegalArgumentException | FeedException | IOException iae) {
+            LOGGER.log(Level.SEVERE, iae.getMessage(), iae);
         }
 
         return unpublishedArticles;

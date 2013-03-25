@@ -38,7 +38,7 @@ import org.cejug.yougi.entity.Properties;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

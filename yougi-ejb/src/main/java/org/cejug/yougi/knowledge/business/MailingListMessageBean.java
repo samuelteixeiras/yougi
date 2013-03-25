@@ -42,8 +42,7 @@ import org.cejug.yougi.knowledge.entity.MailingListSubscription;
 import org.cejug.yougi.util.EntitySupport;
 
 /**
- *
- * @author Hildeberto Mendonça
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
@@ -155,7 +154,7 @@ public class MailingListMessageBean {
      * of the message. */
     private List<MailingList> figureOutMailingLists(Address[] extendedListAddresses) {
         String listAddress;
-        List<MailingList> mailingLists = new ArrayList<MailingList>();
+        List<MailingList> mailingLists = new ArrayList<>();
         MailingList mailingList;
         for(int i = 0;i < extendedListAddresses.length;i++) {
             listAddress = extendedListAddresses[i].toString();

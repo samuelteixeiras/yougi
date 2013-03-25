@@ -41,7 +41,7 @@ import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.web.report.EventAttendeeReport;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @SessionScoped

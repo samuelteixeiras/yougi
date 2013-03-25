@@ -11,7 +11,7 @@ import javax.faces.convert.FacesConverter;
 import org.cejug.yougi.knowledge.entity.WebSource;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @FacesConverter(value="WebSourceConverter")
 public class WebSourceConverter implements Converter {

@@ -34,7 +34,8 @@ import org.cejug.yougi.entity.Identified;
 /**
  * Entity class representing an extracted article from a web source, making it
  * permanently available for publication.
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ *
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
 @Table(name = "article")

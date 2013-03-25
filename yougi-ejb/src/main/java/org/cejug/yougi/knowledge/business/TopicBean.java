@@ -29,7 +29,7 @@ import javax.persistence.PersistenceContext;
 import org.cejug.yougi.knowledge.entity.Topic;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean

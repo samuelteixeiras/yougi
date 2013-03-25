@@ -1,21 +1,21 @@
-/* Yougi is a web application conceived to manage user groups or 
- * communities focused on a certain domain of knowledge, whose members are 
- * constantly sharing information and participating in social and educational 
+/* Yougi is a web application conceived to manage user groups or
+ * communities focused on a certain domain of knowledge, whose members are
+ * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
- * 
- * This application is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by the 
- * Free Software Foundation; either version 2.1 of the License, or (at your 
+ *
+ * This application is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
  * option) any later version.
- * 
- * This application is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ *
+ * This application is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
- * 
- * There is a full copy of the GNU Lesser General Public License along with 
+ *
+ * There is a full copy of the GNU Lesser General Public License along with
  * this library. Look for the file license.txt at the root level. If you do not
- * find it, write to the Free Software Foundation, Inc., 59 Temple Place, 
+ * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA 02111-1307 USA.
  * */
 package org.cejug.yougi.event.entity;
@@ -27,8 +27,7 @@ import javax.persistence.*;
 import org.cejug.yougi.entity.Identified;
 
 /**
- *
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
 @Table(name = "event_session")
@@ -64,10 +63,10 @@ public class EventSession implements Serializable, Identified {
     private Date endTime;
 
     private String room;
-    
+
     @OneToMany(mappedBy="session", fetch= FetchType.EAGER)
     private List<Speaker> speakers;
-    
+
     public EventSession() {
     }
 
@@ -148,20 +147,20 @@ public class EventSession implements Serializable, Identified {
     public void setRoom(String room) {
         this.room = room;
     }
-   
+
     /**
-     * @return At least one speaker that is alocated in this event session to 
+     * @return At least one speaker that is alocated in this event session to
      * give a speech.
      */
     public List<Speaker> getSpeakers() {
         return speakers;
     }
-    
+
     public String getSpeakersName() {
         if(speakers == null || speakers.isEmpty()) {
             return "";
         }
-        
+
         StringBuilder speakersName = new StringBuilder();
         String separator = "";
         for(Speaker speaker: speakers) {
@@ -185,7 +184,6 @@ public class EventSession implements Serializable, Identified {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof EventSession)) {
             return false;
         }

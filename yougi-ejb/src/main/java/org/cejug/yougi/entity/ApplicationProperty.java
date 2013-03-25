@@ -27,7 +27,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
 @Table(name="application_property")

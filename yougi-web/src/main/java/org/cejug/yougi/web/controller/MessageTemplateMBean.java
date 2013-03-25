@@ -29,7 +29,7 @@ import javax.faces.bean.RequestScoped;
 import org.cejug.yougi.entity.MessageTemplate;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped

@@ -31,7 +31,7 @@ import javax.persistence.PersistenceContext;
 import org.cejug.yougi.util.EntitySupport;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean

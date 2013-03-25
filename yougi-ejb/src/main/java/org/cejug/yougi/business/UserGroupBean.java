@@ -32,7 +32,8 @@ import org.cejug.yougi.entity.UserGroup;
 
 /**
  * Business logic to manage the relationship between users and access groups.
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ *
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
@@ -44,14 +45,12 @@ public class UserGroupBean {
     @EJB
     AccessGroupBean accessGroupBean;
 
-    @SuppressWarnings("unchecked")
     public List<UserAccount> findUsersGroup(AccessGroup accessGroup) {
         return em.createQuery("select ug.userAccount from UserGroup ug where ug.accessGroup = :accessGroup order by ug.userAccount.firstName")
                  .setParameter("accessGroup", accessGroup)
                  .getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     public List<UserGroup> findUsersGroups(AccessGroup accessGroup) {
         return em.createQuery("select ug from UserGroup ug where ug.accessGroup = :accessGroup")
                  .setParameter("accessGroup", accessGroup)
@@ -68,7 +67,6 @@ public class UserGroupBean {
                  .getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     public List<AccessGroup> findGroupsUser(UserAccount userAccount) {
         return em.createQuery("select ug.accessGroup from UserGroup ug where ug.userAccount = :userAccount")
                  .setParameter("userAccount", userAccount)

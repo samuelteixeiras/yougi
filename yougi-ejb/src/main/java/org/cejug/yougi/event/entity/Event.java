@@ -31,7 +31,7 @@ import org.cejug.yougi.entity.Province;
 import org.cejug.yougi.partnership.entity.Partner;
 
 /**
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
 @Table(name = "event")

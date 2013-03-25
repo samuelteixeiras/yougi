@@ -31,7 +31,8 @@ import org.cejug.yougi.util.EntitySupport;
 
 /**
  * Business logic dealing with web sources entities.
- * @author Hildeberto Mendonca  - http://www.hildeberto.com
+ *
+ * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
