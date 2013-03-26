@@ -30,30 +30,35 @@ import org.cejug.yougi.util.ResourceBundleHelper;
 /**
  * DeactivationType is a Enum. This converter is responsible for transforming
  * that Enum in something readable for the end-user, using ResourceBundle.
+ *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
-@FacesConverter(value="DeactivationTypeEnumToString")
+@FacesConverter(value = "DeactivationTypeEnumToString")
 public class DeactivationTypeEnumToString implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        if(value.equals("ownWill"))
-            return DeactivationType.OWNWILL;
-        else if(value.equals("administrative"))
-            return DeactivationType.ADMINISTRATIVE;
-        else
-            return null;
+        switch (value) {
+            case "ownWill":
+                return DeactivationType.OWNWILL;
+            case "administrative":
+                return DeactivationType.ADMINISTRATIVE;
+            default:
+                return null;
+        }
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         DeactivationType deactivationType = (DeactivationType) value;
         ResourceBundleHelper bundle = new ResourceBundleHelper();
-        if(deactivationType == DeactivationType.OWNWILL)
-            return bundle.getMessage("ownwill");
-        else if(deactivationType == DeactivationType.ADMINISTRATIVE)
-            return bundle.getMessage("administrative");
-        else
-            return "";
+        switch (deactivationType) {
+            case OWNWILL:
+                return bundle.getMessage("ownwill");
+            case ADMINISTRATIVE:
+                return bundle.getMessage("administrative");
+            default:
+                return null;
+        }
     }
 }
