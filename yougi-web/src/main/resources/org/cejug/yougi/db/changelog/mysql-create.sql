@@ -1,58 +1,6 @@
-# Yougi is a web application conceived to manage user groups or
-# communities focused on a certain domain of knowledge, whose members are
-# constantly sharing information and participating in social and educational
-# events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
-#
-# This application is free software; you can redistribute it and/or modify it
-# under the terms of the GNU Lesser General Public License as published by the
-# Free Software Foundation; either version 2.1 of the License, or (at your
-# option) any later version.
-#
-# This application is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-# or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-# License for more details.
-#
-# There is a full copy of the GNU Lesser General Public License along with
-# this library. Look for the file license.txt at the root level. If you do not
-# find it, write to the Free Software Foundation, Inc., 59 Temple Place,
-# Suite 330, Boston, MA 02111-1307 USA.
+--liquibase formatted sql
 
-drop table if exists speaker;
-drop table if exists event_session;
-drop table if exists attendee;
-drop table if exists event_sponsor;
-drop table if exists event;
-
-drop table if exists representative;
-drop table if exists partner;
-
-drop table if exists article;
-drop table if exists web_source;
-drop table if exists mailing_list_message;
-drop table if exists topic;
-drop table if exists mailing_list_subscription;
-drop table if exists mailing_list;
-
-drop table if exists user_group;
-drop table if exists access_group;
-drop table if exists authentication;
-
-drop table if exists historical_message;
-drop table if exists user_account;
-drop table if exists city;
-drop table if exists province;
-drop table if exists country;
-drop table if exists language;
-drop table if exists message_template;
-drop table if exists application_property;
-drop table if exists DATABASECHANGELOG;
-drop table if exists DATABASECHANGELOGLOCK;
-
-###############################################################################
-# Core                                                                        #
-###############################################################################
-
+--changeset htmfilho:1
 create table application_property (
     property_key   varchar(100) not null,
     property_value text             null
@@ -157,10 +105,6 @@ create table historical_message (
 alter table historical_message add constraint pk_historical_message primary key (id);
 alter table historical_message add constraint fk_message_recipient foreign key (recipient) references user_account(id) on delete cascade;
 
-###############################################################################
-# Security                                                                   #
-###############################################################################
-
 create table authentication (
     username            varchar(100) not null,
     password            varchar(100) not null,
@@ -190,10 +134,6 @@ create table user_group (
 alter table user_group add constraint pk_user_group primary key (group_id, user_id);
 alter table user_group add constraint fk_group_user foreign key (group_id) references access_group(id) on delete cascade;
 alter table user_group add constraint fk_user_group foreign key (user_id) references user_account(id) on delete cascade;
-
-###############################################################################
-# Knowledge                                                                   #
-###############################################################################
 
 create table mailing_list (
     id             char(32)     not null,
@@ -272,10 +212,6 @@ create table article (
 alter table article add constraint pk_article primary key (id);
 alter table article add constraint fk_source_article foreign key (web_source) references web_source (id) on delete cascade;
 
-###############################################################################
-# Partnership                                                                 #
-###############################################################################
-
 create table partner (
     id          char(32)     not null,
     name        varchar(100) not null,
@@ -305,10 +241,6 @@ create table representative (
 alter table representative add constraint pk_representative primary key (id);
 alter table representative add constraint fk_representative_person foreign key (person) references user_account(id) on delete cascade;
 alter table representative add constraint fk_representative_partner foreign key (partner) references partner(id) on delete cascade;
-
-###############################################################################
-# Event                                                                       #
-###############################################################################
 
 create table event (
     id                   char(32)     not null,
