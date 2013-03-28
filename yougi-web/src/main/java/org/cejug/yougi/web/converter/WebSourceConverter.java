@@ -26,7 +26,7 @@ public class WebSourceConverter implements Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if(value == null || !(value instanceof WebSource)) {
+        if (!(value instanceof WebSource)) {
             return null;
         }
         WebSource webSource = (WebSource) value;

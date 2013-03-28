@@ -27,7 +27,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import org.cejug.yougi.event.business.AttendeeBean;
-import org.cejug.yougi.event.business.EventBean;
 import org.cejug.yougi.event.entity.Certificate;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
@@ -39,9 +38,6 @@ import org.cejug.yougi.util.ResourceBundleHelper;
 public class CertificateMBean {
 
     static final Logger logger = Logger.getLogger("org.cejug.event.web.controller.EventBean");
-
-    @EJB
-    private EventBean eventBean;
 
     @EJB
     private AttendeeBean attendeeBean;

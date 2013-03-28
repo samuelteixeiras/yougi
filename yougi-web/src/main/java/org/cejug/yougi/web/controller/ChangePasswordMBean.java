@@ -131,10 +131,11 @@ public class ChangePasswordMBean {
         if(confirmationCode != null && !confirmationCode.isEmpty()) {
             UserAccount userAccount = userAccountBean.findUserAccountByConfirmationCode(confirmationCode);
             Authentication authentication = userAccountBean.findAuthenticationUser(userAccount);
-            if(userAccount != null)
+            if(userAccount != null) {
                 this.username = authentication.getUsername();
-            else
+            } else {
                 invalid = true;
+            }
         }
     }
 

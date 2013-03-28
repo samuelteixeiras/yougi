@@ -146,17 +146,14 @@ public class UserAccountMBean implements Serializable {
 
     // Beginning of privacy composite validation
     public void validatePrivacyOption(FacesContext context, UIComponent component, Object value) {
-        if(this.validationPrivacy == false) {
+        if(!this.validationPrivacy) {
             this.validationPrivacy = (Boolean) value;
         }
     }
 
     public void validatePrivacy(FacesContext context, UIComponent component, Object value) {
-        if(this.validationPrivacy == false) {
-            this.validationPrivacy = (Boolean) value;
-        }
-
         if(!this.validationPrivacy) {
+            this.validationPrivacy = (Boolean) value;
             ResourceBundleHelper bundle = new ResourceBundleHelper();
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle.getMessage("errorCode0007"), null));
         }

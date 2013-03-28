@@ -28,7 +28,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import org.cejug.yougi.business.ApplicationPropertyBean;
 import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.UserAccount;
 
@@ -41,9 +40,6 @@ public class ChangeEmailMBean {
 
     @EJB
     private UserAccountBean userAccountBean;
-
-    @EJB
-    private ApplicationPropertyBean applicationPropertyBean;
 
     @ManagedProperty(value="#{id}")
     private String id;
