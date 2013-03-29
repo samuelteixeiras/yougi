@@ -525,19 +525,23 @@ Antes de usar o aplicativo, o banco de dados deve ser inicializada com alguns da
 \subsection{Obtendo o código fonte}
 \label{ssec:obtaining-source-code}
 
-Git é o sistema de controle de versão (SCV) usado para controlar o código fonte do Yougi. Por ser um SCV distribuído, Git não é trivial. Suas bases são um pouco diferentes dos tradicionais SCVs, como o CVS e SVN. Há um repositório master localizado no http://cejug.java.net, onde o tronco principal (master) está centralizado, 
-Mas cada cliente também é um SCV cheio de recursos. onde é possivel realizar commits off line, criar branches e fazer o merge com outros clientes sem reconhecer o master.
+Git é o sistema de controle de versão (SCV) usado para controlar o código fonte do Yougi. Por ser um SCV distribuído, Git não é trivial. Suas bases são um pouco diferentes dos tradicionais SCVs, como o CVS e SVN. Há um repositório master localizado no github (https://github.com/htmfilho/yougi.git). Mas cada cliente também é um SCV cheio de recursos. onde é possivel realizar commits off line, criar branches e fazer o merge com outros clientes sem reconhecer o master.
 
-Para instalar e usar Yougi não é necessário começar a partir do código fonte. O pacote binário está disponível em http://cejug.java.net. Basta seguir as instruções descritas no capítulo 7. Por outro lado, se a intenção é contribuir para o projeto, o uso de Git para recuperar o código fonte é necessário. O potencial contribuidor deverá:
+O Github é um serviço de hospedagem de repositórios Git usado pelo Yougi para controlar as versões do código-fonte e permitir o trabalho colaborativo entre os committers e demais membros da comunidade. O Github oferece um novo modelo social de trabalho que favorece a colaboração entre programadores de software, sejam eles parte do projeto ou não. Esse modelo permite qualquer programador criar sua própria cópia de um repositório (fork), fazer modificações livremente e, se desejarem, contribuir com tais modificações de volta para o projeto original (pull request).
+
+Para instalar e usar Yougi não é necessário começar a partir do código fonte. O pacote binário está disponível em http://yougi.org/downloads/. Basta seguir as instruções descritas no capítulo 7. Por outro lado, se a intenção é contribuir para o projeto, o uso de Git para recuperar o código fonte é necessário. O potencial contribuidor deverá:
 
 \begin{enumerate}
 \item Instalar o Git na maquina de desenvolvimento: a instalação é dependente da plataforma, assim as instruções para a plataforma alvo estão somente disponiveis no site do Git; http://git-scm.com.
-\item configure o Git para acessar o repositório master: Yougi's O Git somente aceita conexão segura SSH (Security Shell protocol), os passos iniciais são mais complicados do que o esperado. Após esta configuração inicial, o acesso ao master torna-se transparente e seguro.
-\item se cadastre no java.net:
-\item copie e cole a chave pública no perfil pessoal do java.net:
-\item registar-se no CEJUG's project em java.net. Você terá acesso ao repositório apenas se você é um membro do projeto.
-\item Quando você entra no Java.net e vá para a seção de código-fonte, você será capaz de ver o URI para checkout do repositório do Yougi. O endereço contém o seu nome de usuário. exemplo: ssh://[nome-de-usuário]@git.java.net/cejug~jug-management.
-\item Copie o URI acima e ir para a linha de comando e digite o seguinte comando para fazer o checkout do git clone ssh://[nome-de-usuario]@git.java.net/cejug~jug-management. Ele vai criar uma pasta "cejug-jug-managemen" no diretório que você executou o comando e o código fonte completo estará disponível lá.
+\item cadastre-se no Github e faça o logon no seu usuário.
+\item Acesse a página do Yougi no Github: https://github.com/htmfilho/yougi e e clique na opção Fork, conforme a imagem abaixo.
+\begin{figure}
+\centering
+\includegraphics[height=3cm, angle=0]{figures/fork-yougi-github}
+\caption{Clique em Fork}
+\label{fig:1}
+\end{figure}
+\item Copie o URI do Fork recém criado e digite o seguinte comando para fazer o checkout do projeto: git clone https://github.com/[nome-de-usuario]/yougi.git. Ele vai criar uma pasta "yougi" no diretório que você executou o comando e o código fonte completo estará disponível lá.
 \end{enumerate}
 
 Para se certificar de que o código no branch do servidor está funcionando perfeitamente, temos que atualizar a cópia local com as últimas alterações disponíveis no servidor, testar o sistema localmente com essas mudanças e se tudo está funcionando bem, o commit local pode finalmente ser feito e o push para o seu respectivo branch. Antes de atualizar o local, certifique-se de que não há commit pendente usando:
