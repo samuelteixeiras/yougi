@@ -312,13 +312,13 @@ mysql> grant all privileges on ug.* to ug_user@'%';
 mysql> flush privileges;
 \end{verbatim}
 
-O banco de dados \textit{ug} e o usuário \textit{ug\_user} são criados, e todos os privilégios sobre o banco de dados \textit{jug} são concedida ao \textit{ug\_user}. Para verificar se o banco de dados foi criado, execute o seguinte comando:
+O banco de dados \textit{ug} e o usuário \textit{ug\_user} são criados, e todos os privilégios sobre o banco de dados \textit{ug} são concedida ao \textit{ug\_user}. Para verificar se o banco de dados foi criado, execute o seguinte comando:
 
 \begin{verbatim}
 mysql> show databases;
 \end{verbatim}
 
-Verifique se o banco de dados \textit{jug} se encontra na lista. Então nós temos que sair da sessão root e abrir uma nova sessão para o novo usuário para criar a estrutura de banco de dados. Siga a sequência de comandos abaixo:
+Verifique se o banco de dados \textit{ug} se encontra na lista. Então nós temos que sair da sessão root e abrir uma nova sessão para o novo usuário para criar a estrutura de banco de dados. Siga a sequência de comandos abaixo:
 
 \begin{verbatim}
 mysql> quit;
@@ -499,10 +499,10 @@ O processo de instalação leva algum tempo, mas todos esses passos são executa
 \begin{enumerate}
 \item entrar no console administrativo (http://[nome-do-servidor]:4848).
 \item Ir para \textit{Applications} e pressione \textit{Deploy...}.
-\item Informe o pacote \textit{jug.ear} a ser enviado para o servidor.
+\item Informe o pacote \textit{yougi.ear} a ser enviado para o servidor.
 \item Selecione o tipo \textit{Enterprise Application}.
 \item Clique em \textit{Ok} para o deploy.
-\item Verifique se tudo correu bem acessando http://localhost:8080/jug se fizer o deploy em seu próprio computador ou http://[nome-do-servidor]:8080/jug se fizer o deploy no servidor.
+\item Verifique se tudo correu bem acessando http://localhost:8080/ug se fizer o deploy em seu próprio computador ou http://[nome-do-servidor]:8080/ug se fizer o deploy no servidor.
 \end{enumerate}
 
 Yougi aparecerá na lista de aplicativos. No caso de atualização de um aplicativo já feito o deploy, o processo é muito mais simplificado por causa da configuração inicial:
@@ -510,10 +510,10 @@ Yougi aparecerá na lista de aplicativos. No caso de atualização de um aplicat
 \begin{enumerate}
 \item entrar no console administrativo (http://[nome-do-servidor]:4848).
 \item Ir para \textit{Applications}.
-\item clique sobre a ação \textit{Redeploy} na linha da aplicação jug;
-\item informar o pacote “jug.ear” a ser enviado para o servidor, e
+\item clique sobre a ação \textit{Redeploy} na linha da aplicação yougi;
+\item informar o pacote “yougi.ear” a ser enviado para o servidor, e
 \item clique \textit{Ok} para redeploy.
-\item Verifique se tudo ocorreu bem acessando http://[nome-do-servidor]:8080/jug.
+\item Verifique se tudo ocorreu bem acessando http://[nome-do-servidor]:8080/ug.
 \end{enumerate}
 
 \section{Configurando a Aplicação}
