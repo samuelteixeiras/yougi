@@ -151,6 +151,8 @@ Quando o evento já passou, não há informações sobre o evento que podem ser 
 
 \section{Gestão da listas de discussão}
 
+\section{Agregação de Conteúdo Web}
+
 \part{Guia Técnico}
 
 \chapter{Arquitetura}
@@ -255,9 +257,15 @@ Entraremos em detalhes sobre as tecnologias escolhidas, descrevemos cada uma del
 \begin{figure}
 \centering
 \includegraphics[height=10cm, angle=90]{figures/relational-model}
-\caption{Please write your figure caption here}
-\label{fig:1}
+\caption{Database relational model}
+\label{fig:relational-model}
 \end{figure}
+
+\subsection{Liquibase}
+
+Para manter o modelo de banco de dados atualizado, Yougi utiliza o Framework Liquibase\footnote{Liquibase. Gerenciador de alterações no banco de dados.  http://www.liquibase.org.}. Esse framework habilita a aplicação para atualizar o banco de dados durante o tempo de implantação. Isso simplifica a atualização da aplicação, reduzindo-a a uma simples implantação.
+
+Durante o tempo de desenvolvimento, Se o banco de dados precisar ser alterado, o desenvolvedor deve adicionar conjuntos de alterações para um ou vários arquivos xml localizado no módulo yougi-web, em src/main/resources/org/cejug/yougi/db/changelog.
 
 \chapter{Instalação}
 
