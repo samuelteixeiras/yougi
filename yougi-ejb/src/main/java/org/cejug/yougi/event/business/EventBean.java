@@ -22,14 +22,26 @@ package org.cejug.yougi.event.business;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.cejug.yougi.business.MessageTemplateBean;
+import org.cejug.yougi.business.MessengerBean;
+import org.cejug.yougi.entity.EmailMessage;
+import org.cejug.yougi.entity.MessageTemplate;
+import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.util.EntitySupport;
+import org.cejug.yougi.util.TextUtils;
 
 /**
  * Manages events organized by the user group.
@@ -43,6 +55,14 @@ public class EventBean {
     @PersistenceContext
     private EntityManager em;
 
+    @EJB
+    private MessengerBean messengerBean;
+
+    @EJB
+    private MessageTemplateBean messageTemplateBean;
+
+    static final Logger logger = Logger.getLogger(EventBean.class.getName());
+
     public Event findEvent(String id) {
         if(id != null) {
             return em.find(Event.class, id);
@@ -53,14 +73,14 @@ public class EventBean {
     }
 
     public List<Event> findEvents() {
-    	List<Event> events = em.createQuery("select e from Event e order by e.endDate desc")
+    	List<Event> events = em.createQuery("select e from Event e where e.parent is null order by e.endDate desc")
         		       .getResultList();
         return events;
     }
 
-    public List<Event> findCommingEvents() {
+    public List<Event> findUpCommingEvents() {
     	Calendar today = Calendar.getInstance();
-        List<Event> events = em.createQuery("select e from Event e where e.endDate >= :today order by e.endDate desc")
+        List<Event> events = em.createQuery("select e from Event e where e.endDate >= :today and e.parent is null order by e.endDate desc")
         		       .setParameter("today", today.getTime())
                                .getResultList();
         return events;
@@ -72,6 +92,26 @@ public class EventBean {
         }
 
         Query query = em.createQuery("");
+    }
+
+    public void sendConfirmationEventAttendance(UserAccount userAccount, Event event, String dateFormat, String timeFormat, String timezone) {
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("KJDIEJKHFHSDJDUWJHAJSNFNFJHDJSLE");
+        Map<String, Object> values = new HashMap<>();
+        values.put("userAccount.firstName", userAccount.getFirstName());
+        values.put("event.name", event.getName());
+        values.put("event.venue", "");
+        values.put("event.startDate", TextUtils.getFormattedDate(event.getStartDate(), dateFormat));
+        values.put("event.startTime", TextUtils.getFormattedTime(event.getStartTime(), timeFormat, timezone));
+        values.put("event.endTime", TextUtils.getFormattedTime(event.getEndTime(), timeFormat, timezone));
+        EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
+        emailMessage.setRecipient(userAccount);
+
+        try {
+            messengerBean.sendEmailMessage(emailMessage);
+        }
+        catch(MessagingException me) {
+            logger.log(Level.WARNING, "Error when sending the confirmation of event attendance to user "+ userAccount.getPostingEmail(), me);
+        }
     }
 
     public void save(Event event) {

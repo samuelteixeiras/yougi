@@ -21,16 +21,23 @@
 package org.cejug.yougi.business;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import org.cejug.yougi.entity.AccessGroup;
 import org.cejug.yougi.entity.Authentication;
+import org.cejug.yougi.entity.EmailMessage;
+import org.cejug.yougi.entity.MessageTemplate;
 import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.entity.UserGroup;
 import org.cejug.yougi.util.EntitySupport;
@@ -50,6 +57,14 @@ public class AccessGroupBean {
 
     @EJB
     private UserGroupBean userGroupBean;
+
+    @EJB
+    private MessengerBean messengerBean;
+
+    @EJB
+    private MessageTemplateBean messageTemplateBean;
+
+    static final Logger logger = Logger.getLogger(AccessGroupBean.class.getName());
 
     public static final String ADMIN_GROUP = "leaders";
     public static final String DEFAULT_GROUP = "members";
@@ -102,6 +117,22 @@ public class AccessGroupBean {
                                .getSingleResult();
         } catch (NoResultException nre) {
             return null;
+        }
+    }
+
+    public void sendGroupAssignmentAlert(UserAccount userAccount, AccessGroup accessGroup) {
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("09JDIIE82O39IDIDOSJCHXUDJJXHCKP0");
+        Map<String, Object> values = new HashMap<>();
+        values.put("userAccount.firstName", userAccount.getFirstName());
+        values.put("accessGroup.name", accessGroup.getName());
+        EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
+        emailMessage.setRecipient(userAccount);
+
+        try {
+            messengerBean.sendEmailMessage(emailMessage);
+        }
+        catch(MessagingException me) {
+            logger.log(Level.WARNING, "Error when sending the group assignment alert to "+ userAccount.getFullName(), me);
         }
     }
 

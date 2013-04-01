@@ -34,14 +34,19 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.*;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import org.cejug.yougi.entity.EmailMessage;
+import org.cejug.yougi.entity.MessageTemplate;
 import org.cejug.yougi.exception.BusinessLogicException;
 import org.cejug.yougi.knowledge.business.SubscriptionBean;
 import org.cejug.yougi.util.EntitySupport;
@@ -64,6 +69,9 @@ public class UserAccountBean {
 
     @EJB
     private MessengerBean messengerBean;
+
+    @EJB
+    private MessageTemplateBean messageTemplateBean;
 
     @EJB
     private ApplicationPropertyBean applicationPropertyBean;
@@ -382,8 +390,26 @@ public class UserAccountBean {
             ApplicationProperty appProp = applicationPropertyBean.findApplicationProperty(Properties.SEND_EMAILS);
             if(appProp.sendEmailsEnabled()) {
                 ApplicationProperty url = applicationPropertyBean.findApplicationProperty(Properties.URL);
-                messengerBean.sendEmailConfirmationRequest(userAccount, url.getPropertyValue());
+                sendEmailConfirmationRequest(userAccount, url.getPropertyValue());
             }
+        }
+    }
+
+    public void sendEmailConfirmationRequest(UserAccount userAccount, String serverAddress) {
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("E3F122DCC87D42248872878412B34CEE");
+        Map<String, Object> values = new HashMap<>();
+        values.put("serverAddress", serverAddress);
+        values.put("userAccount.firstName", userAccount.getFirstName());
+        values.put("userAccount.confirmationCode", userAccount.getConfirmationCode());
+
+        EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
+        emailMessage.setRecipient(userAccount);
+
+        try {
+            messengerBean.sendEmailMessage(emailMessage);
+        }
+        catch(MessagingException me) {
+            logger.log(Level.WARNING, "Error when sending the mail confirmation. The registration was not finalized.", me);
         }
     }
 
@@ -417,11 +443,11 @@ public class UserAccountBean {
 
                 ApplicationProperty appProp = applicationPropertyBean.findApplicationProperty(Properties.SEND_EMAILS);
                 if(appProp.sendEmailsEnabled()) {
-                    messengerBean.sendWelcomeMessage(userAccount);
+                    sendWelcomeMessage(userAccount);
 
                     AccessGroup administrativeGroup = accessGroupBean.findAdministrativeGroup();
                     List<UserAccount> leaders = userGroupBean.findUsersGroup(administrativeGroup);
-                    messengerBean.sendNewMemberAlertMessage(userAccount, leaders);
+                    sendNewMemberAlertMessage(userAccount, leaders);
                 }
             }
 
@@ -429,6 +455,37 @@ public class UserAccountBean {
         }
         catch(NoResultException nre) {
             return null;
+        }
+    }
+
+    public void sendWelcomeMessage(UserAccount userAccount) {
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("47DEE5C2E0E14F8BA4605F3126FBFAF4");
+        Map<String, Object> values = new HashMap<>();
+        values.put("userAccount.firstName", userAccount.getFirstName());
+        EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
+        emailMessage.setRecipient(userAccount);
+
+        try {
+            messengerBean.sendEmailMessage(emailMessage);
+        }
+        catch(MessagingException me) {
+            logger.log(Level.WARNING, "Error when sending the deactivation reason to user "+ userAccount.getPostingEmail(), me);
+        }
+    }
+
+    public void sendNewMemberAlertMessage(UserAccount userAccount, List<UserAccount> leaders) {
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("0D6F96382D91454F8155A720F3326F1B");
+        Map<String, Object> values = new HashMap<>();
+        values.put("userAccount.fullName", userAccount.getFullName());
+        values.put("userAccount.registrationDate", userAccount.getRegistrationDate());
+        EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
+        emailMessage.setRecipients(leaders);
+
+        try {
+            messengerBean.sendEmailMessage(emailMessage);
+        }
+        catch(MessagingException me) {
+            logger.log(Level.WARNING, "Error when sending alert to administrators about the registration of "+ userAccount.getPostingEmail(), me);
         }
     }
 
@@ -454,14 +511,53 @@ public class UserAccountBean {
         ApplicationProperty appProp = applicationPropertyBean.findApplicationProperty(Properties.SEND_EMAILS);
 
         if(!existingUserAccount.getDeactivationReason().trim().isEmpty() && appProp.sendEmailsEnabled()) {
-            messengerBean.sendDeactivationReason(existingUserAccount);
+            sendDeactivationReason(existingUserAccount);
         }
 
         AccessGroup administrativeGroup = accessGroupBean.findAdministrativeGroup();
         List<UserAccount> leaders = userGroupBean.findUsersGroup(administrativeGroup);
 
         if(appProp.sendEmailsEnabled()) {
-            messengerBean.sendDeactivationAlertMessage(existingUserAccount, leaders);
+            sendDeactivationAlertMessage(existingUserAccount, leaders);
+        }
+    }
+
+    public void sendDeactivationReason(UserAccount userAccount) {
+        MessageTemplate messageTemplate;
+        if(userAccount.getDeactivationType() == DeactivationType.ADMINISTRATIVE) {
+            messageTemplate = messageTemplateBean.findMessageTemplate("03BD6F3ACE4C48BD8660411FC8673DB4");
+        }
+        else {
+            messageTemplate = messageTemplateBean.findMessageTemplate("IKWMAJSNDOE3F122DCC87D4224887287");
+        }
+        em.detach(messageTemplate);
+        Map<String, Object> values = new HashMap<>();
+        values.put("userAccount.firstName", userAccount.getFirstName());
+        values.put("userAccount.deactivationReason", userAccount.getDeactivationReason());
+        EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
+        emailMessage.setRecipient(userAccount);
+
+        try {
+            messengerBean.sendEmailMessage(emailMessage);
+        }
+        catch(MessagingException me) {
+            logger.log(Level.WARNING, "Error when sending the deactivation reason to user "+ userAccount.getPostingEmail(), me);
+        }
+    }
+
+    public void sendDeactivationAlertMessage(UserAccount userAccount, List<UserAccount> leaders) {
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("0D6F96382IKEJSUIWOK5A720F3326F1B");
+        Map<String, Object> values = new HashMap<>();
+        values.put("userAccount.fullName", userAccount.getFullName());
+        values.put("userAccount.deactivationReason", userAccount.getDeactivationReason());
+        EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
+        emailMessage.setRecipients(leaders);
+
+        try {
+            messengerBean.sendEmailMessage(emailMessage);
+        }
+        catch(MessagingException me) {
+            logger.log(Level.WARNING, "Error when sending the deactivation reason from "+ userAccount.getPostingEmail() +" to leaders.", me);
         }
     }
 
@@ -480,11 +576,28 @@ public class UserAccountBean {
             userAccount.defineNewConfirmationCode();
 
             if(appProp.sendEmailsEnabled()) {
-                messengerBean.sendConfirmationCode(userAccount, serverAddress);
+                sendConfirmationCode(userAccount, serverAddress);
             }
         }
         else {
             throw new PersistenceException("Usuário inexistente:"+ username);
+        }
+    }
+
+    public void sendConfirmationCode(UserAccount userAccount, String serverAddress) {
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("67BE6BEBE45945D29109A8D6CD878344");
+        Map<String, Object> values = new HashMap<>();
+        values.put("serverAddress", serverAddress);
+        values.put("userAccount.firstName", userAccount.getFirstName());
+        values.put("userAccount.confirmationCode", userAccount.getConfirmationCode());
+        EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
+        emailMessage.setRecipient(userAccount);
+
+        try {
+            messengerBean.sendEmailMessage(emailMessage);
+        }
+        catch(MessagingException me) {
+            logger.log(Level.WARNING, "Error when sending the mail confirmation. The registration was not finalized.", me);
         }
     }
 
@@ -560,9 +673,37 @@ public class UserAccountBean {
         // Send an email to the user to confirm the new email address
 
         ApplicationProperty url = applicationPropertyBean.findApplicationProperty(Properties.URL);
-        messengerBean.sendEmailVerificationRequest(userAccount, url.getPropertyValue());
+        sendEmailVerificationRequest(userAccount, url.getPropertyValue());
     }
 
+    /**
+     * Sends a email to the user that requested to change his/her email address,
+     * asking him/her to confirm the request by clicking on the informed link. If
+     * the user successfully click on the link it means that his/her email address
+     * is valid since he/she could receive the email message successfully.
+     * @param userAccount the user who wants to change his/her email address.
+     * @param serverAddress the URL of the server where the application is deployed.
+     * it will be used to build the URL that the user will click to validate his/her
+     * email address.
+     */
+    public void sendEmailVerificationRequest(UserAccount userAccount, String serverAddress) {
+        MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("KJZISKQBE45945D29109A8D6C92IZJ89");
+        Map<String, Object> values = new HashMap<>();
+        values.put("serverAddress", serverAddress);
+        values.put("userAccount.firstName", userAccount.getFirstName());
+        values.put("userAccount.email", userAccount.getEmail());
+        values.put("userAccount.unverifiedEmail", userAccount.getUnverifiedEmail());
+        values.put("userAccount.confirmationCode", userAccount.getConfirmationCode());
+        EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
+        emailMessage.setRecipient(userAccount);
+
+        try {
+            messengerBean.sendEmailMessage(emailMessage);
+        }
+        catch(MessagingException me) {
+            logger.log(Level.WARNING, "Error when sending the mail confirmation. The registration was not finalized.", me);
+        }
+    }
 
     public void confirmEmailChange(UserAccount userAccount) {
         if(userAccount.getUnverifiedEmail() == null) {
