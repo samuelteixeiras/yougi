@@ -37,7 +37,7 @@ import org.cejug.yougi.entity.UserAccount;
 public class EmailConfirmationServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-
+    
     @EJB
     private UserAccountBean userAccountBean;
 
@@ -45,25 +45,31 @@ public class EmailConfirmationServlet extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("text/html;charset=UTF-8");
+        
+        // Builds the header of message.
+        StringBuilder sb = new StringBuilder();
+        sb.append("<html>");
+        sb.append("<head>");
+        sb.append("<title>UG - Email Confirmation Failure</title>");
+        sb.append("<link href=\"/ug/resources/theme/css/default_theme.css\" rel=\"stylesheet\" type=\"text/css\"/>");
+        sb.append("</head>");
+        sb.append("<body>");
+        sb.append("<h1>Email Confirmation Failure</h1>");
 
+        // Common variables.
+        String scheme = request.getScheme();
+        String serverName = request.getServerName();
+        int serverPort = request.getServerPort();
+        String contextPath = request.getContextPath();
+        
         String confirmationCode = request.getParameter("code");
 
         if (confirmationCode == null || confirmationCode.equals("")) {
             PrintWriter out = null;
             try {
                 out = response.getWriter();
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>UG - Email Confirmation Failure</title>");
-                out.println("<link href=\"/ug/resources/theme/css/default_theme.css\" rel=\"stylesheet\" type=\"text/css\"/>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Email Confirmation Failure</h1>");
+                out.println(sb.toString());
                 out.println("<p>This email confirmation is invalid. Check if the address on the browser coincides with the address sent by email.</p>");
-                String scheme = request.getScheme();
-                String serverName = request.getServerName();
-                int serverPort = request.getServerPort();
-                String contextPath = request.getContextPath();
                 out.println("<p><a href=\"" + scheme + "://" + serverName + (serverPort != 80 ? ":" + serverPort : "") + (contextPath.equals("") ? "" : contextPath) + "\">Go to Homepage</a>.");
                 out.println("</body>");
                 out.println("</html>");
@@ -86,20 +92,10 @@ public class EmailConfirmationServlet extends HttpServlet {
             PrintWriter out = null;
             try {
                 out = response.getWriter();
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Yougi - Email Confirmation Failure</title>");
-                out.println("<link href=\"/ug/resources/theme/css/default_theme.css\" rel=\"stylesheet\" type=\"text/css\"/>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Email Confirmation Failure</h1>");
+                out.println(sb.toString());
                 out.println("<p>This email confirmation '"+ confirmationCode +"' is invalid.</p>");
                 out.println("<p class=\"alertMessage\">Cause: " + e.getCause().getMessage() + "</p>");
                 out.println("<p>Check if the address on the browser coincides with the address sent my email.</p>");
-                String scheme = request.getScheme();
-                String serverName = request.getServerName();
-                int serverPort = request.getServerPort();
-                String contextPath = request.getContextPath();
                 out.println("<p><a href=\"" + scheme + "://" + serverName + (serverPort != 80 ? ":" + serverPort : "") + (contextPath.equals("") ? "" : contextPath) + "\">Go to website</a>");
                 out.println("</body>");
                 out.println("</html>");

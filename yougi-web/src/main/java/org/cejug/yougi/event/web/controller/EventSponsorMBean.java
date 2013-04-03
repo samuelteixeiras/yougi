@@ -118,7 +118,7 @@ public class EventSponsorMBean implements Serializable {
     }
 
     public BigDecimal getSumAmounts() {
-        BigDecimal sum = new BigDecimal(0);
+        BigDecimal sum = BigDecimal.ZERO;
         List<EventSponsor> es = getEventSponsors();
         for(EventSponsor sponsor: es) {
             sum = sum.add(sponsor.getAmount());

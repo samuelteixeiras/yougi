@@ -297,7 +297,7 @@ The initial installation takes some time, but it will guarantee easy updates whe
 \item Create a Security Realm: the security realm allows the declarative implementation of the application's security, significantly reducing the application complexity by delegating this responsibility to the container.
 \item Create a JavaMail session: since this application deals with people, it has to send emails very often. Therefore, the availability of a JavaMail session, managed by the container, is essential to support the high demand for sending and receiving emails without dealing with the complexity of managing email server connections.
 \item Deploy the application package: finally, we deploy the application package that makes use of all configurations above.
-\item Configure the application according to specific needs of the JUG: after the initial deployment the application will run normally using default configuration. However, the application will be fully operational only when specific configurations for the JUG are defined.
+\item Configure the application according to specific needs of the Yougi: after the initial deployment the application will run normally using default configuration. However, the application will be fully operational only when specific configurations for the Yougi are defined.
 \end{enumerate}
 
 \section{Creating the MySQL Database}
@@ -535,10 +535,10 @@ The installation process takes some time, but all these steps are executed only 
 \begin{enumerate}
 \item enter in the Administrative Console (http://[server-name]:4848).
 \item Go to \textit{Applications} and press \textit{Deploy...}.
-\item Inform the package \textit{jug.ear} to be uploaded to the server.
+\item Inform the package \textit{yougi.ear} to be uploaded to the server.
 \item Select type \textit{Enterprise Application}.
 \item Click \textit{Ok} to deploy.
-\item Check if everything went well accessing http://localhost:8080/jug if deploying on your own computer or http://[servername]:8080/jug if deploying on the server.
+\item Check if everything went well accessing http://localhost:8080/ug if deploying on your own computer or http://[servername]:8080/ug if deploying on the server.
 \end{enumerate}
 
 Yougi will appear in the list of applications. In case of updating an application already deployed, the process is very simplified because of the initial configuration:
@@ -546,10 +546,10 @@ Yougi will appear in the list of applications. In case of updating an applicatio
 \begin{enumerate}
 \item enter in the Administrative Console (http://[server-name]:4848).
 \item Go to \textit{Applications}.
-\item click on the action \textit{Redeploy} in the row of the jug application;
-\item inform the package “jug.ear” to be uploaded to the server; and
+\item click on the action \textit{Redeploy} in the row of the yougi application;
+\item inform the package “yougi.ear” to be uploaded to the server; and
 \item click \textit{Ok} to redeploy.
-\item Check if everything went well accessing http://[server-name]:8080/jug.
+\item Check if everything went well accessing http://[server-name]:8080/ug.
 \end{enumerate}
 
 \section{Configuring the Application}
@@ -580,7 +580,7 @@ To install and use Yougi is not necessary to start from the source code. The bin
 \item configure Git to access the master repository: Yougi's Git accepts only secure SSH (Security Shell protocol) connection, making the initial steps more complicated than expected. After this initial configuration, the access to the master becomes transparent and secure.
 \item register at github.com.
 \item copy and paste the public key in your Github personal profile.
-\item register yourself as a member of the CEJUG Community at \\ http://cejug.org/jug/registration.xhtml. You will have access to the repository only if you are a CEJUG member.
+\item register yourself as a member of the CEJUG Community at \\ http://cejug.org/ug/registration.xhtml. You will have access to the repository only if you are a CEJUG member.
 \end{enumerate}
 
 To make sure that the code in the server branch is perfectly working, we have to update the local copy with the latest changes available on the server, test the system locally with those changes and if everything is working well, the local commits can finally be pushed to its respective branch. Before updating the local, make sure that there is no pending commit using:

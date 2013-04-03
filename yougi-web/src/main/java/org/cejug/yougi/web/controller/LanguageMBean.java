@@ -67,8 +67,9 @@ public class LanguageMBean {
     }
 
     public List<Language> getLanguages() {
-        if(this.languages == null)
+        if (this.languages == null) {
             this.languages = languageBean.findLanguages();
+        }
         return this.languages;
     }
 

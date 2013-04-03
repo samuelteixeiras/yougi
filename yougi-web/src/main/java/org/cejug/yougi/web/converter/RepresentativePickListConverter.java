@@ -37,8 +37,8 @@ public class RepresentativePickListConverter implements Converter {
         if (value == null || value.isEmpty()) {
             return null;
         }
-        UserAccount userAccount = new UserAccount(value);
-        return userAccount;
+        
+        return new UserAccount(value);
     }
 
     @Override

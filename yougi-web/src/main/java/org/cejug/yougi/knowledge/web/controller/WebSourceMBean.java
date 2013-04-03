@@ -21,7 +21,6 @@
 package org.cejug.yougi.knowledge.web.controller;
 
 import java.util.List;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -40,8 +39,6 @@ import org.cejug.yougi.knowledge.entity.WebSource;
 @ManagedBean
 @RequestScoped
 public class WebSourceMBean {
-
-    private static final Logger LOGGER = Logger.getLogger(WebSourceMBean.class.getName());
 
     @EJB
     private UserAccountBean userAccountBean;

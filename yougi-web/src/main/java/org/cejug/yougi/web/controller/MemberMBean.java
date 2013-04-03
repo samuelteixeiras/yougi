@@ -163,7 +163,7 @@ public class MemberMBean implements Serializable {
         if (this.emailCriteria == null || this.emailCriteria.isEmpty()) {
             this.userAccounts = userAccountBean.findNotVerifiedUsers();
         } else {
-            List<UserAccount> uas = new ArrayList<UserAccount>(1);
+            List<UserAccount> uas = new ArrayList<>(1);
             UserAccount ua = userAccountBean.findUserAccountByEmail(this.emailCriteria);
             if (ua != null) {
                 uas.add(ua);
