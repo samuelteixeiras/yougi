@@ -25,5 +25,6 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
     <include file="org/cejug/yougi/db/changelog/mysql-create.sql"/>
+    <include file="org/cejug/yougi/db/changelog/mysql-init.sql"/>
     <include file="org/cejug/yougi/db/changelog/mysql-update.sql"/>
 </databaseChangeLog>

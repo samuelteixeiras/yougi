@@ -24,16 +24,16 @@ package org.cejug.yougi.entity;
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 public enum Properties {
-    CAPTCHA_ENABLED     ("captchaEnabled",     "true" ),
-    CAPTCHA_PRIVATE_KEY ("captchaPrivateKey",  ""     ),
-    CAPTCHA_PUBLIC_KEY  ("captchaPublicKey",   ""     ),
-    DEFAULT_LANGUAGE    ("language",           "en"   ),
-    EMAIL_SERVER_TYPE   ("emailServerType",    "pop3" ),
-    FILE_REPOSITORY_PATH("fileRepositoryPath", ""     ),
-    GROUP_NAME          ("groupName",          ""     ),
-    SEND_EMAILS         ("sendEmails",         "false"),
-    TIMEZONE            ("timezone",           "UTC"  ),
-    URL                 ("url",                ""     );
+    CAPTCHA_ENABLED     ("captchaEnabled",     "false"                   ),
+    CAPTCHA_PRIVATE_KEY ("captchaPrivateKey",  ""                        ),
+    CAPTCHA_PUBLIC_KEY  ("captchaPublicKey",   ""                        ),
+    DEFAULT_LANGUAGE    ("language",           "en"                      ),
+    EMAIL_SERVER_TYPE   ("emailServerType",    "pop3"                    ),
+    FILE_REPOSITORY_PATH("fileRepositoryPath", ""                        ),
+    GROUP_NAME          ("groupName",          "Yougi UG"                ),
+    SEND_EMAILS         ("sendEmails",         "false"                   ),
+    TIMEZONE            ("timezone",           "UTC 0:00"                ),
+    URL                 ("url",                "http://localhost:8080/ug");
 
     private String key;
     private String defaultValue;

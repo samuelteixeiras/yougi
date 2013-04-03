@@ -1,58 +1,16 @@
-# Yougi is a web application conceived to manage user groups or
-# communities focused on a certain domain of knowledge, whose members are
-# constantly sharing information and participating in social and educational
-# events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
-#
-# This application is free software; you can redistribute it and/or modify it
-# under the terms of the GNU Lesser General Public License as published by the
-# Free Software Foundation; either version 2.1 of the License, or (at your
-# option) any later version.
-#
-# This application is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-# or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-# License for more details.
-#
-# There is a full copy of the GNU Lesser General Public License along with
-# this library. Look for the file license.txt at the root level. If you do not
-# find it, write to the Free Software Foundation, Inc., 59 Temple Place,
-# Suite 330, Boston, MA 02111-1307 USA.
+--liquibase formatted sql
 
-delete from speaker;
-delete from event_session;
-delete from attendee;
-delete from event_sponsor;
-delete from event;
-
-delete from representative;
-delete from partner;
-
-delete from article;
-delete from web_source;
-delete from mailing_list_message;
-delete from topic;
-delete from mailing_list_subscription;
-delete from mailing_list;
-
-delete from user_group;
-delete from access_group;
-delete from authentication;
-
-delete from historical_message;
-delete from user_account;
-delete from city;
-delete from province;
-delete from country;
-delete from language;
-delete from message_template;
-delete from application_property;
-
+--changeset htmfilho:3
 insert into application_property values ('timezone', 'UTC 0:00'),
-                                        ('url', 'http://localhost:8080/jug'),
+                                        ('url', 'http://localhost:8080/ug'),
                                         ('sendEmails', 'false'),
-                                        ('groupName', 'UG'),
+                                        ('groupName', 'Yougi UG'),
                                         ('language', 'en'),
-                                        ('emailServerType', 'pop3');
+                                        ('emailServerType', 'pop3'),
+                                        ('captchaEnabled', 'false'),
+                                        ('captchaPrivateKey', ''),
+                                        ('captchaPublicKey', ''),
+                                        ('fileRepositoryPath', '');
 
 insert into message_template (id, title, body) values
     ('03BD6F3ACE4C48BD8660411FC8673DB4', '[UG] Registration Deactivated', '<p>Dear <b>#{userAccount.firstName}</b>,</p><p>We are very sorry to inform that we cannot keep you as a UG member.</p><p>Reason: <i>#{userAccount.deactivationReason}</i></p><p>We kindly appologize for the inconvenience and we count on your understanding.</p><p>Best Regards,</p><p><b>UG Leadership Team</b></p>'),
