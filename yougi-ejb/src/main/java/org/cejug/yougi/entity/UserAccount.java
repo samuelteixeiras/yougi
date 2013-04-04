@@ -1,7 +1,7 @@
 /* Yougi is a web application conceived to manage user groups or
  * communities focused on a certain domain of knowledge, whose members are
  * constantly sharing information and participating in social and educational
- * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ * events. Copyright (C) 2011 Hildeberto Mendonça.
  *
  * This application is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the
@@ -90,6 +90,8 @@ public class UserAccount implements Serializable, Identified {
 
     private String twitter;
 
+    private String organization;
+
     @ManyToOne
     @JoinColumn(name="country")
     private Country country;
@@ -157,7 +159,7 @@ public class UserAccount implements Serializable, Identified {
     }
 
     public void setFirstName(String firstName) {
-        firstName = TextUtils.capitalizeFirstCharWords(firstName);
+        firstName = TextUtils.INSTANCE.capitalizeFirstCharWords(firstName);
         this.firstName = firstName;
     }
 
@@ -166,7 +168,7 @@ public class UserAccount implements Serializable, Identified {
     }
 
     public void setLastName(String lastName) {
-        lastName = TextUtils.capitalizeFirstCharWords(lastName);
+        lastName = TextUtils.INSTANCE.capitalizeFirstCharWords(lastName);
         this.lastName = lastName;
     }
 
@@ -323,6 +325,22 @@ public class UserAccount implements Serializable, Identified {
 
     public void setTwitter(String twitter) {
         this.twitter = twitter;
+    }
+
+    /**
+     * @return The name of the company or institution where the user works or
+     * school or university where the user studies.
+     */
+    public String getOrganization() {
+        return organization;
+    }
+
+    /**
+     * @param organization The name of the company or institution where the user
+     * works or school or university where the user studies.
+     */
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
 
     public Country getCountry() {
