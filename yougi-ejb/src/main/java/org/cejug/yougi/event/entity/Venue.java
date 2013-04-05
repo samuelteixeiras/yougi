@@ -21,40 +21,48 @@
 package org.cejug.yougi.event.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import org.cejug.yougi.entity.City;
+import org.cejug.yougi.entity.Country;
 import org.cejug.yougi.entity.Identified;
-import org.cejug.yougi.entity.UserAccount;
+import org.cejug.yougi.entity.Province;
 
 /**
- * Person with knowledge and experience to give a speech in an event, respecting
- * the scope of subjects in the domain explored by the user group.
- *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
-@Table(name = "speaker")
-public class Speaker implements Serializable, Identified {
-
+@Table(name = "venue")
+public class Venue implements Serializable, Identified {
     private static final long serialVersionUID = 1L;
 
     @Id
     private String id;
 
+    private String name;
+
+    private String address;
+
     @ManyToOne
-    @JoinColumn(name = "user_account", nullable=false)
-    private UserAccount userAccount;
+    @JoinColumn(name = "country")
+    private Country country;
 
-    @Column(name = "short_cv")
-    private String shortCv;
+    @ManyToOne
+    @JoinColumn(name = "province")
+    private Province province;
 
-    private String organization;
+    @ManyToOne
+    @JoinColumn(name = "city")
+    private City city;
 
-    public Speaker() {
-    }
+    private String latitude;
 
-    public Speaker(String id) {
-        this.id = id;
-    }
+    private String longitude;
+
+    private String website;
 
     @Override
     public String getId() {
@@ -66,36 +74,68 @@ public class Speaker implements Serializable, Identified {
         this.id = id;
     }
 
-    public UserAccount getUserAccount() {
-        return userAccount;
+    public String getName() {
+        return name;
     }
 
-    public void setUserAccount(UserAccount userAccount) {
-        this.userAccount = userAccount;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getShortCv() {
-        return shortCv;
+    public String getAddress() {
+        return address;
     }
 
-    public void setShortCv(String shortCv) {
-        this.shortCv = shortCv;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    /**
-     * @return The name of the company or institution where the speaker works or
-     * school or university where the user studies.
-     */
-    public String getOrganization() {
-        return organization;
+    public Country getCountry() {
+        return country;
     }
 
-    /**
-     * @param organization The name of the company or institution where the speaker
-     * works or school or university where the user studies.
-     */
-    public void setOrganization(String organization) {
-        this.organization = organization;
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
     @Override
@@ -107,10 +147,10 @@ public class Speaker implements Serializable, Identified {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Speaker)) {
+        if (!(object instanceof Venue)) {
             return false;
         }
-        Speaker other = (Speaker) object;
+        Venue other = (Venue) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -119,6 +159,6 @@ public class Speaker implements Serializable, Identified {
 
     @Override
     public String toString() {
-        return this.userAccount.getFullName();
+        return this.name;
     }
 }

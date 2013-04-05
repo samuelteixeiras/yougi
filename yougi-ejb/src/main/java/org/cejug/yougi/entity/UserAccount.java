@@ -90,8 +90,6 @@ public class UserAccount implements Serializable, Identified {
 
     private String twitter;
 
-    private String organization;
-
     @ManyToOne
     @JoinColumn(name="country")
     private Country country;
@@ -325,22 +323,6 @@ public class UserAccount implements Serializable, Identified {
 
     public void setTwitter(String twitter) {
         this.twitter = twitter;
-    }
-
-    /**
-     * @return The name of the company or institution where the user works or
-     * school or university where the user studies.
-     */
-    public String getOrganization() {
-        return organization;
-    }
-
-    /**
-     * @param organization The name of the company or institution where the user
-     * works or school or university where the user studies.
-     */
-    public void setOrganization(String organization) {
-        this.organization = organization;
     }
 
     public Country getCountry() {

@@ -1,7 +1,7 @@
 /* Yougi is a web application conceived to manage user groups or
  * communities focused on a certain domain of knowledge, whose members are
  * constantly sharing information and participating in social and educational
- * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ * events. Copyright (C) 2011 Hildeberto Mendonça.
  *
  * This application is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the
@@ -22,7 +22,6 @@ package org.cejug.yougi.event.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 import org.cejug.yougi.entity.Identified;
 
@@ -30,8 +29,8 @@ import org.cejug.yougi.entity.Identified;
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
-@Table(name = "event_session")
-public class EventSession implements Serializable, Identified {
+@Table(name = "session")
+public class Session implements Serializable, Identified, Appointment {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,17 +41,21 @@ public class EventSession implements Serializable, Identified {
     @JoinColumn(name="event", nullable=false)
     private Event event;
 
-    @Column(nullable=false)
-    private String title;
+    @Column(name="name" ,nullable=false)
+    private String name;
 
-    @Column(name="abstract")
-    private String abstr;
+    @Column(name="description")
+    private String description;
 
     private String topics;
 
-    @Column(name = "session_date")
+    @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
-    private Date sessionDate;
+    private Date startDate;
+
+    @Column(name = "end_date")
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
 
     @Column(name = "start_time")
     @Temporal(TemporalType.TIME)
@@ -62,15 +65,18 @@ public class EventSession implements Serializable, Identified {
     @Temporal(TemporalType.TIME)
     private Date endTime;
 
-    private String room;
+    @ManyToOne
+    @JoinColumn(name="room", nullable=false)
+    private Room room;
 
-    @OneToMany(mappedBy="session", fetch= FetchType.EAGER)
-    private List<Speaker> speakers;
+    @ManyToOne
+    @JoinColumn(name="track", nullable=false)
+    private Track track;
 
-    public EventSession() {
+    public Session() {
     }
 
-    public EventSession(String id) {
+    public Session(String id) {
         this.id = id;
     }
 
@@ -84,28 +90,34 @@ public class EventSession implements Serializable, Identified {
         this.id = id;
     }
 
-    public Event getEvent() {
+    @Override
+    public Appointment getParent() {
         return event;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    @Override
+    public void setParent(Appointment parent) {
+        this.event = (Event) parent;
     }
 
-    public String getTitle() {
-        return title;
+    @Override
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getAbstract() {
-        return abstr;
+    @Override
+    public String getDescription() {
+        return description;
     }
 
-    public void setAbstract(String abstr) {
-        this.abstr = abstr;
+    @Override
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getTopics() {
@@ -116,63 +128,60 @@ public class EventSession implements Serializable, Identified {
         this.topics = topics;
     }
 
-    public Date getSessionDate() {
-        return sessionDate;
+    @Override
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setSessionDate(Date sessionDate) {
-        this.sessionDate = sessionDate;
+    @Override
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
+    @Override
+    public Date getEndDate() {
+        return this.endDate;
+    }
+
+    @Override
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    @Override
     public Date getStartTime() {
         return startTime;
     }
 
+    @Override
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
+    @Override
     public Date getEndTime() {
         return endTime;
     }
 
+    @Override
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
-    public String getRoom() {
+    public Room getRoom() {
         return room;
     }
 
-    public void setRoom(String room) {
+    public void setRoom(Room room) {
         this.room = room;
     }
 
-    /**
-     * @return At least one speaker that is alocated in this event session to
-     * give a speech.
-     */
-    public List<Speaker> getSpeakers() {
-        return speakers;
+    public Track getTrack() {
+        return track;
     }
 
-    public String getSpeakersName() {
-        if(speakers == null || speakers.isEmpty()) {
-            return "";
-        }
-
-        StringBuilder speakersName = new StringBuilder();
-        String separator = "";
-        for(Speaker speaker: speakers) {
-            speakersName.append(separator);
-            speakersName.append(speaker.toString());
-            separator = ", ";
-        }
-        return speakersName.toString();
-    }
-
-    public void setSpeakers(List<Speaker> speakers) {
-        this.speakers = speakers;
+    public void setTrack(Track track) {
+        this.track = track;
     }
 
     @Override
@@ -184,10 +193,10 @@ public class EventSession implements Serializable, Identified {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof EventSession)) {
+        if (!(object instanceof Session)) {
             return false;
         }
-        EventSession other = (EventSession) object;
+        Session other = (Session) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -196,6 +205,6 @@ public class EventSession implements Serializable, Identified {
 
     @Override
     public String toString() {
-        return this.title;
+        return this.name;
     }
 }

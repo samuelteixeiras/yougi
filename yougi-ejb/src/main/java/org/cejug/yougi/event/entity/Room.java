@@ -21,81 +21,73 @@
 package org.cejug.yougi.event.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import org.cejug.yougi.entity.Identified;
-import org.cejug.yougi.entity.UserAccount;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
- * Person with knowledge and experience to give a speech in an event, respecting
- * the scope of subjects in the domain explored by the user group.
- *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
-@Table(name = "speaker")
-public class Speaker implements Serializable, Identified {
-
+@Table(name="room")
+public class Room implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     private String id;
 
+    private String name;
+
+    private String description;
+
+    private Integer capacity;
+
     @ManyToOne
-    @JoinColumn(name = "user_account", nullable=false)
-    private UserAccount userAccount;
+    @JoinColumn(name = "venue", nullable = false)
+    private Venue venue;
 
-    @Column(name = "short_cv")
-    private String shortCv;
-
-    private String organization;
-
-    public Speaker() {
-    }
-
-    public Speaker(String id) {
-        this.id = id;
-    }
-
-    @Override
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    public UserAccount getUserAccount() {
-        return userAccount;
+    public String getName() {
+        return name;
     }
 
-    public void setUserAccount(UserAccount userAccount) {
-        this.userAccount = userAccount;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getShortCv() {
-        return shortCv;
+    public String getDescription() {
+        return description;
     }
 
-    public void setShortCv(String shortCv) {
-        this.shortCv = shortCv;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    /**
-     * @return The name of the company or institution where the speaker works or
-     * school or university where the user studies.
-     */
-    public String getOrganization() {
-        return organization;
+    public Integer getCapacity() {
+        return capacity;
     }
 
-    /**
-     * @param organization The name of the company or institution where the speaker
-     * works or school or university where the user studies.
-     */
-    public void setOrganization(String organization) {
-        this.organization = organization;
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
+    public Venue getVenue() {
+        return venue;
+    }
+
+    public void setVenue(Venue venue) {
+        this.venue = venue;
     }
 
     @Override
@@ -107,10 +99,11 @@ public class Speaker implements Serializable, Identified {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Speaker)) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Room)) {
             return false;
         }
-        Speaker other = (Speaker) object;
+        Room other = (Room) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -119,6 +112,6 @@ public class Speaker implements Serializable, Identified {
 
     @Override
     public String toString() {
-        return this.userAccount.getFullName();
+        return this.name;
     }
 }
