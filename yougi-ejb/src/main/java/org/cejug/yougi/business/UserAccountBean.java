@@ -49,7 +49,7 @@ import org.cejug.yougi.entity.EmailMessage;
 import org.cejug.yougi.entity.MessageTemplate;
 import org.cejug.yougi.exception.BusinessLogicException;
 import org.cejug.yougi.knowledge.business.SubscriptionBean;
-import org.cejug.yougi.util.EntitySupport;
+import org.cejug.yougi.entity.EntitySupport;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
