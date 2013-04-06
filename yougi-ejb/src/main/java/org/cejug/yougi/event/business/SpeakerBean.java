@@ -1,7 +1,7 @@
 /* Yougi is a web application conceived to manage user groups or
  * communities focused on a certain domain of knowledge, whose members are
  * constantly sharing information and participating in social and educational
- * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ * events. Copyright (C) 2011 Hildeberto Mendonça.
  *
  * This application is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the
@@ -26,9 +26,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.cejug.yougi.event.entity.Event;
-import org.cejug.yougi.event.entity.EventSession;
+import org.cejug.yougi.event.entity.Session;
 import org.cejug.yougi.event.entity.Speaker;
-import org.cejug.yougi.util.EntitySupport;
+import org.cejug.yougi.entity.EntitySupport;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
@@ -53,7 +53,7 @@ public class SpeakerBean {
                  .getResultList();
     }
 
-    public List<Speaker> findSpeakers(EventSession session) {
+    public List<Speaker> findSpeakers(Session session) {
         return em.createQuery("select s from Speaker s where s.session = :session order by s.userAccount.firstName asc")
                  .setParameter("session", session)
                  .getResultList();

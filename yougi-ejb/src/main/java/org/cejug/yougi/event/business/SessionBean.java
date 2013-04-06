@@ -1,8 +1,7 @@
-
 /* Yougi is a web application conceived to manage user groups or
  * communities focused on a certain domain of knowledge, whose members are
  * constantly sharing information and participating in social and educational
- * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ * events. Copyright (C) 2011 Hildeberto Mendonça.
  *
  * This application is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the
@@ -22,56 +21,57 @@
 package org.cejug.yougi.event.business;
 
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.cejug.yougi.event.entity.Event;
-import org.cejug.yougi.event.entity.EventSponsor;
-import org.cejug.yougi.partnership.entity.Partner;
-import org.cejug.yougi.util.EntitySupport;
+import org.cejug.yougi.event.entity.Session;
+import org.cejug.yougi.knowledge.business.TopicBean;
+import org.cejug.yougi.entity.EntitySupport;
 
 /**
- * This class implements the business logic of events' sponsors.
- *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
-public class EventSponsorBean {
+public class SessionBean {
 
     @PersistenceContext
     private EntityManager em;
 
-    public EventSponsor findEventSponsor(String id) {
+    @EJB
+    private TopicBean topicBean;
+
+    public Session findEventSession(String id) {
         if (id != null) {
-            return em.find(EventSponsor.class, id);
-        } else {
-            return null;
+            return em.find(Session.class, id);
         }
+        return null;
     }
 
-    public List<EventSponsor> findEventSponsors(Event event) {
-        return em.createQuery("select es from EventSponsor es where es.event = :event order by es.partner.name asc").setParameter("event", event).getResultList();
+    public List<Session> findEventSessions(Event event) {
+        return em.createQuery("select s from Session s where s.event = :event order by s.startDate, s.startTime asc")
+                 .setParameter("event", event)
+                 .getResultList();
     }
 
-    public List<EventSponsor> findSponsorEvents(Partner sponsor) {
-        return em.createQuery("select es from EventSponsor es where es.partner = :sponsor order by es.event.name asc").setParameter("sponsor", sponsor).getResultList();
-    }
-
-    public void save(EventSponsor eventSponsor) {
-        if (EntitySupport.INSTANCE.isIdNotValid(eventSponsor)) {
-            eventSponsor.setId(EntitySupport.INSTANCE.generateEntityId());
-            em.persist(eventSponsor);
+    public void save(Session session) {
+        if (EntitySupport.INSTANCE.isIdNotValid(session)) {
+            session.setId(EntitySupport.INSTANCE.generateEntityId());
+            em.persist(session);
         } else {
-            em.merge(eventSponsor);
+            em.merge(session);
         }
+
+        topicBean.consolidateTopics(session.getTopics());
     }
 
     public void remove(String id) {
-        EventSponsor eventSponsor = em.find(EventSponsor.class, id);
-        if (eventSponsor != null) {
-            em.remove(eventSponsor);
+        Session session = em.find(Session.class, id);
+        if (session != null) {
+            em.remove(session);
         }
     }
 }
