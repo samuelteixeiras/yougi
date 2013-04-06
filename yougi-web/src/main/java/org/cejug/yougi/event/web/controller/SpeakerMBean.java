@@ -1,7 +1,7 @@
 /* Yougi is a web application conceived to manage user groups or
  * communities focused on a certain domain of knowledge, whose members are
  * constantly sharing information and participating in social and educational
- * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ * events. Copyright (C) 2011 Hildeberto Mendonça.
  *
  * This application is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the
@@ -30,10 +30,10 @@ import javax.faces.bean.RequestScoped;
 import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.event.business.EventBean;
-import org.cejug.yougi.event.business.EventSessionBean;
+import org.cejug.yougi.event.business.SessionBean;
 import org.cejug.yougi.event.business.SpeakerBean;
 import org.cejug.yougi.event.entity.Event;
-import org.cejug.yougi.event.entity.EventSession;
+import org.cejug.yougi.event.entity.Session;
 import org.cejug.yougi.event.entity.Speaker;
 
 /**
@@ -52,7 +52,7 @@ public class SpeakerMBean implements Serializable {
     private EventBean eventBean;
 
     @EJB
-    private EventSessionBean eventSessionBean;
+    private SessionBean sessionBean;
 
     @EJB
     private UserAccountBean userAccountBean;
@@ -69,7 +69,7 @@ public class SpeakerMBean implements Serializable {
 
     private List<Event> events;
 
-    private List<EventSession> eventSessions;
+    private List<Session> sessions;
 
     private List<UserAccount> userAccounts;
 
@@ -168,10 +168,10 @@ public class SpeakerMBean implements Serializable {
     }
 
     /**
-     * @return the eventSessions
+     * @return the sessions
      */
-    public List<EventSession> getEventSessions() {
-        return eventSessions;
+    public List<Session> getSessions() {
+        return sessions;
     }
 
     /**
@@ -189,38 +189,31 @@ public class SpeakerMBean implements Serializable {
     }
 
     /**
-     * @param eventSessions the eventSessions to set
+     * @param sessions the sessions to set
      */
-    public void setEventSessions(List<EventSession> eventSessions) {
-        this.eventSessions = eventSessions;
+    public void setSessions(List<Session> sessions) {
+        this.sessions = sessions;
     }
 
     @PostConstruct
     public void load() {
         if (this.eventId != null && !this.eventId.isEmpty()) {
             this.event = eventBean.findEvent(eventId);
-            this.speaker.setEvent(this.event);
             this.selectedEvent = this.event.getId();
         }
 
         if (this.id != null && !this.id.isEmpty()) {
             this.speaker = speakerBean.findSpeaker(id);
-            this.selectedEvent = this.speaker.getEvent().getId();
-            this.selectedEventSession = this.speaker.getSession().getId();
             this.selectedUserAccount = this.speaker.getUserAccount().getId();
         }
 
         this.events = eventBean.findEvents();
-        this.eventSessions = eventSessionBean.findEventSessions(this.event);
+        this.sessions = sessionBean.findSessions(this.event);
         this.userAccounts = userAccountBean.findUserAccounts();
     }
 
     public String save() {
         Event evt = eventBean.findEvent(selectedEvent);
-        this.speaker.setEvent(evt);
-
-        EventSession evtSes = eventSessionBean.findEventSession(selectedEventSession);
-        this.speaker.setSession(evtSes);
 
         UserAccount usrAcc = userAccountBean.findUserAccount(selectedUserAccount);
         this.speaker.setUserAccount(usrAcc);

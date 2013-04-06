@@ -2,7 +2,7 @@
 <!-- Yougi is a web application conceived to manage user groups or
  * communities focused on a certain domain of knowledge, whose members are
  * constantly sharing information and participating in social and educational
- * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ * events. Copyright (C) 2011 Hildeberto Mendonça.
  *
  * This application is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the
@@ -24,7 +24,6 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui">
     <body>
         <ui:composition template="../layout.xhtml">
@@ -38,7 +37,6 @@
                             <p:tab title="#{bundle.details}">
                                 <h:panelGrid cellpadding="3">
                                     <h:outputFormat value="#{bundle.eventAppointment}" escape="false">
-                                        <f:param value="#{eventMBean.event.venue}"/>
                                         <f:param value="#{eventMBean.formattedStartDate}"/>
                                         <f:param value="#{eventMBean.formattedStartTime}"/>
                                         <f:param value="#{eventMBean.formattedEndTime}"/>
@@ -68,17 +66,15 @@
                                     </h:outputFormat>
                                 </h:panelGrid>
                                 <p/>
-                                <c:if test="#{!eventMBean.event.external}">
-                                    <h:button value="#{bundle.attend}" outcome="attendee" rendered="#{! eventMBean.isAttending and ! eventMBean.happened}">
-                                        <f:param name="id" value="#{eventMBean.event.id}"/>
-                                    </h:button>
-                                    <h:button value="#{bundle.notAttending}" outcome="attendee_cancel" rendered="#{eventMBean.isAttending and ! eventMBean.happened}">
-                                        <f:param name="id" value="#{eventMBean.event.id}"/>
-                                    </h:button>
-                                    <h:commandButton value="#{bundle.getCertificate}" action="#{eventMBean.getCertificate}" rendered="#{eventMBean.attended and eventMBean.happened}">
-                                        <f:param name="id" value="#{eventMBean.event.id}"/>
-                                    </h:commandButton>
-                                </c:if>
+                                <h:button value="#{bundle.attend}" outcome="attendee" rendered="#{! eventMBean.isAttending and ! eventMBean.happened}">
+                                    <f:param name="id" value="#{eventMBean.event.id}"/>
+                                </h:button>
+                                <h:button value="#{bundle.notAttending}" outcome="attendee_cancel" rendered="#{eventMBean.isAttending and ! eventMBean.happened}">
+                                    <f:param name="id" value="#{eventMBean.event.id}"/>
+                                </h:button>
+                                <h:commandButton value="#{bundle.getCertificate}" action="#{eventMBean.getCertificate}" rendered="#{eventMBean.attended and eventMBean.happened}">
+                                    <f:param name="id" value="#{eventMBean.event.id}"/>
+                                </h:commandButton>
                             </p:tab>
                             <p:tab title="#{bundle.statistics}" rendered="#{securityBackingMBean.isUserLeader}">
                                 <h:panelGrid>

@@ -44,14 +44,14 @@ public class SessionBean {
     @EJB
     private TopicBean topicBean;
 
-    public Session findEventSession(String id) {
+    public Session findSession(String id) {
         if (id != null) {
             return em.find(Session.class, id);
         }
         return null;
     }
 
-    public List<Session> findEventSessions(Event event) {
+    public List<Session> findSessions(Event event) {
         return em.createQuery("select s from Session s where s.event = :event order by s.startDate, s.startTime asc")
                  .setParameter("event", event)
                  .getResultList();

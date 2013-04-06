@@ -1,7 +1,7 @@
 /* Yougi is a web application conceived to manage user groups or
  * communities focused on a certain domain of knowledge, whose members are
  * constantly sharing information and participating in social and educational
- * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ * events. Copyright (C) 2011 Hildeberto Mendonça.
  *
  * This application is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the
@@ -21,31 +21,39 @@
 package org.cejug.yougi.event.web.controller;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+
 import org.cejug.yougi.event.business.EventBean;
-import org.cejug.yougi.event.business.EventSessionBean;
+import org.cejug.yougi.event.business.SponsorshipEventBean;
 import org.cejug.yougi.event.entity.Event;
-import org.cejug.yougi.event.entity.EventSession;
+import org.cejug.yougi.event.entity.SponsorshipEvent;
+import org.cejug.yougi.partnership.business.PartnerBean;
+import org.cejug.yougi.partnership.entity.Partner;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped
-public class EventSessionMBean implements Serializable {
+public class SponsorshipEventMBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @EJB
-    private EventSessionBean eventSessionBean;
+    private SponsorshipEventBean sponsorshipEventBean;
 
     @EJB
     private EventBean eventBean;
+
+    @EJB
+    private PartnerBean partnerBean;
 
     @ManagedProperty(value = "#{param.id}")
     private String id;
@@ -55,15 +63,19 @@ public class EventSessionMBean implements Serializable {
 
     private Event event;
 
-    private EventSession eventSession;
+    private SponsorshipEvent sponsorshipEvent;
+
+    private List<SponsorshipEvent> sponsorshipsEvent;
 
     private List<Event> events;
 
-    private List<EventSession> eventSessions;
-
     private String selectedEvent;
 
-    public EventSessionMBean() {
+    private List<Partner> partners;
+
+    private String selectedSponsorship;
+
+    public SponsorshipEventMBean() {
     }
 
     public String getId() {
@@ -90,19 +102,28 @@ public class EventSessionMBean implements Serializable {
         this.event = event;
     }
 
-    public EventSession getEventSession() {
-        return eventSession;
+    public SponsorshipEvent getSponsorshipEvent() {
+        return sponsorshipEvent;
     }
 
-    public void setEventSession(EventSession eventSession) {
-        this.eventSession = eventSession;
+    public void setSponsorshipEvent(SponsorshipEvent sponsorshipEvent) {
+        this.sponsorshipEvent = sponsorshipEvent;
     }
 
-    public List<EventSession> getEventSessions() {
-        if (this.eventSessions == null) {
-            this.eventSessions = eventSessionBean.findEventSessions(this.event);
+    public List<SponsorshipEvent> getSponsorshipsEvent() {
+        if (sponsorshipsEvent == null) {
+            this.sponsorshipsEvent = sponsorshipEventBean.findSponsorshipsEvent(this.event);
         }
-        return this.eventSessions;
+        return this.sponsorshipsEvent;
+    }
+
+    public BigDecimal getSumAmounts() {
+        BigDecimal sum = BigDecimal.ZERO;
+        List<SponsorshipEvent> es = getSponsorshipsEvent();
+        for(SponsorshipEvent sponsor: es) {
+            sum = sum.add(sponsor.getAmount());
+        }
+        return sum;
     }
 
     public String getSelectedEvent() {
@@ -120,6 +141,21 @@ public class EventSessionMBean implements Serializable {
         return this.events;
     }
 
+    public String getSelectedSponsorship() {
+        return this.selectedSponsorship;
+    }
+
+    public void setSelectedSponsorship(String selectedSponsor) {
+        this.selectedSponsorship = selectedSponsor;
+    }
+
+    public List<Partner> getPartners() {
+        if (this.partners == null) {
+            this.partners = partnerBean.findPartners();
+        }
+        return this.partners;
+    }
+
     @PostConstruct
     public void load() {
         if (this.eventId != null && !this.eventId.isEmpty()) {
@@ -128,23 +164,27 @@ public class EventSessionMBean implements Serializable {
         }
 
         if (this.id != null && !this.id.isEmpty()) {
-            this.eventSession = eventSessionBean.findEventSession(id);
-            this.selectedEvent = this.eventSession.getEvent().getId();
+            this.sponsorshipEvent = sponsorshipEventBean.findSponsorshipEvent(id);
+            this.selectedEvent = this.sponsorshipEvent.getEvent().getId();
+            this.selectedSponsorship = this.sponsorshipEvent.getPartner().getId();
         } else {
-            this.eventSession = new EventSession();
+            this.sponsorshipEvent = new SponsorshipEvent();
         }
     }
 
     public String save() {
         Event evt = eventBean.findEvent(selectedEvent);
-        this.eventSession.setEvent(evt);
+        this.sponsorshipEvent.setEvent(evt);
 
-        eventSessionBean.save(this.eventSession);
-        return "sessions?faces-redirect=true&eventId=" + evt.getId();
+        Partner spon = partnerBean.findPartner(selectedSponsorship);
+        this.sponsorshipEvent.setPartner(spon);
+
+        sponsorshipEventBean.save(this.sponsorshipEvent);
+        return "sponsors?faces-redirect=true&eventId=" + evt.getId();
     }
 
     public String remove() {
-        eventSessionBean.remove(this.eventSession.getId());
-        return "sessions?faces-redirect=true&eventId=" + this.event.getId();
+        sponsorshipEventBean.remove(this.sponsorshipEvent.getId());
+        return "sponsors?faces-redirect=true&eventId=" + this.event.getId();
     }
 }

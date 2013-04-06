@@ -2,7 +2,7 @@
 <!-- Yougi is a web application conceived to manage user groups or
  * communities focused on a certain domain of knowledge, whose members are
  * constantly sharing information and participating in social and educational
- * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ * events. Copyright (C) 2011 Hildeberto Mendonça.
  *
  * This application is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the
@@ -62,10 +62,6 @@
                                             <f:param name="id" value="#{event.id}"/>
                                         </h:link>
                                         <h:outputText value="#{event.shortDescription}"/>
-                                        <h:panelGrid columns="2">
-                                           <h:outputText value="#{bundle.venue}: "/>
-                                           <h:outputText value="#{event.venue}"/>
-                                        </h:panelGrid>
                                         <h:outputFormat value="#{bundle.eventAppointmentShort}">
                                             <f:param value="#{eventMBean.getFormattedStartDate(event.startDate)}"/>
                                             <f:param value="#{eventMBean.getFormattedStartTime(event.startTime)}"/>
@@ -75,8 +71,8 @@
                                             <h:link value="#{bundle.moreInformation}" outcome="event">
                                                 <f:param name="id" value="#{event.id}"/>
                                             </h:link>
-                                            <h:outputText value=" | " rendered="#{!event.external}"/>
-                                            <h:link value="#{bundle.attend}" outcome="event/attendee" rendered="#{!event.external}">
+                                            <h:outputText value=" | "/>
+                                            <h:link value="#{bundle.attend}" outcome="event/attendee">
                                                 <f:param name="id" value="#{event.id}"/>
                                             </h:link>
                                         </h:panelGrid>

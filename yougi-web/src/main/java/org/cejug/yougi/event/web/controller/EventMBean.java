@@ -1,7 +1,7 @@
 /* Yougi is a web application conceived to manage user groups or
  * communities focused on a certain domain of knowledge, whose members are
  * constantly sharing information and participating in social and educational
- * events. Copyright (C) 2011 Ceara Java User Group - CEJUG.
+ * events. Copyright (C) 2011 Hildeberto Mendonça.
  *
  * This application is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the
@@ -41,7 +41,6 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.cejug.yougi.business.ApplicationPropertyBean;
-import org.cejug.yougi.business.MessengerBean;
 import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.ApplicationProperty;
 import org.cejug.yougi.entity.Properties;
@@ -50,8 +49,6 @@ import org.cejug.yougi.event.business.AttendeeBean;
 import org.cejug.yougi.event.business.EventBean;
 import org.cejug.yougi.event.entity.Attendee;
 import org.cejug.yougi.event.entity.Event;
-import org.cejug.yougi.partnership.business.PartnerBean;
-import org.cejug.yougi.partnership.entity.Partner;
 import org.cejug.yougi.web.controller.LocationMBean;
 import org.cejug.yougi.web.controller.UserProfileMBean;
 import org.cejug.yougi.web.report.EventAttendeeCertificate;
@@ -75,13 +72,7 @@ public class EventMBean {
     private AttendeeBean attendeeBean;
 
     @EJB
-    private PartnerBean partnerBean;
-
-    @EJB
     private UserAccountBean userAccountBean;
-
-    @EJB
-    private MessengerBean messengerBean;
 
     @EJB
     private ApplicationPropertyBean applicationPropertyBean;
@@ -103,15 +94,11 @@ public class EventMBean {
 
     private List<Event> commingEvents;
 
-    private List<Partner> venues;
-
     private Long numberPeopleAttending;
 
     private Long numberPeopleAttended;
 
     private PieChartModel pieChartModel;
-
-    private String selectedVenue;
 
     public EventMBean() {
     }
@@ -154,29 +141,6 @@ public class EventMBean {
 
     public void setAttendee(Attendee attendee) {
         this.attendee = attendee;
-    }
-
-    public String getSelectedVenue() {
-        return selectedVenue;
-    }
-
-    public void setSelectedVenue(String selectedVenue) {
-        this.selectedVenue = selectedVenue;
-
-        Partner venue = partnerBean.findPartner(selectedVenue);
-
-        if (this.event.getAddress() == null && venue.getAddress() != null) {
-            this.event.setAddress(venue.getAddress());
-        }
-        if (this.event.getCountry() == null && venue.getCountry() != null) {
-            this.locationMBean.setSelectedCountry(venue.getCountry().getAcronym());
-        }
-        if (this.event.getProvince() == null && venue.getProvince() != null) {
-            this.locationMBean.setSelectedProvince(venue.getProvince().getId());
-        }
-        if (this.event.getCity() == null && venue.getCity() != null) {
-            this.locationMBean.setSelectedCity(venue.getCity().getId());
-        }
     }
 
     /**
@@ -223,16 +187,9 @@ public class EventMBean {
 
     public List<Event> getCommingEvents() {
         if (commingEvents == null) {
-            commingEvents = eventBean.findCommingEvents();
+            commingEvents = eventBean.findUpCommingEvents();
         }
         return commingEvents;
-    }
-
-    public List<Partner> getVenues() {
-        if (venues == null) {
-            venues = partnerBean.findPartners();
-        }
-        return venues;
     }
 
     public Long getNumberPeopleAttending() {
@@ -305,7 +262,6 @@ public class EventMBean {
     public void load() {
         if (id != null && !id.isEmpty()) {
             this.event = eventBean.findEvent(id);
-            this.selectedVenue = this.event.getVenue().getId();
 
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             String username = request.getRemoteUser();
@@ -313,26 +269,6 @@ public class EventMBean {
             this.attendee = attendeeBean.findAttendee(this.event, person);
             this.numberPeopleAttending = attendeeBean.findNumberPeopleAttending(this.event);
             this.numberPeopleAttended = attendeeBean.findNumberPeopleAttended(this.event);
-
-            locationMBean.initialize();
-
-            if (this.event.getCountry() != null) {
-                locationMBean.setSelectedCountry(this.event.getCountry().getAcronym());
-            } else {
-                locationMBean.setSelectedCountry(null);
-            }
-
-            if (this.event.getProvince() != null) {
-                locationMBean.setSelectedProvince(this.event.getProvince().getId());
-            } else {
-                locationMBean.setSelectedProvince(null);
-            }
-
-            if (this.event.getCity() != null) {
-                locationMBean.setSelectedCity(this.event.getCity().getId());
-            } else {
-                locationMBean.setSelectedCity(null);
-            }
         } else {
             this.event = new Event();
         }
@@ -351,7 +287,7 @@ public class EventMBean {
         newAttendee.setRegistrationDate(Calendar.getInstance().getTime());
         attendeeBean.save(newAttendee);
         ResourceBundleHelper rb = new ResourceBundleHelper();
-        messengerBean.sendConfirmationEventAttendance(newAttendee.getAttendee(),
+        eventBean.sendConfirmationEventAttendance(newAttendee.getAttendee(),
                 newAttendee.getEvent(),
                 rb.getMessage("formatDate"),
                 rb.getMessage("formatTime"),
@@ -407,20 +343,12 @@ public class EventMBean {
             response.getOutputStream().flush();
             response.getOutputStream().close();
             context.responseComplete();
-        } catch (IOException ioe) {
+        } catch (IOException | DocumentException ioe) {
             logger.log(Level.SEVERE, ioe.getMessage(), ioe);
-        } catch (DocumentException de) {
-            logger.log(Level.SEVERE, de.getMessage(), de);
         }
     }
 
     public String save() {
-        Partner venue = partnerBean.findPartner(selectedVenue);
-        this.event.setVenue(venue);
-        this.event.setCountry(this.locationMBean.getCountry());
-        this.event.setProvince(this.locationMBean.getProvince());
-        this.event.setCity(this.locationMBean.getCity());
-
         eventBean.save(this.event);
         return "events?faces-redirect=true";
     }
