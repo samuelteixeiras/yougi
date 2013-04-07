@@ -44,7 +44,7 @@ public class Attendee implements Serializable, Identified {
     private Event event;
 
     @ManyToOne
-    @JoinColumn(name = "user_account")
+    @JoinColumn(name = "attendee")
     private UserAccount userAccount;
 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)

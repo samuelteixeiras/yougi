@@ -133,8 +133,6 @@ alter table track drop topics;
 alter table event_sponsor rename to sponsorship_event;
 alter table sponsorship_event add sponsorship_level varchar(20) null;
 
-alter table attendee change attendee user_account char(32) not null;
-
 create table attendee_session (
     id         char(32)    not null,
     attendee   char(32)    not null,

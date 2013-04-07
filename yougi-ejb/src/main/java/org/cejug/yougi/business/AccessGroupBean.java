@@ -64,7 +64,7 @@ public class AccessGroupBean {
     @EJB
     private MessageTemplateBean messageTemplateBean;
 
-    static final Logger logger = Logger.getLogger(AccessGroupBean.class.getName());
+    static final Logger LOGGER = Logger.getLogger(AccessGroupBean.class.getName());
 
     public static final String ADMIN_GROUP = "leaders";
     public static final String DEFAULT_GROUP = "members";
@@ -132,7 +132,7 @@ public class AccessGroupBean {
             messengerBean.sendEmailMessage(emailMessage);
         }
         catch(MessagingException me) {
-            logger.log(Level.WARNING, "Error when sending the group assignment alert to "+ userAccount.getFullName(), me);
+            LOGGER.log(Level.WARNING, "Error when sending the group assignment alert to "+ userAccount.getFullName(), me);
         }
     }
 

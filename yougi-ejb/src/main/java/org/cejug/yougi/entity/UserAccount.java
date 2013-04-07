@@ -157,8 +157,7 @@ public class UserAccount implements Serializable, Identified {
     }
 
     public void setFirstName(String firstName) {
-        firstName = TextUtils.INSTANCE.capitalizeFirstCharWords(firstName);
-        this.firstName = firstName;
+        this.firstName = TextUtils.INSTANCE.capitalizeFirstCharWords(firstName);
     }
 
     public String getLastName() {
@@ -166,8 +165,7 @@ public class UserAccount implements Serializable, Identified {
     }
 
     public void setLastName(String lastName) {
-        lastName = TextUtils.INSTANCE.capitalizeFirstCharWords(lastName);
-        this.lastName = lastName;
+        this.lastName = TextUtils.INSTANCE.capitalizeFirstCharWords(lastName);
     }
 
     public String getFullName() {
@@ -446,8 +444,7 @@ public class UserAccount implements Serializable, Identified {
     }
 
     public void setEmailConfirmation(String emailConfirmation) {
-        emailConfirmation = emailConfirmation.toLowerCase();
-        this.emailConfirmation = emailConfirmation;
+        this.emailConfirmation = emailConfirmation.toLowerCase();
     }
 
     public String getConfirmationCode() {

@@ -30,7 +30,7 @@ import org.cejug.yougi.entity.Identified;
  */
 @Entity
 @Table(name = "session")
-public class Session implements Serializable, Identified, Appointment {
+public class Session implements Serializable, Identified {
 
     private static final long serialVersionUID = 1L;
 
@@ -99,32 +99,26 @@ public class Session implements Serializable, Identified, Appointment {
         this.id = id;
     }
 
-    @Override
-    public Appointment getParent() {
+    public Event getEvent() {
         return event;
     }
 
-    @Override
-    public void setParent(Appointment parent) {
-        this.event = (Event) parent;
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
     public String getDescription() {
         return description;
     }
 
-    @Override
     public void setDescription(String description) {
         this.description = description;
     }
@@ -153,42 +147,34 @@ public class Session implements Serializable, Identified, Appointment {
         this.topics = topics;
     }
 
-    @Override
     public Date getStartDate() {
         return startDate;
     }
 
-    @Override
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    @Override
     public Date getEndDate() {
         return this.endDate;
     }
 
-    @Override
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
-    @Override
     public Date getStartTime() {
         return startTime;
     }
 
-    @Override
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    @Override
     public Date getEndTime() {
         return endTime;
     }
 
-    @Override
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }

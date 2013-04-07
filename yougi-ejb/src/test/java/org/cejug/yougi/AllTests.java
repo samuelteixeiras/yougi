@@ -1,5 +1,3 @@
-package org.cejug.yougi;
-
 /* Yougi is a web application conceived to manage user groups or
  * communities focused on a certain domain of knowledge, whose members are
  * constantly sharing information and participating in social and educational
@@ -21,6 +19,9 @@ package org.cejug.yougi;
  * Suite 330, Boston, MA 02111-1307 USA.
  *
  */
+
+package org.cejug.yougi;
+
 import java.util.HashMap;
 import java.util.Map;
 import javax.ejb.embeddable.EJBContainer;

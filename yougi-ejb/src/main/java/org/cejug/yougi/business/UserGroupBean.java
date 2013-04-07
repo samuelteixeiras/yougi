@@ -40,10 +40,10 @@ import org.cejug.yougi.entity.UserGroup;
 public class UserGroupBean {
 
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
 
     @EJB
-    AccessGroupBean accessGroupBean;
+    private AccessGroupBean accessGroupBean;
 
     public List<UserAccount> findUsersGroup(AccessGroup accessGroup) {
         return em.createQuery("select ug.userAccount from UserGroup ug where ug.accessGroup = :accessGroup order by ug.userAccount.firstName")
