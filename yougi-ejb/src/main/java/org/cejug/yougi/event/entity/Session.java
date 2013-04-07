@@ -47,6 +47,13 @@ public class Session implements Serializable, Identified, Appointment {
     @Column(name="description")
     private String description;
 
+    @Column(name="detailed_description")
+    private String detailedDescription;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="experience_level")
+    private ExperienceLevel experienceLevel;
+
     private String topics;
 
     @Column(name = "start_date")
@@ -72,6 +79,8 @@ public class Session implements Serializable, Identified, Appointment {
     @ManyToOne
     @JoinColumn(name="track", nullable=false)
     private Track track;
+
+    private Boolean approved;
 
     public Session() {
     }
@@ -118,6 +127,22 @@ public class Session implements Serializable, Identified, Appointment {
     @Override
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDetailedDescription() {
+        return detailedDescription;
+    }
+
+    public void setDetailedDescription(String detailedDescription) {
+        this.detailedDescription = detailedDescription;
+    }
+
+    public ExperienceLevel getExperienceLevel() {
+        return experienceLevel;
+    }
+
+    public void setExperienceLevel(ExperienceLevel experienceLevel) {
+        this.experienceLevel = experienceLevel;
     }
 
     public String getTopics() {

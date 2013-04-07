@@ -89,9 +89,9 @@ public class EventAttendeeReport {
         for (Attendee attendee : attendees) {
             table.addCell(new Phrase(String.valueOf(seq++), font));
 
-            table.addCell(new Phrase(attendee.getAttendee().getFullName(), font));
+            table.addCell(new Phrase(attendee.getUserAccount().getFullName(), font));
 
-            table.addCell(new Phrase(attendee.getAttendee().getEmail(), font));
+            table.addCell(new Phrase(attendee.getUserAccount().getEmail(), font));
 
             table.addCell(" ");
         }

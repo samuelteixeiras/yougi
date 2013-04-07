@@ -47,6 +47,8 @@ public class Speaker implements Serializable, Identified {
     @Column(name = "short_cv")
     private String shortCv;
 
+    private String experience;
+
     private String organization;
 
     public Speaker() {
@@ -83,6 +85,17 @@ public class Speaker implements Serializable, Identified {
     }
 
     /**
+     * @return The person previous experience on speeches in other events.
+     */
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    /**
      * @return The name of the company or institution where the speaker works or
      * school or university where the user studies.
      */
@@ -91,8 +104,8 @@ public class Speaker implements Serializable, Identified {
     }
 
     /**
-     * @param organization The name of the company or institution where the speaker
-     * works or school or university where the user studies.
+     * @param organization The name of the company or institution where the
+     * speaker works or school or university where the user studies.
      */
     public void setOrganization(String organization) {
         this.organization = organization;

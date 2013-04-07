@@ -22,70 +22,80 @@ package org.cejug.yougi.event.entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.cejug.yougi.entity.Identified;
 
 /**
+ * Associates a speaker to a session.
+ *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
-@Table(name="room")
-public class Room implements Serializable {
+@Table(name = "attendee_session")
+public class AttendeeSession implements Serializable, Identified {
     private static final long serialVersionUID = 1L;
 
     @Id
     private String id;
 
-    private String name;
-
-    private String description;
-
-    private Integer capacity;
+    @ManyToOne
+    @JoinColumn(name = "attendee", nullable = false)
+    private Attendee attendee;
 
     @ManyToOne
-    @JoinColumn(name = "venue", nullable = false)
-    private Venue venue;
+    @JoinColumn(name = "session", nullable = false)
+    private Session session;
 
+    private Boolean bookmark;
+
+    @Enumerated(EnumType.STRING)
+    private SessionEvaluation evaluation;
+
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Attendee getAttendee() {
+        return attendee;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAttendee(Attendee attendee) {
+        this.attendee = attendee;
     }
 
-    public String getDescription() {
-        return description;
+    public Session getSession() {
+        return session;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSession(Session session) {
+        this.session = session;
     }
 
-    public Integer getCapacity() {
-        return capacity;
+    public Boolean getBookmark() {
+        return bookmark;
     }
 
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
+    public void setBookmark(Boolean bookmark) {
+        this.bookmark = bookmark;
     }
 
-    public Venue getVenue() {
-        return venue;
+    public SessionEvaluation getEvaluation() {
+        return evaluation;
     }
 
-    public void setVenue(Venue venue) {
-        this.venue = venue;
+    public void setEvaluation(SessionEvaluation evaluation) {
+        this.evaluation = evaluation;
     }
 
     @Override
@@ -97,11 +107,10 @@ public class Room implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Room)) {
+        if (!(object instanceof AttendeeSession)) {
             return false;
         }
-        Room other = (Room) object;
+        AttendeeSession other = (AttendeeSession) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -110,6 +119,6 @@ public class Room implements Serializable {
 
     @Override
     public String toString() {
-        return this.name;
+        return this.session.getName() + " - " + this.attendee.getUserAccount().getFullName();
     }
 }

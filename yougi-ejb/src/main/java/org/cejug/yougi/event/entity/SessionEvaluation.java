@@ -20,35 +20,11 @@
  * */
 package org.cejug.yougi.event.entity;
 
-import java.util.Date;
-
 /**
- * Any information of an event that can be added to attendees personal agenda.
+ * Possible qualitative session evaluations.
  *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
-public interface Appointment {
-    public String getId();
-    public void setId(String id);
-
-    public String getName();
-    public void setName(String name);
-
-    public Appointment getParent();
-    public void setParent(Appointment parent);
-
-    public Date getStartDate();
-    public void setStartDate(Date startDate);
-
-    public Date getStartTime();
-    public void setStartTime(Date startTime);
-
-    public Date getEndDate();
-    public void setEndDate(Date endDate);
-
-    public Date getEndTime();
-    public void setEndTime(Date endTime);
-
-    public String getDescription();
-    public void setDescription(String description);
+public enum SessionEvaluation {
+    EXCELLENT, VERY_GOOD, GOOD, NOT_BAD, BAD;
 }

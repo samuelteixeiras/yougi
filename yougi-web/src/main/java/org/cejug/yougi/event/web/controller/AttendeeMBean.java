@@ -160,10 +160,8 @@ public class AttendeeMBean implements Serializable {
             response.getOutputStream().flush();
             response.getOutputStream().close();
             context.responseComplete();
-        } catch (IOException e) {
+        } catch (IOException | DocumentException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
-        } catch (DocumentException de) {
-            logger.log(Level.SEVERE, de.getMessage(), de);
         }
     }
 }

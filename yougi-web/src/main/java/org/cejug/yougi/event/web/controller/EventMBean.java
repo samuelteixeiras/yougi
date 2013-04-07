@@ -283,11 +283,11 @@ public class EventMBean {
 
         Attendee newAttendee = new Attendee();
         newAttendee.setEvent(this.event);
-        newAttendee.setAttendee(person);
+        newAttendee.setUserAccount(person);
         newAttendee.setRegistrationDate(Calendar.getInstance().getTime());
         attendeeBean.save(newAttendee);
         ResourceBundleHelper rb = new ResourceBundleHelper();
-        eventBean.sendConfirmationEventAttendance(newAttendee.getAttendee(),
+        eventBean.sendConfirmationEventAttendance(newAttendee.getUserAccount(),
                 newAttendee.getEvent(),
                 rb.getMessage("formatDate"),
                 rb.getMessage("formatTime"),

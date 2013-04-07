@@ -44,8 +44,8 @@ public class Attendee implements Serializable, Identified {
     private Event event;
 
     @ManyToOne
-    @JoinColumn(name = "attendee")
-    private UserAccount attendee;
+    @JoinColumn(name = "user_account")
+    private UserAccount userAccount;
 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(name = "registration_date")
@@ -87,12 +87,12 @@ public class Attendee implements Serializable, Identified {
         this.event = event;
     }
 
-    public UserAccount getAttendee() {
-        return attendee;
+    public UserAccount getUserAccount() {
+        return userAccount;
     }
 
-    public void setAttendee(UserAccount attendee) {
-        this.attendee = attendee;
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
     }
 
     public Date getRegistrationDate() {
@@ -167,7 +167,7 @@ public class Attendee implements Serializable, Identified {
      */
     public void generateCertificateData() {
         if(this.certificateCode == null && attended) {
-            this.certificateFullname = this.attendee.getFullName();
+            this.certificateFullname = this.userAccount.getFullName();
             this.certificateEvent = this.event.getName();
             this.certificateDate = this.event.getStartDate();
             this.certificateCode = UUID.randomUUID().toString().toUpperCase();
@@ -216,5 +216,10 @@ public class Attendee implements Serializable, Identified {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return this.userAccount.getFullName();
     }
 }
