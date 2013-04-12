@@ -110,7 +110,7 @@ alter table session add constraint fk_track_session foreign key (track) referenc
 alter table user_account drop organization;
 
 alter table session add detailed_description text null;
-alter table session add sponsorship_level varchar(20) null;
+alter table session add experience_level varchar(20) null;
 alter table session add approved tinyint(1) null;
 
 alter table speaker add experience text null;
@@ -132,8 +132,6 @@ alter table track drop topics;
 
 alter table event_sponsor rename to sponsorship_event;
 alter table sponsorship_event add sponsorship_level varchar(20) null;
-
-alter table attendee change attendee user_account char(32) not null;
 
 create table attendee_session (
     id         char(32)    not null,

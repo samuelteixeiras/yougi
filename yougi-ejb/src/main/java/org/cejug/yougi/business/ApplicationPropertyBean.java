@@ -38,7 +38,7 @@ import org.cejug.yougi.exception.BusinessLogicException;
 public class ApplicationPropertyBean {
 
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
 
     public Map<String, String> findApplicationProperties() {
         Map<String, String> propertiesMap = new HashMap<>();

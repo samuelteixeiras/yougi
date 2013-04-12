@@ -181,7 +181,7 @@ public class EventMBean {
 
     public List<Event> getEvents() {
         if (events == null) {
-            events = eventBean.findEvents();
+            events = eventBean.findParentEvents();
         }
         return events;
     }

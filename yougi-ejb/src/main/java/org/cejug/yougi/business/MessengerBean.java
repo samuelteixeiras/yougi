@@ -31,8 +31,6 @@ import javax.ejb.Stateless;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.cejug.yougi.entity.Properties;
 
 /**
@@ -45,9 +43,6 @@ import org.cejug.yougi.entity.Properties;
 @Stateless
 @LocalBean
 public class MessengerBean {
-
-    @PersistenceContext
-    private EntityManager em;
 
     @Resource(name = "mail/ug")
     private Session mailSession;

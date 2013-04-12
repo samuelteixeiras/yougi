@@ -31,7 +31,7 @@ import org.cejug.yougi.entity.Identified;
  */
 @Entity
 @Table(name = "event")
-public class Event implements Serializable, Identified, Appointment {
+public class Event implements Serializable, Identified {
 
     private static final long serialVersionUID = 1L;
 
@@ -81,12 +81,10 @@ public class Event implements Serializable, Identified, Appointment {
         this.id = id;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -96,62 +94,50 @@ public class Event implements Serializable, Identified, Appointment {
      * an event in several other smaller events. It is specially useful in case
      * of big conferences.
      */
-    @Override
     public Event getParent() {
         return parent;
     }
 
-    @Override
-    public void setParent(Appointment parent) {
-        this.parent = (Event)parent;
+    public void setParent(Event parent) {
+        this.parent = parent;
     }
 
-    @Override
     public Date getStartDate() {
         return startDate;
     }
 
-    @Override
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    @Override
     public Date getEndDate() {
         return endDate;
     }
 
-    @Override
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
-    @Override
     public Date getStartTime() {
         return startTime;
     }
 
-    @Override
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    @Override
     public Date getEndTime() {
         return endTime;
     }
 
-    @Override
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
-    @Override
     public String getDescription() {
         return description;
     }
 
-    @Override
     public void setDescription(String description) {
         this.description = description;
     }
@@ -188,11 +174,6 @@ public class Event implements Serializable, Identified, Appointment {
     }
 
     @Override
-    public String toString() {
-        return this.name;
-    }
-
-    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -220,5 +201,10 @@ public class Event implements Serializable, Identified, Appointment {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

@@ -59,25 +59,28 @@ public class EventBean {
     @EJB
     private MessageTemplateBean messageTemplateBean;
 
-    static final Logger logger = Logger.getLogger(EventBean.class.getName());
+    static final Logger LOGGER = Logger.getLogger(EventBean.class.getName());
 
     public Event findEvent(String id) {
-        Event event = em.find(Event.class, id);
-        return event;
+        return em.find(Event.class, id);
     }
 
-    public List<Event> findEvents() {
-    	List<Event> events = em.createQuery("select e from Event e where e.parent is null order by e.endDate desc")
+    public List<Event> findParentEvents() {
+    	return em.createQuery("select e from Event e where e.parent is null order by e.endDate desc")
         		       .getResultList();
-        return events;
+    }
+
+    public List<Event> findEvents(Event parent) {
+        return em.createQuery("select e from Event e where e.parent = :parent order by e.endDate desc")
+                 .setParameter("parent", parent)
+                 .getResultList();
     }
 
     public List<Event> findUpCommingEvents() {
     	Calendar today = Calendar.getInstance();
-        List<Event> events = em.createQuery("select e from Event e where e.endDate >= :today and e.parent is null order by e.endDate desc")
+        return em.createQuery("select e from Event e where e.endDate >= :today and e.parent is null order by e.endDate desc")
         		       .setParameter("today", today.getTime())
                                .getResultList();
-        return events;
     }
 
     public void sendConfirmationEventAttendance(UserAccount userAccount, Event event, String dateFormat, String timeFormat, String timezone) {
@@ -96,7 +99,7 @@ public class EventBean {
             messengerBean.sendEmailMessage(emailMessage);
         }
         catch(MessagingException me) {
-            logger.log(Level.WARNING, "Error when sending the confirmation of event attendance to user "+ userAccount.getPostingEmail(), me);
+            LOGGER.log(Level.WARNING, "Error when sending the confirmation of event attendance to user "+ userAccount.getPostingEmail(), me);
         }
     }
 

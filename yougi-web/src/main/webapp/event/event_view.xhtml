@@ -36,11 +36,24 @@
                         <p:tabView>
                             <p:tab title="#{bundle.details}">
                                 <h:panelGrid cellpadding="3">
-                                    <h:outputFormat value="#{bundle.eventAppointment}" escape="false">
-                                        <f:param value="#{eventMBean.formattedStartDate}"/>
-                                        <f:param value="#{eventMBean.formattedStartTime}"/>
-                                        <f:param value="#{eventMBean.formattedEndTime}"/>
-                                    </h:outputFormat>
+                                    <h:panelGroup>
+                                        <h:outputText value="#{bundle.from} "/>
+                                        <h:outputText value="#{eventMBean.event.startDate}">
+                                            <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
+                                        </h:outputText>
+                                        <h:outputText value=" at " rendered="#{! empty eventMBean.event.startTime}"/>
+                                        <h:outputText value="#{eventMBean.event.startTime}" rendered="#{! empty eventMBean.event.startTime}">
+                                            <f:convertDateTime type="time" timeStyle="short" pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                        </h:outputText>
+                                        <h:outputText value=" #{bundle.to} "/>
+                                        <h:outputText value="#{eventMBean.event.endDate}" rendered="#{eventMBean.event.startDate != eventMBean.event.endDate}">
+                                            <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
+                                        </h:outputText>
+                                        <h:outputText value=" at " rendered="#{! empty eventMBean.event.endTime and eventMBean.event.startDate != eventMBean.event.endDate}"/>
+                                        <h:outputText value="#{eventMBean.event.endTime}" rendered="#{! empty eventMBean.event.startTime}">
+                                            <f:convertDateTime type="time" timeStyle="short" pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                        </h:outputText>
+                                    </h:panelGroup>
 
                                     <h:outputFormat value="#{bundle.numberPeopleAttendingEvent}" style="font-weight: bold; color: blue;" rendered="#{securityBackingMBean.isUserLeader}">
                                         <f:param value="#{eventMBean.numberPeopleAttending}"/>
@@ -49,23 +62,32 @@
 
                                     <h:outputText value="#{eventMBean.formattedEventDescription}" escape="false" style="font-size: 14px;"/>
 
-                                    <p:dataList value="#{eventMBean.event.eventSessions}" var="ses" type="definition" style="border-color: white">
-                                        <b> <h:outputText value="#{ses.startTime}">
-                                                <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
-                                            </h:outputText>:
-                                            <h:outputText value="#{ses.title}"/>
-                                            - <i><h:outputText value="#{ses.speakersName}"/></i></b>
-                                        <f:facet name="description">
-                                            <h:outputText value="#{ses.abstract}"/>
-                                            <br/><br/>
-                                        </f:facet>
-                                    </p:dataList>
-
                                     <h:outputFormat value="#{bundle.iWillAttend}" style="font-weight: bold; color: blue;" rendered="#{eventMBean.isAttending}">
                                         <f:param value="#{eventMBean.formattedRegistrationDate}"/>
                                     </h:outputFormat>
                                 </h:panelGrid>
                                 <p/>
+
+                                <h:panelGrid columns="9">
+                                    <h:link value="#{bundle.edit}" outcome="event" rendered="#{securityBackingMBean.isUserLeader}">
+                                        <f:param name="id" value="#{event.id}"/>
+                                    </h:link>
+                                    <h:outputText value=" | " rendered="#{securityBackingMBean.isUserLeader}"/>
+                                    <h:link value="#{bundle.sessions}" outcome="sessions" rendered="#{securityBackingMBean.isUserLeader}">
+                                        <f:param name="eventId" value="#{event.id}"/>
+                                    </h:link>
+                                    <h:outputText value=" | " rendered="#{securityBackingMBean.isUserLeader}"/>
+                                    <h:link value="#{bundle.speakers}" outcome="speakers" rendered="#{securityBackingMBean.isUserLeader}">
+                                        <f:param name="eventId" value="#{event.id}"/>
+                                    </h:link>
+                                    <h:outputText value=" | " rendered="#{securityBackingMBean.isUserLeader}"/>
+                                    <h:commandLink value="#{bundle.attendees}" action="#{attendeeMBean.load(event.id)}" rendered="#{securityBackingMBean.isUserLeader}"/>
+                                    <h:outputText value=" | " rendered="#{securityBackingMBean.isUserLeader}"/>
+                                    <h:link value="#{bundle.sponsors}" outcome="sponsors" rendered="#{securityBackingMBean.isUserLeader}">
+                                        <f:param name="eventId" value="#{event.id}"/>
+                                    </h:link>
+                                </h:panelGrid>
+
                                 <h:button value="#{bundle.attend}" outcome="attendee" rendered="#{! eventMBean.isAttending and ! eventMBean.happened}">
                                     <f:param name="id" value="#{eventMBean.event.id}"/>
                                 </h:button>
@@ -76,6 +98,21 @@
                                     <f:param name="id" value="#{eventMBean.event.id}"/>
                                 </h:commandButton>
                             </p:tab>
+                            <p:tab title="#{bundle.sessions}">
+                                <p:dataList value="#{eventMBean.event.eventSessions}" var="ses" type="definition" style="border-color: white">
+                                    <b> <h:outputText value="#{ses.startTime}">
+                                            <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                        </h:outputText>:
+                                        <h:outputText value="#{ses.name}"/></b>
+                                    <f:facet name="description">
+                                        <h:outputText value="#{ses.description}"/>
+                                        <br/><br/>
+                                    </f:facet>
+                                </p:dataList>
+                            </p:tab>
+                            <p:tab title="#{bundle.speakers}"></p:tab>
+                            <p:tab title="#{bundle.attendees}"></p:tab>
+                            <p:tab title="#{bundle.sponsors}"></p:tab>
                             <p:tab title="#{bundle.statistics}" rendered="#{securityBackingMBean.isUserLeader}">
                                 <h:panelGrid>
                                     <p:pieChart value="#{eventMBean.attendanceRateChartModel}" title="#{bundle.attendanceRate}" legendPosition="e" showDataLabels="true"/>

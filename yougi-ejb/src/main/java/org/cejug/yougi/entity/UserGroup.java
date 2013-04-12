@@ -34,7 +34,7 @@ public class UserGroup implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    protected UserGroupId id;
+    private UserGroupId id;
 
     @ManyToOne
     @JoinColumn(name="user_id", insertable = false, updatable = false)
