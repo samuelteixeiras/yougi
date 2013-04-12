@@ -40,7 +40,6 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(value = Suite.class)
 @SuiteClasses(value = {
-    CommonBsnTest.class,
     LanguageBsnTest.class
 })
 public class AllTests {
