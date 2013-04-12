@@ -47,12 +47,14 @@
                                 <f:facet name="header"><h:outputText value="#{bundle.default}"/></f:facet>
                                 <h:graphicImage rendered="#{group.userDefault}" url="/images/success-icon.png"/>
                             </p:column>
+                            <!--
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.actions}"/>
                                 </f:facet>
                                 <h:commandLink action="#{accessGroupMBean.remove(group.id)}" value="#{bundle.remove}"/>
                             </p:column>
+                            -->
                         </p:dataTable>
                     </h:form>
                 </div>
