@@ -38,6 +38,7 @@ import org.cejug.yougi.entity.Authentication;
 import org.cejug.yougi.entity.City;
 import org.cejug.yougi.entity.DeactivationType;
 import org.cejug.yougi.entity.UserAccount;
+import org.cejug.yougi.util.EResourceBundleHelper;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
@@ -116,7 +117,7 @@ public class UserAccountMBean implements Serializable {
         this.validationEmail = (String) value;
 
         if(userAccountBean.existingAccount(this.validationEmail)) {
-            ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
+            ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,bundle.getMessage("errorCode0004"), null));
         }
     }
@@ -124,7 +125,7 @@ public class UserAccountMBean implements Serializable {
     public void validateEmailConfirmation(FacesContext context, UIComponent component, Object value) {
         this.validationEmailConfirmation = (String) value;
         if(!this.validationEmailConfirmation.equals(this.validationEmail)) {
-            ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
+            ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle.getMessage("errorCode0003"), null));
         }
     }
@@ -138,7 +139,7 @@ public class UserAccountMBean implements Serializable {
     public void validatePasswordConfirmation(FacesContext context, UIComponent component, Object value) {
         this.passwordConfirmation = (String) value;
         if(!this.passwordConfirmation.equals(this.password)) {
-            ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
+            ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle.getMessage("errorCode0005"), null));
         }
     }
@@ -154,7 +155,7 @@ public class UserAccountMBean implements Serializable {
     public void validatePrivacy(FacesContext context, UIComponent component, Object value) {
         if(!this.validationPrivacy) {
             this.validationPrivacy = (Boolean) value;
-            ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
+            ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle.getMessage("errorCode0007"), null));
         }
     }
@@ -221,7 +222,7 @@ public class UserAccountMBean implements Serializable {
 
     public String register() {
         FacesContext context = FacesContext.getCurrentInstance();
-        ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
+        ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
 
         boolean isFirstUser = userAccountBean.thereIsNoAccount();
 

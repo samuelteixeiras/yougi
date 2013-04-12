@@ -63,7 +63,7 @@ public enum WebTextUtils {
             return "";
         }
 
-        ResourceBundleHelper rb = ResourceBundleHelper.getInstance();
+        ResourceBundleHelper rb = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
         return TextUtils.INSTANCE.getFormattedDate(date, rb.getMessage("formatDate"));
     }
 
@@ -72,7 +72,7 @@ public enum WebTextUtils {
             return "";
         }
 
-        ResourceBundleHelper rb = ResourceBundleHelper.getInstance();
+        ResourceBundleHelper rb = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
         return TextUtils.INSTANCE.getFormattedTime(time, rb.getMessage("formatTime"), timeZone);
     }
 
@@ -81,7 +81,7 @@ public enum WebTextUtils {
             return "";
         }
 
-        ResourceBundleHelper rb = ResourceBundleHelper.getInstance();
+        ResourceBundleHelper rb = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
         return TextUtils.INSTANCE.getFormattedDateTime(dateTime, rb.getMessage("formatDateTime"), timeZone);
     }
 
@@ -120,7 +120,7 @@ public enum WebTextUtils {
             if (!fullAddress.toString().isEmpty()) {
                 fullAddress.append(".");
             }
-            ResourceBundleHelper rb = ResourceBundleHelper.getInstance();
+            ResourceBundleHelper rb = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
             fullAddress.append(" ");
             fullAddress.append(rb.getMessage("postalCode"));
             if (country != null) {

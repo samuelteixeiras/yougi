@@ -28,6 +28,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import org.cejug.yougi.event.business.AttendeeBean;
 import org.cejug.yougi.event.entity.Certificate;
+import org.cejug.yougi.util.EResourceBundleHelper;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
@@ -58,7 +59,7 @@ public class CertificateMBean {
 
     public String verifyAuthenticity() {
         boolean verified = attendeeBean.verifyAuthenticityCertificate(this.certificate);
-        ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
+        ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
         if(verified) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getMessage("infoCode0001"), ""));
         }

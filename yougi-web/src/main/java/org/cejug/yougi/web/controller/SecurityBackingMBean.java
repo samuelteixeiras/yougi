@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.UserAccount;
+import org.cejug.yougi.util.EResourceBundleHelper;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
@@ -63,7 +64,7 @@ public class SecurityBackingMBean {
 
     public String login() {
         if(userAccountBean.thereIsNoAccount()) {
-            ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
+            ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getMessage("infoFirstUser"), ""));
             return "registration";
         }
@@ -74,7 +75,7 @@ public class SecurityBackingMBean {
 
     public String register() {
         if(userAccountBean.thereIsNoAccount()) {
-            ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
+            ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getMessage("infoFirstUser"), ""));
             return "registration";
         }

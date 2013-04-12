@@ -35,6 +35,7 @@ import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.knowledge.business.MailingListBean;
 import org.cejug.yougi.knowledge.entity.MailingList;
 import org.cejug.yougi.knowledge.entity.MailingListSubscription;
+import org.cejug.yougi.util.EResourceBundleHelper;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
@@ -219,7 +220,7 @@ public class SubscriptionMBean {
 
     public String subscribe() {
         FacesContext context = FacesContext.getCurrentInstance();
-        ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
+        ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
 
         if(this.subscriptionDate == null) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,bundle.getMessage("errorCode0008"),""));
@@ -247,7 +248,7 @@ public class SubscriptionMBean {
 
     public String unsubscribe() {
         FacesContext context = FacesContext.getCurrentInstance();
-        ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
+        ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
 
         if(this.unsubscriptionDate == null) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,bundle.getMessage("errorCode0009"),""));

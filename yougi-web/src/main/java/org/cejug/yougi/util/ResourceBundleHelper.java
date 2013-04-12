@@ -33,23 +33,15 @@ import javax.faces.context.FacesContext;
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 public class ResourceBundleHelper {
-
-    private static ResourceBundleHelper INSTANCE;
+ 
     private Locale locale;
 
-    private ResourceBundleHelper() {
+    protected ResourceBundleHelper() {
         this.locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
     }
 
-    private ResourceBundleHelper(Locale locale) {
+    protected ResourceBundleHelper(Locale locale) {
         this.locale = locale;
-    }
-
-    public static ResourceBundleHelper getInstance() {
-        if (ResourceBundleHelper.INSTANCE == null) {
-            ResourceBundleHelper.INSTANCE = new ResourceBundleHelper();
-        }
-        return INSTANCE;
     }
 
     public String getMessage(String key) {

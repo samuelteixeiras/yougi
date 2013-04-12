@@ -25,6 +25,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import org.cejug.yougi.entity.DeactivationType;
+import org.cejug.yougi.util.EResourceBundleHelper;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
@@ -51,7 +52,7 @@ public class DeactivationTypeEnumToString implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         DeactivationType deactivationType = (DeactivationType) value;
-        ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
+        ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
         switch (deactivationType) {
             case OWNWILL:
                 return bundle.getMessage("ownwill");

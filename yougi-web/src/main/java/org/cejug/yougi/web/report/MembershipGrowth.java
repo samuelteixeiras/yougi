@@ -30,6 +30,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.UserAccount;
+import org.cejug.yougi.util.EResourceBundleHelper;
 import org.cejug.yougi.util.ResourceBundleHelper;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
@@ -66,7 +67,7 @@ public class MembershipGrowth {
         membershipGrowthModel = new CartesianChartModel();
         membershipCumulativeGrowthModel = new CartesianChartModel();
 
-        ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
+        ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
         String[] months = {bundle.getMessage("januaryShort"),
                             bundle.getMessage("februaryShort"),
                             bundle.getMessage("marchShort"),
