@@ -174,11 +174,6 @@ public class Event implements Serializable, Identified {
     }
 
     @Override
-    public String toString() {
-        return this.name;
-    }
-
-    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -206,5 +201,10 @@ public class Event implements Serializable, Identified {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

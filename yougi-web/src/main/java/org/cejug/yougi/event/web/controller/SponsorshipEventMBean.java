@@ -136,7 +136,7 @@ public class SponsorshipEventMBean implements Serializable {
 
     public List<Event> getEvents() {
         if (this.events == null) {
-            this.events = eventBean.findEvents();
+            this.events = eventBean.findParentEvents();
         }
         return this.events;
     }

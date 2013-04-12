@@ -34,12 +34,24 @@
                     <h:form>
                         <h:panelGrid>
                             <h:outputText value="#{eventMBean.event.name}" style="font-size: 24px; font-weight: bold;"/>
-                            <h:outputFormat value="#{bundle.eventAppointment}" escape="false">
-                                <f:param value="#{eventMBean.event.venue}"/>
-                                <f:param value="#{eventMBean.formattedStartDate}"/>
-                                <f:param value="#{eventMBean.formattedStartTime}"/>
-                                <f:param value="#{eventMBean.formattedEndTime}"/>
-                            </h:outputFormat>
+                            <h:panelGroup>
+                                <h:outputText value="#{bundle.from} "/>
+                                <h:outputText value="#{eventMBean.event.startDate}">
+                                    <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
+                                </h:outputText>
+                                <h:outputText value=" at " rendered="#{! empty eventMBean.event.startTime}"/>
+                                <h:outputText value="#{eventMBean.event.startTime}" rendered="#{! empty eventMBean.event.startTime}">
+                                    <f:convertDateTime type="time" timeStyle="short" pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                </h:outputText>
+                                <h:outputText value=" #{bundle.to} "/>
+                                <h:outputText value="#{eventMBean.event.endDate}" rendered="#{eventMBean.event.startDate != eventMBean.event.endDate}">
+                                    <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
+                                </h:outputText>
+                                <h:outputText value=" at " rendered="#{! empty eventMBean.event.endTime and eventMBean.event.startDate != eventMBean.event.endDate}"/>
+                                <h:outputText value="#{eventMBean.event.endTime}" rendered="#{! empty eventMBean.event.startTime}">
+                                    <f:convertDateTime type="time" timeStyle="short" pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                </h:outputText>
+                            </h:panelGroup>
                             <h:outputText value="#{eventMBean.formattedEventDescription}" escape="false" style="font-size: 14px;"/>
                             <p:dataList value="#{eventMBean.event.eventSessions}" var="ses" type="definition" style="border-color: white">
                                 <b> <h:outputText value="#{ses.startTime}">

@@ -115,7 +115,7 @@ public class SessionMBean implements Serializable {
 
     public List<Event> getEvents() {
         if (this.events == null) {
-            this.events = eventBean.findEvents();
+            this.events = eventBean.findParentEvents();
         }
         return this.events;
     }
@@ -129,7 +129,7 @@ public class SessionMBean implements Serializable {
 
         if (this.id != null && !this.id.isEmpty()) {
             this.session = sessionBean.findSession(id);
-            this.selectedEvent = this.session.getParent().getId();
+            this.selectedEvent = this.session.getEvent().getId();
         } else {
             this.session = new Session();
         }
@@ -137,7 +137,7 @@ public class SessionMBean implements Serializable {
 
     public String save() {
         Event evt = eventBean.findEvent(selectedEvent);
-        this.session.setParent(evt);
+        this.session.setEvent(evt);
 
         sessionBean.save(this.session);
         return "sessions?faces-redirect=true&eventId=" + evt.getId();

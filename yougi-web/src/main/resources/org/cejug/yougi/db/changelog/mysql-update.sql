@@ -110,7 +110,7 @@ alter table session add constraint fk_track_session foreign key (track) referenc
 alter table user_account drop organization;
 
 alter table session add detailed_description text null;
-alter table session add sponsorship_level varchar(20) null;
+alter table session add experience_level varchar(20) null;
 alter table session add approved tinyint(1) null;
 
 alter table speaker add experience text null;

@@ -65,9 +65,15 @@ public class EventBean {
         return em.find(Event.class, id);
     }
 
-    public List<Event> findEvents() {
+    public List<Event> findParentEvents() {
     	return em.createQuery("select e from Event e where e.parent is null order by e.endDate desc")
         		       .getResultList();
+    }
+
+    public List<Event> findEvents(Event parent) {
+        return em.createQuery("select e from Event e where e.parent = :parent order by e.endDate desc")
+                 .setParameter("parent", parent)
+                 .getResultList();
     }
 
     public List<Event> findUpCommingEvents() {
