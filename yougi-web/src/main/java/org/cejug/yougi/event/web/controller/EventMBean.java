@@ -49,7 +49,6 @@ import org.cejug.yougi.event.business.AttendeeBean;
 import org.cejug.yougi.event.business.EventBean;
 import org.cejug.yougi.event.entity.Attendee;
 import org.cejug.yougi.event.entity.Event;
-import org.cejug.yougi.util.EResourceBundleHelper;
 import org.cejug.yougi.web.controller.LocationMBean;
 import org.cejug.yougi.web.controller.UserProfileMBean;
 import org.cejug.yougi.web.report.EventAttendeeCertificate;
@@ -287,11 +286,10 @@ public class EventMBean {
         newAttendee.setUserAccount(person);
         newAttendee.setRegistrationDate(Calendar.getInstance().getTime());
         attendeeBean.save(newAttendee);
-        ResourceBundleHelper rb = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
         eventBean.sendConfirmationEventAttendance(newAttendee.getUserAccount(),
                 newAttendee.getEvent(),
-                rb.getMessage("formatDate"),
-                rb.getMessage("formatTime"),
+                ResourceBundleHelper.INSTANCE.getMessage("formatDate"),
+                ResourceBundleHelper.INSTANCE.getMessage("formatTime"),
                 userProfileMBean.getTimeZone());
         return "events?faces-redirect=true";
     }

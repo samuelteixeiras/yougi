@@ -30,7 +30,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.UserAccount;
-import org.cejug.yougi.util.EResourceBundleHelper;
 import org.cejug.yougi.util.ResourceBundleHelper;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
@@ -67,19 +66,18 @@ public class MembershipGrowth {
         membershipGrowthModel = new CartesianChartModel();
         membershipCumulativeGrowthModel = new CartesianChartModel();
 
-        ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
-        String[] months = {bundle.getMessage("januaryShort"),
-                            bundle.getMessage("februaryShort"),
-                            bundle.getMessage("marchShort"),
-                            bundle.getMessage("aprilShort"),
-                            bundle.getMessage("mayShort"),
-                            bundle.getMessage("juneShort"),
-                            bundle.getMessage("julyShort"),
-                            bundle.getMessage("augustShort"),
-                            bundle.getMessage("septemberShort"),
-                            bundle.getMessage("octoberShort"),
-                            bundle.getMessage("novemberShort"),
-                            bundle.getMessage("decemberShort")};
+        String[] months = {ResourceBundleHelper.INSTANCE.getMessage("januaryShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("februaryShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("marchShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("aprilShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("mayShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("juneShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("julyShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("augustShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("septemberShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("octoberShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("novemberShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("decemberShort")};
 
         Calendar lastDay = Calendar.getInstance();
         lastDay.set(Calendar.MONTH, Calendar.DECEMBER);

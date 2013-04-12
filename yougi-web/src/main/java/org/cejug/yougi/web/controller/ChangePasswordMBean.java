@@ -37,7 +37,6 @@ import org.cejug.yougi.entity.ApplicationProperty;
 import org.cejug.yougi.entity.Authentication;
 import org.cejug.yougi.entity.Properties;
 import org.cejug.yougi.entity.UserAccount;
-import org.cejug.yougi.util.EResourceBundleHelper;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
@@ -121,8 +120,7 @@ public class ChangePasswordMBean {
     public void validatePasswordConfirmation(FacesContext context, UIComponent component, Object value) {
         this.passwordConfirmation = (String) value;
         if(!this.passwordConfirmation.equals(this.password)) {
-            ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle.getMessage("errorCode0005"), null));
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, ResourceBundleHelper.INSTANCE.getMessage("errorCode0005"), null));
         }
     }
     // End of password validation

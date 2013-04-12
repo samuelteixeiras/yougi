@@ -29,7 +29,6 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.UserAccount;
-import org.cejug.yougi.util.EResourceBundleHelper;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
@@ -101,14 +100,13 @@ public class RegistrationConfirmationMBean {
     public void load() {
         if(this.code != null && !this.code.isEmpty()) {
             FacesContext context = FacesContext.getCurrentInstance();
-            ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
             this.userAccount = userAccountBean.confirmUser(this.code);
             if(this.userAccount != null) {
                 this.validated = Boolean.TRUE;
             }
             else {
                 this.validated = Boolean.FALSE;
-                context.addMessage(this.informedCode, new FacesMessage(FacesMessage.SEVERITY_WARN, bundle.getMessage("warnCode0003"), ""));
+                context.addMessage(this.informedCode, new FacesMessage(FacesMessage.SEVERITY_WARN, ResourceBundleHelper.INSTANCE.getMessage("warnCode0003"), ""));
             }
         }
     }
@@ -128,9 +126,8 @@ public class RegistrationConfirmationMBean {
             }
 
             FacesContext context = FacesContext.getCurrentInstance();
-            ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
             if(!this.validated) {
-                context.addMessage(this.informedCode, new FacesMessage(FacesMessage.SEVERITY_WARN, bundle.getMessage("warnCode0003"), ""));
+                context.addMessage(this.informedCode, new FacesMessage(FacesMessage.SEVERITY_WARN, ResourceBundleHelper.INSTANCE.getMessage("warnCode0003"), ""));
             }
         }
         return "registration_confirmation";

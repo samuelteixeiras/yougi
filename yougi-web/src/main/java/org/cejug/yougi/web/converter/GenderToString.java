@@ -25,7 +25,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import org.cejug.yougi.entity.Gender;
-import org.cejug.yougi.util.EResourceBundleHelper;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
@@ -47,14 +46,13 @@ public class GenderToString implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         Gender gender = (Gender) value;
-        ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
         String genderStr = null;
         switch(gender) {
             case FEMALE:
-                genderStr = bundle.getMessage("female");
+                genderStr = ResourceBundleHelper.INSTANCE.getMessage("female");
                 break;
             case MALE:
-                genderStr = bundle.getMessage("male");
+                genderStr = ResourceBundleHelper.INSTANCE.getMessage("male");
                 break;
         }
         return genderStr;

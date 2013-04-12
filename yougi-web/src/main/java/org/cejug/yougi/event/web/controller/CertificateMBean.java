@@ -20,6 +20,7 @@
  * */
 package org.cejug.yougi.event.web.controller;
 
+import java.util.Locale;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -28,7 +29,6 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import org.cejug.yougi.event.business.AttendeeBean;
 import org.cejug.yougi.event.entity.Certificate;
-import org.cejug.yougi.util.EResourceBundleHelper;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
@@ -58,13 +58,12 @@ public class CertificateMBean {
     }
 
     public String verifyAuthenticity() {
-        boolean verified = attendeeBean.verifyAuthenticityCertificate(this.certificate);
-        ResourceBundleHelper bundle = EResourceBundleHelper.INSTANCE.getResourceBundleHelper();
+        boolean verified = attendeeBean.verifyAuthenticityCertificate(this.certificate);       
         if(verified) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getMessage("infoCode0001"), ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, ResourceBundleHelper.INSTANCE.getMessage("infoCode0001"), ""));
         }
         else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, bundle.getMessage("warnCode0001"), bundle.getMessage("warnCode0002")));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, ResourceBundleHelper.INSTANCE.getMessage("warnCode0001"), ResourceBundleHelper.INSTANCE.getMessage("warnCode0002")));
         }
         return "certificate_validation";
     }
