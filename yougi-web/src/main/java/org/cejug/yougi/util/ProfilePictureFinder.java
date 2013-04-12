@@ -20,6 +20,9 @@
  * */
 package org.cejug.yougi.util;
 
+import de.bripkens.gravatar.DefaultImage;
+import de.bripkens.gravatar.Gravatar;
+import de.bripkens.gravatar.Rating;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -30,4 +33,12 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class ProfilePictureFinder {
 
+    public String getPictureFromEmail(String email) {
+        return new Gravatar()
+                .setSize(85)
+                .setHttps(true)
+                .setRating(Rating.PARENTAL_GUIDANCE_SUGGESTED)
+                .setStandardDefaultImage(DefaultImage.MONSTER)
+                .getUrl(email);
+    }
 }
