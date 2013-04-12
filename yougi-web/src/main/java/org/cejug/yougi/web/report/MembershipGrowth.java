@@ -66,7 +66,7 @@ public class MembershipGrowth {
         membershipGrowthModel = new CartesianChartModel();
         membershipCumulativeGrowthModel = new CartesianChartModel();
 
-        ResourceBundleHelper bundle = new ResourceBundleHelper();
+        ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
         String[] months = {bundle.getMessage("januaryShort"),
                             bundle.getMessage("februaryShort"),
                             bundle.getMessage("marchShort"),

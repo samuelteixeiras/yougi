@@ -96,7 +96,7 @@ public class ApplicationPropertiesMBean implements Serializable {
         this.applicationProperties.put(Properties.CAPTCHA_ENABLED.getKey(), captchaEnabled.toString());
         applicationPropertyBean.save(this.applicationProperties);
 
-        ResourceBundleHelper bundle = new ResourceBundleHelper();
+        ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getMessage("infoPropertiesSaved"), ""));
 
         return "properties";

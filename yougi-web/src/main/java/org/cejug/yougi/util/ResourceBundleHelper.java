@@ -34,14 +34,22 @@ import javax.faces.context.FacesContext;
  */
 public class ResourceBundleHelper {
 
+    private static ResourceBundleHelper INSTANCE;
     private Locale locale;
 
-    public ResourceBundleHelper() {
+    private ResourceBundleHelper() {
         this.locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
     }
 
-    public ResourceBundleHelper(Locale locale) {
+    private ResourceBundleHelper(Locale locale) {
         this.locale = locale;
+    }
+
+    public static ResourceBundleHelper getInstance() {
+        if (ResourceBundleHelper.INSTANCE == null) {
+            ResourceBundleHelper.INSTANCE = new ResourceBundleHelper();
+        }
+        return INSTANCE;
     }
 
     public String getMessage(String key) {

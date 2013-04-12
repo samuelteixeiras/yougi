@@ -97,7 +97,7 @@ public class CommunicationPrivacyRange implements Serializable {
             }
         }
 
-        ResourceBundleHelper bundle = new ResourceBundleHelper();
+        ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
         ChartSeries communicarionPrivacyActive = new ChartSeries();
         communicarionPrivacyActive.setLabel(bundle.getMessage("active"));
         communicarionPrivacyActive.set(bundle.getMessage("publicProfile"), totalPublicProfile);

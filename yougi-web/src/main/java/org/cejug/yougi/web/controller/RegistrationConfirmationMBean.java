@@ -100,7 +100,7 @@ public class RegistrationConfirmationMBean {
     public void load() {
         if(this.code != null && !this.code.isEmpty()) {
             FacesContext context = FacesContext.getCurrentInstance();
-            ResourceBundleHelper bundle = new ResourceBundleHelper();
+            ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
             this.userAccount = userAccountBean.confirmUser(this.code);
             if(this.userAccount != null) {
                 this.validated = Boolean.TRUE;
@@ -127,7 +127,7 @@ public class RegistrationConfirmationMBean {
             }
 
             FacesContext context = FacesContext.getCurrentInstance();
-            ResourceBundleHelper bundle = new ResourceBundleHelper();
+            ResourceBundleHelper bundle = ResourceBundleHelper.getInstance();
             if(!this.validated) {
                 context.addMessage(this.informedCode, new FacesMessage(FacesMessage.SEVERITY_WARN, bundle.getMessage("warnCode0003"), ""));
             }
