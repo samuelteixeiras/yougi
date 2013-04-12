@@ -66,19 +66,18 @@ public class MembershipGrowth {
         membershipGrowthModel = new CartesianChartModel();
         membershipCumulativeGrowthModel = new CartesianChartModel();
 
-        ResourceBundleHelper bundle = new ResourceBundleHelper();
-        String[] months = {bundle.getMessage("januaryShort"),
-                            bundle.getMessage("februaryShort"),
-                            bundle.getMessage("marchShort"),
-                            bundle.getMessage("aprilShort"),
-                            bundle.getMessage("mayShort"),
-                            bundle.getMessage("juneShort"),
-                            bundle.getMessage("julyShort"),
-                            bundle.getMessage("augustShort"),
-                            bundle.getMessage("septemberShort"),
-                            bundle.getMessage("octoberShort"),
-                            bundle.getMessage("novemberShort"),
-                            bundle.getMessage("decemberShort")};
+        String[] months = {ResourceBundleHelper.INSTANCE.getMessage("januaryShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("februaryShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("marchShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("aprilShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("mayShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("juneShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("julyShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("augustShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("septemberShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("octoberShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("novemberShort"),
+                            ResourceBundleHelper.INSTANCE.getMessage("decemberShort")};
 
         Calendar lastDay = Calendar.getInstance();
         lastDay.set(Calendar.MONTH, Calendar.DECEMBER);

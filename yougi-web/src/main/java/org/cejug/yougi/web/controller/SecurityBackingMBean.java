@@ -63,8 +63,7 @@ public class SecurityBackingMBean {
 
     public String login() {
         if(userAccountBean.thereIsNoAccount()) {
-            ResourceBundleHelper bundle = new ResourceBundleHelper();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getMessage("infoFirstUser"), ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, ResourceBundleHelper.INSTANCE.getMessage("infoFirstUser"), ""));
             return "registration";
         }
         else {
@@ -74,8 +73,7 @@ public class SecurityBackingMBean {
 
     public String register() {
         if(userAccountBean.thereIsNoAccount()) {
-            ResourceBundleHelper bundle = new ResourceBundleHelper();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getMessage("infoFirstUser"), ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, ResourceBundleHelper.INSTANCE.getMessage("infoFirstUser"), ""));
             return "registration";
         }
         else {

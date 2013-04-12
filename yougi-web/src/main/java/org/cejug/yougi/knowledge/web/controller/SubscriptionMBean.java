@@ -219,10 +219,9 @@ public class SubscriptionMBean {
 
     public String subscribe() {
         FacesContext context = FacesContext.getCurrentInstance();
-        ResourceBundleHelper bundle = new ResourceBundleHelper();
 
         if(this.subscriptionDate == null) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,bundle.getMessage("errorCode0008"),""));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,ResourceBundleHelper.INSTANCE.getMessage("errorCode0008"),""));
             context.validationFailed();
         }
         else {
@@ -247,10 +246,9 @@ public class SubscriptionMBean {
 
     public String unsubscribe() {
         FacesContext context = FacesContext.getCurrentInstance();
-        ResourceBundleHelper bundle = new ResourceBundleHelper();
 
         if(this.unsubscriptionDate == null) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,bundle.getMessage("errorCode0009"),""));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,ResourceBundleHelper.INSTANCE.getMessage("errorCode0009"),""));
             context.validationFailed();
         }
         else {

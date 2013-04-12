@@ -32,15 +32,15 @@ import javax.faces.context.FacesContext;
  *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
-public class ResourceBundleHelper {
-
+public enum ResourceBundleHelper {
+    INSTANCE;
     private Locale locale;
 
-    public ResourceBundleHelper() {
+    ResourceBundleHelper() {
         this.locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
     }
 
-    public ResourceBundleHelper(Locale locale) {
+    ResourceBundleHelper(Locale locale) {
         this.locale = locale;
     }
 

@@ -63,8 +63,7 @@ public enum WebTextUtils {
             return "";
         }
 
-        ResourceBundleHelper rb = new ResourceBundleHelper();
-        return TextUtils.INSTANCE.getFormattedDate(date, rb.getMessage("formatDate"));
+        return TextUtils.INSTANCE.getFormattedDate(date, ResourceBundleHelper.INSTANCE.getMessage("formatDate"));
     }
 
     public static String getFormattedTime(Date time, String timeZone) {
@@ -72,8 +71,7 @@ public enum WebTextUtils {
             return "";
         }
 
-        ResourceBundleHelper rb = new ResourceBundleHelper();
-        return TextUtils.INSTANCE.getFormattedTime(time, rb.getMessage("formatTime"), timeZone);
+        return TextUtils.INSTANCE.getFormattedTime(time, ResourceBundleHelper.INSTANCE.getMessage("formatTime"), timeZone);
     }
 
     public static String getFormattedDateTime(Date dateTime, String timeZone) {
@@ -81,8 +79,7 @@ public enum WebTextUtils {
             return "";
         }
 
-        ResourceBundleHelper rb = new ResourceBundleHelper();
-        return TextUtils.INSTANCE.getFormattedDateTime(dateTime, rb.getMessage("formatDateTime"), timeZone);
+        return TextUtils.INSTANCE.getFormattedDateTime(dateTime, ResourceBundleHelper.INSTANCE.getMessage("formatDateTime"), timeZone);
     }
 
     public static String printAddress(String address, Country country, Province province, City city, String postalCode) {
@@ -120,9 +117,8 @@ public enum WebTextUtils {
             if (!fullAddress.toString().isEmpty()) {
                 fullAddress.append(".");
             }
-            ResourceBundleHelper rb = new ResourceBundleHelper();
             fullAddress.append(" ");
-            fullAddress.append(rb.getMessage("postalCode"));
+            fullAddress.append(ResourceBundleHelper.INSTANCE.getMessage("postalCode"));
             if (country != null) {
                 fullAddress.append(": ");
                 fullAddress.append(country.getName());

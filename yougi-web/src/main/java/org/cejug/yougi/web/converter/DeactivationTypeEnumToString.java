@@ -51,12 +51,11 @@ public class DeactivationTypeEnumToString implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         DeactivationType deactivationType = (DeactivationType) value;
-        ResourceBundleHelper bundle = new ResourceBundleHelper();
         switch (deactivationType) {
             case OWNWILL:
-                return bundle.getMessage("ownwill");
+                return ResourceBundleHelper.INSTANCE.getMessage("ownwill");
             case ADMINISTRATIVE:
-                return bundle.getMessage("administrative");
+                return ResourceBundleHelper.INSTANCE.getMessage("administrative");
             default:
                 return null;
         }

@@ -286,11 +286,10 @@ public class EventMBean {
         newAttendee.setUserAccount(person);
         newAttendee.setRegistrationDate(Calendar.getInstance().getTime());
         attendeeBean.save(newAttendee);
-        ResourceBundleHelper rb = new ResourceBundleHelper();
         eventBean.sendConfirmationEventAttendance(newAttendee.getUserAccount(),
                 newAttendee.getEvent(),
-                rb.getMessage("formatDate"),
-                rb.getMessage("formatTime"),
+                ResourceBundleHelper.INSTANCE.getMessage("formatDate"),
+                ResourceBundleHelper.INSTANCE.getMessage("formatTime"),
                 userProfileMBean.getTimeZone());
         return "events?faces-redirect=true";
     }
