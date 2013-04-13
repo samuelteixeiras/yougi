@@ -38,7 +38,7 @@ import org.cejug.yougi.util.ResourceBundleHelper;
 @RequestScoped
 public class CertificateMBean {
 
-    static final Logger logger = Logger.getLogger("org.cejug.event.web.controller.EventBean");
+    static final Logger LOGGER = Logger.getLogger("org.cejug.event.web.controller.EventBean");
 
     @EJB
     private AttendeeBean attendeeBean;

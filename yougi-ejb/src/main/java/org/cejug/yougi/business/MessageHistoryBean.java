@@ -40,7 +40,7 @@ public class MessageHistoryBean {
     @PersistenceContext
     private EntityManager em;
     
-    static final Logger logger = Logger.getLogger(MessageHistoryBean.class.getName());
+    static final Logger LOGGER = Logger.getLogger(MessageHistoryBean.class.getName());
     
     public MessageHistory findHistoricalMessage(String id) {
         if(id != null) {

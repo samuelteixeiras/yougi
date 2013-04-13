@@ -47,7 +47,7 @@ public class SubscriptionBean {
     @PersistenceContext
     private EntityManager em;
 
-    static final Logger logger = Logger.getLogger("org.cejug.knowledge.business.SubscriptionBean");
+    static final Logger LOGGER = Logger.getLogger("org.cejug.knowledge.business.SubscriptionBean");
 
     public MailingListSubscription findMailingListSubscription(String id) {
         return em.find(MailingListSubscription.class, id);

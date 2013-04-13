@@ -60,7 +60,7 @@ public class MailingListMessageBean {
     @EJB
     private ApplicationPropertyBean applicationPropertyBean;
 
-    static final Logger logger = Logger.getLogger(MailingListMessageBean.class.getName());
+    static final Logger LOGGER = Logger.getLogger(MailingListMessageBean.class.getName());
 
     @PersistenceContext
     private EntityManager em;
@@ -70,7 +70,7 @@ public class MailingListMessageBean {
     public void retrieveMailingListMessages() {
 
         try {
-            logger.log(Level.INFO, "Start retrieving of emails...");
+            LOGGER.log(Level.INFO, "Start retrieving of emails...");
             ApplicationProperty appProp = applicationPropertyBean.findApplicationProperty(Properties.EMAIL_SERVER_TYPE);
             Store store = mailSession.getStore(appProp.getPropertyValue());
             store.connect();
@@ -131,7 +131,7 @@ public class MailingListMessageBean {
 
                     em.persist(mailingListMessage);
 
-                    logger.log(Level.INFO, "Message -{0}- sent by -{1}- saved.", new Object[]{mailingListMessage.getSubject(),mailingListMessage.getSender()});
+                    LOGGER.log(Level.INFO, "Message -{0}- sent by -{1}- saved.", new Object[]{mailingListMessage.getSubject(),mailingListMessage.getSender()});
                 }
 
                 // Once persisted, the message is flagged to be deleted from the server.
@@ -140,13 +140,13 @@ public class MailingListMessageBean {
             // All messages flagged to be deleted will actually be deleted.
             folder.close(true);
             store.close();
-            logger.log(Level.INFO, "Email retrieval ended.");
+            LOGGER.log(Level.INFO, "Email retrieval ended.");
         } catch (IOException ex) {
-            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
         } catch (MessagingException ex) {
-            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

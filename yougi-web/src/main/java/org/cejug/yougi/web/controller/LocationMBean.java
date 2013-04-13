@@ -45,7 +45,7 @@ import org.cejug.yougi.entity.Province;
 @SessionScoped
 public class LocationMBean {
 
-    static final Logger logger = Logger.getLogger("org.cejug.web.controller.LocationBean");
+    static final Logger LOGGER = Logger.getLogger("org.cejug.web.controller.LocationBean");
 
     @EJB
     private org.cejug.yougi.business.LocationBean locationBean;
@@ -67,7 +67,7 @@ public class LocationMBean {
     private boolean initialized;
 
     public LocationMBean() {
-        logger.info("A new locationBean created.");
+        LOGGER.info("A new locationBean created.");
     }
 
     public List<Country> getCountries() {
@@ -190,7 +190,7 @@ public class LocationMBean {
 
         this.initialized = true;
 
-        logger.info("LocationBean initialized for a new use.");
+        LOGGER.info("LocationBean initialized for a new use.");
     }
 
     public boolean isInitialized() {

@@ -55,7 +55,7 @@ public class UserProfileMBean {
     private Language language;
     private UserAccount userAccount;
 
-    static final Logger logger = Logger.getLogger(UserProfileMBean.class.getName());
+    static final Logger LOGGER = Logger.getLogger(UserProfileMBean.class.getName());
 
     public UserProfileMBean() {
         this.language = new Language();

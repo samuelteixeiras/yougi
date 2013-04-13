@@ -63,7 +63,7 @@ import org.primefaces.model.chart.PieChartModel;
 @RequestScoped
 public class EventMBean {
 
-    static final Logger logger = Logger.getLogger(EventMBean.class.getName());
+    static final Logger LOGGER = Logger.getLogger(EventMBean.class.getName());
 
     @EJB
     private EventBean eventBean;
@@ -343,7 +343,7 @@ public class EventMBean {
             response.getOutputStream().close();
             context.responseComplete();
         } catch (IOException | DocumentException ioe) {
-            logger.log(Level.SEVERE, ioe.getMessage(), ioe);
+            LOGGER.log(Level.SEVERE, ioe.getMessage(), ioe);
         }
     }
 

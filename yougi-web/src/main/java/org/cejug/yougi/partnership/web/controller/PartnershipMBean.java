@@ -57,7 +57,7 @@ import org.primefaces.model.UploadedFile;
 @RequestScoped
 public class PartnershipMBean {
 
-    static final Logger logger = Logger.getLogger("org.cejug.partnership.web.controller.PartnershipBean");
+    static final Logger LOGGER = Logger.getLogger("org.cejug.partnership.web.controller.PartnershipBean");
 
     @EJB
     private RepresentativeBean representativeBean;
@@ -192,17 +192,17 @@ public class PartnershipMBean {
 
             if (logoPath != null) {
                 InputStream in = new FileInputStream(new File(logoPath));
-                logger.log(Level.INFO, "JUG-0002: Loading logo file {0}", new String[]{logoPath});
+                LOGGER.log(Level.INFO, "JUG-0002: Loading logo file {0}", new String[]{logoPath});
                 logoImage = new DefaultStreamedContent(in, "image/jpeg");
             }
         } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
     public void handleLogoFileUpload(FileUploadEvent event) {
         UploadedFile uploadedFile = event.getFile();
-        logger.log(Level.INFO, "JUG-0001: File {0} of type {1} temporarely uploaded to {2}", new String[]{uploadedFile.getFileName(), uploadedFile.getContentType(), System.getProperty("java.io.tmpdir")});
+        LOGGER.log(Level.INFO, "JUG-0001: File {0} of type {1} temporarely uploaded to {2}", new String[]{uploadedFile.getFileName(), uploadedFile.getContentType(), System.getProperty("java.io.tmpdir")});
         try {
             /* Loads the representative related to the logged user. */
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -238,9 +238,9 @@ public class PartnershipMBean {
 
             loadLogoImage();
         } catch (IOException ioe) {
-            logger.log(Level.INFO, ioe.getMessage(), ioe);
+            LOGGER.log(Level.INFO, ioe.getMessage(), ioe);
         } catch (Exception e) {
-            logger.log(Level.INFO, e.getMessage(), e);
+            LOGGER.log(Level.INFO, e.getMessage(), e);
         }
         FacesMessage msg = new FacesMessage("Succesful", uploadedFile.getSize() + " bytes of the file " + uploadedFile.getFileName() + " are uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -255,11 +255,11 @@ public class PartnershipMBean {
 
                 logo.delete();
                 InputStream in = new FileInputStream(new File(logoPath));
-                logger.log(Level.INFO, "JUG-0002: Loading logo file {0}", new String[]{logoPath});
+                LOGGER.log(Level.INFO, "JUG-0002: Loading logo file {0}", new String[]{logoPath});
                 logoImage = new DefaultStreamedContent(in, "image/jpeg");
             }
         } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
         return "profile?faces-redirect=true&tab=2";
     }
