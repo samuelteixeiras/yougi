@@ -49,7 +49,7 @@ public class AttendeeMBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    static final Logger logger = Logger.getLogger(AttendeeMBean.class.getName());
+    static final Logger LOGGER = Logger.getLogger(AttendeeMBean.class.getName());
 
     @EJB
     private EventBean eventBean;
@@ -161,7 +161,7 @@ public class AttendeeMBean implements Serializable {
             response.getOutputStream().close();
             context.responseComplete();
         } catch (IOException | DocumentException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 }

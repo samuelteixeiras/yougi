@@ -82,7 +82,7 @@ public class UserAccountBean {
     @PersistenceContext
     private EntityManager em;
 
-    static final Logger logger = Logger.getLogger(UserAccountBean.class.getName());
+    static final Logger LOGGER = Logger.getLogger(UserAccountBean.class.getName());
 
     /**
      * Checks whether an user account exists.
@@ -409,7 +409,7 @@ public class UserAccountBean {
             messengerBean.sendEmailMessage(emailMessage);
         }
         catch(MessagingException me) {
-            logger.log(Level.WARNING, "Error when sending the mail confirmation. The registration was not finalized.", me);
+            LOGGER.log(Level.WARNING, "Error when sending the mail confirmation. The registration was not finalized.", me);
         }
     }
 
@@ -469,7 +469,7 @@ public class UserAccountBean {
             messengerBean.sendEmailMessage(emailMessage);
         }
         catch(MessagingException me) {
-            logger.log(Level.WARNING, "Error when sending the deactivation reason to user "+ userAccount.getPostingEmail(), me);
+            LOGGER.log(Level.WARNING, "Error when sending the deactivation reason to user "+ userAccount.getPostingEmail(), me);
         }
     }
 
@@ -485,7 +485,7 @@ public class UserAccountBean {
             messengerBean.sendEmailMessage(emailMessage);
         }
         catch(MessagingException me) {
-            logger.log(Level.WARNING, "Error when sending alert to administrators about the registration of "+ userAccount.getPostingEmail(), me);
+            LOGGER.log(Level.WARNING, "Error when sending alert to administrators about the registration of "+ userAccount.getPostingEmail(), me);
         }
     }
 
@@ -541,7 +541,7 @@ public class UserAccountBean {
             messengerBean.sendEmailMessage(emailMessage);
         }
         catch(MessagingException me) {
-            logger.log(Level.WARNING, "Error when sending the deactivation reason to user "+ userAccount.getPostingEmail(), me);
+            LOGGER.log(Level.WARNING, "Error when sending the deactivation reason to user "+ userAccount.getPostingEmail(), me);
         }
     }
 
@@ -557,7 +557,7 @@ public class UserAccountBean {
             messengerBean.sendEmailMessage(emailMessage);
         }
         catch(MessagingException me) {
-            logger.log(Level.WARNING, "Error when sending the deactivation reason from "+ userAccount.getPostingEmail() +" to leaders.", me);
+            LOGGER.log(Level.WARNING, "Error when sending the deactivation reason from "+ userAccount.getPostingEmail() +" to leaders.", me);
         }
     }
 
@@ -597,7 +597,7 @@ public class UserAccountBean {
             messengerBean.sendEmailMessage(emailMessage);
         }
         catch(MessagingException me) {
-            logger.log(Level.WARNING, "Error when sending the mail confirmation. The registration was not finalized.", me);
+            LOGGER.log(Level.WARNING, "Error when sending the mail confirmation. The registration was not finalized.", me);
         }
     }
 
@@ -701,7 +701,7 @@ public class UserAccountBean {
             messengerBean.sendEmailMessage(emailMessage);
         }
         catch(MessagingException me) {
-            logger.log(Level.WARNING, "Error when sending the mail confirmation. The registration was not finalized.", me);
+            LOGGER.log(Level.WARNING, "Error when sending the mail confirmation. The registration was not finalized.", me);
         }
     }
 
@@ -718,19 +718,19 @@ public class UserAccountBean {
 
     @Schedules({ @Schedule(hour="*/12") })
     public void removeNonConfirmedAccounts(Timer timer) {
-        logger.log(Level.INFO, "Timer to remove non confirmed accounts started.");
+        LOGGER.log(Level.INFO, "Timer to remove non confirmed accounts started.");
 
         Calendar twoDaysAgo = Calendar.getInstance();
         twoDaysAgo.add(Calendar.DAY_OF_YEAR, -2);
 
         Format formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        logger.log(Level.INFO, "Non confirmed accounts older than {0} will be removed.", formatter.format(twoDaysAgo.getTime()));
+        LOGGER.log(Level.INFO, "Non confirmed accounts older than {0} will be removed.", formatter.format(twoDaysAgo.getTime()));
 
         int i = em.createQuery("delete from UserAccount ua where ua.registrationDate <= :twoDaysAgo and ua.confirmationCode is not null")
                   .setParameter("twoDaysAgo", twoDaysAgo.getTime())
                   .executeUpdate();
 
-        logger.log(Level.INFO, "Number of removed non confirmed accounts: {0}", i);
+        LOGGER.log(Level.INFO, "Number of removed non confirmed accounts: {0}", i);
     }
 
     /**

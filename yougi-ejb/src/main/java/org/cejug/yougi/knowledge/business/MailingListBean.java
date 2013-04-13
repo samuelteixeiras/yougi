@@ -42,7 +42,7 @@ public class MailingListBean {
     @PersistenceContext
     private EntityManager em;
 
-    static final Logger logger = Logger.getLogger(MailingListBean.class.getName());
+    static final Logger LOGGER = Logger.getLogger(MailingListBean.class.getName());
 
     public MailingList findMailingList(String id) {
         return em.find(MailingList.class, id);
