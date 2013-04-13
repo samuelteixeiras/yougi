@@ -20,7 +20,7 @@
  * */
 package org.cejug.yougi.web.controller;
 
-
+import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -30,6 +30,10 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.UserAccount;
+import org.cejug.yougi.exception.BusinessLogicException;
+import org.cejug.yougi.exception.EnvironmentResourceException;
+import org.cejug.yougi.exception.ExistingUserAccount;
+import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
@@ -37,21 +41,18 @@ import org.cejug.yougi.entity.UserAccount;
 @ManagedBean
 @RequestScoped
 public class ChangeEmailMBean {
-
+    
     @EJB
     private UserAccountBean userAccountBean;
-
-    @ManagedProperty(value="#{id}")
+    @ManagedProperty(value = "#{id}")
     private String id;
-
-    @ManagedProperty(value="#{param.cc}")
+    @ManagedProperty(value = "#{param.cc}")
     private String confirmationCode;
-
     private UserAccount userAccount;
     private String currentEmail;
     private String newEmail;
     private String newEmailConfirmation;
-
+    
     public ChangeEmailMBean() {
         userAccount = new UserAccount();
     }
@@ -62,15 +63,15 @@ public class ChangeEmailMBean {
     public String getId() {
         return id;
     }
-
+    
     public void setId(String id) {
         this.id = id;
     }
-
+    
     public String getConfirmationCode() {
         return confirmationCode;
     }
-
+    
     public void setConfirmationCode(String confirmationCode) {
         this.confirmationCode = confirmationCode;
     }
@@ -81,7 +82,7 @@ public class ChangeEmailMBean {
     public UserAccount getUserAccount() {
         return userAccount;
     }
-
+    
     public void setUserAccount(UserAccount userAccount) {
         this.userAccount = userAccount;
     }
@@ -92,7 +93,7 @@ public class ChangeEmailMBean {
     public String getCurrentEmail() {
         return currentEmail;
     }
-
+    
     public void setCurrentEmail(String currentEmail) {
         this.currentEmail = currentEmail;
     }
@@ -103,34 +104,35 @@ public class ChangeEmailMBean {
     public String getNewEmail() {
         return newEmail;
     }
-
+    
     public void setNewEmail(String newEmail) {
         this.newEmail = newEmail;
     }
 
     /**
-     * @return the newEmailConfirmation to minimize the risk of typos in the address.
+     * @return the newEmailConfirmation to minimize the risk of typos in the
+     * address.
      */
     public String getNewEmailConfirmation() {
         return newEmailConfirmation;
     }
-
+    
     public void setNewEmailConfirmation(String newEmailConfirmation) {
         this.newEmailConfirmation = newEmailConfirmation;
     }
-
+    
     @PostConstruct
     public void load() {
-        if(id != null && !id.isEmpty()) {
+        if (id != null && !id.isEmpty()) {
             this.userAccount = userAccountBean.findUserAccountByConfirmationCode(id);
-        }
-        else if(confirmationCode != null && !confirmationCode.isEmpty()) {
+        } else if (confirmationCode != null && !confirmationCode.isEmpty()) {
             this.userAccount = userAccountBean.findUserAccountByConfirmationCode(confirmationCode);
         }
     }
 
     /**
      * Compares the informed email with its respective confirmation.
+     *
      * @return true if the email matches with its confirmation.
      */
     private boolean isEmailConfirmed() {
@@ -139,20 +141,26 @@ public class ChangeEmailMBean {
 
     /**
      * It changes the user's email.
+     *
      * @return returns the next step in the navigation flow.
      */
     public String changeEmail() {
 
         // If password doesn't match its confirmation.
-        if(!isEmailConfirmed()) {
+        if (!isEmailConfirmed()) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("The email confirmation does not match."));
             return "change_password";
         }
-
-        userAccountBean.changeEmail(userAccount, this.newEmail);
+        
+        try {
+            userAccountBean.changeEmail(userAccount, this.newEmail);            
+        } catch (ExistingUserAccount e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ResourceBundleHelper.INSTANCE.getMessage("errorCode0001")));
+            return "change_email";            
+        }
         return "profile?faces-redirect=true";
     }
-
+    
     public String confirmEmailChange() {
         this.userAccount.resetConfirmationCode();
         userAccountBean.save(this.userAccount);
