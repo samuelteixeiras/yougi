@@ -50,6 +50,7 @@ import org.cejug.yougi.entity.MessageTemplate;
 import org.cejug.yougi.exception.BusinessLogicException;
 import org.cejug.yougi.knowledge.business.SubscriptionBean;
 import org.cejug.yougi.entity.EntitySupport;
+import org.cejug.yougi.exception.ExistingUserAccountException;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
@@ -652,12 +653,12 @@ public class UserAccountBean {
      * @param newEmail the new email address of the user account.
      * @exception BusinessLogicException in case the newEmail is already registered.
      */
-    public void changeEmail(UserAccount userAccount, String newEmail) {
+    public void changeEmail(UserAccount userAccount, String newEmail) throws ExistingUserAccountException {
         // Check if the new email already exists in the UserAccounts
         UserAccount existingUserAccount = findUserAccountByEmail(newEmail);
 
         if(existingUserAccount != null) {
-            throw new BusinessLogicException("errorCode0001");
+            throw new ExistingUserAccountException("errorCode0001");
         }
 
         // Change the email address in the UserAccount
