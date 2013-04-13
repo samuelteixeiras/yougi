@@ -20,7 +20,6 @@
  * */
 package org.cejug.yougi.util;
 
-import de.bripkens.gravatar.DefaultImage;
 import de.bripkens.gravatar.Gravatar;
 import de.bripkens.gravatar.Rating;
 import javax.faces.bean.ManagedBean;
@@ -38,7 +37,6 @@ public class ProfilePictureFinder {
                 .setSize(85)
                 .setHttps(true)
                 .setRating(Rating.PARENTAL_GUIDANCE_SUGGESTED)
-                .setStandardDefaultImage(DefaultImage.MONSTER)
                 .getUrl(email);
     }
 }
