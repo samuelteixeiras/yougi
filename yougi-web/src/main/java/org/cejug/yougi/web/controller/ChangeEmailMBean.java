@@ -32,7 +32,7 @@ import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.exception.BusinessLogicException;
 import org.cejug.yougi.exception.EnvironmentResourceException;
-import org.cejug.yougi.exception.ExistingUserAccount;
+import org.cejug.yougi.exception.ExistingUserAccountException;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
@@ -154,7 +154,7 @@ public class ChangeEmailMBean {
         
         try {
             userAccountBean.changeEmail(userAccount, this.newEmail);            
-        } catch (ExistingUserAccount e) {
+        } catch (ExistingUserAccountException e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ResourceBundleHelper.INSTANCE.getMessage("errorCode0001")));
             return "change_email";            
         }
