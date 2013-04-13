@@ -44,12 +44,12 @@
                                 <h:outputLabel for="endDate" value="#{bundle.end}" styleClass="requiredFieldLabel"/>
                                 <h:outputText/>
 
-                                <p:calendar id="startDate" value="#{eventMBean.event.startDate}" pattern="#{bundle.formatDate}" size="10" timeZone="#{userProfileMBean.timeZone}"/>
-                                <p:inputMask id="startTime" value="#{eventMBean.event.startTime}" mask="99:99" size="5">
+                                <p:calendar id="startDate" label="#{bundle.startDate}" value="#{eventMBean.event.startDate}" pattern="#{bundle.formatDate}" required="true" size="10" timeZone="#{userProfileMBean.timeZone}"/>
+                                <p:inputMask id="startTime" label="#{bundle.startHour}" value="#{eventMBean.event.startTime}" mask="99:99" size="5" required="true">
                                     <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                 </p:inputMask>
-                                <p:calendar id="endDate" value="#{eventMBean.event.endDate}" pattern="#{bundle.formatDate}" size="10" timeZone="#{userProfileMBean.timeZone}"/>
-                                <p:inputMask id="endTime" value="#{eventMBean.event.endTime}" mask="99:99" size="5">
+                                <p:calendar id="endDate" label="#{bundle.endDate}" value="#{eventMBean.event.endDate}" pattern="#{bundle.formatDate}" required="true" size="10" timeZone="#{userProfileMBean.timeZone}"/>
+                                <p:inputMask id="endTime" label="#{bundle.endHour}" value="#{eventMBean.event.endTime}" mask="99:99" size="5" required="true">
                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                 </p:inputMask>
 
