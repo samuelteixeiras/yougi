@@ -30,26 +30,25 @@ import javax.faces.context.FacesContext;
  * Actually, this is so complex that a better approach should be investigated,
  * or a solution presented to spec leaders.
  *
- * @author Hildeberto Mendonca - http://www.hildeberto.com
+ * @author Daniel Cunha
+ *         Hildeberto Mendonca - http://www.hildeberto.com
  */
 public enum ResourceBundleHelper {
     INSTANCE;
-    private Locale locale;
 
-    ResourceBundleHelper() {
-        this.locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-    }
-
-    ResourceBundleHelper(Locale locale) {
-        this.locale = locale;
-    }
+    private Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
 
     public String getMessage(String key) {
         return getMessageFromResourceBundle(key);
     }
 
+    public String getMessage(String key, Locale locale) {
+        this.locale = locale;
+        return getMessageFromResourceBundle(key);
+    }
+
     private String getMessageFromResourceBundle(String key) {
-        ResourceBundle bundle = null;
+        ResourceBundle bundle;
         String bundleName = "org.cejug.yougi.web.bundles.Resources";
         String message = "";
 
@@ -68,7 +67,7 @@ public enum ResourceBundleHelper {
         return message;
     }
 
-    private static ClassLoader getCurrentLoader(Object fallbackClass) {
+    private ClassLoader getCurrentLoader(Object fallbackClass) {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         if (loader == null) {
             loader = fallbackClass.getClass().getClassLoader();
