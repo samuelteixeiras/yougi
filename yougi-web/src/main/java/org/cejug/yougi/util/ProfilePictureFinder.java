@@ -33,10 +33,19 @@ import javax.faces.bean.RequestScoped;
 public class ProfilePictureFinder {
 
     public String getPictureFromEmail(String email) {
-        return new Gravatar()
+        return this.validateUrl(new Gravatar()
                 .setSize(85)
                 .setHttps(true)
                 .setRating(Rating.PARENTAL_GUIDANCE_SUGGESTED)
-                .getUrl(email);
+                .getUrl(email));
+    }
+    
+    private String validateUrl(String url) {
+        String urlErro = "https://secure.gravatar.com/avatar/9dd4e461268c8034f5c8564e155c67a6.jpg?s=85&r=pg&";
+        return url.equalsIgnoreCase(urlErro) ? getDefaultAvatar() : url; 
+    }
+    
+    private String getDefaultAvatar() {
+        return "/images/logo.png";
     }
 }
