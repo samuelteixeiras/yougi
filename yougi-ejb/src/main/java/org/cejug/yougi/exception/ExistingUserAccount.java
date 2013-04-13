@@ -27,22 +27,22 @@ import javax.ejb.ApplicationException;
  * @author Daniel Cunha (danielsoro@gmail.com)
  */
 @ApplicationException
-public class ExistingUserAccountException extends Exception {
+public class ExistingUserAccount extends Exception {
 
     /**
      * Creates a new instance of
-     * <code>ExistingUserAccountException</code> without detail message.
+     * <code>ExistingUserAccount</code> without detail message.
      */
-    public ExistingUserAccountException() {
+    public ExistingUserAccount() {
     }
 
     /**
      * Constructs an instance of
-     * <code>ExistingUserAccountException</code> with the specified detail message.
+     * <code>ExistingUserAccount</code> with the specified detail message.
      *
      * @param msg the detail message.
      */
-    public ExistingUserAccountException(String msg) {
+    public ExistingUserAccount(String msg) {
         super(msg);
     }
 }
