@@ -27,6 +27,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import org.cejug.yougi.business.AccessGroupBean;
 import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.business.UserGroupBean;
 import org.cejug.yougi.entity.AccessGroup;
@@ -41,7 +42,7 @@ import org.primefaces.model.DualListModel;
 public class AccessGroupMBean {
 
     @EJB
-    private org.cejug.yougi.business.AccessGroupBean accessGroupBean;
+    private AccessGroupBean accessGroupBean;
 
     @EJB
     private UserAccountBean userAccountBean;
@@ -115,11 +116,6 @@ public class AccessGroupMBean {
         }
 
         accessGroupBean.save(this.group, selectedMembers);
-        return "groups?faces-redirect=true";
-    }
-
-    public String remove(String groupId) {
-        accessGroupBean.remove(groupId);
         return "groups?faces-redirect=true";
     }
 }

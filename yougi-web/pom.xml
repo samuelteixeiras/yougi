@@ -13,7 +13,6 @@
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
 
     <dependencies>
@@ -63,6 +62,11 @@
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.bripkens</groupId>
+            <artifactId>gravatar4java</artifactId>
+            <version>1.1</version>
         </dependency>
     </dependencies>
 

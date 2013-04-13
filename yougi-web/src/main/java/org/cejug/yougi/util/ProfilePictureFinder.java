@@ -20,6 +20,8 @@
  * */
 package org.cejug.yougi.util;
 
+import de.bripkens.gravatar.Gravatar;
+import de.bripkens.gravatar.Rating;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -30,4 +32,20 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class ProfilePictureFinder {
 
+    public String getPictureFromEmail(String email) {
+        return this.validateUrl(new Gravatar()
+                .setSize(85)
+                .setHttps(true)
+                .setRating(Rating.PARENTAL_GUIDANCE_SUGGESTED)
+                .getUrl(email));
+    }
+    
+    private String validateUrl(String url) {
+        String urlErro = "https://secure.gravatar.com/avatar/9dd4e461268c8034f5c8564e155c67a6.jpg?s=85&r=pg&";
+        return url.equalsIgnoreCase(urlErro) ? getDefaultAvatar() : url; 
+    }
+    
+    private String getDefaultAvatar() {
+        return "/images/logo.png";
+    }
 }
