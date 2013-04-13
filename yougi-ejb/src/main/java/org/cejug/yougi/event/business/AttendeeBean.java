@@ -70,7 +70,7 @@ public class AttendeeBean {
 
     public Boolean isAttending(Event event, UserAccount person) {
         try {
-            Attendee attendee = (Attendee) em.createQuery("select a from Attendee a where a.attendee = :person and a.event = :event").setParameter("person", person).setParameter("event", event).getSingleResult();
+            Attendee attendee = (Attendee) em.createQuery("select a from Attendee a where a.userAccount = :person and a.event = :event").setParameter("person", person).setParameter("event", event).getSingleResult();
 
             if (attendee != null) {
                 return true;
@@ -83,19 +83,19 @@ public class AttendeeBean {
     }
 
     public List<Attendee> findAttendees(Event event) {
-        return em.createQuery("select a from Attendee a where a.event = :event order by a.attendee.firstName asc").setParameter("event", event).getResultList();
+        return em.createQuery("select a from Attendee a where a.event = :event order by a.userAccount.firstName asc").setParameter("event", event).getResultList();
     }
 
     public List<Attendee> findConfirmedAttendees(Event event) {
-        return em.createQuery("select a from Attendee a where a.event = :event and a.attended = :attended order by a.attendee.firstName asc").setParameter("event", event).setParameter("attended", true).getResultList();
+        return em.createQuery("select a from Attendee a where a.event = :event and a.attended = :attended order by a.userAccount.firstName asc").setParameter("event", event).setParameter("attended", true).getResultList();
     }
 
     /**
      * Returns a list of events in which the presence of the user was confirmed.
      */
     public List<Event> findAttendeedEvents(UserAccount userAccount) {
-        return em.createQuery("select a.event from Attendee a where a.attendee = :attendee and a.attended = :attended order by a.event.startDate desc")
-                 .setParameter("attendee", userAccount)
+        return em.createQuery("select a.event from Attendee a where a.userAccount = :userAccount and a.attended = :attended order by a.event.startDate desc")
+                 .setParameter("userAccount", userAccount)
                  .setParameter("attended", true)
                  .getResultList();
     }
