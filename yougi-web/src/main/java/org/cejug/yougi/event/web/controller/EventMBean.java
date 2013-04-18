@@ -47,8 +47,10 @@ import org.cejug.yougi.entity.Properties;
 import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.event.business.AttendeeBean;
 import org.cejug.yougi.event.business.EventBean;
+import org.cejug.yougi.event.business.SessionBean;
 import org.cejug.yougi.event.entity.Attendee;
 import org.cejug.yougi.event.entity.Event;
+import org.cejug.yougi.event.entity.Session;
 import org.cejug.yougi.web.controller.LocationMBean;
 import org.cejug.yougi.web.controller.UserProfileMBean;
 import org.cejug.yougi.web.report.EventAttendeeCertificate;
@@ -67,6 +69,9 @@ public class EventMBean {
 
     @EJB
     private EventBean eventBean;
+
+    @EJB
+    private SessionBean sessionBean;
 
     @EJB
     private AttendeeBean attendeeBean;
@@ -92,7 +97,13 @@ public class EventMBean {
 
     private List<Event> events;
 
+    private List<Event> subEvents;
+
+    private List<Event> parentEvents;
+
     private List<Event> commingEvents;
+
+    private List<Session> sessions;
 
     private Long numberPeopleAttending;
 
@@ -185,11 +196,32 @@ public class EventMBean {
         return events;
     }
 
+    public List<Event> getParentEvents() {
+        if (parentEvents == null) {
+            parentEvents = eventBean.findParentEvents();
+        }
+        return parentEvents;
+    }
+
+    public List<Event> getSubEvents() {
+        if (subEvents == null) {
+            subEvents = eventBean.findEvents(this.event);
+        }
+        return subEvents;
+    }
+
     public List<Event> getCommingEvents() {
         if (commingEvents == null) {
             commingEvents = eventBean.findUpCommingEvents();
         }
         return commingEvents;
+    }
+
+    public List<Session> getSessions() {
+        if (sessions == null) {
+            sessions = sessionBean.findSessions(this.event);
+        }
+        return sessions;
     }
 
     public Long getNumberPeopleAttending() {

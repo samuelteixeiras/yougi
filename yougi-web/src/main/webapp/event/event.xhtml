@@ -38,6 +38,13 @@
                             <h:inputText id="name" label="#{bundle.name}" required="true" size="78" maxlength="100" value="#{eventMBean.event.name}" styleClass="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"/>
                             <h:message for="name" errorClass="errorMessage"/>
 
+                            <h:outputLabel for="parent" value="#{bundle.parent}" styleClass="fieldLabel"/>
+                            <h:selectOneMenu id="parent" label="#{bundle.parent}" value="#{eventMBean.event.parent}">
+                                <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
+                                <f:selectItems value="#{eventMBean.parentEvents}" var="parent" itemLabel="#{parent.name}" itemValue="#{parent.id}"/>
+                                <f:converter id="eventConverter"/>
+                            </h:selectOneMenu>
+
                             <h:panelGrid columns="4">
                                 <h:outputLabel for="startDate" value="#{bundle.start}" styleClass="requiredFieldLabel"/>
                                 <h:outputText/>

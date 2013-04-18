@@ -68,8 +68,11 @@ public class Event implements Serializable, Identified {
     @Column(name = "certificate_template")
     private String certificateTemplate;
 
-    @OneToMany(mappedBy="event")
-    private List<Session> eventSessions;
+    public Event() {}
+
+    public Event(String id) {
+        this.id = id;
+    }
 
     @Override
     public String getId() {
@@ -162,17 +165,6 @@ public class Event implements Serializable, Identified {
         this.certificateTemplate = certificateTemplate;
     }
 
-    /**
-     * @return the sessions in which the event is organized.
-     */
-    public List<Session> getEventSessions() {
-        return eventSessions;
-    }
-
-    public void setEventSessions(List<Session> eventSessions) {
-        this.eventSessions = eventSessions;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -205,6 +197,6 @@ public class Event implements Serializable, Identified {
 
     @Override
     public String toString() {
-        return this.name;
+        return (this.parent != null? this.parent.toString() + " - " : "") + this.name;
     }
 }

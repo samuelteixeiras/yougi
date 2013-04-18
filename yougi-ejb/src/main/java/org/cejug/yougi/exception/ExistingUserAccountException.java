@@ -23,25 +23,14 @@ package org.cejug.yougi.exception;
 import javax.ejb.ApplicationException;
 
 /**
- *
- * @author Daniel Cunha (danielsoro@gmail.com)
+ * @author Daniel Cunha - danielsoro@gmail.com
  */
 @ApplicationException
 public class ExistingUserAccountException extends Exception {
 
-    /**
-     * Creates a new instance of
-     * <code>ExistingUserAccountException</code> without detail message.
-     */
     public ExistingUserAccountException() {
     }
 
-    /**
-     * Constructs an instance of
-     * <code>ExistingUserAccountException</code> with the specified detail message.
-     *
-     * @param msg the detail message.
-     */
     public ExistingUserAccountException(String msg) {
         super(msg);
     }

@@ -30,7 +30,7 @@ import javax.faces.context.FacesContext;
  * Actually, this is so complex that a better approach should be investigated,
  * or a solution presented to spec leaders.
  *
- * @author Daniel Cunha
+ * @author Daniel Cunha - danielsoro@gmail.com
  *         Hildeberto Mendonca - http://www.hildeberto.com
  */
 public enum ResourceBundleHelper {
