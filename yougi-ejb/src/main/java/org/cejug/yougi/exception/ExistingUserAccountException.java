@@ -25,7 +25,7 @@ import javax.ejb.ApplicationException;
 /**
  * @author Daniel Cunha - danielsoro@gmail.com
  */
-@ApplicationException
+@ApplicationException(rollback = true)
 public class ExistingUserAccountException extends Exception {
 
     public ExistingUserAccountException() {
