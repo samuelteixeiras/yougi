@@ -48,13 +48,13 @@ public class SpeakerBean {
     }
 
     public List<Speaker> findSpeakers(Event event) {
-        return em.createQuery("select s from Speaker s where s.session.event = :event order by s.userAccount.firstName asc")
+        return em.createQuery("select ss.speaker from SpeakerSession ss where ss.session.event = :event order by ss.speaker.userAccount.firstName asc")
                  .setParameter("event", event)
                  .getResultList();
     }
 
     public List<Speaker> findSpeakers(Session session) {
-        return em.createQuery("select s from Speaker s where s.session = :session order by s.userAccount.firstName asc")
+        return em.createQuery("select ss.speaker from SpeakerSession ss where ss.session = :session order by ss.speaker.userAccount.firstName asc")
                  .setParameter("session", session)
                  .getResultList();
     }

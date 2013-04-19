@@ -22,6 +22,7 @@ package org.cejug.yougi.event.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import org.cejug.yougi.entity.Identified;
 
@@ -81,6 +82,9 @@ public class Session implements Serializable, Identified {
     private Track track;
 
     private Boolean approved;
+
+    @Transient
+    private List<Speaker> speakers;
 
     public Session() {
     }
@@ -193,6 +197,22 @@ public class Session implements Serializable, Identified {
 
     public void setTrack(Track track) {
         this.track = track;
+    }
+
+    public Boolean getApproved() {
+        return approved;
+    }
+
+    public void setApproved(Boolean approved) {
+        this.approved = approved;
+    }
+
+    public List<Speaker> getSpeakers() {
+        return speakers;
+    }
+
+    public void setSpeakers(List<Speaker> speakers) {
+        this.speakers = speakers;
     }
 
     @Override

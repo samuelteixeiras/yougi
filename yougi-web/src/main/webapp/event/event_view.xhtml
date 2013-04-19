@@ -105,13 +105,28 @@
                                                 <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                             </h:outputText>
                                             <p:spacer width="10"/>
-                                            <h:outputText value="#{ses.name}"/>
+                                            <h:outputText value="#{ses.name}" style="font-weight: bold"/>
+                                            <p:spacer width="5"/>
+                                            <h:outputText value="#{ses.speakers}">
+                                                <f:converter converterId="SessionSpeakerConverter"/>
+                                            </h:outputText>
                                         </h:panelGroup>
                                     </c:forEach>
                                 </h:panelGrid>
                             </p:tab>
 
-                            <p:tab title="#{bundle.speakers}"></p:tab>
+                            <p:tab title="#{bundle.speakers}">
+                                <h:panelGrid>
+                                    <c:forEach var="spk" items="#{eventMBean.speakers}">
+                                        <h:panelGroup>
+                                            <h:outputText value="#{spk.userAccount.fullName}"/>
+                                            <h:outputText value=" - "/>
+                                            <h:outputText value="#{spk.organization}"/>
+                                        </h:panelGroup>
+                                    </c:forEach>
+                                </h:panelGrid>
+                            </p:tab>
+
                             <p:tab title="#{bundle.attendees}">
                                 <h:outputFormat value="#{bundle.numberPeopleAttendingEvent}" style="color: blue;" rendered="#{securityBackingMBean.isUserLeader}">
                                     <f:param value="#{eventMBean.numberPeopleAttending}"/>

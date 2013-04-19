@@ -44,6 +44,9 @@ public class SessionBean {
     @EJB
     private TopicBean topicBean;
 
+    @EJB
+    private SpeakerBean speakerBean;
+
     public Session findSession(String id) {
         if (id != null) {
             return em.find(Session.class, id);
@@ -55,6 +58,20 @@ public class SessionBean {
         return em.createQuery("select s from Session s where s.event = :event order by s.startDate, s.startTime asc")
                  .setParameter("event", event)
                  .getResultList();
+    }
+
+    public List<Session> findSessionsWithSpeakers(Event event) {
+        List<Session> sessions = em.createQuery("select s from Session s where s.event = :event order by s.startDate, s.startTime asc")
+                                   .setParameter("event", event)
+                                   .getResultList();
+
+        if(sessions != null) {
+            for(Session session: sessions) {
+                session.setSpeakers(speakerBean.findSpeakers(session));
+            }
+        }
+
+        return sessions;
     }
 
     public void save(Session session) {

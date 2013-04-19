@@ -100,7 +100,7 @@ public class SessionMBean implements Serializable {
 
     public List<Session> getSessions() {
         if (this.sessions == null) {
-            this.sessions = sessionBean.findSessions(this.event);
+            this.sessions = sessionBean.findSessionsWithSpeakers(this.event);
         }
         return this.sessions;
     }

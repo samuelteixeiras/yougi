@@ -48,9 +48,11 @@ import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.event.business.AttendeeBean;
 import org.cejug.yougi.event.business.EventBean;
 import org.cejug.yougi.event.business.SessionBean;
+import org.cejug.yougi.event.business.SpeakerBean;
 import org.cejug.yougi.event.entity.Attendee;
 import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.Session;
+import org.cejug.yougi.event.entity.Speaker;
 import org.cejug.yougi.web.controller.LocationMBean;
 import org.cejug.yougi.web.controller.UserProfileMBean;
 import org.cejug.yougi.web.report.EventAttendeeCertificate;
@@ -72,6 +74,9 @@ public class EventMBean {
 
     @EJB
     private SessionBean sessionBean;
+
+    @EJB
+    private SpeakerBean speakerBean;
 
     @EJB
     private AttendeeBean attendeeBean;
@@ -104,6 +109,8 @@ public class EventMBean {
     private List<Event> commingEvents;
 
     private List<Session> sessions;
+
+    private List<Speaker> speakers;
 
     private Long numberPeopleAttending;
 
@@ -219,9 +226,16 @@ public class EventMBean {
 
     public List<Session> getSessions() {
         if (sessions == null) {
-            sessions = sessionBean.findSessions(this.event);
+            sessions = sessionBean.findSessionsWithSpeakers(this.event);
         }
         return sessions;
+    }
+
+    public List<Speaker> getSpeakers() {
+        if (speakers == null) {
+            speakers = speakerBean.findSpeakers(this.event);
+        }
+        return speakers;
     }
 
     public Long getNumberPeopleAttending() {
