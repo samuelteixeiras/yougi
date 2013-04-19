@@ -20,9 +20,13 @@
  * */
 package org.cejug.yougi.util;
 
+import de.bripkens.gravatar.DefaultImage;
 import de.bripkens.gravatar.Gravatar;
 import de.bripkens.gravatar.Rating;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -33,16 +37,26 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class ProfilePictureFinder {
 
-    public String getPictureFromEmail(String email) throws UnsupportedEncodingException {
-        return new Gravatar()
+    public String getPictureFromEmail(String email) throws MalformedURLException, IOException {
+        return this.validateUrl(new Gravatar()
                 .setSize(85)
                 .setHttps(true)
                 .setRating(Rating.PARENTAL_GUIDANCE_SUGGESTED)
-                .setCustomDefaultImage(this.getDefaultAvatar())
-                .getUrl(email);
+                .setStandardDefaultImage(DefaultImage.HTTP_404)
+                .getUrl(email));
+    }
+
+    private String validateUrl(String gravataUrl) throws MalformedURLException, IOException {
+        return isNotFound(new URL(gravataUrl)) ? this.getDefaultAvatar() : gravataUrl;
     }
     
+    private boolean isNotFound(URL url) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.connect();
+        return connection.getResponseCode() == HttpURLConnection.HTTP_NOT_FOUND;
+    }
+
     private String getDefaultAvatar() {
-        return "http://cejug.org/ug/images/logo.png";
+        return "/images/logo.png";
     }
 }
