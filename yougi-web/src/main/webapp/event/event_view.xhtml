@@ -94,7 +94,7 @@
                             </p:tab>
 
                             <p:tab title="#{bundle.sessions}">
-                                <h:panelGrid>
+                                <h:panelGrid width="100%">
                                     <c:forEach var="ses" items="#{eventMBean.sessions}">
                                         <h:panelGroup>
                                             <h:outputText value="#{ses.startTime}">
@@ -112,6 +112,33 @@
                                             </h:outputText>
                                         </h:panelGroup>
                                     </c:forEach>
+
+                                    <p:accordionPanel multiple="true">
+                                        <c:forEach var="event" items="#{eventMBean.subEvents}">
+                                            <p:tab title="#{event.name}">
+                                                <h:panelGrid>
+                                                    <h:outputText value="" style="font-weight: bold; font-size: large"/>
+                                                    <c:forEach var="ses" items="#{eventMBean.getSessions(event)}">
+                                                        <h:panelGroup styleClass="indent">
+                                                            <h:outputText value="#{ses.startTime}">
+                                                                <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                                            </h:outputText>
+                                                            <h:outputText value=" - "/>
+                                                            <h:outputText value="#{ses.endTime}">
+                                                                <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                                            </h:outputText>
+                                                            <p:spacer width="10"/>
+                                                            <h:outputText value="#{ses.name}" style="font-weight: bold"/>
+                                                            <p:spacer width="5"/>
+                                                            <h:outputText value="#{ses.speakers}">
+                                                                <f:converter converterId="SessionSpeakerConverter"/>
+                                                            </h:outputText>
+                                                        </h:panelGroup>
+                                                    </c:forEach>
+                                                </h:panelGrid>
+                                            </p:tab>
+                                        </c:forEach>
+                                    </p:accordionPanel>
                                 </h:panelGrid>
                             </p:tab>
 
@@ -125,6 +152,23 @@
                                         </h:panelGroup>
                                     </c:forEach>
                                 </h:panelGrid>
+
+                                <p:accordionPanel multiple="true">
+                                    <c:forEach var="event" items="#{eventMBean.subEvents}">
+                                        <p:tab title="#{event.name}">
+                                            <h:panelGrid>
+                                                <h:outputText value="" style="font-weight: bold; font-size: large"/>
+                                                <c:forEach var="spk" items="#{eventMBean.getSpeakers(event)}">
+                                                    <h:panelGroup>
+                                                        <h:outputText value="#{spk.userAccount.fullName}"/>
+                                                        <h:outputText value=" - "/>
+                                                        <h:outputText value="#{spk.organization}"/>
+                                                    </h:panelGroup>
+                                                </c:forEach>
+                                            </h:panelGrid>
+                                        </p:tab>
+                                    </c:forEach>
+                                </p:accordionPanel>
                             </p:tab>
 
                             <p:tab title="#{bundle.attendees}">
@@ -140,7 +184,6 @@
                                 </h:panelGrid>
                             </p:tab>
                         </p:tabView>
-                        <p/>
 
                         <h:panelGrid columns="9">
                             <h:button value="#{bundle.back}" outcome="events"/>

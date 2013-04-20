@@ -231,11 +231,19 @@ public class EventMBean {
         return sessions;
     }
 
+    public List<Session> getSessions(Event event) {
+        return sessionBean.findSessionsWithSpeakers(event);
+    }
+
     public List<Speaker> getSpeakers() {
         if (speakers == null) {
             speakers = speakerBean.findSpeakers(this.event);
         }
         return speakers;
+    }
+
+    public List<Speaker> getSpeakers(Event event) {
+        return speakerBean.findSpeakers(event);
     }
 
     public Long getNumberPeopleAttending() {
