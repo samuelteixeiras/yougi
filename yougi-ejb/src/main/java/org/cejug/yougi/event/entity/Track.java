@@ -25,12 +25,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import org.cejug.yougi.entity.Identified;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
-public class Track implements Serializable {
+public class Track implements Serializable, Identified {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -46,10 +47,12 @@ public class Track implements Serializable {
     @JoinColumn(name = "event")
     private Event event;
 
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public void setId(String id) {
         this.id = id;
     }

@@ -49,10 +49,12 @@ import org.cejug.yougi.event.business.AttendeeBean;
 import org.cejug.yougi.event.business.EventBean;
 import org.cejug.yougi.event.business.SessionBean;
 import org.cejug.yougi.event.business.SpeakerBean;
+import org.cejug.yougi.event.business.TrackBean;
 import org.cejug.yougi.event.entity.Attendee;
 import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.Session;
 import org.cejug.yougi.event.entity.Speaker;
+import org.cejug.yougi.event.entity.Track;
 import org.cejug.yougi.web.controller.LocationMBean;
 import org.cejug.yougi.web.controller.UserProfileMBean;
 import org.cejug.yougi.web.report.EventAttendeeCertificate;
@@ -77,6 +79,9 @@ public class EventMBean {
 
     @EJB
     private SpeakerBean speakerBean;
+
+    @EJB
+    private TrackBean trackBean;
 
     @EJB
     private AttendeeBean attendeeBean;
@@ -109,6 +114,8 @@ public class EventMBean {
     private List<Event> commingEvents;
 
     private List<Session> sessions;
+
+    private List<Track> tracks;
 
     private List<Speaker> speakers;
 
@@ -235,6 +242,17 @@ public class EventMBean {
 
     public List<Session> getSessions(Event event) {
         return sessionBean.findSessionsWithSpeakers(event);
+    }
+
+    public List<Track> getTracks() {
+        if (tracks == null) {
+            tracks = trackBean.findTracks(this.event);
+        }
+        return tracks;
+    }
+
+    public List<Track> getTracks(Event event) {
+        return trackBean.findTracks(event);
     }
 
     public List<Speaker> getSpeakers() {

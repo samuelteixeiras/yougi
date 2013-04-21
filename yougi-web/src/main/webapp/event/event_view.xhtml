@@ -213,7 +213,38 @@
                                     </p:dataTable>
                                 </h:panelGrid>
                             </p:tab>
-                            <p:tab title="#{bundle.sponsors}"></p:tab>
+                            <p:tab title="#{bundle.tracks}">
+                                <h:panelGrid>
+                                    <c:forEach var="trk" items="#{eventMBean.tracks}">
+                                        <h:panelGroup>
+                                            <h:link outcome="track" value="#{trk.name}">
+                                                <f:param name="id" value="#{trk.id}"/>
+                                            </h:link>
+                                            <h:outputText value=" - "/>
+                                            <h:outputText value="#{trk.description}"/>
+                                        </h:panelGroup>
+                                    </c:forEach>
+                                </h:panelGrid>
+
+                                <p:accordionPanel multiple="true">
+                                    <c:forEach var="event" items="#{eventMBean.subEvents}">
+                                        <p:tab title="#{event.name}">
+                                            <h:panelGrid>
+                                                <h:outputText value="" style="font-weight: bold; font-size: large"/>
+                                                <c:forEach var="trk" items="#{eventMBean.getTracks(event)}">
+                                                    <h:panelGroup>
+                                                        <h:link outcome="track" value="#{trk.name}">
+                                                            <f:param name="id" value="#{trk.id}"/>
+                                                        </h:link>
+                                                        <h:outputText value=" - "/>
+                                                        <h:outputText value="#{trk.description}"/>
+                                                    </h:panelGroup>
+                                                </c:forEach>
+                                            </h:panelGrid>
+                                        </p:tab>
+                                    </c:forEach>
+                                </p:accordionPanel>
+                            </p:tab>
                             <p:tab title="#{bundle.statistics}" rendered="#{securityBackingMBean.isUserLeader}">
                                 <h:panelGrid>
                                     <p:pieChart value="#{eventMBean.attendanceRateChartModel}" title="#{bundle.attendanceRate}" legendPosition="e" showDataLabels="true"/>
