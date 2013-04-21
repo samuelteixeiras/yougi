@@ -112,6 +112,8 @@ public class EventMBean {
 
     private List<Speaker> speakers;
 
+    private List<Attendee> attendees;
+
     private Long numberPeopleAttending;
 
     private Long numberPeopleAttended;
@@ -244,6 +246,13 @@ public class EventMBean {
 
     public List<Speaker> getSpeakers(Event event) {
         return speakerBean.findSpeakers(event);
+    }
+
+    public List<Attendee> getAttendees() {
+        if (attendees == null) {
+            attendees = attendeeBean.findAllAttendees(this.event);
+        }
+        return attendees;
     }
 
     public Long getNumberPeopleAttending() {

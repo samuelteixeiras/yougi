@@ -21,6 +21,7 @@
 package org.cejug.yougi.event.business;
 
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -43,6 +44,9 @@ public class AttendeeBean {
 
     @PersistenceContext
     private EntityManager em;
+
+    @EJB
+    private EventBean eventBean;
 
     public Attendee findAttendee(String id) {
         if (id != null) {
@@ -82,11 +86,33 @@ public class AttendeeBean {
         }
     }
 
+    /**
+     * Find the attendees of a specific event only.
+     * @param event the event on which attendees are registered.
+     * @return a list of found attendees.
+     */
     public List<Attendee> findAttendees(Event event) {
         return em.createQuery("select a from Attendee a where a.event = :event order by a.userAccount.firstName asc").setParameter("event", event).getResultList();
     }
 
-    public List<Attendee> findConfirmedAttendees(Event event) {
+    /**
+     * Find the attendees from the informed event and from all its sub-events.
+     * @param event the event on which attendees are registered. Also considered
+     * as the parent of other events.
+     * @return a list of found attendees.
+     */
+    public List<Attendee> findAllAttendees(Event event) {
+        List<Attendee> attendees = findAttendees(event);
+        List<Event> subEvents = eventBean.findEvents(event);
+        if(subEvents != null && !subEvents.isEmpty()) {
+            for(Event subEvent: subEvents) {
+                attendees.addAll(findAllAttendees(subEvent));
+            }
+        }
+        return attendees;
+    }
+
+    public List<Attendee> findAttendeesWhoAttended(Event event) {
         return em.createQuery("select a from Attendee a where a.event = :event and a.attended = :attended order by a.userAccount.firstName asc").setParameter("event", event).setParameter("attended", true).getResultList();
     }
 
@@ -155,7 +181,7 @@ public class AttendeeBean {
      * @return true if the data of the certificate match exactly the record of
      * the related attendee.
      */
-    public Boolean verifyAuthenticityCertificate(Certificate certificate) {
+    public Boolean verifyCertificateAuthenticity(Certificate certificate) {
         try {
             Attendee attendee = (Attendee) em.createQuery("select a from Attendee a where a.certificateCode = :certificateCode and a.certificateFullname = :certificateFullname and a.certificateEvent = :certificateEvent and a.certificateVenue = :certificateVenue")
                                             .setParameter("certificateCode", certificate.getCertificateCode())

@@ -110,7 +110,7 @@ public class AttendeeMBean implements Serializable {
         this.event = eventBean.findEvent(eventId);
 
         this.attendees = attendeeBean.findAttendees(this.event);
-        List<Attendee> confirmedAttendees = attendeeBean.findConfirmedAttendees(event);
+        List<Attendee> confirmedAttendees = attendeeBean.findAttendeesWhoAttended(event);
         if (confirmedAttendees != null) {
             this.selectedAttendees = new Attendee[confirmedAttendees.size()];
             int i = 0;

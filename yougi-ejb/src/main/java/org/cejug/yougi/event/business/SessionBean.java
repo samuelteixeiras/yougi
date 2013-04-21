@@ -60,6 +60,11 @@ public class SessionBean {
                  .getResultList();
     }
 
+    /**
+     * Returns all sessions with their speakers, which are related to the event.
+     * A session may contain more than one speaker.
+     * @param event The event with which the sessions are related.
+     */
     public List<Session> findSessionsWithSpeakers(Event event) {
         List<Session> sessions = em.createQuery("select s from Session s where s.event = :event order by s.startDate, s.startTime asc")
                                    .setParameter("event", event)

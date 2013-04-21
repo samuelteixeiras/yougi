@@ -58,7 +58,7 @@ public class CertificateMBean {
     }
 
     public String verifyAuthenticity() {
-        boolean verified = attendeeBean.verifyAuthenticityCertificate(this.certificate);       
+        boolean verified = attendeeBean.verifyCertificateAuthenticity(this.certificate);       
         if(verified) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, ResourceBundleHelper.INSTANCE.getMessage("infoCode0001"), ""));
         }
