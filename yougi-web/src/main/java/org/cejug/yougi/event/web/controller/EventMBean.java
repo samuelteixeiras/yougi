@@ -27,7 +27,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.Level;
@@ -55,7 +54,6 @@ import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.Session;
 import org.cejug.yougi.event.entity.Speaker;
 import org.cejug.yougi.event.entity.Track;
-import org.cejug.yougi.web.controller.LocationMBean;
 import org.cejug.yougi.web.controller.UserProfileMBean;
 import org.cejug.yougi.web.report.EventAttendeeCertificate;
 import org.cejug.yougi.util.ResourceBundleHelper;
@@ -94,9 +92,6 @@ public class EventMBean {
 
     @ManagedProperty(value = "#{param.id}")
     private String id;
-
-    @ManagedProperty(value = "#{locationMBean}")
-    private LocationMBean locationMBean;
 
     @ManagedProperty(value = "#{userProfileMBean}")
     private UserProfileMBean userProfileMBean;
@@ -138,36 +133,12 @@ public class EventMBean {
         this.id = id;
     }
 
-    public LocationMBean getLocationMBean() {
-        return locationMBean;
-    }
-
-    public void setLocationMBean(LocationMBean locationMBean) {
-        this.locationMBean = locationMBean;
-    }
-
-    public UserProfileMBean getUserProfileMBean() {
-        return userProfileMBean;
-    }
-
-    public void setUserProfileMBean(UserProfileMBean userProfileMBean) {
-        this.userProfileMBean = userProfileMBean;
-    }
-
     public Event getEvent() {
         return event;
     }
 
     public void setEvent(Event event) {
         this.event = event;
-    }
-
-    public Attendee getAttendee() {
-        return attendee;
-    }
-
-    public void setAttendee(Attendee attendee) {
-        this.attendee = attendee;
     }
 
     /**
@@ -300,38 +271,6 @@ public class EventMBean {
         return WebTextUtils.convertLineBreakToHTMLParagraph(event.getDescription());
     }
 
-    public String getFormattedEventDescription(String description) {
-        return WebTextUtils.convertLineBreakToHTMLParagraph(description);
-    }
-
-    public String getFormattedStartDate() {
-        return WebTextUtils.getFormattedDate(event.getStartDate());
-    }
-
-    public String getFormattedStartDate(Date startDate) {
-        return WebTextUtils.getFormattedDate(startDate);
-    }
-
-    public String getFormattedEndDate() {
-        return WebTextUtils.getFormattedDate(event.getEndDate());
-    }
-
-    public String getFormattedStartTime() {
-        return WebTextUtils.getFormattedTime(event.getStartTime(), userProfileMBean.getTimeZone());
-    }
-
-    public String getFormattedStartTime(Date startTime) {
-        return WebTextUtils.getFormattedTime(startTime, userProfileMBean.getTimeZone());
-    }
-
-    public String getFormattedEndTime() {
-        return WebTextUtils.getFormattedTime(event.getEndTime(), userProfileMBean.getTimeZone());
-    }
-
-    public String getFormattedEndTime(Date endTime) {
-        return WebTextUtils.getFormattedTime(endTime, userProfileMBean.getTimeZone());
-    }
-
     public String getFormattedRegistrationDate() {
         if (this.attendee == null) {
             return "";
@@ -436,5 +375,13 @@ public class EventMBean {
     public String remove() {
         eventBean.remove(this.event.getId());
         return "events?faces-redirect=true";
+    }
+
+    public UserProfileMBean getUserProfileMBean() {
+        return userProfileMBean;
+    }
+
+    public void setUserProfileMBean(UserProfileMBean userProfileMBean) {
+        this.userProfileMBean = userProfileMBean;
     }
 }
