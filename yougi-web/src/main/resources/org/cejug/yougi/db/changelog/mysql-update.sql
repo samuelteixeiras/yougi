@@ -159,3 +159,6 @@ create table slot (
 alter table slot add constraint pk_slot primary key (id);
 create index idx_slot_event on slot (event);
 alter table slot add constraint fk_slot_event foreign key (event) references event(id) on delete cascade;
+
+--changeset htmfilho:8
+insert into language values ('fr', 'Français');
