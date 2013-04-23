@@ -144,17 +144,17 @@ public class PartnerMBean implements Serializable {
 
             AccessGroup accessGroup = accessGroupBean.findAccessGroupByName("partners");
         	List<UserAccount> usersGroup = userGroupBean.findUsersGroup(accessGroup);
-            List<UserAccount> reps = new ArrayList<UserAccount>();
+            List<UserAccount> reps = new ArrayList<>();
             reps.addAll(representativeBean.findRepresentativePersons(this.partner));
             usersGroup.removeAll(reps);
-            this.candidates = new DualListModel<UserAccount>(usersGroup, reps);
+            this.candidates = new DualListModel<>(usersGroup, reps);
         } else {
             this.partner = new Partner();
 
             AccessGroup accessGroup = accessGroupBean.findAccessGroupByName("partners");
         	List<UserAccount> usersGroup = userGroupBean.findUsersGroup(accessGroup);
-            List<UserAccount> reps = new ArrayList<UserAccount>();
-            this.candidates = new DualListModel<UserAccount>(usersGroup, reps);
+            List<UserAccount> reps = new ArrayList<>();
+            this.candidates = new DualListModel<>(usersGroup, reps);
         }
     }
 
@@ -175,7 +175,7 @@ public class PartnerMBean implements Serializable {
             this.partner.setCity(city);
         }
 
-        List<UserAccount> reps = new ArrayList<UserAccount>();
+        List<UserAccount> reps = new ArrayList<>();
         List selectedCandidates = this.candidates.getTarget();
         UserAccount userAccount;
         for(int i = 0;i < selectedCandidates.size();i++) {

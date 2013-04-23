@@ -45,7 +45,7 @@ import org.cejug.yougi.entity.Province;
 @SessionScoped
 public class LocationMBean {
 
-    static final Logger LOGGER = Logger.getLogger("org.cejug.web.controller.LocationBean");
+    static final Logger LOGGER = Logger.getLogger(LocationMBean.class.getName());
 
     @EJB
     private org.cejug.yougi.business.LocationBean locationBean;
@@ -98,7 +98,7 @@ public class LocationMBean {
 
     public List<String> findCitiesStartingWith(String initials) {
         List<City> cits = locationBean.findCitiesStartingWith(initials);
-        List<String> citiesStartingWith = new ArrayList<String>();
+        List<String> citiesStartingWith = new ArrayList<>();
         for (City city : cits) {
             citiesStartingWith.add(city.getName());
         }
