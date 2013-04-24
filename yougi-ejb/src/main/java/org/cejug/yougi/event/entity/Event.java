@@ -22,6 +22,7 @@ package org.cejug.yougi.event.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import org.cejug.yougi.entity.Identified;
 
@@ -66,6 +67,9 @@ public class Event implements Serializable, Identified {
 
     @Column(name = "certificate_template")
     private String certificateTemplate;
+
+    @Transient
+    private List<Venue> venues;
 
     public Event() {}
 
@@ -162,6 +166,14 @@ public class Event implements Serializable, Identified {
 
     public void setCertificateTemplate(String certificateTemplate) {
         this.certificateTemplate = certificateTemplate;
+    }
+
+    public List<Venue> getVenues() {
+        return venues;
+    }
+
+    public void setVenues(List<Venue> venues) {
+        this.venues = venues;
     }
 
     @Override

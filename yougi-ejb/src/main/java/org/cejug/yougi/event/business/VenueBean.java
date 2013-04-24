@@ -24,9 +24,12 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import org.cejug.yougi.event.entity.Venue;
 import org.cejug.yougi.entity.EntitySupport;
+import org.cejug.yougi.event.entity.Event;
+import org.cejug.yougi.exception.BusinessLogicException;
 
 /**
  * Manages venues.
@@ -53,6 +56,16 @@ public class VenueBean {
     	List<Venue> venues = em.createQuery("select v from Venue v order by v.name desc")
         		       .getResultList();
         return venues;
+    }
+
+    public List<Venue> findEventVenues(Event event) {
+        if(event == null) {
+            return null;
+        }
+        
+        return em.createQuery("select ev.venue from EventVenue ev where ev.event = :event")
+                 .setParameter("event", event)
+                 .getResultList();
     }
 
     public void save(Venue venue) {

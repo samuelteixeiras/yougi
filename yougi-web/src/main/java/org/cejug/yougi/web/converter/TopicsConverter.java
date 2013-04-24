@@ -20,19 +20,22 @@
  * */
 package org.cejug.yougi.web.converter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.cejug.yougi.event.entity.Session;
 import org.cejug.yougi.event.entity.Speaker;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
-@FacesConverter(value="SessionSpeakerConverter")
-public class SessionSpeakerConverter implements Converter {
+@FacesConverter(value="TopicsConverter")
+public class TopicsConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -41,31 +44,25 @@ public class SessionSpeakerConverter implements Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if(value == null && !(value instanceof List)) {
+        if(value == null && !(value instanceof String)) {
             return null;
         }
-
-        List<Speaker> speakers = (List<Speaker>) value;
-
-        if(speakers.isEmpty()) {
-            return null;
-        }
-
-        StringBuilder strSpeakers = new StringBuilder();
-        strSpeakers.append(ResourceBundleHelper.INSTANCE.getMessage("by"));
-        strSpeakers.append(" ");
-        String and = "";
-        for(Speaker speaker: speakers) {
-            strSpeakers.append(and);
-            if("".equals(and)) {
-                and = " " + ResourceBundleHelper.INSTANCE.getMessage("and") + " ";
+        String topics = (String) value;
+        StringBuilder strTopics = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(topics, ",");
+        String topic;
+        while(st.hasMoreTokens()) {
+            topic = st.nextToken().trim();
+            strTopics.append("<a href=\"topic.xhtml?topic=");
+            strTopics.append(topic);
+            strTopics.append("\">");
+            strTopics.append(topic);
+            strTopics.append("</a>");
+            if(st.hasMoreTokens()) {
+                strTopics.append(", ");
             }
-            strSpeakers.append("<a href=\"speaker.xhtml?id=");
-            strSpeakers.append(speaker.getId());
-            strSpeakers.append("\">");
-            strSpeakers.append(speaker.getUserAccount().getFullName());
-            strSpeakers.append("</a>");
         }
-        return strSpeakers.toString();
+
+        return strTopics.toString();
     }
 }

@@ -20,7 +20,11 @@
  * */
 package org.cejug.yougi.event.business;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -48,10 +52,14 @@ public class SessionBean {
     private SpeakerBean speakerBean;
 
     public Session findSession(String id) {
+        Session session = null;
         if (id != null) {
-            return em.find(Session.class, id);
+            session = em.find(Session.class, id);
+            if(session != null) {
+                session.setSpeakers(speakerBean.findSpeakers(session));
+            }
         }
-        return null;
+        return session;
     }
 
     public List<Session> findSessions(Event event) {
@@ -77,6 +85,55 @@ public class SessionBean {
         }
 
         return sessions;
+    }
+
+    public Session findPreviousSession(Session currentSession) {
+        List<Session> foundSessions = em.createQuery("select s from Session s where s.event = :event and s.startDate <= :startDate and s.startTime < :startTime order by s.startDate, s.startTime desc")
+                                        .setParameter("event", currentSession.getEvent())
+                                        .setParameter("startDate", currentSession.getStartDate())
+                                        .setParameter("startTime", currentSession.getStartTime())
+                                        .getResultList();
+
+        if(foundSessions != null && !foundSessions.isEmpty()) {
+            return foundSessions.get(0);
+        }
+
+        return null;
+    }
+
+    public Session findNextSession(Session currentSession) {
+        List<Session> foundSessions = em.createQuery("select s from Session s where s.event = :event and s.startDate >= :startDate and s.startTime > :startTime order by s.startDate, s.startTime asc")
+                .setParameter("event", currentSession.getEvent())
+                .setParameter("startDate", currentSession.getStartDate())
+                .setParameter("startTime", currentSession.getStartTime())
+                .getResultList();
+
+        if(foundSessions != null && !foundSessions.isEmpty()) {
+            return foundSessions.get(0);
+        }
+
+        return null;
+    }
+
+    public List<Session> findSessionsByTopic(String topic) {
+        return em.createQuery("select s from Session s where s.topics like '%"+ topic +"%'").getResultList();
+    }
+
+    public List<Session> findRelatedSessions(Session session) {
+        String strTopics = session.getTopics();
+        if(strTopics == null) {
+            return null;
+        }
+
+        StringTokenizer st = new StringTokenizer(strTopics, ",");
+        Set<Session> relatedSessions = new HashSet<>();
+        String topic;
+        while(st.hasMoreTokens()) {
+            topic = st.nextToken().trim();
+            relatedSessions.addAll(findSessionsByTopic(topic));
+        }
+        relatedSessions.remove(session);
+        return new ArrayList<>(relatedSessions);
     }
 
     public void save(Session session) {

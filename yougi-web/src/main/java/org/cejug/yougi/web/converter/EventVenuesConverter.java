@@ -25,14 +25,14 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import org.cejug.yougi.event.entity.Speaker;
+import org.cejug.yougi.event.entity.Venue;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
-@FacesConverter(value="SessionSpeakerConverter")
-public class SessionSpeakerConverter implements Converter {
+@FacesConverter(value="EventVenuesConverter")
+public class EventVenuesConverter  implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -45,27 +45,27 @@ public class SessionSpeakerConverter implements Converter {
             return null;
         }
 
-        List<Speaker> speakers = (List<Speaker>) value;
+        List<Venue> venues = (List<Venue>) value;
 
-        if(speakers.isEmpty()) {
+        if(venues.isEmpty()) {
             return null;
         }
 
-        StringBuilder strSpeakers = new StringBuilder();
-        strSpeakers.append(ResourceBundleHelper.INSTANCE.getMessage("by"));
-        strSpeakers.append(" ");
+        StringBuilder strVenues = new StringBuilder();
+        strVenues.append(ResourceBundleHelper.INSTANCE.getMessage("at"));
+        strVenues.append(" ");
         String and = "";
-        for(Speaker speaker: speakers) {
-            strSpeakers.append(and);
+        for(Venue venue: venues) {
+            strVenues.append(and);
             if("".equals(and)) {
                 and = " " + ResourceBundleHelper.INSTANCE.getMessage("and") + " ";
             }
-            strSpeakers.append("<a href=\"speaker.xhtml?id=");
-            strSpeakers.append(speaker.getId());
-            strSpeakers.append("\">");
-            strSpeakers.append(speaker.getUserAccount().getFullName());
-            strSpeakers.append("</a>");
+            strVenues.append("<a href=\"venue.xhtml?id=");
+            strVenues.append(venue.getId());
+            strVenues.append("\">");
+            strVenues.append(venue.getName());
+            strVenues.append("</a>");
         }
-        return strSpeakers.toString();
+        return strVenues.toString();
     }
 }

@@ -33,9 +33,16 @@
                 <div class="content">
                     <h1>#{bundle.session}</h1>
                     <h:form>
-                        <h:panelGrid>
-                            <h:outputText value="#{sessionMBean.session.event}" style="font-size: 18px;"/>
+                        <h:panelGrid width="100%">
+                            <h:link outcome="event" value="#{sessionMBean.session.event}" style="font-size: 18px;">
+                                <f:param name="id" value="#{sessionMBean.session.event.id}"/>
+                            </h:link>
+
                             <h:outputText value="#{sessionMBean.session}" style="font-size: 24px; font-weight: bold;"/>
+
+                            <h:outputText value="#{sessionMBean.session.speakers}" style="font-size: 16px; font-style: italic;" escape="false">
+                                <f:converter converterId="SessionSpeakerConverter"/>
+                            </h:outputText>
 
                             <h:panelGroup>
                                 <h:outputText value="#{sessionMBean.session.startDate}">
@@ -51,24 +58,38 @@
                                 </h:outputText>
                             </h:panelGroup>
 
+                            <p:separator/>
+
+                            <h:outputText value="#{sessionMBean.session.description}" escape="false" style="font-size: 14px; font-style: italic;"/>
+
+                            <p:spacer height="10"/>
+
+                            <h:outputText value="#{sessionMBean.session.detailedDescription}" escape="false"/>
+
                             <h:panelGroup>
-                                <h:outputText value="#{sessionMBean.session.startDate}">
-                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
-                                </h:outputText>
-                                <h:outputText value="#{sessionMBean.session.startTime}">
-                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
-                                </h:outputText>
-                                <h:outputText value=" - "/>
-                                <h:outputText value="#{sessionMBean.session.endTime}">
-                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
-                                </h:outputText>
-                                <p:spacer width="10"/>
-                                <h:outputText value="#{sessionMBean.session.name}" style="font-weight: bold"/>
-                                <p:spacer width="5"/>
-                                <h:outputText value="#{sessionMBean.session.speakers}">
-                                    <f:converter converterId="SessionSpeakerConverter"/>
+                                <h:outputText value="#{bundle.topics}: "/>
+                                <h:outputText value="#{sessionMBean.session.topics}" escape="false">
+                                    <f:converter converterId="TopicsConverter"/>
                                 </h:outputText>
                             </h:panelGroup>
+
+                            <h:panelGrid width="100%" columns="3" columnClasses="panelGridColumn,panelGridColumn,panelGridColumn">
+                                <p:panel header="#{bundle.relatedSessions}">
+                                    <h:panelGrid>
+                                        <c:forEach items="#{sessionMBean.relatedSessions}" var="ses">
+                                            <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
+                                                <f:param name="id" value="#{ses.id}"/>
+                                            </h:link>
+                                        </c:forEach>
+                                    </h:panelGrid>
+                                </p:panel>
+                                <p:panel header="#{bundle.inSameRoom}">
+
+                                </p:panel>
+                                <p:panel header="#{bundle.inParallel}">
+
+                                </p:panel>
+                            </h:panelGrid>
                         </h:panelGrid>
                     </h:form>
                 </div>

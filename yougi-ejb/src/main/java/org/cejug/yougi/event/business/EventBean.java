@@ -54,6 +54,9 @@ public class EventBean {
     private EntityManager em;
 
     @EJB
+    private VenueBean venueBean;
+
+    @EJB
     private MessengerBean messengerBean;
 
     @EJB
@@ -66,21 +69,34 @@ public class EventBean {
     }
 
     public List<Event> findParentEvents() {
-    	return em.createQuery("select e from Event e where e.parent is null order by e.endDate desc")
-        		       .getResultList();
+    	List<Event> events =  em.createQuery("select e from Event e where e.parent is null order by e.endDate desc")
+        		        .getResultList();
+
+        return loadVenues(events);
     }
 
     public List<Event> findEvents(Event parent) {
-        return em.createQuery("select e from Event e where e.parent = :parent order by e.endDate desc")
-                 .setParameter("parent", parent)
-                 .getResultList();
+        List<Event> events = em.createQuery("select e from Event e where e.parent = :parent order by e.endDate desc")
+                               .setParameter("parent", parent)
+                               .getResultList();
+        return loadVenues(events);
     }
 
     public List<Event> findUpCommingEvents() {
     	Calendar today = Calendar.getInstance();
-        return em.createQuery("select e from Event e where e.endDate >= :today and e.parent is null order by e.endDate desc")
+        List<Event> events = em.createQuery("select e from Event e where e.endDate >= :today and e.parent is null order by e.endDate desc")
         		       .setParameter("today", today.getTime())
                                .getResultList();
+        return loadVenues(events);
+    }
+
+    private List<Event> loadVenues(List<Event> events) {
+        if(events != null) {
+            for(Event event: events) {
+                event.setVenues(venueBean.findEventVenues(event));
+            }
+        }
+        return events;
     }
 
     public void sendConfirmationEventAttendance(UserAccount userAccount, Event event, String dateFormat, String timeFormat, String timezone) {

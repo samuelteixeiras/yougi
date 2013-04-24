@@ -61,6 +61,8 @@ public class SessionMBean implements Serializable {
 
     private List<Session> sessions;
 
+    private List<Session> relatedSessions;
+
     private String selectedEvent;
 
     public SessionMBean() {
@@ -105,6 +107,13 @@ public class SessionMBean implements Serializable {
         return this.sessions;
     }
 
+    public List<Session> getRelatedSessions() {
+        if (this.relatedSessions == null) {
+            this.relatedSessions = sessionBean.findRelatedSessions(this.session);
+        }
+        return this.relatedSessions;
+    }
+
     public String getSelectedEvent() {
         return this.selectedEvent;
     }
@@ -118,6 +127,14 @@ public class SessionMBean implements Serializable {
             this.events = eventBean.findParentEvents();
         }
         return this.events;
+    }
+
+    public Session getPreviousSession() {
+        return sessionBean.findPreviousSession(this.session);
+    }
+
+    public Session getNextSession() {
+        return sessionBean.findNextSession(this.session);
     }
 
     @PostConstruct
