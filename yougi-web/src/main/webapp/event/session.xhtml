@@ -37,7 +37,7 @@
                             <h:link outcome="event" value="#{sessionMBean.session.event}" style="font-size: 18px;">
                                 <f:param name="id" value="#{sessionMBean.session.event.id}"/>
                             </h:link>
-                            
+
                             <h:link outcome="track" value="#{sessionMBean.session.track}" style="font-size: 18px;">
                                 <f:param name="id" value="#{sessionMBean.session.track.id}"/>
                             </h:link>
@@ -90,7 +90,11 @@
                                                 <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
                                                     <f:param name="id" value="#{ses.id}"/>
                                                 </h:link>
-                                                <h:outputText value=" - #{ses.room}" rendered="#{! empty ses.room}"/>
+                                                <h:outputText value=" - " rendered="#{! empty ses.room}"/>
+                                                <h:link outcome="room" value="#{ses.room}" rendered="#{! empty ses.room}">
+                                                    <f:param name="id" value="#{ses.room.id}"/>
+                                                    <f:param name="eventId" value="#{ses.event.id}"/>
+                                                </h:link>
                                             </h:panelGroup>
                                         </c:forEach>
                                     </h:panelGrid>
@@ -121,7 +125,11 @@
                                                 <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
                                                     <f:param name="id" value="#{ses.id}"/>
                                                 </h:link>
-                                                <h:outputText value=" - #{ses.room}" rendered="#{! empty ses.room}"/>
+                                                <h:outputText value=" - " rendered="#{! empty ses.room}"/>
+                                                <h:link outcome="room" value="#{ses.room}" rendered="#{! empty ses.room}">
+                                                    <f:param name="id" value="#{ses.room.id}"/>
+                                                    <f:param name="eventId" value="#{ses.event.id}"/>
+                                                </h:link>
                                             </h:panelGroup>
                                         </c:forEach>
                                     </h:panelGrid>

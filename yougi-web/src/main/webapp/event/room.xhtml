@@ -48,9 +48,19 @@
                                 <p:panel header="#{bundle.sessions}">
                                     <h:panelGrid>
                                         <c:forEach items="#{roomMBean.sessions}" var="ses">
-                                            <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
-                                                <f:param name="id" value="#{ses.id}"/>
-                                            </h:link>
+                                            <h:panelGroup>
+                                                <h:outputText value="#{ses.startTime}">
+                                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                                </h:outputText>
+                                                <h:outputText value=" - "/>
+                                                <h:outputText value="#{ses.endTime}">
+                                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                                </h:outputText>
+                                                <p:spacer width="10"/>
+                                                <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
+                                                    <f:param name="id" value="#{ses.id}"/>
+                                                </h:link>
+                                            </h:panelGroup>
                                         </c:forEach>
                                     </h:panelGrid>
                                 </p:panel>
@@ -59,6 +69,7 @@
                                         <c:forEach items="#{roomMBean.speakers}" var="spk">
                                             <h:link outcome="speaker" value="#{spk.fullName}" style="font-weight: bold">
                                                 <f:param name="id" value="#{spk.id}"/>
+                                                <f:param name="eventId" value="#{roomMBean.event.id}"/>
                                             </h:link>
                                         </c:forEach>
                                     </h:panelGrid>

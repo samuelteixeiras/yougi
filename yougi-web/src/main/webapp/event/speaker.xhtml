@@ -39,7 +39,7 @@
                             </h:link>
 
                             <h:outputText value="#{speakerMBean.speaker.fullName}" style="font-size: 24px; font-weight: bold;"/>
-                            
+
                             <h:outputText value="#{speakerMBean.speaker.organization}" style="font-size: 14px;"/>
 
                             <p:spacer height="10"/>
@@ -63,7 +63,11 @@
                                             <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
                                                 <f:param name="id" value="#{ses.id}"/>
                                             </h:link>
-                                            <h:outputText value=" - #{ses.room}" rendered="#{! empty ses.room}"/>
+                                            <h:outputText value=" - " rendered="#{! empty ses.room}"/>
+                                            <h:link outcome="room" value="#{ses.room}" rendered="#{! empty ses.room}">
+                                                <f:param name="id" value="#{ses.room.id}"/>
+                                                <f:param name="eventId" value="#{speakerMBean.event.id}"/>
+                                            </h:link>
                                         </h:panelGroup>
                                     </c:forEach>
                                 </h:panelGrid>

@@ -48,9 +48,9 @@ public class SpeakerBean {
     }
 
     public List<Speaker> findSpeakers(Event event) {
-        return em.createQuery("select ss.speaker from SpeakerSession ss where ss.session.event = :event order by ss.speaker.userAccount.firstName asc")
-                 .setParameter("event", event)
-                 .getResultList();
+        return em.createQuery("select distinct ss.speaker from SpeakerSession ss where ss.session.event = :event order by ss.speaker.userAccount.firstName asc")
+                                   .setParameter("event", event)
+                                   .getResultList();
     }
 
     public List<Speaker> findSpeakers(Session session) {
