@@ -1,4 +1,4 @@
- /* Yougi is a web application conceived to manage user groups or
+/* Yougi is a web application conceived to manage user groups or
  * communities focused on a certain domain of knowledge, whose members are
  * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Hildeberto Mendonça.
@@ -26,29 +26,48 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
-import org.cejug.yougi.event.business.AttendeeBean;
-import org.cejug.yougi.event.entity.Attendee;
+import javax.faces.bean.RequestScoped;
+import org.cejug.yougi.event.business.EventBean;
+import org.cejug.yougi.event.business.RoomBean;
+import org.cejug.yougi.event.business.SessionBean;
+import org.cejug.yougi.event.business.VenueBean;
 import org.cejug.yougi.event.entity.Event;
+import org.cejug.yougi.event.entity.Room;
+import org.cejug.yougi.event.entity.Session;
+import org.cejug.yougi.event.entity.Venue;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
-@SessionScoped
-public class AttendeeMBean implements Serializable {
+@RequestScoped
+public class VenueMBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @EJB
-    private AttendeeBean attendeeBean;
+    private VenueBean venueBean;
+    
+    @EJB
+    private RoomBean roomBean;
+
+    @EJB
+    private SessionBean sessionBean;
+
+    @EJB
+    private EventBean eventBean;
 
     @ManagedProperty(value = "#{param.id}")
     private String id;
 
-    private Attendee attendee;
-    
-    private List<Event> attendedEvents;
+    @ManagedProperty(value = "#{param.eventId}")
+    private String eventId;
+
+    private Event event;
+
+    private Venue venue;
+
+    private List<Room> rooms;
 
     public String getId() {
         return id;
@@ -58,25 +77,49 @@ public class AttendeeMBean implements Serializable {
         this.id = id;
     }
 
-    public Attendee getAttendee() {
-        return this.attendee;
+    public String getEventId() {
+        return eventId;
     }
 
-    public void setAttendee(Attendee attendee) {
-        this.attendee = attendee;
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
-    
-    public List<Event> getAttendedEvents() {
-        if(this.attendedEvents == null) {
-            this.attendedEvents = attendeeBean.findAttendeedEvents(this.attendee.getUserAccount());
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public Venue getVenue() {
+        return venue;
+    }
+
+    public void setVenue(Venue venue) {
+        this.venue = venue;
+    }
+
+    public List<Session> getSessions(Room room) {
+        return sessionBean.findSessionsByRoom(this.event, room);
+    }
+
+    public List<Room> getRooms() {
+        if(this.rooms == null) {
+            this.rooms = roomBean.findRooms(this.venue);
         }
-        return this.attendedEvents;
+        return this.rooms;
     }
 
     @PostConstruct
     public void load() {
+        if (this.eventId != null && !this.eventId.isEmpty()) {
+            this.event = eventBean.findEvent(eventId);
+        }
+
         if (this.id != null && !this.id.isEmpty()) {
-            this.attendee = attendeeBean.findAttendee(id);
+            this.venue = venueBean.findVenue(id);
         }
     }
 }

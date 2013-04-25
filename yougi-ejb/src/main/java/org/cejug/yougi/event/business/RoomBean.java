@@ -26,8 +26,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.cejug.yougi.entity.EntitySupport;
-import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.Room;
+import org.cejug.yougi.event.entity.Venue;
 
 /**
  * Manages rooms.
@@ -48,6 +48,12 @@ public class RoomBean {
         else {
             return null;
         }
+    }
+    
+    public List<Room> findRooms(Venue venue) {
+        return em.createQuery("select r from Room r where r.venue = :venue order by r.name asc")
+                 .setParameter("venue", venue)
+                 .getResultList();
     }
 
     public void save(Room room) {

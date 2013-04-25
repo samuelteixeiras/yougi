@@ -33,6 +33,7 @@ import org.cejug.yougi.event.business.SessionBean;
 import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.Room;
 import org.cejug.yougi.event.entity.Session;
+import org.cejug.yougi.event.entity.Speaker;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
@@ -63,6 +64,7 @@ public class RoomMBean implements Serializable {
     private Room room;
 
     private List<Session> sessions;
+    private List<Speaker> speakers;
 
     public String getId() {
         return id;
@@ -101,6 +103,13 @@ public class RoomMBean implements Serializable {
             this.sessions = sessionBean.findSessionsByRoom(this.event, this.room);
         }
         return this.sessions;
+    }
+
+    public List<Speaker> getSpeakers() {
+        if(this.speakers == null) {
+            this.speakers = sessionBean.findSessionSpeakersByRoom(this.event, this.room);
+        }
+        return this.speakers;
     }
 
     @PostConstruct

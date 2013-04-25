@@ -35,6 +35,9 @@ import org.cejug.yougi.event.entity.Session;
 import org.cejug.yougi.knowledge.business.TopicBean;
 import org.cejug.yougi.entity.EntitySupport;
 import org.cejug.yougi.event.entity.Room;
+import org.cejug.yougi.event.entity.Speaker;
+import org.cejug.yougi.event.entity.Track;
+import org.cejug.yougi.event.entity.Venue;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
@@ -51,6 +54,9 @@ public class SessionBean {
 
     @EJB
     private SpeakerBean speakerBean;
+    
+    @EJB
+    private RoomBean roomBean;
 
     public Session findSession(String id) {
         Session session = null;
@@ -79,12 +85,15 @@ public class SessionBean {
                                    .setParameter("event", event)
                                    .getResultList();
 
+        return loadSpeakers(sessions);
+    }
+    
+    private List<Session> loadSpeakers(List<Session> sessions) {
         if(sessions != null) {
             for(Session session: sessions) {
                 session.setSpeakers(speakerBean.findSpeakers(session));
             }
         }
-
         return sessions;
     }
 
@@ -124,11 +133,46 @@ public class SessionBean {
         return em.createQuery("select s from Session s where s.topics like '%"+ topic +"%'").getResultList();
     }
 
+    public List<Session> findSessionsByTrack(Track track) {
+        return em.createQuery("select s from Session s where s.track = :track order by s.startDate asc")
+                 .setParameter("track", track)
+                 .getResultList();
+    }
+    
     public List<Session> findSessionsByRoom(Event event, Room room) {
         return em.createQuery("select s from Session s where s.event = :event and s.room = :room order by s.startDate asc")
                  .setParameter("event", event)
                  .setParameter("room", room)
                  .getResultList();
+    }
+    
+    public List<Session> findSessionsByVenue(Event event, Venue venue) {
+        List<Room> rooms = roomBean.findRooms(venue);
+        List<Session> sessions = new ArrayList<>();
+        for(Room room: rooms) {
+            sessions.addAll(findSessionsByRoom(event, room));
+        }
+        return sessions;
+    }
+    
+    public List<Speaker> findSessionSpeakersByRoom(Event event, Room room) {
+        List<Session> sessions = findSessionsByRoom(event, room);
+        sessions = loadSpeakers(sessions);
+        Set<Speaker> speakers = new HashSet<>();
+        for(Session session: sessions) {
+            speakers.addAll(session.getSpeakers());
+        }
+        return new ArrayList<>(speakers);
+    }
+    
+    public List<Speaker> findSessionSpeakersByTrack(Track track) {
+        List<Session> sessions = findSessionsByTrack(track);
+        sessions = loadSpeakers(sessions);
+        Set<Speaker> speakers = new HashSet<>();
+        for(Session session: sessions) {
+            speakers.addAll(session.getSpeakers());
+        }
+        return new ArrayList<>(speakers);
     }
 
     public List<Session> findSessionsInTheSameRoom(Session session) {

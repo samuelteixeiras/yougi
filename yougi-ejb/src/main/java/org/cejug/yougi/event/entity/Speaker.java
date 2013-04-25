@@ -67,6 +67,10 @@ public class Speaker implements Serializable, Identified {
     public void setId(String id) {
         this.id = id;
     }
+    
+    public String getFullName() {
+        return this.userAccount.getFullName();
+    }
 
     public UserAccount getUserAccount() {
         return userAccount;

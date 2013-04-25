@@ -78,6 +78,10 @@ public class Attendee implements Serializable, Identified {
     public void setId(String id) {
         this.id = id;
     }
+    
+    public String getFullName() {
+        return this.userAccount.getFullName();
+    }
 
     public Event getEvent() {
         return event;

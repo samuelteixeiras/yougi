@@ -37,6 +37,10 @@
                             <h:link outcome="event" value="#{sessionMBean.session.event}" style="font-size: 18px;">
                                 <f:param name="id" value="#{sessionMBean.session.event.id}"/>
                             </h:link>
+                            
+                            <h:link outcome="track" value="#{sessionMBean.session.track}" style="font-size: 18px;">
+                                <f:param name="id" value="#{sessionMBean.session.track.id}"/>
+                            </h:link>
 
                             <h:outputText value="#{sessionMBean.session}" style="font-size: 26px; font-weight: bold; color: steelblue;"/>
 
@@ -59,6 +63,7 @@
                                 <h:outputText value=" #{bundle.at} "/>
                                 <h:link outcome="room" value="#{sessionMBean.session.room}" rendered="#{! empty sessionMBean.session.room}">
                                     <f:param name="id" value="#{sessionMBean.session.room.id}"/>
+                                    <f:param name="eventId" value="#{sessionMBean.session.event.id}"/>
                                 </h:link>
                             </h:panelGroup>
 

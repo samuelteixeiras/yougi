@@ -55,7 +55,13 @@
                                     </h:panelGrid>
                                 </p:panel>
                                 <p:panel header="#{bundle.speakers}">
-
+                                    <h:panelGrid>
+                                        <c:forEach items="#{roomMBean.speakers}" var="spk">
+                                            <h:link outcome="speaker" value="#{spk.fullName}" style="font-weight: bold">
+                                                <f:param name="id" value="#{spk.id}"/>
+                                            </h:link>
+                                        </c:forEach>
+                                    </h:panelGrid>
                                 </p:panel>
                             </h:panelGrid>
                         </h:panelGrid>

@@ -23,7 +23,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <body>
         <ui:composition template="../layout.xhtml">
             <ui:define name="title">#{bundle.speaker}</ui:define>
@@ -31,47 +33,41 @@
                 <div class="content">
                     <h1>#{bundle.speaker}</h1>
                     <h:form>
-                        <h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/>
-                        <h:panelGrid>
-                            <h:outputLabel for="event" value="#{bundle.event} *" styleClass="fieldLabel"/>
-                            <h:selectOneMenu id="event" label="#{bundle.event}" value="#{speakerMBean.selectedEvent}">
-                                <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                <f:selectItems value="#{speakerMBean.events}" var="event" itemLabel="#{event.name}" itemValue="#{event.id}"/>
-                            </h:selectOneMenu>
-                            <h:message for="event" errorClass="errorMessage"/>
+                        <h:panelGrid width="100%">
+                            <h:link outcome="event" value="#{speakerMBean.event}" style="font-size: 18px;">
+                                <f:param name="id" value="#{speakerMBean.event.id}"/>
+                            </h:link>
 
-                            <h:outputLabel for="eventSession" value="#{bundle.session}" styleClass="fieldLabel"/>
-                            <h:selectOneMenu id="eventSession" label="#{bundle.session}" value="#{speakerMBean.selectedEventSession}">
-                                <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                <f:selectItems value="#{speakerMBean.eventSessions}" var="ses" itemLabel="#{ses.title}" itemValue="#{ses.id}"/>
-                            </h:selectOneMenu>
-                            <h:message for="eventSession" errorClass="errorMessage"/>
+                            <h:outputText value="#{speakerMBean.speaker.fullName}" style="font-size: 24px; font-weight: bold;"/>
+                            
+                            <h:outputText value="#{speakerMBean.speaker.organization}" style="font-size: 14px;"/>
 
-                            <h:outputLabel for="userAccount" value="#{bundle.user}" styleClass="fieldLabel"/>
-                            <h:selectOneMenu id="userAccount" label="#{bundle.user}" value="#{speakerMBean.selectedUserAccount}">
-                                <f:selectItem itemLabel="#{bundle.select}" itemValue="" />
-                                <f:selectItems value="#{speakerMBean.userAccounts}" var="usr" itemLabel="#{usr.fullName}" itemValue="#{usr.id}"/>
-                            </h:selectOneMenu>
-                            <h:message for="userAccount" errorClass="errorMessage"/>
+                            <p:spacer height="10"/>
 
-                            <h:outputLabel for="shortCv" value="#{bundle.shortCv}" styleClass="fieldLabel"/>
-                            <h:inputTextarea id="shortCv" label="#{bundle.shortCv}" cols="60" rows="4" value="#{speakerMBean.speaker.shortCv}"/>
-                        </h:panelGrid>
+                            <h:outputText value="#{speakerMBean.speaker.shortCv}" escape="false" style="font-size: 14px; font-style: italic;"/>
 
-                        <h:inputHidden id="id" value="#{speakerMBean.speaker.id}"/>
+                            <p:spacer height="10"/>
 
-                        <h:panelGrid columns="3">
-                            <h:commandButton value="#{bundle.save}" action="#{speakerMBean.save}">
-                                <f:param name="eventId" value="#{speakerMBean.speaker.event.id}"/>
-                                <f:param name="id" value="#{speakerMBean.speaker.id}"/>
-                            </h:commandButton>
-                            <h:commandButton value="#{bundle.remove}" action="#{speakerMBean.remove}" rendered="#{! empty speakerMBean.id}">
-                                <f:param name="eventId" value="#{speakerMBean.speaker.event.id}"/>
-                                <f:param name="id" value="#{speakerMBean.speaker.id}"/>
-                            </h:commandButton>
-                            <h:button value="#{bundle.cancel}" outcome="speakers">
-                                <f:param name="eventId" value="#{speakerMBean.speaker.event.id}"/>
-                            </h:button>
+                            <p:panel header="#{bundle.sessions}">
+                                <h:panelGrid>
+                                    <c:forEach items="#{speakerMBean.sessions}" var="ses">
+                                        <h:panelGroup>
+                                            <h:outputText value="#{ses.startTime}">
+                                                <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                            </h:outputText>
+                                            <h:outputText value=" - "/>
+                                            <h:outputText value="#{ses.endTime}">
+                                                <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                            </h:outputText>
+                                            <p:spacer width="10"/>
+                                            <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
+                                                <f:param name="id" value="#{ses.id}"/>
+                                            </h:link>
+                                            <h:outputText value=" - #{ses.room}" rendered="#{! empty ses.room}"/>
+                                        </h:panelGroup>
+                                    </c:forEach>
+                                </h:panelGrid>
+                            </p:panel>
                         </h:panelGrid>
                     </h:form>
                 </div>

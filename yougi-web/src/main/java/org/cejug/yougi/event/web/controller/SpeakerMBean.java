@@ -171,6 +171,9 @@ public class SpeakerMBean implements Serializable {
      * @return the sessions
      */
     public List<Session> getSessions() {
+        if(this.sessions == null) {
+            this.sessions = sessionBean.findSessions(this.event);
+        }
         return sessions;
     }
 
@@ -208,7 +211,6 @@ public class SpeakerMBean implements Serializable {
         }
 
         this.events = eventBean.findParentEvents();
-        this.sessions = sessionBean.findSessions(this.event);
         this.userAccounts = userAccountBean.findUserAccounts();
     }
 

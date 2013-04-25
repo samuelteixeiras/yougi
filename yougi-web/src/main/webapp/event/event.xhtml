@@ -171,6 +171,7 @@
                                         <h:panelGroup>
                                             <h:link outcome="speaker" value="#{spk.userAccount.fullName}">
                                                 <f:param name="id" value="#{spk.id}"/>
+                                                <f:param name="eventId" value="#{eventMBean.event.id}"/>
                                             </h:link>
                                             <h:outputText value=" - "/>
                                             <h:outputText value="#{spk.organization}"/>
@@ -187,6 +188,7 @@
                                                     <h:panelGroup>
                                                         <h:link outcome="speaker" value="#{spk.userAccount.fullName}">
                                                             <f:param name="id" value="#{spk.id}"/>
+                                                            <f:param name="eventId" value="#{eventMBean.event.id}"/>
                                                         </h:link>
                                                         <h:outputText value=" - "/>
                                                         <h:outputText value="#{spk.organization}"/>
@@ -208,8 +210,8 @@
                                     <p:dataTable value="#{eventMBean.attendees}" var="attendee">
                                         <p:column>
                                             <f:facet name="header"><h:outputText value="#{bundle.name}"/></f:facet>
-                                            <h:link outcome="/profile/profile" value="#{attendee.userAccount.fullName}">
-                                                <f:param name="id" value="#{attendee.userAccount.id}"/>
+                                            <h:link outcome="attendee" value="#{attendee.fullName}">
+                                                <f:param name="id" value="#{attendee.id}"/>
                                             </h:link>
                                         </p:column>
 

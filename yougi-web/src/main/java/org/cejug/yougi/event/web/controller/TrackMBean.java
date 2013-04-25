@@ -1,4 +1,4 @@
- /* Yougi is a web application conceived to manage user groups or
+/* Yougi is a web application conceived to manage user groups or
  * communities focused on a certain domain of knowledge, whose members are
  * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Hildeberto Mendonça.
@@ -26,29 +26,39 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
-import org.cejug.yougi.event.business.AttendeeBean;
-import org.cejug.yougi.event.entity.Attendee;
-import org.cejug.yougi.event.entity.Event;
+import javax.faces.bean.RequestScoped;
+import org.cejug.yougi.event.business.EventBean;
+import org.cejug.yougi.event.business.SessionBean;
+import org.cejug.yougi.event.business.TrackBean;
+import org.cejug.yougi.event.entity.Session;
+import org.cejug.yougi.event.entity.Speaker;
+import org.cejug.yougi.event.entity.Track;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
-@SessionScoped
-public class AttendeeMBean implements Serializable {
+@RequestScoped
+public class TrackMBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @EJB
-    private AttendeeBean attendeeBean;
+    private TrackBean trackBean;
+
+    @EJB
+    private SessionBean sessionBean;
+
+    @EJB
+    private EventBean eventBean;
 
     @ManagedProperty(value = "#{param.id}")
     private String id;
 
-    private Attendee attendee;
-    
-    private List<Event> attendedEvents;
+    private Track track;
+
+    private List<Session> sessions;
+    private List<Speaker> speakers;
 
     public String getId() {
         return id;
@@ -58,25 +68,32 @@ public class AttendeeMBean implements Serializable {
         this.id = id;
     }
 
-    public Attendee getAttendee() {
-        return this.attendee;
+    public Track getTrack() {
+        return track;
     }
 
-    public void setAttendee(Attendee attendee) {
-        this.attendee = attendee;
+    public void setTrack(Track track) {
+        this.track = track;
     }
-    
-    public List<Event> getAttendedEvents() {
-        if(this.attendedEvents == null) {
-            this.attendedEvents = attendeeBean.findAttendeedEvents(this.attendee.getUserAccount());
+
+    public List<Session> getSessions() {
+        if (this.sessions == null) {
+            this.sessions = sessionBean.findSessionsByTrack(this.track);
         }
-        return this.attendedEvents;
+        return this.sessions;
+    }
+
+    public List<Speaker> getSpeakers() {
+        if(this.speakers == null) {
+            this.speakers = sessionBean.findSessionSpeakersByTrack(this.track);
+        }
+        return this.speakers;
     }
 
     @PostConstruct
     public void load() {
         if (this.id != null && !this.id.isEmpty()) {
-            this.attendee = attendeeBean.findAttendee(id);
+            this.track = trackBean.findTrack(id);
         }
     }
 }
