@@ -38,7 +38,7 @@
                                 <f:param name="id" value="#{sessionMBean.session.event.id}"/>
                             </h:link>
 
-                            <h:outputText value="#{sessionMBean.session}" style="font-size: 24px; font-weight: bold;"/>
+                            <h:outputText value="#{sessionMBean.session}" style="font-size: 26px; font-weight: bold; color: steelblue;"/>
 
                             <h:outputText value="#{sessionMBean.session.speakers}" style="font-size: 16px; font-style: italic;" escape="false">
                                 <f:converter converterId="SessionSpeakerConverter"/>
@@ -56,6 +56,10 @@
                                 <h:outputText value="#{sessionMBean.session.endTime}" rendered="#{! empty sessionMBean.session.startTime}">
                                     <f:convertDateTime type="time" timeStyle="short" pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                 </h:outputText>
+                                <h:outputText value=" #{bundle.at} "/>
+                                <h:link outcome="room" value="#{sessionMBean.session.room}" rendered="#{! empty sessionMBean.session.room}">
+                                    <f:param name="id" value="#{sessionMBean.session.room.id}"/>
+                                </h:link>
                             </h:panelGroup>
 
                             <p:separator/>
@@ -77,17 +81,45 @@
                                 <p:panel header="#{bundle.relatedSessions}">
                                     <h:panelGrid>
                                         <c:forEach items="#{sessionMBean.relatedSessions}" var="ses">
-                                            <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
-                                                <f:param name="id" value="#{ses.id}"/>
-                                            </h:link>
+                                            <h:panelGroup>
+                                                <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
+                                                    <f:param name="id" value="#{ses.id}"/>
+                                                </h:link>
+                                                <h:outputText value=" - #{ses.room}" rendered="#{! empty ses.room}"/>
+                                            </h:panelGroup>
                                         </c:forEach>
                                     </h:panelGrid>
                                 </p:panel>
                                 <p:panel header="#{bundle.inSameRoom}">
-
+                                    <h:panelGrid>
+                                        <c:forEach items="#{sessionMBean.sessionsInTheSameRoom}" var="ses">
+                                            <h:panelGroup>
+                                                <h:outputText value="#{ses.startTime}">
+                                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                                </h:outputText>
+                                                <h:outputText value=" - "/>
+                                                <h:outputText value="#{ses.endTime}">
+                                                    <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                                </h:outputText>
+                                                <p:spacer width="10"/>
+                                                <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
+                                                    <f:param name="id" value="#{ses.id}"/>
+                                                </h:link>
+                                            </h:panelGroup>
+                                        </c:forEach>
+                                    </h:panelGrid>
                                 </p:panel>
                                 <p:panel header="#{bundle.inParallel}">
-
+                                    <h:panelGrid>
+                                        <c:forEach items="#{sessionMBean.sessionsInParallel}" var="ses">
+                                            <h:panelGroup>
+                                                <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
+                                                    <f:param name="id" value="#{ses.id}"/>
+                                                </h:link>
+                                                <h:outputText value=" - #{ses.room}" rendered="#{! empty ses.room}"/>
+                                            </h:panelGroup>
+                                        </c:forEach>
+                                    </h:panelGrid>
                                 </p:panel>
                             </h:panelGrid>
                         </h:panelGrid>

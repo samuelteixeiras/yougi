@@ -34,6 +34,7 @@ import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.Session;
 import org.cejug.yougi.knowledge.business.TopicBean;
 import org.cejug.yougi.entity.EntitySupport;
+import org.cejug.yougi.event.entity.Room;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
@@ -119,6 +120,35 @@ public class SessionBean {
         return em.createQuery("select s from Session s where s.topics like '%"+ topic +"%'").getResultList();
     }
 
+    public List<Session> findSessionsInByTopic(String topic) {
+        return em.createQuery("select s from Session s where s.topics like '%"+ topic +"%'").getResultList();
+    }
+
+    public List<Session> findSessionsByRoom(Event event, Room room) {
+        return em.createQuery("select s from Session s where s.event = :event and s.room = :room order by s.startDate asc")
+                 .setParameter("event", event)
+                 .setParameter("room", room)
+                 .getResultList();
+    }
+
+    public List<Session> findSessionsInTheSameRoom(Session session) {
+        return em.createQuery("select s from Session s where s != :session and s.room = :room order by s.startDate asc")
+                 .setParameter("session", session)
+                 .setParameter("room", session.getRoom())
+                 .getResultList();
+    }
+
+    public List<Session> findSessionsInParallel(Session session) {
+        return em.createQuery("select s from Session s where s != :except and s.startDate = :date and (s.startTime between :otherStartTime1 and :otherEndTime1 or s.endTime between :otherStartTime2 and :otherEndTime2)")
+                 .setParameter("except", session)
+                 .setParameter("date", session.getStartDate())
+                 .setParameter("otherStartTime1", session.getStartTime())
+                 .setParameter("otherEndTime1", session.getEndTime())
+                 .setParameter("otherStartTime2", session.getStartTime())
+                 .setParameter("otherEndTime2", session.getEndTime())
+                 .getResultList();
+    }
+
     public List<Session> findRelatedSessions(Session session) {
         String strTopics = session.getTopics();
         if(strTopics == null) {
@@ -135,6 +165,8 @@ public class SessionBean {
         relatedSessions.remove(session);
         return new ArrayList<>(relatedSessions);
     }
+
+
 
     public void save(Session session) {
         if (EntitySupport.INSTANCE.isIdNotValid(session)) {

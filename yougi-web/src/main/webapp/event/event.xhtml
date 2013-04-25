@@ -56,6 +56,10 @@
                                         </h:outputText>
                                     </h:panelGroup>
 
+                                    <h:outputText value="#{eventMBean.event.venues}" escape="false">
+                                        <f:converter converterId="EventVenuesConverter"/>
+                                    </h:outputText>
+
                                     <h:outputText value="#{eventMBean.formattedEventDescription}" escape="false" style="font-size: 14px;"/>
 
                                     <h:outputFormat value="#{bundle.iWillAttend}" style="font-weight: bold; color: blue;" rendered="#{eventMBean.isAttending}">
@@ -88,6 +92,9 @@
                                                             <f:convertDateTime type="time" timeStyle="short" pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                                         </h:outputText>
                                                     </h:panelGroup>
+                                                    <h:outputText value="#{event.venues}" escape="false">
+                                                        <f:converter converterId="EventVenuesConverter"/>
+                                                    </h:outputText>
                                                 </h:panelGrid>
                                             </p:panel>
                                         </p:column>
@@ -114,6 +121,11 @@
                                             <h:outputText value="#{ses.speakers}" escape="false">
                                                 <f:converter converterId="SessionSpeakerConverter"/>
                                             </h:outputText>
+                                            <p:spacer width="5"/>
+                                            <h:link outcome="room" value="(#{ses.room})" rendered="#{! empty ses.room}">
+                                                <f:param name="id" value="#{ses.room.id}"/>
+                                                <f:param name="eventId" value="#{ses.event.id}"/>
+                                            </h:link>
                                         </h:panelGroup>
                                     </c:forEach>
 
@@ -139,6 +151,11 @@
                                                             <h:outputText value="#{ses.speakers}" escape="false">
                                                                 <f:converter converterId="SessionSpeakerConverter"/>
                                                             </h:outputText>
+                                                            <p:spacer width="5"/>
+                                                            <h:link outcome="room" value="(#{ses.room})" rendered="#{! empty ses.room}">
+                                                                <f:param name="id" value="#{ses.room.id}"/>
+                                                                <f:param name="eventId" value="#{ses.event.id}"/>
+                                                            </h:link>
                                                         </h:panelGroup>
                                                     </c:forEach>
                                                 </h:panelGrid>
@@ -246,11 +263,6 @@
                                         </p:tab>
                                     </c:forEach>
                                 </p:accordionPanel>
-                            </p:tab>
-                            <p:tab title="#{bundle.statistics}" rendered="#{securityBackingMBean.isUserLeader}">
-                                <h:panelGrid>
-                                    <p:pieChart value="#{eventMBean.attendanceRateChartModel}" title="#{bundle.attendanceRate}" legendPosition="e" showDataLabels="true"/>
-                                </h:panelGrid>
                             </p:tab>
                         </p:tabView>
 

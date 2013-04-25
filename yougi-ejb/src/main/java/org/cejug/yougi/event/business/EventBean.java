@@ -65,7 +65,9 @@ public class EventBean {
     static final Logger LOGGER = Logger.getLogger(EventBean.class.getName());
 
     public Event findEvent(String id) {
-        return em.find(Event.class, id);
+        Event event = em.find(Event.class, id);
+        event.setVenues(venueBean.findEventVenues(event));
+        return event;
     }
 
     public List<Event> findParentEvents() {

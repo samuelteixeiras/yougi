@@ -26,13 +26,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.cejug.yougi.entity.Identified;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
 @Table(name="room")
-public class Room implements Serializable {
+public class Room implements Serializable, Identified {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -48,10 +49,12 @@ public class Room implements Serializable {
     @JoinColumn(name = "venue", nullable = false)
     private Venue venue;
 
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public void setId(String id) {
         this.id = id;
     }

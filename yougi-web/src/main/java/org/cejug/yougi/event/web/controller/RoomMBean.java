@@ -28,8 +28,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import org.cejug.yougi.event.business.EventBean;
+import org.cejug.yougi.event.business.RoomBean;
 import org.cejug.yougi.event.business.SessionBean;
 import org.cejug.yougi.event.entity.Event;
+import org.cejug.yougi.event.entity.Room;
 import org.cejug.yougi.event.entity.Session;
 
 /**
@@ -37,9 +39,12 @@ import org.cejug.yougi.event.entity.Session;
  */
 @ManagedBean
 @RequestScoped
-public class SessionMBean implements Serializable {
+public class RoomMBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @EJB
+    private RoomBean roomBean;
 
     @EJB
     private SessionBean sessionBean;
@@ -55,22 +60,9 @@ public class SessionMBean implements Serializable {
 
     private Event event;
 
-    private Session session;
-
-    private List<Event> events;
+    private Room room;
 
     private List<Session> sessions;
-
-    private List<Session> relatedSessions;
-
-    private List<Session> sessionsInTheSameRoom;
-
-    private List<Session> sessionsInParallel;
-
-    private String selectedEvent;
-
-    public SessionMBean() {
-    }
 
     public String getId() {
         return id;
@@ -96,90 +88,29 @@ public class SessionMBean implements Serializable {
         this.event = event;
     }
 
-    public Session getSession() {
-        return session;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setSession(Session session) {
-        this.session = session;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public List<Session> getSessions() {
         if (this.sessions == null) {
-            this.sessions = sessionBean.findSessionsWithSpeakers(this.event);
+            this.sessions = sessionBean.findSessionsByRoom(this.event, this.room);
         }
         return this.sessions;
-    }
-
-    public List<Session> getRelatedSessions() {
-        if (this.relatedSessions == null) {
-            this.relatedSessions = sessionBean.findRelatedSessions(this.session);
-        }
-        return this.relatedSessions;
-    }
-
-    public List<Session> getSessionsInTheSameRoom() {
-        if (this.sessionsInTheSameRoom == null) {
-            this.sessionsInTheSameRoom = sessionBean.findSessionsInTheSameRoom(this.session);
-        }
-        return this.sessionsInTheSameRoom;
-    }
-
-    public List<Session> getSessionsInParallel() {
-        if(this.sessionsInParallel == null) {
-            this.sessionsInParallel = sessionBean.findSessionsInParallel(this.session);
-        }
-        return sessionsInParallel;
-    }
-
-    public String getSelectedEvent() {
-        return this.selectedEvent;
-    }
-
-    public void setSelectedEvent(String selectedEvent) {
-        this.selectedEvent = selectedEvent;
-    }
-
-    public List<Event> getEvents() {
-        if (this.events == null) {
-            this.events = eventBean.findParentEvents();
-        }
-        return this.events;
-    }
-
-    public Session getPreviousSession() {
-        return sessionBean.findPreviousSession(this.session);
-    }
-
-    public Session getNextSession() {
-        return sessionBean.findNextSession(this.session);
     }
 
     @PostConstruct
     public void load() {
         if (this.eventId != null && !this.eventId.isEmpty()) {
             this.event = eventBean.findEvent(eventId);
-            this.selectedEvent = this.event.getId();
         }
 
         if (this.id != null && !this.id.isEmpty()) {
-            this.session = sessionBean.findSession(id);
-            this.selectedEvent = this.session.getEvent().getId();
-        } else {
-            this.session = new Session();
+            this.room = roomBean.findRoom(id);
         }
-    }
-
-    public String save() {
-        Event evt = eventBean.findEvent(selectedEvent);
-        this.session.setEvent(evt);
-
-        sessionBean.save(this.session);
-        return "sessions?faces-redirect=true&eventId=" + evt.getId();
-    }
-
-    public String remove() {
-        sessionBean.remove(this.session.getId());
-        return "sessions?faces-redirect=true&eventId=" + this.event.getId();
     }
 }

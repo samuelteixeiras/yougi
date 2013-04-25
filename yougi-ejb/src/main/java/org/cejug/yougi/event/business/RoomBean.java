@@ -25,67 +25,45 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.cejug.yougi.event.entity.Venue;
 import org.cejug.yougi.entity.EntitySupport;
 import org.cejug.yougi.event.entity.Event;
+import org.cejug.yougi.event.entity.Room;
 
 /**
- * Manages venues.
+ * Manages rooms.
  *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Stateless
 @LocalBean
-public class VenueBean {
+public class RoomBean {
 
     @PersistenceContext
     private EntityManager em;
 
-    public Venue findVenue(String id) {
+    public Room findRoom(String id) {
         if(id != null) {
-            return em.find(Venue.class, id);
+            return em.find(Room.class, id);
         }
         else {
             return null;
         }
     }
 
-    public List<Venue> findVenues() {
-    	List<Venue> venues = em.createQuery("select v from Venue v order by v.name desc")
-        		       .getResultList();
-        return venues;
-    }
-
-    public List<Venue> findEventVenues(Event event) {
-        if(event == null) {
-            return null;
-        }
-
-        List<Venue> venues = em.createQuery("select ev.venue from EventVenue ev where ev.event = :event")
-                               .setParameter("event", event)
-                               .getResultList();
-
-        if((venues == null || venues.isEmpty()) && event.getParent() != null) {
-            venues = findEventVenues(event.getParent());
-        }
-
-        return venues;
-    }
-
-    public void save(Venue venue) {
-    	if(EntitySupport.INSTANCE.isIdNotValid(venue)) {
-            venue.setId(EntitySupport.INSTANCE.generateEntityId());
-            em.persist(venue);
+    public void save(Room room) {
+    	if(EntitySupport.INSTANCE.isIdNotValid(room)) {
+            room.setId(EntitySupport.INSTANCE.generateEntityId());
+            em.persist(room);
         }
         else {
-            em.merge(venue);
+            em.merge(room);
         }
     }
 
     public void remove(String id) {
-        Venue venue = findVenue(id);
-        if(venue != null) {
-            em.remove(venue);
+        Room room = findRoom(id);
+        if(room != null) {
+            em.remove(room);
         }
     }
 }

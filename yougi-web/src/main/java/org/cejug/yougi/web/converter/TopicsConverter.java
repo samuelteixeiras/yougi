@@ -20,16 +20,11 @@
  * */
 package org.cejug.yougi.web.converter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import org.cejug.yougi.event.entity.Session;
-import org.cejug.yougi.event.entity.Speaker;
-import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
