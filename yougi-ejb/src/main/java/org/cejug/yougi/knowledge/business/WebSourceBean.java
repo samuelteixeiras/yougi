@@ -57,6 +57,7 @@ public class WebSourceBean {
     }
 
     public void save(WebSource webSource) {
+
         if(EntitySupport.INSTANCE.isIdNotValid(webSource)) {
             webSource.setId(EntitySupport.INSTANCE.generateEntityId());
             em.persist(webSource);

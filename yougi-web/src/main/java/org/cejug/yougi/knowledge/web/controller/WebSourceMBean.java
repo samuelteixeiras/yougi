@@ -111,6 +111,7 @@ public class WebSourceMBean {
             if(this.webSource == null) {
                 this.webSource = new WebSource();
                 this.webSource.setProvider(this.provider);
+                this.webSource.setFeed(articleBean.findWebsiteFeedURL(this.provider.getWebsite()));
             }
             showFeedArticles();
         }

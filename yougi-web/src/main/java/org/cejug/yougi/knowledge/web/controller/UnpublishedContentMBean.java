@@ -85,7 +85,7 @@ public class UnpublishedContentMBean {
 
     public void addArticle(Article article) {
         if(this.articles == null) {
-            this.articles = new ArrayList<Article>();
+            this.articles = new ArrayList<>();
         }
         article.setId(null);
         article.setPublished(Boolean.FALSE);
@@ -94,7 +94,7 @@ public class UnpublishedContentMBean {
 
     public void removeArticle(Article article) {
         if(this.articles == null) {
-            this.articles = new ArrayList<Article>();
+            this.articles = new ArrayList<>();
         }
 
         this.articles.remove(article);

@@ -98,15 +98,14 @@ public class ArticleBean {
     public List<Article> findUnpublishedArticles(WebSource webSource) {
         List<Article> unpublishedArticles = null;
 
-        String feedUrl = findWebsiteFeedURL(webSource);
+        String feedUrl = findWebsiteFeedURL(webSource.getProvider().getWebsite());
 
         try {
             URL url  = new URL(feedUrl);
             XmlReader reader = new XmlReader(url);
             SyndFeed feed = new SyndFeedInput().build(reader);
-            if(webSource != null) {
-                webSource.setTitle(feed.getTitle());
-            }
+            webSource.setTitle(feed.getTitle());
+
             unpublishedArticles = new ArrayList<>();
             Article article;
             for (Iterator i = feed.getEntries().iterator(); i.hasNext();) {
@@ -144,9 +143,9 @@ public class ArticleBean {
         return unpublishedArticles;
     }
 
-    private String findWebsiteFeedURL(WebSource webSource) {
+    public String findWebsiteFeedURL(String urlWebsite) {
         String feedUrl = null;
-        String websiteContent = retrieveWebsiteContent(webSource);
+        String websiteContent = retrieveWebsiteContent(urlWebsite);
 
         if(websiteContent == null) {
             return null;
@@ -158,10 +157,6 @@ public class ArticleBean {
         while (matcher.find()) {
             feedUrl = matcher.group();
             if(isFeedURL(feedUrl)) {
-                if(webSource != null) {
-                    webSource.setFeed(feedUrl);
-                    LOGGER.log(Level.INFO, "Feed: {0}", feedUrl);
-                }
                 break;
             }
         }
@@ -176,12 +171,7 @@ public class ArticleBean {
         return false;
     }
 
-    private String retrieveWebsiteContent(WebSource webSource) {
-        if(webSource == null) {
-            return null;
-        }
-
-        String urlWebsite = webSource.getProvider().getWebsite();
+    private String retrieveWebsiteContent(String urlWebsite) {
 
         StringBuilder content = null;
         if(!urlWebsite.contains("http")) {
