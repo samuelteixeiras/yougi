@@ -59,7 +59,7 @@
                                                 <f:convertDateTime type="time" timeStyle="short" pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                             </h:outputText>
                                         </h:panelGroup>
-                                        <h:outputText value="#{event.venues}" escape="false">
+                                        <h:outputText value="#{event}" escape="false">
                                             <f:converter converterId="EventVenuesConverter"/>
                                         </h:outputText>
                                     </h:panelGrid>

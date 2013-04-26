@@ -34,13 +34,15 @@
                     <h1>#{bundle.session}</h1>
                     <h:form>
                         <h:panelGrid width="100%">
-                            <h:link outcome="event" value="#{sessionMBean.session.event}" style="font-size: 18px;">
-                                <f:param name="id" value="#{sessionMBean.session.event.id}"/>
-                            </h:link>
-
-                            <h:link outcome="track" value="#{sessionMBean.session.track}" style="font-size: 18px;">
-                                <f:param name="id" value="#{sessionMBean.session.track.id}"/>
-                            </h:link>
+                            <h:panelGroup>
+                                <h:link outcome="event" value="#{sessionMBean.session.event}" style="font-size: 18px;">
+                                    <f:param name="id" value="#{sessionMBean.session.event.id}"/>
+                                </h:link>
+                                <h:outputText value=" / " style="font-size: 18px;" rendered="#{! empty sessionMBean.session.track}"/>
+                                <h:link outcome="track" value="#{sessionMBean.session.track}" style="font-size: 18px;">
+                                    <f:param name="id" value="#{sessionMBean.session.track.id}"/>
+                                </h:link>
+                            </h:panelGroup>
 
                             <h:outputText value="#{sessionMBean.session}" style="font-size: 26px; font-weight: bold; color: steelblue;"/>
 

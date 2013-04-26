@@ -25,6 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.Venue;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
@@ -41,13 +42,13 @@ public class EventVenuesConverter  implements Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if(value == null && !(value instanceof List)) {
+        if(value == null && !(value instanceof Event)) {
             return null;
         }
 
-        List<Venue> venues = (List<Venue>) value;
+        Event event = (Event) value;
 
-        if(venues.isEmpty()) {
+        if(event.getVenues().isEmpty()) {
             return null;
         }
 
@@ -55,13 +56,15 @@ public class EventVenuesConverter  implements Converter {
         strVenues.append(ResourceBundleHelper.INSTANCE.getMessage("at"));
         strVenues.append(" ");
         String and = "";
-        for(Venue venue: venues) {
+        for(Venue venue: event.getVenues()) {
             strVenues.append(and);
             if("".equals(and)) {
                 and = " " + ResourceBundleHelper.INSTANCE.getMessage("and") + " ";
             }
             strVenues.append("<a href=\"venue.xhtml?id=");
             strVenues.append(venue.getId());
+            strVenues.append("&eventId=");
+            strVenues.append(event.getId());
             strVenues.append("\">");
             strVenues.append(venue.getName());
             strVenues.append("</a>");

@@ -42,6 +42,8 @@
 
                             <h:outputText value="#{speakerMBean.speaker.organization}" style="font-size: 14px;"/>
 
+                            <h:graphicImage value="#{profilePictureFinder.getPictureFromEmail(speakerMBean.speaker.userAccount.email)}"/>
+
                             <p:spacer height="10"/>
 
                             <h:outputText value="#{speakerMBean.speaker.shortCv}" escape="false" style="font-size: 14px; font-style: italic;"/>
