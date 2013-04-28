@@ -85,7 +85,7 @@ public class Authentication implements Serializable {
     }
 
     /**
-     * Hash a raw password using the MD5 algorithm.
+     * Hash a raw password using the SHA-256 algorithm.
      * @param rawPassword non-hashed password informed by the user.
      * @return the hashed password.
      */
@@ -93,7 +93,7 @@ public class Authentication implements Serializable {
         MessageDigest md;
         byte stringBytes[];
         try {
-            md = MessageDigest.getInstance("MD5");
+            md = MessageDigest.getInstance("SHA-256");
             stringBytes = rawPassword.getBytes("UTF8");
 
             byte stringCriptBytes[] = md.digest(stringBytes);
