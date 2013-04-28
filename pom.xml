@@ -17,4 +17,16 @@
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
         <netbeans.hint.j2eeVersion>1.6</netbeans.hint.j2eeVersion>
     </properties>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>1.0.3.Final</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
