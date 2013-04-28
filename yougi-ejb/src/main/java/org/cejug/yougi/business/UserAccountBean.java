@@ -327,49 +327,54 @@ public class UserAccountBean {
             }
         }
 
+        /* If the account does not exist yet then the informed account is taken
+           into consideration. */
         if(userAccount == null) {
             userAccount = newUserAccount;
         }
 
-        ApplicationProperty timeZone = applicationPropertyBean.findApplicationProperty(Properties.TIMEZONE);
+        if(!noAccount) {
+            ApplicationProperty timeZone = applicationPropertyBean.findApplicationProperty(Properties.TIMEZONE);
 
-        // A potential new city was informed.
-        if(newCity != null) {
-            // Check if the informed city already exists.
-            City existingCity = locationBean.findCityByName(newCity.getName());
+            // A potential new city was informed.
+            if(newCity != null) {
+                // Check if the informed city already exists.
+                City existingCity = locationBean.findCityByName(newCity.getName());
 
-            // If the city exists it simply set the property of the user account.
-            if(existingCity != null) {
-                userAccount.setCity(existingCity);
-                if(existingCity.getTimeZone() != null) {
-                    userAccount.setTimeZone(existingCity.getTimeZone());
+                // If the city exists it simply set the property of the user account.
+                if(existingCity != null) {
+                    userAccount.setCity(existingCity);
+                    if(existingCity.getTimeZone() != null) {
+                        userAccount.setTimeZone(existingCity.getTimeZone());
+                    }
+                    else {
+                        userAccount.setTimeZone(timeZone.getPropertyValue());
+                    }
+                }
+                else { // If the city does not exist it is created and used to set the property of the user account.
+                    newCity.setTimeZone(timeZone.getPropertyValue());
+                    newCity.setCountry(userAccount.getCountry());
+                    newCity.setProvince(userAccount.getProvince());
+                    locationBean.saveCity(newCity);
+
+                    userAccount.setCity(newCity);
+                    userAccount.setTimeZone(newCity.getTimeZone());
+                }
+            }
+            else {
+                /* If no new city was informed, it just takes the selected one to set
+                 * timezone of the user account. */
+                if(userAccount.getCity() != null && userAccount.getCity().getTimeZone() != null) {
+                    userAccount.setTimeZone(userAccount.getCity().getTimeZone());
                 }
                 else {
                     userAccount.setTimeZone(timeZone.getPropertyValue());
                 }
             }
-            else { // If the city does not exist it is created and used to set the property of the user account.
-                newCity.setTimeZone(timeZone.getPropertyValue());
-                newCity.setCountry(userAccount.getCountry());
-                newCity.setProvince(userAccount.getProvince());
-                locationBean.saveCity(newCity);
-
-                userAccount.setCity(newCity);
-                userAccount.setTimeZone(newCity.getTimeZone());
-            }
+            
+            userAccount.defineNewConfirmationCode();
         }
-        /* If no new city was informed, it just takes the selected one to set
-         * timezone of the user account. */
-        else {
-            if(userAccount.getCity() != null && userAccount.getCity().getTimeZone() != null) {
-                userAccount.setTimeZone(userAccount.getCity().getTimeZone());
-            }
-            else {
-                userAccount.setTimeZone(timeZone.getPropertyValue());
-            }
-        }
-
-        userAccount.defineNewConfirmationCode();
+        
         userAccount.setRegistrationDate(Calendar.getInstance().getTime());
 
         if(!existingAccount) {
@@ -380,14 +385,16 @@ public class UserAccountBean {
         authentication.setUserAccount(userAccount);
         em.persist(authentication);
 
-        // In case there is no account, the user is added to the administrative group.
+        /* In case there is no account, the user is added to the administrative
+         * group straight away. There is no need to send a confirmation email.*/
         if(noAccount) {
-            userAccount.resetConfirmationCode();
+            userAccount.setEmailAsVerified();
             AccessGroup adminGroup = accessGroupBean.findAdministrativeGroup();
             UserGroup userGroup = new UserGroup(adminGroup, authentication);
             userGroupBean.add(userGroup);
         }
         else {
+            /* A confirmation email is sent to all other new users. */
             ApplicationProperty appProp = applicationPropertyBean.findApplicationProperty(Properties.SEND_EMAILS);
             if(appProp.sendEmailsEnabled()) {
                 ApplicationProperty url = applicationPropertyBean.findApplicationProperty(Properties.URL);
@@ -432,8 +439,7 @@ public class UserAccountBean {
                                                      .getSingleResult();
             if(userAccount != null) {
             	userAccount.resetConfirmationCode();
-                userAccount.setEmail(userAccount.getUnverifiedEmail());
-                userAccount.setUnverifiedEmail(null);
+                userAccount.setEmailAsVerified();
             	userAccount.setRegistrationDate(Calendar.getInstance().getTime());
 
                 // This step effectively allows the user to access the application.
@@ -610,10 +616,11 @@ public class UserAccountBean {
      */
     public Boolean passwordMatches(UserAccount userAccount, String passwordToCheck) {
         try {
-            Authentication authentication = (Authentication) em.createQuery("select a from Authentication a where a.userAccount = :userAccount and a.password = :password")
-                                            .setParameter("userAccount", userAccount)
-                                            .setParameter("password", (new Authentication()).hashPassword(passwordToCheck))
-                                            .getSingleResult();
+            Authentication authentication = new Authentication();
+            authentication = (Authentication) em.createQuery("select a from Authentication a where a.userAccount = :userAccount and a.password = :password")
+                                                .setParameter("userAccount", userAccount)
+                                                .setParameter("password", authentication.hashPassword(passwordToCheck))
+                                                .getSingleResult();
             if(authentication != null) {
                 return Boolean.TRUE;
             }
@@ -712,8 +719,8 @@ public class UserAccountBean {
         }
 
         userAccount.resetConfirmationCode();
-        userAccount.setEmail(userAccount.getUnverifiedEmail());
-        userAccount.setUnverifiedEmail(null);
+        userAccount.setEmailAsVerified();
+        
         save(userAccount);
     }
 

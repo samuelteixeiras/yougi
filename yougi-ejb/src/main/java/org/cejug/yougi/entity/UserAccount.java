@@ -213,10 +213,6 @@ public class UserAccount implements Serializable, Identified {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email.toLowerCase();
-    }
-
     /**
      * @return the unverifiedEmail is not null when the user's email is not
      * confirmed yet. Once the email is confirmed this method returns null.
@@ -232,6 +228,11 @@ public class UserAccount implements Serializable, Identified {
         else {
             this.unverifiedEmail = null;
         }
+    }
+    
+    public void setEmailAsVerified() {
+        this.email = this.unverifiedEmail;
+        this.unverifiedEmail = null;
     }
 
     /**
@@ -451,11 +452,20 @@ public class UserAccount implements Serializable, Identified {
         return confirmationCode;
     }
 
+    /**
+     * Defines a confirmation code to the user. It usually happens when the user
+     * fill in the registration form and the email address needs to be confirmed
+     * or when (s)he needs to change the password.
+     */
     public void defineNewConfirmationCode() {
         UUID uuid = UUID.randomUUID();
         this.confirmationCode = uuid.toString().replaceAll("-", "");
     }
 
+    /**
+     * Set the confirmation code as null. Should be called when the confirmation
+     * code is confirmed and can be discarded.
+     */
     public void resetConfirmationCode() {
         this.confirmationCode = null;
     }
