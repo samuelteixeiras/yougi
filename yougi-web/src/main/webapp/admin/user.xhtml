@@ -230,8 +230,6 @@
                                 </h:panelGrid>
 
                                 <h:inputHidden id="id" value="#{memberMBean.userAccount.id}"/>
-                                <h:inputHidden id="email" value="#{memberMBean.userAccount.email}"/>
-                                <h:inputHidden id="unverifiedEmail" value="#{memberMBean.userAccount.unverifiedEmail}"/>
                             </p:tab>
                             <p:tab title="#{bundle.messages}">
                                 <p:dataTable var="historicMessage" value="#{memberMBean.historicMessages}">

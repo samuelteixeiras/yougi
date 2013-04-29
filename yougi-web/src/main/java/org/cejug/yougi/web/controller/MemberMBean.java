@@ -296,6 +296,8 @@ public class MemberMBean implements Serializable {
         existingUserAccount.setLastName(userAccount.getLastName());
         existingUserAccount.setGender(userAccount.getGender());
         existingUserAccount.setBirthDate(userAccount.getBirthDate());
+        existingUserAccount.setWebsite(userAccount.getWebsite());
+        existingUserAccount.setTwitter(userAccount.getTwitter());
 
         existingUserAccount.setPublicProfile(userAccount.getPublicProfile());
         existingUserAccount.setMailingList(userAccount.getMailingList());
