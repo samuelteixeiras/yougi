@@ -95,9 +95,13 @@ public class ArticleBean {
         }
     }
 
-    public List<Article> findUnpublishedArticles(WebSource webSource) {
-        List<Article> unpublishedArticles = null;
-
+    /**
+     * @param webSource a web source that contains details about a user website.
+     * @return a list of articles found in the informed web source.
+     * */
+    public WebSource loadWebSource(WebSource webSource) {
+        List<Article> unpublishedArticles;
+ 
         String feedUrl = findWebsiteFeedURL(webSource.getProvider().getWebsite());
 
         try {
@@ -136,13 +140,20 @@ public class ArticleBean {
             for(Article publishedArticle: publishedArticles) {
                 unpublishedArticles.remove(publishedArticle);
             }
+
+            webSource.setArticles(unpublishedArticles);
+
         } catch (IllegalArgumentException | FeedException | IOException iae) {
             LOGGER.log(Level.SEVERE, iae.getMessage(), iae);
         }
 
-        return unpublishedArticles;
+        return webSource;
     }
 
+    /**
+     * @param urlWebsite url used to find the web content where there is probably a feed to be consumed.
+     * @return if a feed url is found in the web content, it is returned. Otherwise, the method returns null.
+     * */
     public String findWebsiteFeedURL(String urlWebsite) {
         String feedUrl = null;
         String websiteContent = retrieveWebsiteContent(urlWebsite);
@@ -164,6 +175,10 @@ public class ArticleBean {
         return feedUrl;
     }
 
+    /**
+     * @param url candidate to be a feed url.
+     * @return true if the informed url is actually a feed, false otherwise.
+     * */
     private boolean isFeedURL(String url) {
         if(url.contains("feed")) {
             return true;
@@ -171,6 +186,10 @@ public class ArticleBean {
         return false;
     }
 
+    /**
+     * @param urlWebsite url used to find the web content where there is probably a feed to be consumed.
+     * @return the entire content, which or without url feed.
+     * */
     private String retrieveWebsiteContent(String urlWebsite) {
 
         StringBuilder content = null;

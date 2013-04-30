@@ -111,9 +111,9 @@ public class WebSourceMBean {
             if(this.webSource == null) {
                 this.webSource = new WebSource();
                 this.webSource.setProvider(this.provider);
-                this.webSource.setFeed(articleBean.findWebsiteFeedURL(this.provider.getWebsite()));
             }
-            showFeedArticles();
+            this.webSource = articleBean.loadWebSource(this.webSource);
+            this.unpublishedContentMBean.setWebSource(this.webSource);
         }
     }
 
@@ -125,16 +125,12 @@ public class WebSourceMBean {
     public String undoReference() {
         webSourceBean.remove(this.webSource.getId());
         this.webSource.setId(null);
+        this.unpublishedContentMBean.reset();
         return "website";
     }
 
     public String refreshUnpublishedContent() {
-        this.unpublishedContentMBean.refreshArticles();
+        this.unpublishedContentMBean.loadWebSource();
         return "website";
-    }
-
-    public void showFeedArticles() {
-        this.unpublishedContentMBean.setWebSource(this.webSource);
-        this.unpublishedContentMBean.loadArticles();
     }
 }

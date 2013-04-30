@@ -20,7 +20,6 @@
  * */
 package org.cejug.yougi.knowledge.web.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -37,7 +36,6 @@ import org.cejug.yougi.knowledge.entity.WebSource;
 public class UnpublishedContentMBean {
 
     private WebSource webSource;
-    private List<Article> articles;
 
     @EJB
     private ArticleBean articleBean;
@@ -48,16 +46,21 @@ public class UnpublishedContentMBean {
 
     public void setWebSource(WebSource webSource) {
         if(this.webSource == null || !this.webSource.equals(webSource)) {
-            this.articles = null;
+            reset();
         }
         this.webSource = webSource;
     }
 
+    public void reset() {
+        this.webSource  = null;
+    }
+
     public List<Article> getArticles() {
-        return articles;
+        return this.webSource.getArticles();
     }
 
     public Article getArticle(String permanentLink) {
+        List<Article> articles = this.webSource.getArticles();
         if(articles == null || permanentLink == null) {
             return null;
         }
@@ -73,30 +76,17 @@ public class UnpublishedContentMBean {
         return article;
     }
 
-    public void loadArticles() {
-        if(this.articles == null) {
-            this.articles = articleBean.findUnpublishedArticles(this.webSource);
-        }
-    }
-
-    public void refreshArticles() {
-        this.articles = articleBean.findUnpublishedArticles(this.webSource);
+    public void loadWebSource() {
+        this.webSource = articleBean.loadWebSource(this.webSource);
     }
 
     public void addArticle(Article article) {
-        if(this.articles == null) {
-            this.articles = new ArrayList<>();
-        }
         article.setId(null);
         article.setPublished(Boolean.FALSE);
-        this.articles.add(article);
+        this.webSource.addArticle(article);
     }
 
     public void removeArticle(Article article) {
-        if(this.articles == null) {
-            this.articles = new ArrayList<>();
-        }
-
-        this.articles.remove(article);
+        this.webSource.removeArticle(article);
     }
 }

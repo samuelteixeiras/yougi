@@ -21,11 +21,10 @@
 package org.cejug.yougi.knowledge.entity;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
+
 import org.cejug.yougi.entity.Identified;
 import org.cejug.yougi.entity.UserAccount;
 
@@ -49,6 +48,9 @@ public class WebSource implements Serializable, Identified {
     @ManyToOne
     @JoinColumn(name="provider")
     private UserAccount provider;
+
+    @OneToMany(mappedBy = "webSource")
+    private List<Article> articles;
 
     public WebSource() {}
 
@@ -88,6 +90,27 @@ public class WebSource implements Serializable, Identified {
 
     public void setProvider(UserAccount provider) {
         this.provider = provider;
+    }
+
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
+
+    public void addArticle(Article article) {
+        if(this.articles == null) {
+            this.articles = new ArrayList<>();
+        }
+        this.articles.add(article);
+    }
+
+    public void removeArticle(Article article) {
+        if(article != null && this.articles != null) {
+            this.articles.remove(article);
+        }
     }
 
     @Override
