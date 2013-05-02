@@ -36,7 +36,7 @@
                             <p:panel rendered="#{! empty eventMBean.commingEvents}" header="#{bundle.events}">
                                 <c:forEach items="#{eventMBean.commingEvents}" var="event">
                                     <h:panelGrid>
-                                        <h:link value="#{event.name}" outcome="event" style="font-size: 18px; font-weight: bold;">
+                                        <h:link value="#{event.name}" outcome="event/event" style="font-size: 18px; font-weight: bold;">
                                             <f:param name="id" value="#{event.id}"/>
                                         </h:link>
                                         <h:outputText value="#{event.shortDescription}"/>
@@ -58,7 +58,7 @@
                                                 <f:convertDateTime type="time" timeStyle="short" pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
                                             </h:outputText>
                                         </h:panelGroup>
-                                        <h:panelGrid columns="3">
+                                        <h:panelGroup>
                                             <h:link value="#{bundle.moreInformation}" outcome="event">
                                                 <f:param name="id" value="#{event.id}"/>
                                             </h:link>
@@ -66,12 +66,29 @@
                                             <h:link value="#{bundle.attend}" outcome="event/attendee">
                                                 <f:param name="id" value="#{event.id}"/>
                                             </h:link>
-                                        </h:panelGrid>
+                                        </h:panelGroup>
                                     </h:panelGrid>
                                 </c:forEach>
                             </p:panel>
                             <p:panel header="#{bundle.news}">
-                                
+                                <c:forEach items="#{webSourceMBean.allPublishedArticles}" var="article">
+                                    <h:panelGrid>
+                                        <h:link value="#{article.title}" outcome="knowledge/article" style="font-size: 18px; font-weight: bold;">
+                                            <f:param name="id" value="#{article.id}"/>
+                                        </h:link>
+                                        <h:panelGroup>
+                                            <h:outputText value="#{bundle.by} "/>
+                                            <h:outputText value="#{article.author}" style="font-size: 16px; font-style: italic;" escape="false"/>
+                                        </h:panelGroup>
+                                        <p:spacer height="10"/>
+                                        <h:panelGroup>
+                                            <h:outputText value="#{article.summary}" style="font-size: 14px;"/>
+                                            <h:link value=" #{bundle.readMore}..." outcome="knowledge/article">
+                                                <f:param name="id" value="#{article.id}"/>
+                                            </h:link>
+                                        </h:panelGroup>
+                                    </h:panelGrid>
+                                </c:forEach>
                             </p:panel>
                         </h:panelGrid>
 

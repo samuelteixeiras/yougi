@@ -63,6 +63,12 @@ public class ArticleBean {
         return em.find(Article.class, id);
     }
 
+    public List<Article> findPublishedArticles() {
+            return em.createQuery("select a from Article a where a.published = :published order by a.publication desc")
+                     .setParameter("published", Boolean.TRUE)
+                     .getResultList();
+    }
+
     public List<Article> findPublishedArticles(WebSource webSource) {
             return em.createQuery("select a from Article a where a.webSource = :webSource order by a.title asc")
                                  .setParameter("webSource", webSource)
@@ -101,7 +107,7 @@ public class ArticleBean {
      * */
     public WebSource loadWebSource(WebSource webSource) {
         List<Article> unpublishedArticles;
- 
+
         String feedUrl = findWebsiteFeedURL(webSource.getProvider().getWebsite());
 
         try {
@@ -109,7 +115,7 @@ public class ArticleBean {
             XmlReader reader = new XmlReader(url);
             SyndFeed feed = new SyndFeedInput().build(reader);
             webSource.setTitle(feed.getTitle());
-
+            webSource.setFeed(feedUrl);
             unpublishedArticles = new ArrayList<>();
             Article article;
             for (Iterator i = feed.getEntries().iterator(); i.hasNext();) {

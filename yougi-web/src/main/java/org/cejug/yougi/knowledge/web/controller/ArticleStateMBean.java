@@ -37,7 +37,7 @@ public class ArticleStateMBean {
 
     public void setState(Article article, Boolean newState) {
         if(articlesState == null) {
-            articlesState = new HashMap<Article, Boolean>();
+            articlesState = new HashMap<>();
         }
         articlesState.put(article, newState);
     }

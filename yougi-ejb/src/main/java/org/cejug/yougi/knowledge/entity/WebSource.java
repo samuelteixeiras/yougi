@@ -49,7 +49,7 @@ public class WebSource implements Serializable, Identified {
     @JoinColumn(name="provider")
     private UserAccount provider;
 
-    @OneToMany(mappedBy = "webSource")
+    @Transient
     private List<Article> articles;
 
     public WebSource() {}

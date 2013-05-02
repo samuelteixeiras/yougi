@@ -101,13 +101,6 @@
       <web-resource-name>leaders</web-resource-name>
       <description></description>
       <url-pattern>/admin/*</url-pattern>
-      <url-pattern>/event/event.xhtml</url-pattern>
-      <url-pattern>/event/attendees.xhtml</url-pattern>
-      <url-pattern>/event/session.xhtml</url-pattern>
-      <url-pattern>/event/speaker.xhtml</url-pattern>
-      <url-pattern>/event/sponsor.xhtml</url-pattern>
-      <url-pattern>/knowledge/mailing_list.xhtml</url-pattern>
-      <url-pattern>/knowledge/topic.xhtml</url-pattern>
       <http-method>GET</http-method>
       <http-method>POST</http-method>
     </web-resource-collection>
@@ -116,29 +109,11 @@
     </auth-constraint>
   </security-constraint>
   <security-constraint>
-    <display-name>Helpers Constraints</display-name>
-    <web-resource-collection>
-      <web-resource-name>helpers</web-resource-name>
-      <description></description>
-      <url-pattern>/program/*</url-pattern>
-      <http-method>GET</http-method>
-      <http-method>POST</http-method>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>helper</role-name>
-    </auth-constraint>
-  </security-constraint>
-  <security-constraint>
     <display-name>Members Constraints</display-name>
     <web-resource-collection>
       <web-resource-name>members</web-resource-name>
       <description></description>
       <url-pattern>/profile/*</url-pattern>
-      <url-pattern>/knowledge/*</url-pattern>
-      <url-pattern>/event/events.xhtml</url-pattern>
-      <url-pattern>/event/event_view.xhtml</url-pattern>
-      <url-pattern>/event/attendee.xhtml</url-pattern>
-      <url-pattern>/event/attendee_cancel.xhtml</url-pattern>
       <http-method>GET</http-method>
       <http-method>POST</http-method>
     </web-resource-collection>
