@@ -1,4 +1,4 @@
-\documentclass[envcountsame,envcountchap,letterpaper]{svmono}
+\documentclass[envcountsame,envcountchap]{svmono}
 \usepackage{makeidx}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -39,9 +39,9 @@ Notice: copies of this document may be made for your own use and for distributio
 
 \chapter{Introduction}
 
-\section{What is a User Group?}
+\section{What is a Community?}
 
-\section{Case Study}
+\section{Case Study: Java User Groups}
 
 The chosen case study is based on the personal experience of the team who is developing You. Most of contributions come from the Cear\'{a} Java User Group, which is a technical user group located in the Northeast cost of Brazil. Despite being part of a specific domain, we believe that the proposed model is generic enough to cover the management's needs of most user groups out there.
 
@@ -64,6 +64,14 @@ The project goes beyond services for communities and extends its impact to other
 \section{Overview}
 
 \section{Conventions Used in this Book}
+
+Within codes and scripts, when a word is surrounded by '[' it means that word should be replaced by a context-specific value when applied to a particular environment. For example:
+
+\begin{verbatim}
+password = [password]
+\end{verbatim}
+
+In this case, [password] should be replaced by the real password.
 
 \part{User Guide}
 
@@ -101,6 +109,20 @@ The deactivation of a member means that he/she will not participate in the activ
 
 At the same time, all data input by the ancient member in the database will not be removed. Comments, email messages, articles and other information will be kept unchanged indefinitely. Therefore, any modification on these data is not responsibility of the application.
 
+\chapter{Partnership Management}
+
+\section{Registration of Partners}
+
+\section{Sponsorship}
+
+\section{Exclusive Services for Partners}
+
+\subsection{Dissemination of Job Offers}
+
+\subsection{Offers of Products and Services}
+
+\subsection{Search for Talent People}
+
 \chapter{Event Management}
 \label{chp:event-management}
 
@@ -130,25 +152,11 @@ At the entrance of the event, a member of the UG staff checks the inscription of
 
 When the event has passed, no information about the event can be changed anymore. It will be available only in a read-only mode from the day after. Speakers will not be able to update their profiles either until being allocated to another event. However, UG Leaders are able to publish additional resources related to the event, such as pictures, documents, presentations, etc.
 
-\chapter{Partnership Management}
-
-\section{Registration of Partners}
-
-\section{Sponsorship}
-
-\section{Exclusive Services for Partners}
-
-\subsection{Dissemination of Job Offers}
-
-\subsection{Offers of Products and Services}
-
-\subsection{Search for Talent People}
-
 \chapter{Knowledge Management}
 
-\section{Topics in the Scope of the User Group}
+\section{Topics}
 
-\section{Mailing Lists Management}
+\section{Mailing Lists from Chaos to Meaningful Content}
 
 \section{Web Content Agregation}
 
@@ -287,17 +295,19 @@ To install Yougi we need:
 \item Access to a SMTP and POP 3 server to send and receive email messages.
 \end{itemize}
 
-The initial installation takes some time, but it will guarantee easy updates when new releases come out. Because the installation of Java SE JDK, Glassfish and MySQL are dependent of platform, we consider that they were already performed by the administrator, who knows details about the hosting system. We would not be complete and up-to-date enough here, thus the best source of information is their respective websites. The steps to install the application are:
+The initial installation takes some time, but it will guarantee easy updates when new releases come out. Because the installation of Java SE JDK, Glassfish and MySQL are dependent on the target platform, we consider that they were already performed by the administrator, who knows details about the hosting system. We would not be complete and up-to-date enough to cover all the possibilities, thus the best source of information is their respective websites. 
+
+The steps to install the application are:
 
 \begin{enumerate}
 \item Create a MySQL database: run SQL scripts to create a database and its structure dedicated for the application. The last available version of the database script is mysql-create.sql.
 \item Install the JDBC Driver on Glassfish: make the MySQL ConnectorJ JDBC Driver available in the application server classpath to be used by the connection pool to create new MySQL database connections.
 \item Create a database connection pool on Glassfish: the connection pool manages connections to the database using the JDBC Driver.
-\item Create a datasource for the connection pool on Glassfish: the datasource links the connection pool to the application. In other words, the connection pool is a resource and the datasource is a name for this resource. This name is used in the application to locate and use the resource.
-\item Create a Security Realm: the security realm allows the declarative implementation of the application's security, significantly reducing the application complexity by delegating this responsibility to the container.
+\item Create a datasource for the connection pool on Glassfish: the datasource links the connection pool to the application. In other words, the connection pool is a resource and the datasource is a name for this resource. This name is used in the application to locate and use that resource.
 \item Create a JavaMail session: since this application deals with people, it has to send emails very often. Therefore, the availability of a JavaMail session, managed by the container, is essential to support the high demand for sending and receiving emails without dealing with the complexity of managing email server connections.
+\item Create a Security Realm: the security realm allows the declarative implementation of the application's security, significantly reducing the application complexity by delegating this responsibility to the container.
 \item Deploy the application package: finally, we deploy the application package that makes use of all configurations above.
-\item Configure the application according to specific needs of the Yougi: after the initial deployment the application will run normally using default configuration. However, the application will be fully operational only when specific configurations for the Yougi are defined.
+\item Configure the application according to specific needs of the community: after the initial deployment the application will run normally using default configuration. However, the application will be fully operational only when specific configurations for the community are defined. For instance: there will not be no location registered at the beginning and they have to be created to allow the registration of new members.
 \end{enumerate}
 
 \section{Creating the MySQL Database}
@@ -314,9 +324,9 @@ Usually, an administrative user is needed to create a new database. The user \te
 
 \begin{verbatim}
 mysql> create database ug;
-mysql> create user ug_user identified by '[password]';
+mysql> create user 'ug_user'@'localhost' identified by '[password]';
 mysql> use ug;
-mysql> grant all privileges on ug.* to ug_user@'%';
+mysql> grant all privileges on ug.* to 'ug_user'@'localhost';
 mysql> flush privileges;
 \end{verbatim}
 
@@ -326,25 +336,29 @@ The database \textit{ug} and the user \textit{ug\_user} are created, and all pri
 mysql> show databases;
 \end{verbatim}
 
-Check if the database \textit{ug} is in the list. Then we have to sign out from this root's session and open a new session for the new user to create the database structure. Follow the sequence of commands below:
+Check if the database \textit{ug} is in the list. If necessary, you can drop the user to create it again:
 
 \begin{verbatim}
-mysql> quit;
+mysql> drop 'ug_user'@'localhost';
+\end{verbatim}
 
-# mysql -u ug_user -p
+Or you can reset the password:
 
-mysql> use ug;
-mysql> source [path of the database script]/mysql-create.sql;
+\begin{verbatim}
+mysql> set password for 'ug_user'@'localhost' = password('[password]');
+\end{verbatim}
+
+To leave the MySQL command prompt, use the command \textit{quit}.
+
+\begin{verbatim}
 mysql> quit;
 \end{verbatim}
 
 The user \textit{ug\_user} and its password should be used in the configuration of the connection pool. Do not use the \textit{root} user for application purposes.
 
-The file \textit{mysql-create.sql} is available within the source code. It is located in the folder /yougi-ejb/src/main/resources/META-INF/. To get the source code, follow the instructions described in the section \ref{ssec:obtaining-source-code} or get it from the web at: https://github.com/htmfilho/yougi.
-
 \section{Installing the JDBC Driver on Glassfish}
 
-The driver installation consists on saving the driver file in a specific AS lib directory. For this step instructions consider that Glassfish AS, version 3.1.2 or superior, is already installed and configured. The driver is available to download at MySQL's website (http://www.mysql.com). The downloaded file contains the driver and its documentation. Copy  the driver file mysql-connector-java-[version]-bin.jar to the directory /glassfish/domains/domain1/lib/. The server needs to be restarted to make the driver available.
+The driver installation consists on saving the driver file in a specific AS lib directory. For this step we consider that Glassfish AS, version 3.1 or superior, is already installed and configured. The driver is available to download at MySQL's website (http://www.mysql.com). The downloaded file contains the driver and its documentation. Copy  the driver file mysql-connector-java-[version]-bin.jar to the directory /glassfish/domains/domain1/lib/. The server needs to be restarted to make the driver available.
 
 \section{Creating a Database Connection Pool}
 \label{sec:creating-database-connection-pool}
@@ -361,14 +375,14 @@ To create the database connection pool through the configuration file, open the 
        "com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource"
        res-type="javax.sql.ConnectionPoolDataSource" description="" 
        name="UGPool" ping="true">
-         <property name="User" value="ug_user"></property>
-         <property name="DatabaseName" value="ug"></property>
-         <property name="Password" value="password_here"></property>
-         <property name="ServerName" value="localhost"></property>
-         <property name="PortNumber" value="3306"></property>
+         <property name="User" value="ug_user"/>
+         <property name="DatabaseName" value="ug"/>
+         <property name="Password" value="[password]"/>
+         <property name="ServerName" value="localhost"/>
+         <property name="PortNumber" value="3306"/>
    </jdbc-connection-pool>
    <jdbc-resource pool-name="UGPool" description="" 
-                  jndi-name="jdbc/ug"></jdbc-resource>
+                  jndi-name="jdbc/ug"/>
 </resources>
 \end{verbatim}
 
@@ -377,7 +391,7 @@ Now, find the element \textless server name=''server'' config-ref=''server-confi
 \begin{verbatim}
 <server name="server" config-ref="server-config">
    ...
-   <resource-ref ref="jdbc/ug"></resource-ref>
+   <resource-ref ref="jdbc/ug"/>
 </server>
 \end{verbatim}
 
@@ -390,7 +404,7 @@ If you prefer to do it in the Administrative Console, you can go through the fol
    \begin{enumerate}
    \item DatabaseName=ug
    \item User=ug\_user
-   \item Password=put\_the\_password\_here
+   \item Password=[password]
    \item PortNumber=3306 (this is the default port but make sure
    that you are using the correct one)
    \item ServerName=[server-name or ip address]
@@ -422,14 +436,14 @@ You can configure JavaMail directly in the domain.xml file, by copying and pasti
    ...
    </jdbc-connection-pool>
    <jdbc-resource pool-name="UGPool" description="" 
-                  jndi-name="jdbc/ug"></jdbc-resource>
+                  jndi-name="jdbc/ug"/>
 
-   <mail-resource host="send.one.com" description="" 
-                  jndi-name="mail/ug" from="your@emailaddress"
+   <mail-resource host="[smtp_server_name]" description="" 
+                  jndi-name="mail/ug" from="[your@emailaddress]"
                   user="smtp_user">
-      <property name="mail.smtp.port" value="2525"></property>
-      <property name="mail.smtp.auth" value="true"></property>
-      <property name="mail.smtp.password" value="your_password">
+      <property name="mail.smtp.port" value="[port_number]"/>
+      <property name="mail.smtp.auth" value="true"/>
+      <property name="mail.smtp.password" value="[password]"/>
       </property>
    </mail-resource>
 </resources>
@@ -453,7 +467,7 @@ To configure JavaMail using the Administrative Console, follow the steps below:
 \item create a new JavaMail session and set the following properties:
    \begin{enumerate}
    \item JNDI Name: mail/ug
-   \item Mail Host: [smtp-server-address]
+   \item Mail Host: [smtp-server-name]
    \item Default User: the username to authenticate on the smtp
     server
    \item Default Return Address: the address used by recipients to
@@ -490,17 +504,16 @@ As usual, we start with the fastest configuration option, by directly changing t
    ...
    <auth-realm name="ug-realm"
        classname="com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm">
-       <property name="jaas-context" value="jdbcRealm"></property>
-       <property name="encoding" value="Base64"></property>
-       <property name="user-table" value="authentication"></property>          
-       <property name="password-column" value="password"></property>
-       <property name="datasource-jndi" value="jdbc/ug"></property>
-       <property name="group-table" value="user_group"></property>
-       <property name="group-name-column" value="group_name"></property>
-       <property name="group-table-user-name-column" 
-           value="username"></property>
-       <property name="digest-algorithm" value="MD5"></property>
-       <property name="user-name-column" value="username"></property>
+       <property name="jaas-context" value="jdbcRealm"/>
+       <property name="encoding" value="Base64"/>
+       <property name="user-table" value="authentication"/>          
+       <property name="password-column" value="password"/>
+       <property name="datasource-jndi" value="jdbc/ug"/>
+       <property name="group-table" value="user_group"/>
+       <property name="group-name-column" value="group_name"/>
+       <property name="group-table-user-name-column" value="username"/>
+       <property name="digest-algorithm" value="SHA-256"/>
+       <property name="user-name-column" value="username"/>
    </auth-realm>
    ...
 </security-service>
@@ -522,7 +535,7 @@ If you prefer, you can always use the Adminstrative Console to configure the JDB
    \item Group Table: user\_group
    \item Group Table User Name Column: username
    \item Group Name Column: group\_name
-   \item Digest Algorithm: MD5
+   \item Digest Algorithm: SHA-256
    \item Encoding: Base64
    \end{enumerate}
 \item Restart the application server to activate the realm.
