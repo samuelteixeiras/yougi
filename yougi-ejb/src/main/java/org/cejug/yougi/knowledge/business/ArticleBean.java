@@ -186,7 +186,8 @@ public class ArticleBean {
      * @return true if the informed url is actually a feed, false otherwise.
      * */
     private boolean isFeedURL(String url) {
-        if(url.contains("feed")) {
+        String lowerCaseUrl = url.toLowerCase();
+        if(lowerCaseUrl.contains("feed") || lowerCaseUrl.contains("rss")) {
             return true;
         }
         return false;
