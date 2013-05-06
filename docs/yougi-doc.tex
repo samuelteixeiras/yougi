@@ -635,6 +635,33 @@ To push local commit to the server, use:
 #git push origin master
 \end{verbatim}
 
+\begin{figure}
+\centering
+\includegraphics[scale=.34]{figures/github-fork}
+\caption{Forking the main repository}
+\label{fig:github-fork}
+\end{figure}
+
+It is a good practice to refresh your fork before creating a pull request. It will substantially reduce the effort of the committers while trying to merge your contributions. The main trunk might have been under intense changes, made by different people in parallel, and refreshing your fork is also a way to also distribute the effort of having the application more stable and complete.
+
+Go to your own fork page and you will see the possibility of creating a pull request to the original repository. The commits you have done to your own repository will be in the scope of the pull request. There are some fields available to allow you to explain in details what you have done. This is very important because in a distributed team we don't have the chance to talk in person and things turn to be more difficult to understand. Figure \ref{fig:github-pull-request-example} shows an example of a pull request that is about to be sent.
+
+\begin{figure}
+\centering
+\includegraphics[scale=.46]{figures/github-pull-request-example}
+\caption{Example of pull request}
+\label{fig:github-pull-request-example}
+\end{figure}
+
+The pull request appears in the main repository and any of the existing committers can take the initiative to review and approve/desaprove it, as illustrated in Figure \ref{fig:github-pull-request-merged-closed}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=.46]{figures/github-pull-request-merged-closed}
+\caption{Review and approval of the received pull request}
+\label{fig:github-pull-request-merged-closed}
+\end{figure}
+
 \subsection{Configuring the Eclipse IDE}
 
 Eclipse is the most popular Java IDE. Since it is, basically, a multi-purpose platform, Eclipse should be suficiently extended to allow productive development of a JavaEE application, such as Yougi. In this section we will work with Eclipse Juno (4.2). It is available for download at: http://eclipse.org/downloads.
