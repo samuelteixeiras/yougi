@@ -577,16 +577,85 @@ Before using the application, the database should be initialized with some initi
 
 \chapter{Development}
 
-This chapter explains how to contribute to the source code of the project. It goes from the checkout of the source code to the development of an entire feature.
+As explained in the previous chapter, it is not necessary to start from the source code to install and use Yougi. The binary package is available at http://yougi.org/downloads. On the other hand, if the intention is to contribute to the project, a set of other actions are necessary. A potential contributor may:
+
+\begin{itemize}
+\item Be pationate about open source initiatives and technologies.
+\item Be interested in learning Enterprise Java technologies.
+\item Be excited about implementing a solution to manage comunities.
+\item Learn JavaEE, Maven, Arquillian, JUnit, and other technologies used in the project.
+\end{itemize}
+
+If you fell confortable with these principals, this chapter will help you to get started, explaining how to contribute to the source code of the project.
 
 \section{Preparing the Development Environment}
+
+Before starting, make sure you have everything it takes to develop Yougi. Basically, you have to:
+
+\begin{itemize}
+\item Install and configure Git, a version control system used to manage the source code and its distribution.
+\item Create an account on Github and learn the social aspect of it.
+\item Install and configure a Java IDE, preferably Netbeans because it is one of the best IDEs available to work with JavaEE applications.
+\item Install and configure an application server, preferably Glassfish, which is probably the more mature Java EE implementation available.
+\item Install and configure a relational database,  
+\end{itemize}
 
 \subsection{Obtaining the Source Code}
 \label{ssec:obtaining-source-code}
 
-Git is the version control system (VCS) used to control Yougi source code. For being a distributed VCS, Git is not trivial. Its foundations are a bit different from traditional VCSs, such as CVS and SVN. There is a master repository located at http://github.com/htmfilho/yougi, where the main trunk (master) is centralized, but every client is also a full featured VCS, where is possible perform commits off line, create branches and merge with other clients without acknowledging the master.
+Git is the version control system (VCS) used to control Yougi source code. For being a distributed VCS, Git is not that trivial. Its foundations are a bit different from traditional VCSs, such as CVS and SVN. So, you have to rethink some concepts while working with Git. We will explore the necessary here, but it is always good to master it later through books, training and other means.
 
-To install and use Yougi is not necessary to start from the source code. The binary package is available at http://yougi.org/downloads. Just follow the instructions described on Chapter \ref{chp:installation}. On the other hand, if the intention is to contribute to the project, the use of Git to retrieve the source code is necessary. The potential contributor should:
+The master repository is located at http://github.com/htmfilho/yougi, where the main trunk (master) is centralized, but every client is also a full featured VCS, where is possible to perform commits off line, create branches and merge with other clients without acknowledging the master.
+
+fork the main repository
+
+clone your own fork to your computer.
+
+\begin{verbatim}
+#git config --global user.name "John Smith"
+#git config --global user.email "john.smith@gmail.com"
+
+# mkdir yougi
+# cd yougi
+# git clone https://github.com/[your-github-username]/yougi.git .
+\end{verbatim}
+
+\subsection{Building the Project for the First Time}
+
+Start Netbeans
+
+Open Maven project: yougi
+
+Clean and Build: yougi
+
+\begin{verbatim}
+-------------------------------------------------------------
+Reactor Summary:
+
+yougi ..................................... SUCCESS [6.170s]
+yougi-ejb  ................................ SUCCESS [37.864s]
+yougi-web  ................................ SUCCESS [34.020s]
+yougi-ear  ................................ SUCCESS [5.009s]
+-------------------------------------------------------------
+BUILD SUCCESS
+-------------------------------------------------------------
+Total time: 1:23.555s
+Finished at: Sun May 05 17.45.48 CEST 2013
+Final Memory: 28M/369M
+-------------------------------------------------------------
+\end{verbatim}
+
+Freely change the files in your local clone, trying to solve one of the issues reported at: https://github.com/htmfilho/yougi/issues.
+
+Add the changed files to the stage for commit
+
+\begin{verbatim}
+git add [file]
+\end{verbatim}
+
+Only add files that should be committed.
+
+
 
 \begin{enumerate}
 \item install Git in the development machine: the installation is dependent of platform, thus the instructions for the target platform are only available on the Git website: http://git-scm.com.
