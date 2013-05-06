@@ -269,18 +269,29 @@ Going into details about the chosen technologies, we describe each one of them, 
 
 \section{Database Model}
 
-\begin{figure}
-\centering
-\includegraphics[height=10cm, angle=90]{figures/relational-model}
-\caption{Database relational model}
-\label{fig:relational-model}
-\end{figure}
-
 \subsection{Liquibase}
 
 To keep the database model up-to-date, Yougi uses the Framework Liquibase\footnote{Liquibase. Database Change Management.  http://www.liquibase.org.}. This framework empowers the application to update the database during deployment time. It simplies the upgrade of the application, reducing it to a simple deployment.
 
 During development time, if the database needs to change, the developer should add change sets to one or several xml files located in the module yougi-web, at src/main/resources/org/cejug/yougi/db/changelog.
+
+\subsection{Security Model}
+
+\begin{figure}
+\centering
+\includegraphics{figures/security-db-model}
+\caption{Security database model}
+\label{fig:security-db-model}
+\end{figure}
+
+\subsection{Event Model}
+
+\begin{figure}
+\centering
+\includegraphics{figures/event-db-model}
+\caption{Event database model}
+\label{fig:event-db-model}
+\end{figure}
 
 \chapter{Installation}
 \label{chp:installation}
