@@ -49,11 +49,13 @@ import org.cejug.yougi.event.business.EventBean;
 import org.cejug.yougi.event.business.SessionBean;
 import org.cejug.yougi.event.business.SpeakerBean;
 import org.cejug.yougi.event.business.TrackBean;
+import org.cejug.yougi.event.business.VenueBean;
 import org.cejug.yougi.event.entity.Attendee;
 import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.Session;
 import org.cejug.yougi.event.entity.Speaker;
 import org.cejug.yougi.event.entity.Track;
+import org.cejug.yougi.event.entity.Venue;
 import org.cejug.yougi.web.controller.UserProfileMBean;
 import org.cejug.yougi.web.report.EventAttendeeCertificate;
 import org.cejug.yougi.util.ResourceBundleHelper;
@@ -88,6 +90,9 @@ public class EventMBean {
     private UserAccountBean userAccountBean;
 
     @EJB
+    private VenueBean venueBean;
+
+    @EJB
     private ApplicationPropertyBean applicationPropertyBean;
 
     @ManagedProperty(value = "#{param.id}")
@@ -100,11 +105,15 @@ public class EventMBean {
 
     private Attendee attendee;
 
+    private String selectedParent;
+
     private List<Event> events;
 
     private List<Event> subEvents;
 
     private List<Event> parentEvents;
+
+    private List<Venue> venues;
 
     private List<Event> commingEvents;
 
@@ -139,6 +148,14 @@ public class EventMBean {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public String getSelectedParent() {
+        return this.selectedParent;
+    }
+
+    public void setSelectedParent(String selectedParent) {
+        this.selectedParent = selectedParent;
     }
 
     /**
@@ -188,6 +205,13 @@ public class EventMBean {
             parentEvents = eventBean.findParentEvents();
         }
         return parentEvents;
+    }
+
+    public List<Venue> getVenues() {
+        if(venues == null) {
+            venues = venueBean.findVenues();
+        }
+        return venues;
     }
 
     public List<Event> getSubEvents() {
@@ -283,10 +307,15 @@ public class EventMBean {
         if (id != null && !id.isEmpty()) {
             this.event = eventBean.findEvent(id);
 
+            if(this.event.getParent() != null) {
+                this.selectedParent = this.event.getParent().getId();
+            }
+
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             String username = request.getRemoteUser();
             UserAccount person = userAccountBean.findUserAccountByUsername(username);
             this.attendee = attendeeBean.findAttendee(this.event, person);
+
             this.numberPeopleAttending = attendeeBean.findNumberPeopleAttending(this.event);
             this.numberPeopleAttended = attendeeBean.findNumberPeopleAttended(this.event);
         } else {
@@ -368,7 +397,12 @@ public class EventMBean {
     }
 
     public String save() {
+        if(selectedParent != null && !selectedParent.isEmpty()) {
+            this.event.setParent(new Event(selectedParent));
+        }
+
         eventBean.save(this.event);
+
         return "events?faces-redirect=true";
     }
 

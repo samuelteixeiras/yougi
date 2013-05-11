@@ -32,7 +32,7 @@
                 <div class="content">
                     <h1>#{bundle.events}</h1>
                     <h:form>
-                        <p><p:commandLink id="eventFormOpen" value="#{bundle.newEvent}" onclick="eventFormDlg.show();" rendered="#{securityBackingMBean.isUserLeader}"/></p>
+                        <p><h:link outcome="event_form" value="#{bundle.newEvent}" rendered="#{securityBackingMBean.isUserLeader}"/></p>
                         <p:dataGrid var="event" value="#{eventMBean.events}" columns="1" rows="3" paginator="true">
                             <p:column>
                                 <p:panel>
@@ -68,7 +68,6 @@
                         </p:dataGrid>
                     </h:form>
                 </div>
-                <ui:include src="event_form.xhtml"/>
             </ui:define>
         </ui:composition>
     </h:body>

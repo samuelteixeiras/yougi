@@ -122,7 +122,7 @@ public class EventBean {
     }
 
     public void save(Event event) {
-    	if(EntitySupport.INSTANCE.isIdNotValid(event)) {
+        if(EntitySupport.INSTANCE.isIdNotValid(event)) {
             event.setId(EntitySupport.INSTANCE.generateEntityId());
             em.persist(event);
         }

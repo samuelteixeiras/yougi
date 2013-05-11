@@ -64,20 +64,20 @@ public class SecurityBackingMBean {
     public String login() {
         if(userAccountBean.thereIsNoAccount()) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, ResourceBundleHelper.INSTANCE.getMessage("infoFirstUser"), ""));
-            return "registration";
+            return "/registration";
         }
         else {
-            return "login?faces-redirect=true";
+            return "/login?faces-redirect=true";
         }
     }
 
     public String register() {
         if(userAccountBean.thereIsNoAccount()) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, ResourceBundleHelper.INSTANCE.getMessage("infoFirstUser"), ""));
-            return "registration";
+            return "/registration";
         }
         else {
-            return "registration?faces-redirect=true";
+            return "/registration?faces-redirect=true";
         }
     }
 

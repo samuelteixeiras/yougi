@@ -40,6 +40,10 @@ a:link:hover, a:visited:hover  {
     color: red;
 }
 
+.alignColumnLeft {
+    text-align: left;
+}
+
 .alignColumnRight {
     text-align: right;
 }
@@ -92,7 +96,6 @@ body {
     margin-bottom: 15px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-
 }
 
 .dataTable {
