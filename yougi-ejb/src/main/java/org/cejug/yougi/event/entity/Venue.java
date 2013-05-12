@@ -64,6 +64,12 @@ public class Venue implements Serializable, Identified {
 
     private String website;
 
+    public Venue() {}
+
+    public Venue(String id) {
+        this.id = id;
+    }
+
     @Override
     public String getId() {
         return id;

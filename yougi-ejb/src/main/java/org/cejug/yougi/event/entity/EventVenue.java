@@ -49,6 +49,13 @@ public class EventVenue implements Serializable, Identified {
     @JoinColumn(name = "venue", nullable = false)
     private Venue venue;
 
+    public EventVenue() {}
+
+    public EventVenue(Event event, Venue venue) {
+        this.event = event;
+        this.venue = venue;
+    }
+
     @Override
     public String getId() {
         return id;
