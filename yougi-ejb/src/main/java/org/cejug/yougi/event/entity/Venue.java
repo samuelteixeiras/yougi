@@ -120,6 +120,23 @@ public class Venue implements Serializable, Identified {
         this.city = city;
     }
 
+    public String getLocation() {
+        StringBuilder location = new StringBuilder();
+        String separator = "";
+
+        if(city != null) {
+            location.append(city.getName());
+            separator = ", ";
+        }
+
+        if(country != null) {
+            location.append(separator);
+            location.append(country.getName());
+        }
+        
+        return location.toString();
+    }
+
     public String getLatitude() {
         return latitude;
     }

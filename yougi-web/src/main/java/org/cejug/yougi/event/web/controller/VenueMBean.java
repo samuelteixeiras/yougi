@@ -73,6 +73,8 @@ public class VenueMBean implements Serializable {
 
     private List<Room> rooms;
 
+    private List<Venue> venues;
+
     public String getId() {
         return id;
     }
@@ -124,6 +126,13 @@ public class VenueMBean implements Serializable {
         return this.rooms;
     }
 
+    public List<Venue> getVenues() {
+        if(this.venues == null) {
+            this.venues = venueBean.findVenues();
+        }
+        return this.venues;
+    }
+
     @PostConstruct
     public void load() {
         if (this.eventId != null && !this.eventId.isEmpty()) {
@@ -134,6 +143,4 @@ public class VenueMBean implements Serializable {
             this.venue = venueBean.findVenue(id);
         }
     }
-
-
 }
