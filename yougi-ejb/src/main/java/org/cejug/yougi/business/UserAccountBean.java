@@ -50,7 +50,6 @@ import org.cejug.yougi.entity.MessageTemplate;
 import org.cejug.yougi.exception.BusinessLogicException;
 import org.cejug.yougi.knowledge.business.SubscriptionBean;
 import org.cejug.yougi.entity.EntitySupport;
-import org.cejug.yougi.exception.ExistingUserAccountException;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
@@ -371,10 +370,10 @@ public class UserAccountBean {
                     userAccount.setTimeZone(timeZone.getPropertyValue());
                 }
             }
-            
+
             userAccount.defineNewConfirmationCode();
         }
-        
+
         userAccount.setRegistrationDate(Calendar.getInstance().getTime());
 
         if(!existingAccount) {
@@ -424,7 +423,7 @@ public class UserAccountBean {
     /**
      * Finds the user account using the confirmation code, adds this user
      * account in the default group, sends a welcome message to the user and a
-     * notification message to the leaders. The user has access to the
+     * notification message to the administrators. The user has access to the
      * application when he/she is added to the default group.
      * @return The confirmed user account.
      * */
@@ -453,8 +452,8 @@ public class UserAccountBean {
                     sendWelcomeMessage(userAccount);
 
                     AccessGroup administrativeGroup = accessGroupBean.findAdministrativeGroup();
-                    List<UserAccount> leaders = userGroupBean.findUsersGroup(administrativeGroup);
-                    sendNewMemberAlertMessage(userAccount, leaders);
+                    List<UserAccount> admins = userGroupBean.findUsersGroup(administrativeGroup);
+                    sendNewMemberAlertMessage(userAccount, admins);
                 }
             }
 
@@ -480,13 +479,13 @@ public class UserAccountBean {
         }
     }
 
-    public void sendNewMemberAlertMessage(UserAccount userAccount, List<UserAccount> leaders) {
+    public void sendNewMemberAlertMessage(UserAccount userAccount, List<UserAccount> admins) {
         MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("0D6F96382D91454F8155A720F3326F1B");
         Map<String, Object> values = new HashMap<>();
         values.put("userAccount.fullName", userAccount.getFullName());
         values.put("userAccount.registrationDate", userAccount.getRegistrationDate());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
-        emailMessage.setRecipients(leaders);
+        emailMessage.setRecipients(admins);
 
         try {
             messengerBean.sendEmailMessage(emailMessage);
@@ -522,10 +521,10 @@ public class UserAccountBean {
         }
 
         AccessGroup administrativeGroup = accessGroupBean.findAdministrativeGroup();
-        List<UserAccount> leaders = userGroupBean.findUsersGroup(administrativeGroup);
+        List<UserAccount> admins = userGroupBean.findUsersGroup(administrativeGroup);
 
         if(appProp.sendEmailsEnabled()) {
-            sendDeactivationAlertMessage(existingUserAccount, leaders);
+            sendDeactivationAlertMessage(existingUserAccount, admins);
         }
     }
 
@@ -552,19 +551,19 @@ public class UserAccountBean {
         }
     }
 
-    public void sendDeactivationAlertMessage(UserAccount userAccount, List<UserAccount> leaders) {
+    public void sendDeactivationAlertMessage(UserAccount userAccount, List<UserAccount> admins) {
         MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("0D6F96382IKEJSUIWOK5A720F3326F1B");
         Map<String, Object> values = new HashMap<>();
         values.put("userAccount.fullName", userAccount.getFullName());
         values.put("userAccount.deactivationReason", userAccount.getDeactivationReason());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
-        emailMessage.setRecipients(leaders);
+        emailMessage.setRecipients(admins);
 
         try {
             messengerBean.sendEmailMessage(emailMessage);
         }
         catch(MessagingException me) {
-            LOGGER.log(Level.WARNING, "Error when sending the deactivation reason from "+ userAccount.getPostingEmail() +" to leaders.", me);
+            LOGGER.log(Level.WARNING, "Error when sending the deactivation reason from "+ userAccount.getPostingEmail() +" to administrators.", me);
         }
     }
 
@@ -660,12 +659,12 @@ public class UserAccountBean {
      * @param newEmail the new email address of the user account.
      * @exception BusinessLogicException in case the newEmail is already registered.
      */
-    public void changeEmail(UserAccount userAccount, String newEmail) throws ExistingUserAccountException {
+    public void changeEmail(UserAccount userAccount, String newEmail) {
         // Check if the new email already exists in the UserAccounts
         UserAccount existingUserAccount = findUserAccountByEmail(newEmail);
 
         if(existingUserAccount != null) {
-            throw new ExistingUserAccountException("errorCode0001");
+            throw new BusinessLogicException("errorCode0001");
         }
 
         // Change the email address in the UserAccount
@@ -720,7 +719,7 @@ public class UserAccountBean {
 
         userAccount.resetConfirmationCode();
         userAccount.setEmailAsVerified();
-        
+
         save(userAccount);
     }
 

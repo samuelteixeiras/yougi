@@ -66,7 +66,7 @@ public class AccessGroupBean {
 
     static final Logger LOGGER = Logger.getLogger(AccessGroupBean.class.getName());
 
-    public static final String ADMIN_GROUP = "leaders";
+    public static final String ADMIN_GROUP = "admins";
     public static final String DEFAULT_GROUP = "members";
 
     public AccessGroup findAccessGroup(String groupId) {
@@ -99,7 +99,7 @@ public class AccessGroupBean {
                                         .getSingleResult();
         }
         catch(Exception nre) {
-            group = new AccessGroup(ADMIN_GROUP,"JUG Leaders Group");
+            group = new AccessGroup(ADMIN_GROUP,"Administrators Group");
             group.setId(EntitySupport.INSTANCE.generateEntityId());
             em.persist(group);
         }

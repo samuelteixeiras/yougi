@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.cejug.yougi.business.UserAccountBean;
 import org.cejug.yougi.entity.UserAccount;
+import org.cejug.yougi.exception.EnvironmentResourceException;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
@@ -99,24 +100,35 @@ public class SecurityBackingMBean {
         return "/index?faces-redirect=true";
     }
 
+    public Boolean getIsUserAdministrator() {
+        HttpServletRequest request = getHttpRequest();
+        return request.isUserInRole("admin");
+    }
+
     public Boolean getIsUserLeader() {
-        Boolean result = false;
-        FacesContext context = FacesContext.getCurrentInstance();
-        Object request = context.getExternalContext().getRequest();
-        if(request instanceof HttpServletRequest) {
-            result = ((HttpServletRequest)request).isUserInRole("leader");
-        }
-        return result;
+        HttpServletRequest request = getHttpRequest();
+        return request.isUserInRole("leader");
+    }
+
+    public Boolean getIsUserHelper() {
+        HttpServletRequest request = getHttpRequest();
+        return request.isUserInRole("helper");
     }
 
     public Boolean getIsUserPartner() {
-        Boolean result = false;
+        HttpServletRequest request = getHttpRequest();
+        return request.isUserInRole("partner");
+    }
+
+    private HttpServletRequest getHttpRequest() {
         FacesContext context = FacesContext.getCurrentInstance();
         Object request = context.getExternalContext().getRequest();
         if(request instanceof HttpServletRequest) {
-            result = ((HttpServletRequest)request).isUserInRole("partner");
+            return (HttpServletRequest) request;
         }
-        return result;
+        else {
+            throw new EnvironmentResourceException("errorCode0011");
+        }
     }
 
     public Map<String, Object> getSessionMap() {
