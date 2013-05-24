@@ -40,40 +40,49 @@
 
                             <h:panelGrid columns="2" width="100%" columnClasses="alignColumnLeft, alignColumnRight">
                                 <h:outputText value="#{venueMBean.venue}" style="font-size: 26px; font-weight: bold;"/>
-                                <p:button value="#{bundle.edit}" outcome="venue_form" rendered="#{securityBackingMBean.isUserLeader}">
+                                <h:button value="#{bundle.edit}" outcome="venue_form" rendered="#{securityBackingMBean.isUserLeader}">
                                     <f:param name="id" value="#{venueMBean.venue.id}"/>
-                                </p:button>
+                                </h:button>
                             </h:panelGrid>
+
+                            <h:outputText value="#{venueMBean.venue.location}"/>
 
                             <p:spacer height="10"/>
 
-                            <p:accordionPanel multiple="true">
-                                <c:forEach var="room" items="#{venueMBean.rooms}">
-                                    <p:tab title="#{room.name}">
-                                        <h:panelGrid>
-                                            <c:forEach var="ses" items="#{venueMBean.getSessions(room)}">
-                                                <h:panelGroup styleClass="indent">
-                                                    <h:outputText value="#{ses.startTime}">
-                                                        <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
-                                                    </h:outputText>
-                                                    <h:outputText value=" - "/>
-                                                    <h:outputText value="#{ses.endTime}">
-                                                        <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
-                                                    </h:outputText>
-                                                    <p:spacer width="10"/>
-                                                    <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
-                                                        <f:param name="id" value="#{ses.id}"/>
-                                                    </h:link>
-                                                    <p:spacer width="5"/>
-                                                    <h:outputText value="#{ses.speakers}" escape="false">
-                                                        <f:converter converterId="SessionSpeakerConverter"/>
-                                                    </h:outputText>
-                                                </h:panelGroup>
-                                            </c:forEach>
-                                        </h:panelGrid>
-                                    </p:tab>
-                                </c:forEach>
-                            </p:accordionPanel>
+                            <p:tabView>
+                                <p:tab title="#{bundle.rooms}">
+                                    <h:button value="#{bundle.newRoom}" outcome="room_form" rendered="#{securityBackingMBean.isUserLeader}">
+                                        <f:param name="venueId" value="#{venueMBean.venue.id}"/>
+                                    </h:button>
+                                    <p:dataGrid var="room" value="#{venueMBean.rooms}" columns="2" rows="0" paginator="false" rendered="#{! empty venueMBean.rooms}">
+                                        <p:column>
+                                            <p:panel>
+                                                <h:panelGrid>
+                                                    <c:forEach var="ses" items="#{venueMBean.getSessions(room)}">
+                                                        <h:panelGroup styleClass="indent">
+                                                            <h:outputText value="#{ses.startTime}">
+                                                                <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                                            </h:outputText>
+                                                            <h:outputText value=" - "/>
+                                                            <h:outputText value="#{ses.endTime}">
+                                                                <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                                            </h:outputText>
+                                                            <p:spacer width="10"/>
+                                                            <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
+                                                                <f:param name="id" value="#{ses.id}"/>
+                                                            </h:link>
+                                                            <p:spacer width="5"/>
+                                                            <h:outputText value="#{ses.speakers}" escape="false">
+                                                                <f:converter converterId="SessionSpeakerConverter"/>
+                                                            </h:outputText>
+                                                        </h:panelGroup>
+                                                    </c:forEach>
+                                                </h:panelGrid>
+                                            </p:panel>
+                                        </p:column>
+                                    </p:dataGrid>
+                                </p:tab>
+                            </p:tabView>
                         </h:panelGrid>
                     </h:form>
                 </div>

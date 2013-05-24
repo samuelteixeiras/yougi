@@ -75,6 +75,10 @@ public class VenueMBean implements Serializable {
 
     private List<Venue> venues;
 
+    public VenueMBean() {
+        this.venue = new Venue();
+    }
+
     public String getId() {
         return id;
     }
@@ -141,6 +145,30 @@ public class VenueMBean implements Serializable {
 
         if (this.id != null && !this.id.isEmpty()) {
             this.venue = venueBean.findVenue(id);
+
+            locationMBean.initialize();
+
+            if (this.venue.getCountry() != null) {
+                locationMBean.setSelectedCountry(this.venue.getCountry().getAcronym());
+            }
+
+            if (this.venue.getProvince() != null) {
+                locationMBean.setSelectedProvince(this.venue.getProvince().getId());
+            }
+
+            if (this.venue.getCity() != null) {
+                locationMBean.setSelectedCity(this.venue.getCity().getId());
+            }
         }
+    }
+
+    public String save() {
+        this.venue.setCountry(this.locationMBean.getCountry());
+        this.venue.setProvince(this.locationMBean.getProvince());
+        this.venue.setCity(this.locationMBean.getCity());
+
+        venueBean.save(this.venue);
+
+        return "venues?faces-redirect=true";
     }
 }

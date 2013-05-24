@@ -19,7 +19,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>3.4.2</version>
+            <version>3.5</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -84,7 +84,7 @@
                     </compilerArguments>
                 </configuration>
             </plugin>
-            
+
             <!-- resource optimization -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -112,7 +112,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>            
+            </plugin>
             <plugin>
                 <groupId>org.primefaces.extensions</groupId>
                 <artifactId>resources-optimizer-maven-plugin</artifactId>
