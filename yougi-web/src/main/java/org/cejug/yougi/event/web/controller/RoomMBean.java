@@ -30,10 +30,12 @@ import javax.faces.bean.RequestScoped;
 import org.cejug.yougi.event.business.EventBean;
 import org.cejug.yougi.event.business.RoomBean;
 import org.cejug.yougi.event.business.SessionBean;
+import org.cejug.yougi.event.business.VenueBean;
 import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.Room;
 import org.cejug.yougi.event.entity.Session;
 import org.cejug.yougi.event.entity.Speaker;
+import org.cejug.yougi.event.entity.Venue;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
@@ -53,18 +55,30 @@ public class RoomMBean implements Serializable {
     @EJB
     private EventBean eventBean;
 
+    @EJB
+    private VenueBean venueBean;
+
     @ManagedProperty(value = "#{param.id}")
     private String id;
 
     @ManagedProperty(value = "#{param.eventId}")
     private String eventId;
 
-    private Event event;
+    @ManagedProperty(value = "#{param.venueId}")
+    private String venueId;
 
+    private Event event;
     private Room room;
 
     private List<Session> sessions;
     private List<Speaker> speakers;
+    private List<Venue> venues;
+
+    private String selectedVenue;
+
+    public RoomMBean() {
+        this.room = new Room();
+    }
 
     public String getId() {
         return id;
@@ -80,6 +94,14 @@ public class RoomMBean implements Serializable {
 
     public void setEventId(String eventId) {
         this.eventId = eventId;
+    }
+
+    public String getVenueId() {
+        return venueId;
+    }
+
+    public void setVenueId(String venueId) {
+        this.venueId = venueId;
     }
 
     public Event getEvent() {
@@ -98,6 +120,14 @@ public class RoomMBean implements Serializable {
         this.room = room;
     }
 
+    public String getSelectedVenue() {
+        return selectedVenue;
+    }
+
+    public void setSelectedVenue(String selectedVenue) {
+        this.selectedVenue = selectedVenue;
+    }
+
     public List<Session> getSessions() {
         if (this.sessions == null) {
             this.sessions = sessionBean.findSessionsByRoom(this.event, this.room);
@@ -112,14 +142,33 @@ public class RoomMBean implements Serializable {
         return this.speakers;
     }
 
+    public List<Venue> getVenues() {
+        if(this.venues == null) {
+            this.venues = venueBean.findVenues();
+        }
+        return this.venues;
+    }
+
     @PostConstruct
     public void load() {
         if (this.eventId != null && !this.eventId.isEmpty()) {
             this.event = eventBean.findEvent(eventId);
         }
 
+        if (this.venueId != null && !this.venueId.isEmpty()) {
+            this.selectedVenue = venueId;
+        }
+
         if (this.id != null && !this.id.isEmpty()) {
             this.room = roomBean.findRoom(id);
         }
+    }
+
+    public String save() {
+        this.room.setVenue(new Venue(this.selectedVenue));
+
+        roomBean.save(this.room);
+
+        return "venue?faces-redirect=true&id="+ this.selectedVenue;
     }
 }

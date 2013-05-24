@@ -24,8 +24,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:p="http://primefaces.org/ui">
     <body>
         <ui:composition template="../layout.xhtml">
             <ui:define name="title">#{bundle.venue}</ui:define>
@@ -58,25 +57,9 @@
                                         <p:column>
                                             <p:panel>
                                                 <h:panelGrid>
-                                                    <c:forEach var="ses" items="#{venueMBean.getSessions(room)}">
-                                                        <h:panelGroup styleClass="indent">
-                                                            <h:outputText value="#{ses.startTime}">
-                                                                <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
-                                                            </h:outputText>
-                                                            <h:outputText value=" - "/>
-                                                            <h:outputText value="#{ses.endTime}">
-                                                                <f:convertDateTime pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
-                                                            </h:outputText>
-                                                            <p:spacer width="10"/>
-                                                            <h:link outcome="session" value="#{ses.name}" style="font-weight: bold">
-                                                                <f:param name="id" value="#{ses.id}"/>
-                                                            </h:link>
-                                                            <p:spacer width="5"/>
-                                                            <h:outputText value="#{ses.speakers}" escape="false">
-                                                                <f:converter converterId="SessionSpeakerConverter"/>
-                                                            </h:outputText>
-                                                        </h:panelGroup>
-                                                    </c:forEach>
+                                                    <h:panelGroup styleClass="indent">
+                                                        <h:outputText value="#{room.name}"/>
+                                                    </h:panelGroup>
                                                 </h:panelGrid>
                                             </p:panel>
                                         </p:column>
