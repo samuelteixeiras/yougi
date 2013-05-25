@@ -29,67 +29,40 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import org.cejug.yougi.event.business.EventBean;
 import org.cejug.yougi.event.business.EventVenueBean;
-import org.cejug.yougi.event.business.RoomBean;
-import org.cejug.yougi.event.business.SessionBean;
 import org.cejug.yougi.event.business.VenueBean;
 import org.cejug.yougi.event.entity.Event;
-import org.cejug.yougi.event.entity.Room;
-import org.cejug.yougi.event.entity.Session;
+import org.cejug.yougi.event.entity.EventVenue;
 import org.cejug.yougi.event.entity.Venue;
-import org.cejug.yougi.web.controller.LocationMBean;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @ManagedBean
 @RequestScoped
-public class VenueMBean implements Serializable {
+public class EventVenueMBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @EJB
-    private VenueBean venueBean;
-
-    @EJB
-    private RoomBean roomBean;
-
-    @EJB
-    private SessionBean sessionBean;
 
     @EJB
     private EventBean eventBean;
 
     @EJB
-    private EventVenueBean eventVenueBean;
+    private VenueBean venueBean;
 
-    @ManagedProperty(value = "#{param.id}")
-    private String id;
+    @EJB
+    private EventVenueBean eventVenueBean;
 
     @ManagedProperty(value = "#{param.eventId}")
     private String eventId;
 
-    @ManagedProperty(value="#{locationMBean}")
-    private LocationMBean locationMBean;
+    @ManagedProperty(value = "#{param.venueId}")
+    private String venueId;
 
-    private Event event;
-
-    private Venue venue;
-
-    private List<Room> rooms;
     private List<Event> events;
     private List<Venue> venues;
 
-    public VenueMBean() {
-        this.venue = new Venue();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    private String selectedVenue;
+    private String selectedEvent;
 
     public String getEventId() {
         return eventId;
@@ -99,39 +72,28 @@ public class VenueMBean implements Serializable {
         this.eventId = eventId;
     }
 
-    public Event getEvent() {
-        return event;
+    public String getVenueId() {
+        return venueId;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setVenueId(String venueId) {
+        this.venueId = venueId;
     }
 
-    public Venue getVenue() {
-        return venue;
+    public String getSelectedVenue() {
+        return selectedVenue;
     }
 
-    public void setVenue(Venue venue) {
-        this.venue = venue;
+    public void setSelectedVenue(String selectedVenue) {
+        this.selectedVenue = selectedVenue;
     }
 
-    public LocationMBean getLocationMBean() {
-        return locationMBean;
+    public String getSelectedEvent() {
+        return selectedEvent;
     }
 
-    public void setLocationMBean(LocationMBean locationMBean) {
-        this.locationMBean = locationMBean;
-    }
-
-    public List<Session> getSessions(Room room) {
-        return sessionBean.findSessionsByRoom(this.event, room);
-    }
-
-    public List<Room> getRooms() {
-        if(this.rooms == null) {
-            this.rooms = roomBean.findRooms(this.venue);
-        }
-        return this.rooms;
+    public void setSelectedEvent(String selectedEvent) {
+        this.selectedEvent = selectedEvent;
     }
 
     public List<Venue> getVenues() {
@@ -143,7 +105,7 @@ public class VenueMBean implements Serializable {
 
     public List<Event> getEvents() {
         if(this.events == null) {
-            this.events = eventVenueBean.findEventsVenue(venue);
+            this.events = eventBean.findParentEvents();
         }
         return this.events;
     }
@@ -151,35 +113,21 @@ public class VenueMBean implements Serializable {
     @PostConstruct
     public void load() {
         if (this.eventId != null && !this.eventId.isEmpty()) {
-            this.event = eventBean.findEvent(eventId);
+            this.selectedEvent = eventId;
         }
 
-        if (this.id != null && !this.id.isEmpty()) {
-            this.venue = venueBean.findVenue(id);
-
-            locationMBean.initialize();
-
-            if (this.venue.getCountry() != null) {
-                locationMBean.setSelectedCountry(this.venue.getCountry().getAcronym());
-            }
-
-            if (this.venue.getProvince() != null) {
-                locationMBean.setSelectedProvince(this.venue.getProvince().getId());
-            }
-
-            if (this.venue.getCity() != null) {
-                locationMBean.setSelectedCity(this.venue.getCity().getId());
-            }
+        if (this.venueId != null && !this.venueId.isEmpty()) {
+            this.selectedVenue = venueId;
         }
     }
 
     public String save() {
-        this.venue.setCountry(this.locationMBean.getCountry());
-        this.venue.setProvince(this.locationMBean.getProvince());
-        this.venue.setCity(this.locationMBean.getCity());
+        EventVenue eventVenue = new EventVenue();
+        eventVenue.setEvent(new Event(this.selectedEvent));
+        eventVenue.setVenue(new Venue(this.selectedVenue));
 
-        venueBean.save(this.venue);
+        eventVenueBean.save(eventVenue);
 
-        return "venues?faces-redirect=true";
+        return "venue?faces-redirect=true&id="+ this.selectedVenue;
     }
 }

@@ -49,10 +49,50 @@
                             <p:spacer height="10"/>
 
                             <p:tabView>
+                                <p:tab title="#{bundle.events}">
+                                    <h:button value="#{bundle.addEvent}" outcome="event_venue_form" rendered="#{securityBackingMBean.isUserLeader}">
+                                        <f:param name="venueId" value="#{venueMBean.venue.id}"/>
+                                    </h:button>
+                                    <p/>
+                                    <p:dataGrid var="event" value="#{venueMBean.events}" columns="1" rows="0" paginator="false" rendered="#{! empty venueMBean.events}">
+                                        <p:column>
+                                            <p:panel>
+                                                <h:panelGrid>
+                                                    <h:link value="#{event.name}" outcome="event" style="font-size: 18px; font-weight: bold;">
+                                                        <f:param name="id" value="#{event.id}"/>
+                                                    </h:link>
+                                                    <h:outputText value="#{event.shortDescription}"/>
+                                                    <h:panelGroup>
+                                                        <h:outputText value="#{bundle.from} "/>
+                                                        <h:outputText value="#{event.startDate}">
+                                                            <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
+                                                        </h:outputText>
+                                                        <h:outputText value=" at " rendered="#{! empty event.startTime}"/>
+                                                        <h:outputText value="#{event.startTime}" rendered="#{! empty event.startTime}">
+                                                            <f:convertDateTime type="time" timeStyle="short" pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                                        </h:outputText>
+                                                        <h:outputText value=" #{bundle.to} "/>
+                                                        <h:outputText value="#{event.endDate}" rendered="#{event.startDate != event.endDate}">
+                                                            <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
+                                                        </h:outputText>
+                                                        <h:outputText value=" at " rendered="#{! empty event.endTime and event.startDate != event.endDate}"/>
+                                                        <h:outputText value="#{event.endTime}" rendered="#{! empty event.startTime}">
+                                                            <f:convertDateTime type="time" timeStyle="short" pattern="#{bundle.formatTime}" timeZone="#{userProfileMBean.timeZone}"/>
+                                                        </h:outputText>
+                                                    </h:panelGroup>
+                                                    <h:outputText value="#{event}" escape="false">
+                                                        <f:converter converterId="EventVenuesConverter"/>
+                                                    </h:outputText>
+                                                </h:panelGrid>
+                                            </p:panel>
+                                        </p:column>
+                                    </p:dataGrid>
+                                </p:tab>
                                 <p:tab title="#{bundle.rooms}">
                                     <h:button value="#{bundle.newRoom}" outcome="room_form" rendered="#{securityBackingMBean.isUserLeader}">
                                         <f:param name="venueId" value="#{venueMBean.venue.id}"/>
                                     </h:button>
+                                    <p/>
                                     <p:dataGrid var="room" value="#{venueMBean.rooms}" columns="2" rows="0" paginator="false" rendered="#{! empty venueMBean.rooms}">
                                         <p:column>
                                             <p:panel>

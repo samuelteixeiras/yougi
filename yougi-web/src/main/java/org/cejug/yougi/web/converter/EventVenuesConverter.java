@@ -48,7 +48,7 @@ public class EventVenuesConverter  implements Converter {
 
         Event event = (Event) value;
 
-        if(event.getVenues().isEmpty()) {
+        if(event == null || event.getVenues() == null || event.getVenues().isEmpty()) {
             return null;
         }
 

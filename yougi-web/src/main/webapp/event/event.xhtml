@@ -273,6 +273,10 @@
                                 </p:accordionPanel>
                             </p:tab>
                             <p:tab title="#{bundle.venue}">
+                                <h:button value="#{bundle.addVenue}" outcome="event_venue_form" rendered="#{securityBackingMBean.isUserLeader}">
+                                    <f:param name="eventId" value="#{eventMBean.event.id}"/>
+                                </h:button>
+                                <p/>
                                 <h:panelGrid width="100%">
                                     <p:dataGrid var="venue" value="#{eventMBean.venues}" columns="2" rows="0" paginator="false" rendered="#{! empty eventMBean.venues}">
                                         <p:column>

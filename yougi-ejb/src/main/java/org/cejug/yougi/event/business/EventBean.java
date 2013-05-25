@@ -78,7 +78,7 @@ public class EventBean {
     }
 
     public List<Event> findEvents(Event parent) {
-        List<Event> events = em.createQuery("select e from Event e where e.parent = :parent order by e.endDate desc")
+        List<Event> events = em.createQuery("select e from Event e where e.parent = :parent order by e.startDate asc")
                                .setParameter("parent", parent)
                                .getResultList();
         return loadVenues(events);
@@ -86,7 +86,7 @@ public class EventBean {
 
     public List<Event> findUpCommingEvents() {
     	Calendar today = Calendar.getInstance();
-        List<Event> events = em.createQuery("select e from Event e where e.endDate >= :today and e.parent is null order by e.endDate desc")
+        List<Event> events = em.createQuery("select e from Event e where e.endDate >= :today and e.parent is null order by e.startDate asc")
         		       .setParameter("today", today.getTime())
                                .getResultList();
         return loadVenues(events);

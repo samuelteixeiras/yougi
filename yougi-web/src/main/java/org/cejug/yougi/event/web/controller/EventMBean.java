@@ -46,6 +46,7 @@ import org.cejug.yougi.entity.Properties;
 import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.event.business.AttendeeBean;
 import org.cejug.yougi.event.business.EventBean;
+import org.cejug.yougi.event.business.EventVenueBean;
 import org.cejug.yougi.event.business.SessionBean;
 import org.cejug.yougi.event.business.SpeakerBean;
 import org.cejug.yougi.event.business.TrackBean;
@@ -91,6 +92,9 @@ public class EventMBean {
 
     @EJB
     private VenueBean venueBean;
+
+    @EJB
+    private EventVenueBean eventVenueBean;
 
     @EJB
     private ApplicationPropertyBean applicationPropertyBean;
@@ -209,7 +213,7 @@ public class EventMBean {
 
     public List<Venue> getVenues() {
         if(venues == null) {
-            venues = venueBean.findVenues();
+            venues = eventVenueBean.findEventVenues(event);
         }
         return venues;
     }

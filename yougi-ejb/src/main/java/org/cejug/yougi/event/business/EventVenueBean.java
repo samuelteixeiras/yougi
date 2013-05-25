@@ -51,8 +51,14 @@ public class EventVenueBean {
     }
 
     public List<Venue> findEventVenues(Event event) {
-        return em.createQuery("select ev.venue from EventVenue ev where ev.event = :event")
+        return em.createQuery("select ev.venue from EventVenue ev where ev.event = :event order by ev.venue.name asc")
                                          .setParameter("event", event)
+                                         .getResultList();
+    }
+
+    public List<Event> findEventsVenue(Venue venue) {
+        return em.createQuery("select ev.event from EventVenue ev where ev.venue = :venue order by ev.event.name asc")
+                                         .setParameter("venue", venue)
                                          .getResultList();
     }
 
