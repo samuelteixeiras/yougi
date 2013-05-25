@@ -58,7 +58,9 @@
                                             <p:panel>
                                                 <h:panelGrid>
                                                     <h:panelGroup styleClass="indent">
-                                                        <h:outputText value="#{room.name}"/>
+                                                        <h:link value="#{room.name}" outcome="room" style="font-size: 18px; font-weight: bold;">
+                                                            <f:param name="id" value="#{room.id}"/>
+                                                        </h:link>
                                                     </h:panelGroup>
                                                 </h:panelGrid>
                                             </p:panel>

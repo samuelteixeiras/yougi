@@ -161,6 +161,7 @@ public class RoomMBean implements Serializable {
 
         if (this.id != null && !this.id.isEmpty()) {
             this.room = roomBean.findRoom(id);
+            this.selectedVenue = this.room.getVenue().getId();
         }
     }
 
