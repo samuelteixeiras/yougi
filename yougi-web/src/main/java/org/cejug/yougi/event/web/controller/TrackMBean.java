@@ -30,6 +30,7 @@ import javax.faces.bean.RequestScoped;
 import org.cejug.yougi.event.business.EventBean;
 import org.cejug.yougi.event.business.SessionBean;
 import org.cejug.yougi.event.business.TrackBean;
+import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.Session;
 import org.cejug.yougi.event.entity.Speaker;
 import org.cejug.yougi.event.entity.Track;
@@ -55,10 +56,20 @@ public class TrackMBean implements Serializable {
     @ManagedProperty(value = "#{param.id}")
     private String id;
 
+    @ManagedProperty(value = "#{param.eventId}")
+    private String eventId;
+
     private Track track;
 
+    private List<Event> events;
     private List<Session> sessions;
     private List<Speaker> speakers;
+
+    private String selectedEvent;
+
+    public TrackMBean() {
+        this.track = new Track();
+    }
 
     public String getId() {
         return id;
@@ -74,6 +85,29 @@ public class TrackMBean implements Serializable {
 
     public void setTrack(Track track) {
         this.track = track;
+    }
+
+    public String getSelectedEvent() {
+        return selectedEvent;
+    }
+
+    public void setSelectedEvent(String selectedEvent) {
+        this.selectedEvent = selectedEvent;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+
+    public List<Event> getEvents() {
+        if (this.events == null) {
+            this.events = eventBean.findParentEvents();
+        }
+        return this.events;
     }
 
     public List<Session> getSessions() {
@@ -95,5 +129,17 @@ public class TrackMBean implements Serializable {
         if (this.id != null && !this.id.isEmpty()) {
             this.track = trackBean.findTrack(id);
         }
+
+        if (this.eventId != null && !this.eventId.isEmpty()) {
+            this.selectedEvent = eventId;
+        }
+    }
+
+    public String save() {
+        this.track.setEvent(new Event(this.selectedEvent));
+
+        trackBean.save(this.track);
+
+        return "event?faces-redirect=true&tab=1&id="+ this.selectedEvent;
     }
 }

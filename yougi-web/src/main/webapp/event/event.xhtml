@@ -40,7 +40,7 @@
                             </p:button>
                         </h:panelGrid>
 
-                        <p:tabView>
+                        <p:tabView activeIndex="#{param.tab}">
                             <p:tab title="#{bundle.details}">
                                 <h:panelGrid width="100%">
                                     <h:panelGroup>
@@ -106,6 +106,46 @@
                                         </p:column>
                                     </p:dataGrid>
                                 </h:panelGrid>
+                            </p:tab>
+
+                            <p:tab title="#{bundle.tracks}">
+                                <h:button value="#{bundle.newTrack}" outcome="track_form" rendered="#{securityBackingMBean.isUserLeader}">
+                                    <f:param name="eventId" value="#{eventMBean.event.id}"/>
+                                </h:button>
+                                <p/>
+
+                                <h:panelGrid width="100%">
+                                    <p:dataGrid var="track" value="#{eventMBean.tracks}" columns="2" rows="0" paginator="false" rendered="#{! empty eventMBean.tracks}">
+                                        <p:column>
+                                            <p:panel>
+                                                <h:panelGrid>
+                                                    <h:link value="#{track.name}" outcome="track" style="font-size: 18px; font-weight: bold;">
+                                                        <f:param name="id" value="#{track.id}"/>
+                                                    </h:link>
+                                                </h:panelGrid>
+                                            </p:panel>
+                                        </p:column>
+                                    </p:dataGrid>
+                                </h:panelGrid>
+
+                                <p:accordionPanel multiple="true">
+                                    <c:forEach var="event" items="#{eventMBean.subEvents}">
+                                        <p:tab title="#{event.name}">
+                                            <h:panelGrid>
+                                                <h:outputText value="" style="font-weight: bold; font-size: large"/>
+                                                <c:forEach var="trk" items="#{eventMBean.getTracks(event)}">
+                                                    <h:panelGroup>
+                                                        <h:link outcome="track" value="#{trk.name}">
+                                                            <f:param name="id" value="#{trk.id}"/>
+                                                        </h:link>
+                                                        <h:outputText value=" - "/>
+                                                        <h:outputText value="#{trk.description}"/>
+                                                    </h:panelGroup>
+                                                </c:forEach>
+                                            </h:panelGrid>
+                                        </p:tab>
+                                    </c:forEach>
+                                </p:accordionPanel>
                             </p:tab>
 
                             <p:tab title="#{bundle.sessions}">
@@ -206,7 +246,7 @@
                                 </p:accordionPanel>
                             </p:tab>
 
-                            <p:tab title="#{bundle.attendees}">
+                            <p:tab title="#{bundle.attendees}" rendered="#{securityBackingMBean.isUserLeader}">
                                 <h:panelGrid width="100%">
                                     <h:outputFormat value="#{bundle.numberPeopleAttendingEvent}" style="color: blue;" rendered="#{securityBackingMBean.isUserLeader}">
                                         <f:param value="#{eventMBean.numberPeopleAttending}"/>
@@ -239,38 +279,6 @@
                                         </p:column>
                                     </p:dataTable>
                                 </h:panelGrid>
-                            </p:tab>
-                            <p:tab title="#{bundle.tracks}">
-                                <h:panelGrid>
-                                    <c:forEach var="trk" items="#{eventMBean.tracks}">
-                                        <h:panelGroup>
-                                            <h:link outcome="track" value="#{trk.name}">
-                                                <f:param name="id" value="#{trk.id}"/>
-                                            </h:link>
-                                            <h:outputText value=" - "/>
-                                            <h:outputText value="#{trk.description}"/>
-                                        </h:panelGroup>
-                                    </c:forEach>
-                                </h:panelGrid>
-
-                                <p:accordionPanel multiple="true">
-                                    <c:forEach var="event" items="#{eventMBean.subEvents}">
-                                        <p:tab title="#{event.name}">
-                                            <h:panelGrid>
-                                                <h:outputText value="" style="font-weight: bold; font-size: large"/>
-                                                <c:forEach var="trk" items="#{eventMBean.getTracks(event)}">
-                                                    <h:panelGroup>
-                                                        <h:link outcome="track" value="#{trk.name}">
-                                                            <f:param name="id" value="#{trk.id}"/>
-                                                        </h:link>
-                                                        <h:outputText value=" - "/>
-                                                        <h:outputText value="#{trk.description}"/>
-                                                    </h:panelGroup>
-                                                </c:forEach>
-                                            </h:panelGrid>
-                                        </p:tab>
-                                    </c:forEach>
-                                </p:accordionPanel>
                             </p:tab>
                             <p:tab title="#{bundle.venue}">
                                 <h:button value="#{bundle.addVenue}" outcome="event_venue_form" rendered="#{securityBackingMBean.isUserLeader}">
