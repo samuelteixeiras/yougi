@@ -79,9 +79,29 @@ In this case, [password] should be replaced by the real password.
 
 \section{Registration}
 
-The decision to register in the user group always come from the interested person. That is why the only way to add a new member is filling out the initial registration form, accessible through a link in the application header when there is no member logged in. JUG leaders do not have any feature that allow them to add new members manually.
+The decision to register in the user group always come from the interested person. That is why the only way to add a new member is filling out the initial registration form, accessible through a link in the application header when there is no member logged in. Leaders or administrators do not have any feature that allows them to add new members manually.
 
-Besides the basic personal data, the registration form also asks the interested person to select one or more of the following options:
+Right after installing the application for the first time, while the database is still empty, the application asks the user to register the first person, who will be considered as administrator. This person will have full access to all functionalities. All other people registered after the administrator will have rights of a regular member by default.
+
+The form asks for personal, identification, and location data, as well as some personal preferences. The only restriction is the email address, which should be unique for each member. So the application won't allow the user to register twice with the same email address. There is also a particularity when informing the location, since it is not practical to register all existing provinces and cities in the world, we made the province optional and we added a text field besides the list of cities to be used in case the user does not find its city in the list.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.9]{figures/registration-location}
+\caption{Location data in the registration form}
+\label{fig:registration-location}
+\end{figure}
+
+The city informed in the text field is not immediately taken into consideration by the application. It means that the new city will not appear to other users in subsequent registrations. Behind the scene, the administrator must confirm the existence of the city by performing a search on Google Maps\footnote{https://maps.google.com} and adding in the new city's registration its geographic coordinates. Once confirmed, the city is made available in the registration form for other users.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.9]{figures/location-city-validation}
+\caption{Validation of a city informed by the user during its registration}
+\label{fig:location-city-validation}
+\end{figure}
+
+The following preferences are available in the registration form:
 
 \begin{itemize}
 \item ``I want to be aware of all events organized and supported by the UG in a local, national and international level'' - as a member, the person will receive information about events organized by the UG (see Chapter \ref{chp:event-management}) and other supported events promoted by partners and sponsors.
@@ -97,7 +117,7 @@ Besides the basic personal data, the registration form also asks the interested 
 \item ``Other UG members will be able to see my profile and contact me directly through the application. The application will carefully protect the email address, not showing it for others'' - only members who checked this option will be able to use the social features of the application.
 \end{itemize}
 
-When the interested person submits the registration form, we have to make sure that his/her email address is correct before considering him/her as a member. We send an email message to the email address informed in the form, asking the interested person to confirm their email address by clicking on the confirmation link. This link contains a unique code that guarantees that the link cannot be reused after its first use, confirming the email address only once. The interested person is considered as a member as soon as his/her email address is confirmed. The new member receives a welcome email message and JUG Leaders are informed by email about the successful member registration.
+When the interested person submits the registration form, we have to make sure that his/her email address is correct before considering him/her as a member. We send an email message to the email address informed in the form, asking the interested person to confirm their email address by clicking on the confirmation link. This link contains a unique code that guarantees that the link cannot be reused after its first use, confirming the email address only once. The interested person is considered as a member as soon as his/her email address is confirmed. The new member receives a welcome email message and leaders are informed by email about the successful member registration.
 
 \section{Member Profile}
 
