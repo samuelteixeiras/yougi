@@ -68,6 +68,11 @@
             <artifactId>gravatar4java</artifactId>
             <version>1.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.faces</artifactId>
+            <version>2.2.0-m15</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -43,7 +43,7 @@ Notice: copies of this document may be made for your own use and for distributio
 
 \section{Case Study: Java User Groups}
 
-The chosen case study is based on the personal experience of the team who is developing You. Most of contributions come from the Cear\'{a} Java User Group, which is a technical user group located in the Northeast cost of Brazil. Despite being part of a specific domain, we believe that the proposed model is generic enough to cover the management's needs of most user groups out there.
+The chosen case study is based on the personal experience of the team who is developing You. Most of contributions come from the Cear\'{a} Java User Group, which is a technical user group located in the North-east cost of Brazil. Despite being part of a specific domain, we believe that the proposed model is generic enough to cover the management's needs of most user groups out there.
 
 \subsection{The Java User Group Scenario}
 
@@ -57,9 +57,9 @@ Their independence from the industry is particularly interesting because, in gen
 
 \section{Yougi Mission and Vision}
 
-Yougi is developed by passionate people that are used to do, in a daily basis for several years, what the application does today and what it is planned to do tomorrow for online communities out there. After two years of continuos development, Yougi has consolidated its mission of managing, promoting and spreading knowledge produced by a community of members sharing the same interests and passions.
+Yougi is developed by passionate people that are used to do, in a daily basis for several years, what the application does today and what it is planned to do tomorrow for on-line communities out there. After two years of continuous development, Yougi has consolidated its mission of managing, promoting and spreading knowledge produced by a community of members sharing the same interests and passions.
 
-The project goes beyond services for communities and extends its impact to other areas such as education, economical competitivity and generation of opportunities. Since the application is made available as free and open software, several technical questions from CEJUG's mailing list are actually addressed by examples extracted from Yougi's source code. Beginners and professionals learn how to program and use the platform by studing how the application was developed.
+The project goes beyond services for communities and extends its impact to other areas such as education, economical competitiveness and generation of opportunities. Since the application is made available as free and open software, several technical questions from CEJUG's mailing list are actually addressed by examples extracted from Yougi's source code. Beginners and professionals learn how to program and use the platform by studying how the application was developed.
 
 \section{Overview}
 
@@ -170,7 +170,7 @@ At the entrance of the event, a member of the UG staff checks the inscription of
 
 \section{After the Event}
 
-When the event has passed, no information about the event can be changed anymore. It will be available only in a read-only mode from the day after. Speakers will not be able to update their profiles either until being allocated to another event. However, UG Leaders are able to publish additional resources related to the event, such as pictures, documents, presentations, etc.
+When the event has passed, information about the event can no longer be changed. It will be available only in a read-only mode from the day after. Speakers will not be able to update their profiles either until being allocated to another event. However, UG Leaders are able to publish additional resources related to the event, such as pictures, documents, presentations, etc.
 
 \chapter{Knowledge Management}
 
@@ -184,7 +184,7 @@ When the event has passed, no information about the event can be changed anymore
 
 \chapter{Architecture}
 
-Yougi should be deployed in an Application Server (AS). This platform is responsible for the system execution, the connectivity to several resources available in the environment and the availability for several users and systems. For the moment, Glassfish 3.1.2 is the standard AS for this application. This JEE Server has gained lots of attention for constantly run towards the state-of-the-art of the Java server side technology. It has an aggressive roadmap, being always the first product on the market to fully implement the last version of the JEE specification.
+Yougi should be deployed in an Application Server (AS). This platform is responsible for the system execution, the connectivity to several resources available in the environment and the availability for several users and systems. For the moment, Glassfish is the standard AS for this application. This JavaEE 6 Server has gained lots of attention for constantly run towards the state-of-the-art of the Java server side technology. It has an aggressive roadmap, being always the first product on the market to fully implement the last version of the JEE specification.
 
 One of the main advantages of using an application server like Glassfish is to keep the application free of complex code, such as a) manual control of database transactions; b) database access configuration; c) security authentication and authorization; e) sending and receiving e-mail messages, among many other complexities that are non-functional requirements, consuming the time we would be spending on functional requirements.
 
@@ -471,11 +471,10 @@ You can configure JavaMail directly in the domain.xml file, by copying and pasti
 
    <mail-resource host="[smtp_server_name]" description="" 
                   jndi-name="mail/ug" from="[your@emailaddress]"
-                  user="smtp_user">
+                  user="[smtp_user]">
       <property name="mail.smtp.port" value="[port_number]"/>
       <property name="mail.smtp.auth" value="true"/>
       <property name="mail.smtp.password" value="[password]"/>
-      </property>
    </mail-resource>
 </resources>
 \end{verbatim}
@@ -485,8 +484,8 @@ Add the element \textless resource-ref\textgreater \ of this new resource after 
 \begin{verbatim}
 <server name="server" config-ref="server-config">
    ...
-   <resource-ref ref="jdbc/ug"></resource-ref>
-   <resource-ref ref="mail/ug"></resource-ref>
+   <resource-ref ref="jdbc/ug"/>
+   <resource-ref ref="mail/ug"/>
 </server>
 \end{verbatim}
 
@@ -685,8 +684,6 @@ git add [file]
 \end{verbatim}
 
 Only add files that should be committed.
-
-
 
 \begin{enumerate}
 \item install Git in the development machine: the installation is dependent of platform, thus the instructions for the target platform are only available on the Git website: http://git-scm.com.
