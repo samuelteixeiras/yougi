@@ -471,12 +471,7 @@ public class UserAccount implements Serializable, Identified {
     }
 
     public boolean getConfirmed() {
-        if(confirmationCode != null) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return confirmationCode == null;
     }
 
     @Override

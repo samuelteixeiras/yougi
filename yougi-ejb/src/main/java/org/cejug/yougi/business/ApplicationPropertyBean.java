@@ -67,7 +67,9 @@ public class ApplicationPropertyBean {
         }
         // If there is more persisted properties than in the enumeration, then exceding properties are removed.
         else if(Properties.values().length < propertiesMap.size()) {
-            Set<Map.Entry<String, String>> propEntries = propertiesMap.entrySet(); // from database
+            // entries from database
+            Set<Map.Entry<String, String>> propEntries = propertiesMap.entrySet();
+            
             Iterator<Map.Entry<String, String>> iProps = propEntries.iterator();
             Map.Entry<String, String> entry;
             Properties[] props = Properties.values();

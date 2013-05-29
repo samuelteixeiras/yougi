@@ -233,7 +233,7 @@ public class MemberMBean implements Serializable {
 
     public void validateUserId(FacesContext context, UIComponent toValidate, Object value) throws ValidatorException {
         String usrId = (String) value;
-        if (-1 == usrId.indexOf("@")) {
+        if (-1 == usrId.indexOf('@')) {
             throw new ValidatorException(new FacesMessage("Invalid email address."));
         }
     }
@@ -312,7 +312,7 @@ public class MemberMBean implements Serializable {
             existingUserAccount.setVerified(verified);
         }
 
-        List<MailingList> mailingListsToSubscribe = new ArrayList<MailingList>();
+        List<MailingList> mailingListsToSubscribe = new ArrayList<>();
         mailingListsToSubscribe.addAll(Arrays.asList(this.selectedMailingLists));
         subscriptionBean.subscribe(mailingListsToSubscribe, existingUserAccount);
 

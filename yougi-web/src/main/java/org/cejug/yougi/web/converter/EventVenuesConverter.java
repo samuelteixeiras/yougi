@@ -41,7 +41,7 @@ public class EventVenuesConverter  implements Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if(value == null && !(value instanceof Event)) {
+        if(value == null || !(value instanceof Event)) {
             return null;
         }
 

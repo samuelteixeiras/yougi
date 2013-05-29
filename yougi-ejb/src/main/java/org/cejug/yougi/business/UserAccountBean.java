@@ -103,12 +103,7 @@ public class UserAccountBean {
      * */
     public boolean thereIsNoAccount() {
         Long totalUserAccounts = (Long)em.createQuery("select count(u) from UserAccount u").getSingleResult();
-        if(totalUserAccounts == 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return totalUserAccounts == 0;
     }
 
     public UserAccount findUserAccount(String id) {
@@ -350,7 +345,9 @@ public class UserAccountBean {
                         userAccount.setTimeZone(timeZone.getPropertyValue());
                     }
                 }
-                else { // If the city does not exist it is created and used to set the property of the user account.
+                else { 
+                    // If the city does not exist it is created and used to set 
+                    // the property of the user account.
                     newCity.setTimeZone(timeZone.getPropertyValue());
                     newCity.setCountry(userAccount.getCountry());
                     newCity.setProvince(userAccount.getProvince());
@@ -678,7 +675,6 @@ public class UserAccountBean {
         subscriptionBean.changeEmailAddress(userAccount);
 
         // Send an email to the user to confirm the new email address
-
         ApplicationProperty url = applicationPropertyBean.findApplicationProperty(Properties.URL);
         sendEmailVerificationRequest(userAccount, url.getPropertyValue());
     }

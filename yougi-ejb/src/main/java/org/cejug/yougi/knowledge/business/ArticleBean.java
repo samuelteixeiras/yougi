@@ -197,17 +197,17 @@ public class ArticleBean {
      * @param urlWebsite url used to find the web content where there is probably a feed to be consumed.
      * @return the entire content, which or without url feed.
      * */
-    private String retrieveWebsiteContent(String urlWebsite) {
-
+    private String retrieveWebsiteContent(String url) {
         StringBuilder content = null;
-        if(!urlWebsite.contains("http")) {
-            urlWebsite = "http://" + urlWebsite;
+        String fullUrl = url;
+        if(!url.contains("http")) {
+            fullUrl = "http://" + url;
         }
 
-        if(urlWebsite != null) {
+        if(fullUrl != null) {
             try {
-                URL url = new URL(urlWebsite);
-                BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+                URL theUrl = new URL(fullUrl);
+                BufferedReader br = new BufferedReader(new InputStreamReader(theUrl.openStream()));
                 String line = "";
                 content = new StringBuilder();
                 while(null != (line = br.readLine())) {
