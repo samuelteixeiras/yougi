@@ -77,9 +77,6 @@
   </filter-mapping>
 
   <listener>
-    <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
-  </listener>
-  <listener>
     <listener-class>liquibase.integration.servlet.LiquibaseServletListener</listener-class>
   </listener>
 
