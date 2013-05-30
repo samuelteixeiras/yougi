@@ -45,7 +45,7 @@ import org.cejug.yougi.util.ResourceBundleHelper;
 @RequestScoped
 public class SubscriptionMBean {
 
-    static final Logger logger = Logger.getLogger("org.cejug.knowledge.web.controller.SubscriptionBean");
+    static final Logger LOGGER = Logger.getLogger("org.cejug.knowledge.web.controller.SubscriptionBean");
 
     @EJB
     private MailingListBean mailingListBean;

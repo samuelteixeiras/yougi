@@ -42,9 +42,6 @@ public class UserGroupBean {
     @PersistenceContext
     private EntityManager em;
 
-    @EJB
-    private AccessGroupBean accessGroupBean;
-
     public List<UserAccount> findUsersGroup(AccessGroup accessGroup) {
         return em.createQuery("select ug.userAccount from UserGroup ug where ug.accessGroup = :accessGroup order by ug.userAccount.firstName")
                  .setParameter("accessGroup", accessGroup)

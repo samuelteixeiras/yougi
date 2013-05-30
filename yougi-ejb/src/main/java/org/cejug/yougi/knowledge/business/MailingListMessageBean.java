@@ -99,8 +99,8 @@ public class MailingListMessageBean {
 
                     /* Get the email address of the 'from' field and set the sender. */
                     from = message[i].getFrom()[0].toString();
-                    if(from.indexOf("<") >= 0) {
-                        from = from.substring(from.indexOf("<") + 1, from.indexOf(">"));
+                    if(from.indexOf('<') >= 0) {
+                        from = from.substring(from.indexOf('<') + 1, from.indexOf('>'));
                     }
                     from = from.toLowerCase();
                     MailingListSubscription mailingListSubscription = subscriptionBean.findMailingListSubscription(mailingList, from);
@@ -158,8 +158,8 @@ public class MailingListMessageBean {
         MailingList mailingList;
         for(int i = 0;i < extendedListAddresses.length;i++) {
             listAddress = extendedListAddresses[i].toString();
-            if(listAddress.indexOf("<") >= 0) {
-                listAddress = listAddress.substring(listAddress.indexOf("<") + 1, listAddress.indexOf(">"));
+            if(listAddress.indexOf('<') >= 0) {
+                listAddress = listAddress.substring(listAddress.indexOf('<') + 1, listAddress.indexOf('>'));
             }
             listAddress = listAddress.toLowerCase();
             mailingList = mailingListBean.findMailingListByEmail(listAddress);

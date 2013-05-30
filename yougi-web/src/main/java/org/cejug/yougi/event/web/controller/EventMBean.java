@@ -91,9 +91,6 @@ public class EventMBean {
     private UserAccountBean userAccountBean;
 
     @EJB
-    private VenueBean venueBean;
-
-    @EJB
     private EventVenueBean eventVenueBean;
 
     @EJB
@@ -132,8 +129,6 @@ public class EventMBean {
     private Long numberPeopleAttending;
 
     private Long numberPeopleAttended;
-
-    private PieChartModel pieChartModel;
 
     public EventMBean() {
     }
@@ -289,7 +284,7 @@ public class EventMBean {
     }
 
     public PieChartModel getAttendanceRateChartModel() {
-        pieChartModel = new PieChartModel();
+        PieChartModel pieChartModel = new PieChartModel();
         pieChartModel.set("Registered", numberPeopleAttending);
         pieChartModel.set("Attended", numberPeopleAttended);
         return pieChartModel;
