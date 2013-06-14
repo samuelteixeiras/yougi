@@ -53,22 +53,13 @@
                             <pluginExecutions>
                                 <pluginExecution>
                                     <pluginExecutionFilter>
-                                        <groupId>
-                                            org.apache.maven.plugins
-                                        </groupId>
-                                        <artifactId>
-                                            maven-ear-plugin
-                                        </artifactId>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-ear-plugin</artifactId>
                                         <versionRange>[2.6,)</versionRange>
                                         <goals>
-                                            <goal>
-                                                generate-application-xml
-                                            </goal>
+                                            <goal>generate-application-xml</goal>
                                         </goals>
                                     </pluginExecutionFilter>
-                                    <action>
-                                        <ignore></ignore>
-                                    </action>
                                 </pluginExecution>
                             </pluginExecutions>
                         </lifecycleMappingMetadata>
