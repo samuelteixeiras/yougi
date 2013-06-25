@@ -68,11 +68,6 @@
             <artifactId>gravatar4java</artifactId>
             <version>1.1</version>
         </dependency>
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.faces</artifactId>
-            <version>2.2.0-m15</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -88,6 +83,24 @@
                         <endorseddirs>${endorsed.dir}</endorseddirs>
                     </compilerArguments>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <tasks>
+                                <copy file="${basedir}/src/main/resources/org/cejug/yougi/db/changelog_${environment}.xml" toFile="${project.build.directory}/webapp/WEB-INF/classes/org/cejug/yougi/db/changelog.xml"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- resource optimization -->
@@ -142,7 +155,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
+                <version>2.3</version>
                 <executions>
                     <execution>
                         <id>war</id>
