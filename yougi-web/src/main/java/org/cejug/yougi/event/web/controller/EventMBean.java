@@ -50,7 +50,6 @@ import org.cejug.yougi.event.business.EventVenueBean;
 import org.cejug.yougi.event.business.SessionBean;
 import org.cejug.yougi.event.business.SpeakerBean;
 import org.cejug.yougi.event.business.TrackBean;
-import org.cejug.yougi.event.business.VenueBean;
 import org.cejug.yougi.event.entity.Attendee;
 import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.Session;

@@ -37,6 +37,7 @@ import org.cejug.yougi.entity.ApplicationProperty;
 import org.cejug.yougi.entity.Authentication;
 import org.cejug.yougi.entity.Properties;
 import org.cejug.yougi.entity.UserAccount;
+import org.cejug.yougi.exception.BusinessLogicException;
 import org.cejug.yougi.util.ResourceBundleHelper;
 
 /**
@@ -168,7 +169,12 @@ public class ChangePasswordMBean {
             return "change_password";
         }
 
-        userAccountBean.changePassword(userAccount, this.password);
+        try {
+            userAccountBean.changePassword(userAccount, this.password);
+        } catch (BusinessLogicException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            return "change_password";
+        }
         return "login?faces-redirect=true";
     }
 
@@ -185,7 +191,12 @@ public class ChangePasswordMBean {
             return "change_password";
         }
 
-        userAccountBean.changePassword(userAccount, this.password);
+        try {
+            userAccountBean.changePassword(userAccount, this.password);
+        } catch (BusinessLogicException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            return "change_password";
+        }   
         return "profile?faces-redirect=true";
     }
 }

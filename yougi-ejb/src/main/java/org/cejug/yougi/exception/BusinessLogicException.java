@@ -23,7 +23,7 @@ package org.cejug.yougi.exception;
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
-public class BusinessLogicException extends RuntimeException {
+public class BusinessLogicException extends Exception {
 
     public BusinessLogicException(String string, Throwable thrwbl) {
         super(string, thrwbl);

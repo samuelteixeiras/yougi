@@ -90,10 +90,6 @@ public class UserAccountBean {
      * @return true if the account already exists.
      */
     public boolean existingAccount(String username) {
-        if(username == null || username.isEmpty()) {
-            throw new BusinessLogicException("It is not possible to check if the account exists because the username was not informed.");
-        }
-
         UserAccount existing = findUserAccountByUsername(username);
         return existing != null;
     }
@@ -266,7 +262,7 @@ public class UserAccountBean {
      * container.</p>
      * <p>When there is no user, the first registration creates a super user
      * with administrative rights.</p> */
-    public void register(UserAccount newUserAccount, Authentication authentication, City newCity) {
+    public void register(UserAccount newUserAccount, Authentication authentication, City newCity) throws BusinessLogicException {
 
         // true if there is no account registered so far.
         boolean noAccount = thereIsNoAccount();
@@ -399,7 +395,7 @@ public class UserAccountBean {
         }
     }
 
-    public void sendEmailConfirmationRequest(UserAccount userAccount, String serverAddress) {
+    public void sendEmailConfirmationRequest(UserAccount userAccount, String serverAddress) throws BusinessLogicException {
         MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("E3F122DCC87D42248872878412B34CEE");
         Map<String, Object> values = new HashMap<>();
         values.put("serverAddress", serverAddress);
@@ -632,7 +628,7 @@ public class UserAccountBean {
      * @param userAccount account of the user who wants to change his password.
      * @param newPassword the new password of the user.
      */
-    public void changePassword(UserAccount userAccount, String newPassword) {
+    public void changePassword(UserAccount userAccount, String newPassword) throws BusinessLogicException {
         try {
             // Retrieve the user authentication where the password is saved.
             Authentication authentication = (Authentication) em.createQuery("select a from Authentication a where a.userAccount = :userAccount")
@@ -656,7 +652,7 @@ public class UserAccountBean {
      * @param newEmail the new email address of the user account.
      * @exception BusinessLogicException in case the newEmail is already registered.
      */
-    public void changeEmail(UserAccount userAccount, String newEmail) {
+    public void changeEmail(UserAccount userAccount, String newEmail) throws BusinessLogicException {
         // Check if the new email already exists in the UserAccounts
         UserAccount existingUserAccount = findUserAccountByEmail(newEmail);
 
@@ -689,7 +685,7 @@ public class UserAccountBean {
      * it will be used to build the URL that the user will click to validate his/her
      * email address.
      */
-    public void sendEmailVerificationRequest(UserAccount userAccount, String serverAddress) {
+    public void sendEmailVerificationRequest(UserAccount userAccount, String serverAddress) throws BusinessLogicException {
         MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("KJZISKQBE45945D29109A8D6C92IZJ89");
         Map<String, Object> values = new HashMap<>();
         values.put("serverAddress", serverAddress);
@@ -708,7 +704,7 @@ public class UserAccountBean {
         }
     }
 
-    public void confirmEmailChange(UserAccount userAccount) {
+    public void confirmEmailChange(UserAccount userAccount) throws BusinessLogicException {
         if(userAccount.getUnverifiedEmail() == null) {
             throw new BusinessLogicException("errorCode0002");
         }

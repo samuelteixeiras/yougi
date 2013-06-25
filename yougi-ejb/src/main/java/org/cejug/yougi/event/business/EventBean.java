@@ -39,6 +39,7 @@ import org.cejug.yougi.entity.MessageTemplate;
 import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.entity.EntitySupport;
+import org.cejug.yougi.exception.BusinessLogicException;
 import org.cejug.yougi.util.TextUtils;
 
 /**
@@ -116,8 +117,8 @@ public class EventBean {
         try {
             messengerBean.sendEmailMessage(emailMessage);
         }
-        catch(MessagingException me) {
-            LOGGER.log(Level.WARNING, "Error when sending the confirmation of event attendance to user "+ userAccount.getPostingEmail(), me);
+        catch(MessagingException | BusinessLogicException e) {
+            LOGGER.log(Level.WARNING, "Error when sending the confirmation of event attendance to user "+ userAccount.getPostingEmail(), e);
         }
     }
 

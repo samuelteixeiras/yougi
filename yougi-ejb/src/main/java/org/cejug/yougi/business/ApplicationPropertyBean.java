@@ -102,9 +102,6 @@ public class ApplicationPropertyBean {
             String key = properties.getKey();
             applicationProperty = new ApplicationProperty(key, (String)applicationProperties.get(key));
         }
-        catch(Exception e) {
-            throw new BusinessLogicException(e.getMessage(), e);
-        }
         return applicationProperty;
     }
 

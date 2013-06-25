@@ -22,6 +22,7 @@ package org.cejug.yougi.web.handler;
 
 import java.util.Iterator;
 import javax.faces.FacesException;
+import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
 import javax.faces.application.ViewExpiredException;
 import javax.faces.context.ExceptionHandler;
@@ -29,6 +30,7 @@ import javax.faces.context.ExceptionHandlerWrapper;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
+import org.cejug.yougi.util.ResourceBundleHelper;
 
 public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
@@ -57,7 +59,7 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
                 FacesContext fc = FacesContext.getCurrentInstance();
                 NavigationHandler nav = fc.getApplication().getNavigationHandler();
                 try {
-                    fc.getExternalContext().getFlash().put("currentViewId", vee.getViewId());
+                    fc.getExternalContext().getFlash().put("currentViewId", ResourceBundleHelper.INSTANCE.getMessage("warnCode0004"));
                     nav.handleNavigation(fc, null, "/login?faces-redirect=true");
                     fc.renderResponse();
                 } finally {
