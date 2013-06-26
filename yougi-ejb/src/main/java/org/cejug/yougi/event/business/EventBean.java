@@ -117,7 +117,7 @@ public class EventBean {
         try {
             messengerBean.sendEmailMessage(emailMessage);
         }
-        catch(MessagingException | BusinessLogicException e) {
+        catch(MessagingException e) {
             LOGGER.log(Level.WARNING, "Error when sending the confirmation of event attendance to user "+ userAccount.getPostingEmail(), e);
         }
     }
