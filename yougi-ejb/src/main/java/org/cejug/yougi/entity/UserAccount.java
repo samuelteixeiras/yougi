@@ -28,7 +28,7 @@ import javax.persistence.*;
 import org.cejug.yougi.util.TextUtils;
 
 /**
- * Represents the user account of jug members.
+ * Represents the user account.
  *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
@@ -229,7 +229,7 @@ public class UserAccount implements Serializable, Identified {
             this.unverifiedEmail = null;
         }
     }
-    
+
     public void setEmailAsVerified() {
         this.email = this.unverifiedEmail;
         this.unverifiedEmail = null;
@@ -310,10 +310,18 @@ public class UserAccount implements Serializable, Identified {
     }
 
     public void setWebsite(String website) {
-        if(website != null && website.trim().isEmpty()) {
+        if(website == null || website.trim().isEmpty()) {
             this.website = null;
         }
-        this.website = website;
+        else if(website.contains("http://")) {
+            this.website = website.replace("http://", "");
+        }
+        else if(website.contains("https://")) {
+            this.website = website.replace("https://", "");
+        }
+        else {
+            this.website = website;
+        }
     }
 
     public String getTwitter() {
@@ -321,7 +329,15 @@ public class UserAccount implements Serializable, Identified {
     }
 
     public void setTwitter(String twitter) {
-        this.twitter = twitter;
+        if(twitter == null || twitter.trim().isEmpty()) {
+            this.twitter = null;
+        }
+        else if(twitter.contains("@")) {
+            this.twitter = twitter.replace("@", "");
+        }
+        else {
+            this.twitter = twitter;
+        }
     }
 
     public Country getCountry() {
