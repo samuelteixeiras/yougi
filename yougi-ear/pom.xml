@@ -39,35 +39,26 @@
                     </modules>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <tasks>
+                                <copy file="${basedir}/src/main/setup/glassfish-resources_${environment}.xml" toFile="${project.build.directory}/${project.name}-${project.version}/META-INF/glassfish-resources.xml"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <!-- This plugin's configuration is used to store Eclipse m2e
-                settings only. It has no influence on the Maven build itself.-->
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.apache.maven.plugins</groupId>
-                                        <artifactId>maven-ear-plugin</artifactId>
-                                        <versionRange>[2.6,)</versionRange>
-                                        <goals>
-                                            <goal>generate-application-xml</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
+
     <dependencies>
         <dependency>
             <groupId>org.cejug.yougi</groupId>
