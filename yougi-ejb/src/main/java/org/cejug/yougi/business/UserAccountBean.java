@@ -48,7 +48,6 @@ import javax.persistence.PersistenceException;
 import org.cejug.yougi.entity.EmailMessage;
 import org.cejug.yougi.entity.MessageTemplate;
 import org.cejug.yougi.exception.BusinessLogicException;
-import org.cejug.yougi.knowledge.business.SubscriptionBean;
 import org.cejug.yougi.entity.EntitySupport;
 
 /**
@@ -75,9 +74,6 @@ public class UserAccountBean {
 
     @EJB
     private ApplicationPropertyBean applicationPropertyBean;
-
-    @EJB
-    private SubscriptionBean subscriptionBean;
 
     @PersistenceContext
     private EntityManager em;
@@ -341,8 +337,8 @@ public class UserAccountBean {
                         userAccount.setTimeZone(timeZone.getPropertyValue());
                     }
                 }
-                else { 
-                    // If the city does not exist it is created and used to set 
+                else {
+                    // If the city does not exist it is created and used to set
                     // the property of the user account.
                     newCity.setTimeZone(timeZone.getPropertyValue());
                     newCity.setCountry(userAccount.getCountry());
@@ -666,9 +662,6 @@ public class UserAccountBean {
 
         // Since the email address is also the username, change the username in the Authentication and in the UserGroup
         userGroupBean.changeUsername(userAccount, newEmail);
-
-        // In the MailingListSubscription, we close the subscription of the previous email address and subscribe the new one, linked to the same user account.
-        subscriptionBean.changeEmailAddress(userAccount);
 
         // Send an email to the user to confirm the new email address
         ApplicationProperty url = applicationPropertyBean.findApplicationProperty(Properties.URL);

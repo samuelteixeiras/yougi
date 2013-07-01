@@ -20,7 +20,6 @@
  * */
 package org.cejug.yougi.event.web.controller;
 
-import java.util.Locale;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -58,7 +57,7 @@ public class CertificateMBean {
     }
 
     public String verifyAuthenticity() {
-        boolean verified = attendeeBean.verifyCertificateAuthenticity(this.certificate);       
+        boolean verified = attendeeBean.verifyCertificateAuthenticity(this.certificate);
         if(verified) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, ResourceBundleHelper.INSTANCE.getMessage("infoCode0001"), ""));
         }
