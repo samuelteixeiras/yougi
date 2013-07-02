@@ -39,6 +39,7 @@ import org.cejug.yougi.entity.MessageTemplate;
 import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.entity.EntitySupport;
+import org.cejug.yougi.exception.BusinessLogicException;
 import org.cejug.yougi.util.TextUtils;
 
 /**
@@ -78,7 +79,7 @@ public class EventBean {
     }
 
     public List<Event> findEvents(Event parent) {
-        List<Event> events = em.createQuery("select e from Event e where e.parent = :parent order by e.endDate desc")
+        List<Event> events = em.createQuery("select e from Event e where e.parent = :parent order by e.startDate asc")
                                .setParameter("parent", parent)
                                .getResultList();
         return loadVenues(events);
@@ -86,7 +87,7 @@ public class EventBean {
 
     public List<Event> findUpCommingEvents() {
     	Calendar today = Calendar.getInstance();
-        List<Event> events = em.createQuery("select e from Event e where e.endDate >= :today and e.parent is null order by e.endDate desc")
+        List<Event> events = em.createQuery("select e from Event e where e.endDate >= :today and e.parent is null order by e.startDate asc")
         		       .setParameter("today", today.getTime())
                                .getResultList();
         return loadVenues(events);
@@ -116,8 +117,8 @@ public class EventBean {
         try {
             messengerBean.sendEmailMessage(emailMessage);
         }
-        catch(MessagingException me) {
-            LOGGER.log(Level.WARNING, "Error when sending the confirmation of event attendance to user "+ userAccount.getPostingEmail(), me);
+        catch(MessagingException e) {
+            LOGGER.log(Level.WARNING, "Error when sending the confirmation of event attendance to user "+ userAccount.getPostingEmail(), e);
         }
     }
 

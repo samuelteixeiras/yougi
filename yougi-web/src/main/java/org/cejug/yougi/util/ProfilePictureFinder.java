@@ -25,7 +25,6 @@ import de.bripkens.gravatar.Gravatar;
 import de.bripkens.gravatar.Rating;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -37,7 +36,7 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class ProfilePictureFinder {
 
-    public String getPictureFromEmail(String email) throws MalformedURLException, IOException {
+    public String getPictureFromEmail(String email) throws IOException {
         return this.validateUrl(new Gravatar()
                 .setSize(85)
                 .setHttps(true)
@@ -46,7 +45,7 @@ public class ProfilePictureFinder {
                 .getUrl(email));
     }
 
-    private String validateUrl(String gravataUrl) throws MalformedURLException, IOException {
+    private String validateUrl(String gravataUrl) throws IOException {
         return isNotFound(new URL(gravataUrl)) ? this.getDefaultAvatar() : gravataUrl;
     }
     

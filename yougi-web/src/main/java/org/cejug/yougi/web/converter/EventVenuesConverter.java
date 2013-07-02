@@ -20,7 +20,6 @@
  * */
 package org.cejug.yougi.web.converter;
 
-import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -42,13 +41,13 @@ public class EventVenuesConverter  implements Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if(value == null && !(value instanceof Event)) {
+        if(value == null || !(value instanceof Event)) {
             return null;
         }
 
         Event event = (Event) value;
 
-        if(event.getVenues().isEmpty()) {
+        if(event.getVenues() == null || event.getVenues().isEmpty()) {
             return null;
         }
 

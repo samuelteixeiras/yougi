@@ -46,10 +46,10 @@ import org.cejug.yougi.entity.Properties;
 import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.event.business.AttendeeBean;
 import org.cejug.yougi.event.business.EventBean;
+import org.cejug.yougi.event.business.EventVenueBean;
 import org.cejug.yougi.event.business.SessionBean;
 import org.cejug.yougi.event.business.SpeakerBean;
 import org.cejug.yougi.event.business.TrackBean;
-import org.cejug.yougi.event.business.VenueBean;
 import org.cejug.yougi.event.entity.Attendee;
 import org.cejug.yougi.event.entity.Event;
 import org.cejug.yougi.event.entity.Session;
@@ -90,7 +90,7 @@ public class EventMBean {
     private UserAccountBean userAccountBean;
 
     @EJB
-    private VenueBean venueBean;
+    private EventVenueBean eventVenueBean;
 
     @EJB
     private ApplicationPropertyBean applicationPropertyBean;
@@ -128,8 +128,6 @@ public class EventMBean {
     private Long numberPeopleAttending;
 
     private Long numberPeopleAttended;
-
-    private PieChartModel pieChartModel;
 
     public EventMBean() {
     }
@@ -209,7 +207,7 @@ public class EventMBean {
 
     public List<Venue> getVenues() {
         if(venues == null) {
-            venues = venueBean.findVenues();
+            venues = eventVenueBean.findEventVenues(event);
         }
         return venues;
     }
@@ -285,7 +283,7 @@ public class EventMBean {
     }
 
     public PieChartModel getAttendanceRateChartModel() {
-        pieChartModel = new PieChartModel();
+        PieChartModel pieChartModel = new PieChartModel();
         pieChartModel.set("Registered", numberPeopleAttending);
         pieChartModel.set("Attended", numberPeopleAttended);
         return pieChartModel;

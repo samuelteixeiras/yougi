@@ -214,7 +214,7 @@ public class PartnershipMBean {
             InputStream in = uploadedFile.getInputstream();
             ApplicationProperty applicationProperty = applicationPropertyBean.findApplicationProperty(Properties.FILE_REPOSITORY_PATH);
             String fileExtension = uploadedFile.getFileName();
-            fileExtension = fileExtension.substring(fileExtension.indexOf("."));
+            fileExtension = fileExtension.substring(fileExtension.indexOf('.'));
             StringBuilder filePath = new StringBuilder();
             filePath.append(applicationProperty.getPropertyValue());
             filePath.append("/");

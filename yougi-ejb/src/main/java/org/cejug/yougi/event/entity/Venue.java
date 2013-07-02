@@ -32,6 +32,8 @@ import org.cejug.yougi.entity.Identified;
 import org.cejug.yougi.entity.Province;
 
 /**
+ * Venue is the place where an event is organized.
+ *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
@@ -118,6 +120,23 @@ public class Venue implements Serializable, Identified {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public String getLocation() {
+        StringBuilder location = new StringBuilder();
+        String separator = "";
+
+        if(city != null) {
+            location.append(city.getName());
+            separator = ", ";
+        }
+
+        if(country != null) {
+            location.append(separator);
+            location.append(country.getName());
+        }
+
+        return location.toString();
     }
 
     public String getLatitude() {

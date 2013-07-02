@@ -65,8 +65,6 @@ public class MailingListMessage implements Serializable, Cloneable, Identified {
     @Column(name = "message_type")
     private MessageType messageType;
     
-    private String topics;
-
     private Boolean published;
 
     public MailingListMessage() {

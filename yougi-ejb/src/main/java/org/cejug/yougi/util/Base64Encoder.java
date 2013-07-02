@@ -101,8 +101,10 @@ public final class Base64Encoder {
      * @return A character array with the Base64 encoded data.
      */
     public static char[] encode(byte[] in, int iLen) {
-        int oDataLen = (iLen * 4 + 2) / 3;       // output length without padding
-        int oLen = ((iLen + 2) / 3) * 4;         // output length including padding
+        // output length without padding
+        int oDataLen = (iLen * 4 + 2) / 3;
+        // output length including padding
+        int oLen = ((iLen + 2) / 3) * 4;
         char[] out = new char[oLen];
         int ip = 0;
         int op = 0;

@@ -25,12 +25,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import org.cejug.yougi.entity.Identified;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */
 @Entity
+@Table(name = "track")
 public class Track implements Serializable, Identified {
     private static final long serialVersionUID = 1L;
 

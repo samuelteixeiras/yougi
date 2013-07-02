@@ -28,6 +28,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import org.cejug.yougi.event.business.EventBean;
+import org.cejug.yougi.event.business.EventVenueBean;
 import org.cejug.yougi.event.business.RoomBean;
 import org.cejug.yougi.event.business.SessionBean;
 import org.cejug.yougi.event.business.VenueBean;
@@ -58,6 +59,9 @@ public class VenueMBean implements Serializable {
     @EJB
     private EventBean eventBean;
 
+    @EJB
+    private EventVenueBean eventVenueBean;
+
     @ManagedProperty(value = "#{param.id}")
     private String id;
 
@@ -72,6 +76,12 @@ public class VenueMBean implements Serializable {
     private Venue venue;
 
     private List<Room> rooms;
+    private List<Event> events;
+    private List<Venue> venues;
+
+    public VenueMBean() {
+        this.venue = new Venue();
+    }
 
     public String getId() {
         return id;
@@ -124,6 +134,20 @@ public class VenueMBean implements Serializable {
         return this.rooms;
     }
 
+    public List<Venue> getVenues() {
+        if(this.venues == null) {
+            this.venues = venueBean.findVenues();
+        }
+        return this.venues;
+    }
+
+    public List<Event> getEvents() {
+        if(this.events == null) {
+            this.events = eventVenueBean.findEventsVenue(venue);
+        }
+        return this.events;
+    }
+
     @PostConstruct
     public void load() {
         if (this.eventId != null && !this.eventId.isEmpty()) {
@@ -132,8 +156,30 @@ public class VenueMBean implements Serializable {
 
         if (this.id != null && !this.id.isEmpty()) {
             this.venue = venueBean.findVenue(id);
+
+            locationMBean.initialize();
+
+            if (this.venue.getCountry() != null) {
+                locationMBean.setSelectedCountry(this.venue.getCountry().getAcronym());
+            }
+
+            if (this.venue.getProvince() != null) {
+                locationMBean.setSelectedProvince(this.venue.getProvince().getId());
+            }
+
+            if (this.venue.getCity() != null) {
+                locationMBean.setSelectedCity(this.venue.getCity().getId());
+            }
         }
     }
 
+    public String save() {
+        this.venue.setCountry(this.locationMBean.getCountry());
+        this.venue.setProvince(this.locationMBean.getProvince());
+        this.venue.setCity(this.locationMBean.getCity());
 
+        venueBean.save(this.venue);
+
+        return "venues?faces-redirect=true";
+    }
 }

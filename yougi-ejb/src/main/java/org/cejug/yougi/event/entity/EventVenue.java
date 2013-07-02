@@ -29,7 +29,8 @@ import javax.persistence.Table;
 import org.cejug.yougi.entity.Identified;
 
 /**
- * Associates a event to a venue.
+ * Associates a event to a venue because an event can happen in several venues
+ * at the same time.
  *
  * @author Hildeberto Mendonca - http://www.hildeberto.com
  */

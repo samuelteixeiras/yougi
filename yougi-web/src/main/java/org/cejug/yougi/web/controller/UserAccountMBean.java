@@ -62,7 +62,6 @@ public class UserAccountMBean implements Serializable {
     private String passwordConfirmation;
 
     private String validationEmail;
-    private String validationEmailConfirmation;
 
     private Boolean validationPrivacy = false;
 
@@ -121,8 +120,8 @@ public class UserAccountMBean implements Serializable {
     }
 
     public void validateEmailConfirmation(FacesContext context, UIComponent component, Object value) {
-        this.validationEmailConfirmation = (String) value;
-        if(!this.validationEmailConfirmation.equals(this.validationEmail)) {
+        String validationEmailConfirmation = (String) value;
+        if(!validationEmailConfirmation.equals(this.validationEmail)) {
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, ResourceBundleHelper.INSTANCE.getMessage("errorCode0003"), null));
         }
     }
@@ -177,7 +176,7 @@ public class UserAccountMBean implements Serializable {
 
     public void validateUserId(FacesContext context, UIComponent toValidate, Object value) throws ValidatorException {
         String usrId = (String) value;
-        if(-1 == usrId.indexOf("@")) {
+        if(-1 == usrId.indexOf('@')) {
             throw new ValidatorException(new FacesMessage("Invalid email address."));
         }
     }

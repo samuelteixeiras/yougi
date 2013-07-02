@@ -25,11 +25,15 @@ package org.cejug.yougi.exception;
  */
 public class EnvironmentResourceException extends RuntimeException {
 
-    public EnvironmentResourceException(String string, Throwable thrwbl) {
-        super(string, thrwbl);
-    }
-
     public EnvironmentResourceException(Throwable thrwbl) {
         super(thrwbl);
+    }
+
+    public EnvironmentResourceException(String message) {
+        super(message);
+    }
+
+    public EnvironmentResourceException(String message, Throwable thrwbl) {
+        super(message, thrwbl);
     }
 }

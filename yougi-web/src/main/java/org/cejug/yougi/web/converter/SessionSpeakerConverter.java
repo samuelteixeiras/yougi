@@ -41,7 +41,7 @@ public class SessionSpeakerConverter implements Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if(value == null && !(value instanceof List)) {
+        if(value == null || !(value instanceof List)) {
             return null;
         }
 

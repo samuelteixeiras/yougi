@@ -29,7 +29,8 @@
             <ui:define name="content">
                 <div class="content">
                     <h1>#{bundle.signIn}</h1>
-                    <p><h:messages globalOnly="true" styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/></p>
+                    <p><h:messages styleClass="alertMessage" infoClass="infoMessage" errorClass="errorMessage"/></p>
+                    <p>-<h:outputText value="#{currentViewId}" styleClass="alertMessage"/></p>
                     <p>#{bundle.signInMessage}.</p>
                     <form method="post" action="j_security_check">
                         <h:panelGrid>

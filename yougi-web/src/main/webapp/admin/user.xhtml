@@ -133,23 +133,6 @@
                                                 <h:selectBooleanCheckbox id="mailingListCheck" label="#{bundle.mailingList}" value="#{memberMBean.userAccount.mailingList}"/>
                                                 <h:outputLabel for="mailingListCheck" value="#{bundle.activated}"/>
                                             </h:panelGrid>
-
-                                            <p:dataTable var="mailingList" value="#{memberMBean.mailingLists}" selection="#{memberMBean.selectedMailingLists}" rowKey="#{mailingList.id}">
-                                                <f:facet name="header"><h:outputText value="#{bundle.mailingLists}"/></f:facet>
-                                                <p:column selectionMode="multiple"/>
-                                                <p:column>
-                                                    <f:facet name="header"><h:outputText value="#{bundle.name}"/></f:facet>
-                                                    <h:outputText value="#{mailingList.name}"/>
-                                                </p:column>
-                                                <p:column>
-                                                    <f:facet name="header"><h:outputText value="#{bundle.description}"/></f:facet>
-                                                    <h:outputText value="#{mailingList.description}"/>
-                                                </p:column>
-                                                <p:column>
-                                                    <f:facet name="header"><h:outputText value="#{bundle.email}"/></f:facet>
-                                                    <h:outputText value="#{mailingList.email}" />
-                                                </p:column>
-                                            </p:dataTable>
                                         </p:tab>
                                         <p:tab title="#{bundle.publicProfile}" rendered="#{memberMBean.userAccount.publicProfile}">
                                             <h:selectBooleanCheckbox id="publicProfile" label="#{bundle.publicProfile}" value="#{memberMBean.userAccount.publicProfile}"/>
@@ -166,10 +149,6 @@
                                                 <p:column>
                                                     <f:facet name="header"><h:outputText value="#{bundle.name}"/></f:facet>
                                                     <h:outputText value="#{evt.name}"/>
-                                                </p:column>
-                                                <p:column>
-                                                    <f:facet name="header"><h:outputText value="#{bundle.venue}"/></f:facet>
-                                                    <h:outputText value="#{evt.venue}"/>
                                                 </p:column>
                                                 <p:column>
                                                     <f:facet name="header"><h:outputText value="#{bundle.date}"/></f:facet>
@@ -202,28 +181,28 @@
                                     </p:tabView>
                                     <p:fieldset legend="#{bundle.availablePrivacyOptions}">
                                         <h:panelGrid columns="2">
-                                            <h:selectBooleanCheckbox id="mailingListCheck2" label="#{bundle.mailingList2}" value="#{memberMBean.userAccount.mailingList}" rendered="#{!memberMBean.userAccount.mailingList}"/>
+                                            <h:selectBooleanCheckbox id="mailingListCheck2" label="#{bundle.mailingList}" value="#{memberMBean.userAccount.mailingList}" rendered="#{!memberMBean.userAccount.mailingList}"/>
                                             <h:outputLabel for="mailingListCheck2" value="#{bundle.mailingList}" rendered="#{!memberMBean.userAccount.mailingList}"/>
 
-                                            <h:selectBooleanCheckbox id="publicProfile2" label="#{bundle.publicProfile2}" value="#{memberMBean.userAccount.publicProfile}" rendered="#{!memberMBean.userAccount.publicProfile}"/>
+                                            <h:selectBooleanCheckbox id="publicProfile2" label="#{bundle.publicProfile}" value="#{memberMBean.userAccount.publicProfile}" rendered="#{!memberMBean.userAccount.publicProfile}"/>
                                             <h:outputLabel for="publicProfile2" value="#{bundle.publicProfile}" rendered="#{!memberMBean.userAccount.publicProfile}"/>
 
-                                            <h:selectBooleanCheckbox id="event2" label="#{bundle.event2}" value="#{memberMBean.userAccount.event}" rendered="#{!memberMBean.userAccount.event}"/>
+                                            <h:selectBooleanCheckbox id="event2" label="#{bundle.event}" value="#{memberMBean.userAccount.event}" rendered="#{!memberMBean.userAccount.event}"/>
                                             <h:outputLabel for="event2" value="#{bundle.event}" rendered="#{!memberMBean.userAccount.event}"/>
 
-                                            <h:selectBooleanCheckbox id="news2" label="#{bundle.news2}" value="#{memberMBean.userAccount.news}" rendered="#{!memberMBean.userAccount.news}"/>
+                                            <h:selectBooleanCheckbox id="news2" label="#{bundle.news}" value="#{memberMBean.userAccount.news}" rendered="#{!memberMBean.userAccount.news}"/>
                                             <h:outputLabel for="news2" value="#{bundle.news}" rendered="#{!memberMBean.userAccount.news}"/>
 
-                                            <h:selectBooleanCheckbox id="generalOffer2" label="#{bundle.generalOffer2}" value="#{memberMBean.userAccount.generalOffer}" rendered="#{!memberMBean.userAccount.generalOffer}"/>
+                                            <h:selectBooleanCheckbox id="generalOffer2" label="#{bundle.generalOffer}" value="#{memberMBean.userAccount.generalOffer}" rendered="#{!memberMBean.userAccount.generalOffer}"/>
                                             <h:outputLabel for="generalOffer2" value="#{bundle.generalOffer}" rendered="#{!memberMBean.userAccount.generalOffer}"/>
 
-                                            <h:selectBooleanCheckbox id="jobOffer2" label="#{bundle.jobOffer2}" value="#{memberMBean.userAccount.jobOffer}" rendered="#{!memberMBean.userAccount.jobOffer}"/>
+                                            <h:selectBooleanCheckbox id="jobOffer2" label="#{bundle.jobOffer}" value="#{memberMBean.userAccount.jobOffer}" rendered="#{!memberMBean.userAccount.jobOffer}"/>
                                             <h:outputLabel for="jobOffer2" value="#{bundle.jobOffer}" rendered="#{!memberMBean.userAccount.jobOffer}"/>
 
-                                            <h:selectBooleanCheckbox id="sponsor2" label="#{bundle.sponsor2}" value="#{memberMBean.userAccount.sponsor}" rendered="#{!memberMBean.userAccount.sponsor}"/>
+                                            <h:selectBooleanCheckbox id="sponsor2" label="#{bundle.sponsor}" value="#{memberMBean.userAccount.sponsor}" rendered="#{!memberMBean.userAccount.sponsor}"/>
                                             <h:outputLabel for="sponsor2" value="#{bundle.sponsor}" rendered="#{!memberMBean.userAccount.sponsor}"/>
 
-                                            <h:selectBooleanCheckbox id="speaker2" label="#{bundle.speaker2}" value="#{memberMBean.userAccount.speaker}" rendered="#{!memberMBean.userAccount.speaker}"/>
+                                            <h:selectBooleanCheckbox id="speaker2" label="#{bundle.speaker}" value="#{memberMBean.userAccount.speaker}" rendered="#{!memberMBean.userAccount.speaker}"/>
                                             <h:outputLabel for="speaker2" value="#{bundle.speaker}" rendered="#{!memberMBean.userAccount.speaker}"/>
                                         </h:panelGrid>
                                     </p:fieldset>

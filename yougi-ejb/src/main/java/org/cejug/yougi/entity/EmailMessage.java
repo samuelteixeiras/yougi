@@ -92,7 +92,7 @@ public class EmailMessage {
         try {
             MimeMessage msg = new MimeMessage(mailSession);
             msg.setSubject(this.getSubject(), "UTF-8");
-            Address[] jRecipients; // JavaMail recipients.
+            Address[] jRecipients;
 
             if(recipients != null) {
                 jRecipients = new Address[recipients.length];

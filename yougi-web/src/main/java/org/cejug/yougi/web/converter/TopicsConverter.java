@@ -39,7 +39,7 @@ public class TopicsConverter implements Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if(value == null && !(value instanceof String)) {
+        if(value == null || !(value instanceof String)) {
             return null;
         }
         String topics = (String) value;

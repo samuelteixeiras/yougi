@@ -1,4 +1,5 @@
-/* Yougi is a web application conceived to manage user groups or
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Yougi is a web application conceived to manage user groups or
  * communities focused on a certain domain of knowledge, whose members are
  * constantly sharing information and participating in social and educational
  * events. Copyright (C) 2011 Hildeberto Mendonça.
@@ -17,30 +18,13 @@
  * this library. Look for the file license.txt at the root level. If you do not
  * find it, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA 02111-1307 USA.
- * */
-package org.cejug.yougi.entity;
+ * -->
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
-/**
- * Indicates the type of deactivation that the member was subject to. In case of
- * ADMINISTRATIVE, the member was deactivated by a UG leader. If OWNWILL, the
- * member requested his/her own deactivation.
- *
- * @author Hildeberto Mendonca - http://www.hildeberto.com
- */
-public enum DeactivationType {
-
-    ADMINISTRATIVE("administrative"),
-    OWNWILL("ownwill"),
-    UNREGISTERED("unregistered");
-
-    private String name;
-
-    DeactivationType(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
-}
+    <include file="org/cejug/yougi/db/changelog/javadb-create.sql"/>
+    <include file="org/cejug/yougi/db/changelog/javadb-init.sql"/>
+    <include file="org/cejug/yougi/db/changelog/javadb-update.sql"/>
+</databaseChangeLog>

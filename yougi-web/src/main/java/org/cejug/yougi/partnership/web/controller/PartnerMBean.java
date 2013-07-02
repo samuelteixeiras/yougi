@@ -158,7 +158,6 @@ public class PartnerMBean implements Serializable {
         }
     }
 
-    @SuppressWarnings("rawtypes")
     public String save() {
         Country country = this.locationMBean.getCountry();
         if (country != null) {

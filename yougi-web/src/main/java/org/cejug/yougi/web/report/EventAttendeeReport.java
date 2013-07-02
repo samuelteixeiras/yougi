@@ -47,7 +47,7 @@ public class EventAttendeeReport {
     }
 
     public void printReport(List<Attendee> attendees) throws DocumentException {
-        float[] columnSizes = {20, 220, 220, 60}; // 520
+        float[] columnSizes = {20, 220, 220, 60};
         PdfPTable table = new PdfPTable(columnSizes.length);
         table.setLockedWidth(true);
         table.setTotalWidth(columnSizes);

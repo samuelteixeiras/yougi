@@ -48,9 +48,7 @@ import javax.persistence.PersistenceException;
 import org.cejug.yougi.entity.EmailMessage;
 import org.cejug.yougi.entity.MessageTemplate;
 import org.cejug.yougi.exception.BusinessLogicException;
-import org.cejug.yougi.knowledge.business.SubscriptionBean;
 import org.cejug.yougi.entity.EntitySupport;
-import org.cejug.yougi.exception.ExistingUserAccountException;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
@@ -77,9 +75,6 @@ public class UserAccountBean {
     @EJB
     private ApplicationPropertyBean applicationPropertyBean;
 
-    @EJB
-    private SubscriptionBean subscriptionBean;
-
     @PersistenceContext
     private EntityManager em;
 
@@ -91,10 +86,6 @@ public class UserAccountBean {
      * @return true if the account already exists.
      */
     public boolean existingAccount(String username) {
-        if(username == null || username.isEmpty()) {
-            throw new BusinessLogicException("It is not possible to check if the account exists because the username was not informed.");
-        }
-
         UserAccount existing = findUserAccountByUsername(username);
         return existing != null;
     }
@@ -104,12 +95,7 @@ public class UserAccountBean {
      * */
     public boolean thereIsNoAccount() {
         Long totalUserAccounts = (Long)em.createQuery("select count(u) from UserAccount u").getSingleResult();
-        if(totalUserAccounts == 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return totalUserAccounts == 0;
     }
 
     public UserAccount findUserAccount(String id) {
@@ -272,7 +258,7 @@ public class UserAccountBean {
      * container.</p>
      * <p>When there is no user, the first registration creates a super user
      * with administrative rights.</p> */
-    public void register(UserAccount newUserAccount, Authentication authentication, City newCity) {
+    public void register(UserAccount newUserAccount, Authentication authentication, City newCity) throws BusinessLogicException {
 
         // true if there is no account registered so far.
         boolean noAccount = thereIsNoAccount();
@@ -351,7 +337,9 @@ public class UserAccountBean {
                         userAccount.setTimeZone(timeZone.getPropertyValue());
                     }
                 }
-                else { // If the city does not exist it is created and used to set the property of the user account.
+                else {
+                    // If the city does not exist it is created and used to set
+                    // the property of the user account.
                     newCity.setTimeZone(timeZone.getPropertyValue());
                     newCity.setCountry(userAccount.getCountry());
                     newCity.setProvince(userAccount.getProvince());
@@ -371,10 +359,10 @@ public class UserAccountBean {
                     userAccount.setTimeZone(timeZone.getPropertyValue());
                 }
             }
-            
+
             userAccount.defineNewConfirmationCode();
         }
-        
+
         userAccount.setRegistrationDate(Calendar.getInstance().getTime());
 
         if(!existingAccount) {
@@ -403,7 +391,7 @@ public class UserAccountBean {
         }
     }
 
-    public void sendEmailConfirmationRequest(UserAccount userAccount, String serverAddress) {
+    public void sendEmailConfirmationRequest(UserAccount userAccount, String serverAddress) throws BusinessLogicException {
         MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("E3F122DCC87D42248872878412B34CEE");
         Map<String, Object> values = new HashMap<>();
         values.put("serverAddress", serverAddress);
@@ -424,7 +412,7 @@ public class UserAccountBean {
     /**
      * Finds the user account using the confirmation code, adds this user
      * account in the default group, sends a welcome message to the user and a
-     * notification message to the leaders. The user has access to the
+     * notification message to the administrators. The user has access to the
      * application when he/she is added to the default group.
      * @return The confirmed user account.
      * */
@@ -453,8 +441,8 @@ public class UserAccountBean {
                     sendWelcomeMessage(userAccount);
 
                     AccessGroup administrativeGroup = accessGroupBean.findAdministrativeGroup();
-                    List<UserAccount> leaders = userGroupBean.findUsersGroup(administrativeGroup);
-                    sendNewMemberAlertMessage(userAccount, leaders);
+                    List<UserAccount> admins = userGroupBean.findUsersGroup(administrativeGroup);
+                    sendNewMemberAlertMessage(userAccount, admins);
                 }
             }
 
@@ -480,13 +468,13 @@ public class UserAccountBean {
         }
     }
 
-    public void sendNewMemberAlertMessage(UserAccount userAccount, List<UserAccount> leaders) {
+    public void sendNewMemberAlertMessage(UserAccount userAccount, List<UserAccount> admins) {
         MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("0D6F96382D91454F8155A720F3326F1B");
         Map<String, Object> values = new HashMap<>();
         values.put("userAccount.fullName", userAccount.getFullName());
         values.put("userAccount.registrationDate", userAccount.getRegistrationDate());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
-        emailMessage.setRecipients(leaders);
+        emailMessage.setRecipients(admins);
 
         try {
             messengerBean.sendEmailMessage(emailMessage);
@@ -522,10 +510,10 @@ public class UserAccountBean {
         }
 
         AccessGroup administrativeGroup = accessGroupBean.findAdministrativeGroup();
-        List<UserAccount> leaders = userGroupBean.findUsersGroup(administrativeGroup);
+        List<UserAccount> admins = userGroupBean.findUsersGroup(administrativeGroup);
 
         if(appProp.sendEmailsEnabled()) {
-            sendDeactivationAlertMessage(existingUserAccount, leaders);
+            sendDeactivationAlertMessage(existingUserAccount, admins);
         }
     }
 
@@ -552,19 +540,19 @@ public class UserAccountBean {
         }
     }
 
-    public void sendDeactivationAlertMessage(UserAccount userAccount, List<UserAccount> leaders) {
+    public void sendDeactivationAlertMessage(UserAccount userAccount, List<UserAccount> admins) {
         MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("0D6F96382IKEJSUIWOK5A720F3326F1B");
         Map<String, Object> values = new HashMap<>();
         values.put("userAccount.fullName", userAccount.getFullName());
         values.put("userAccount.deactivationReason", userAccount.getDeactivationReason());
         EmailMessage emailMessage = messageTemplate.replaceVariablesByValues(values);
-        emailMessage.setRecipients(leaders);
+        emailMessage.setRecipients(admins);
 
         try {
             messengerBean.sendEmailMessage(emailMessage);
         }
         catch(MessagingException me) {
-            LOGGER.log(Level.WARNING, "Error when sending the deactivation reason from "+ userAccount.getPostingEmail() +" to leaders.", me);
+            LOGGER.log(Level.WARNING, "Error when sending the deactivation reason from "+ userAccount.getPostingEmail() +" to administrators.", me);
         }
     }
 
@@ -636,7 +624,7 @@ public class UserAccountBean {
      * @param userAccount account of the user who wants to change his password.
      * @param newPassword the new password of the user.
      */
-    public void changePassword(UserAccount userAccount, String newPassword) {
+    public void changePassword(UserAccount userAccount, String newPassword) throws BusinessLogicException {
         try {
             // Retrieve the user authentication where the password is saved.
             Authentication authentication = (Authentication) em.createQuery("select a from Authentication a where a.userAccount = :userAccount")
@@ -660,12 +648,12 @@ public class UserAccountBean {
      * @param newEmail the new email address of the user account.
      * @exception BusinessLogicException in case the newEmail is already registered.
      */
-    public void changeEmail(UserAccount userAccount, String newEmail) throws ExistingUserAccountException {
+    public void changeEmail(UserAccount userAccount, String newEmail) throws BusinessLogicException {
         // Check if the new email already exists in the UserAccounts
         UserAccount existingUserAccount = findUserAccountByEmail(newEmail);
 
         if(existingUserAccount != null) {
-            throw new ExistingUserAccountException("errorCode0001");
+            throw new BusinessLogicException("errorCode0001");
         }
 
         // Change the email address in the UserAccount
@@ -675,11 +663,7 @@ public class UserAccountBean {
         // Since the email address is also the username, change the username in the Authentication and in the UserGroup
         userGroupBean.changeUsername(userAccount, newEmail);
 
-        // In the MailingListSubscription, we close the subscription of the previous email address and subscribe the new one, linked to the same user account.
-        subscriptionBean.changeEmailAddress(userAccount);
-
         // Send an email to the user to confirm the new email address
-
         ApplicationProperty url = applicationPropertyBean.findApplicationProperty(Properties.URL);
         sendEmailVerificationRequest(userAccount, url.getPropertyValue());
     }
@@ -694,7 +678,7 @@ public class UserAccountBean {
      * it will be used to build the URL that the user will click to validate his/her
      * email address.
      */
-    public void sendEmailVerificationRequest(UserAccount userAccount, String serverAddress) {
+    public void sendEmailVerificationRequest(UserAccount userAccount, String serverAddress) throws BusinessLogicException {
         MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("KJZISKQBE45945D29109A8D6C92IZJ89");
         Map<String, Object> values = new HashMap<>();
         values.put("serverAddress", serverAddress);
@@ -713,14 +697,14 @@ public class UserAccountBean {
         }
     }
 
-    public void confirmEmailChange(UserAccount userAccount) {
+    public void confirmEmailChange(UserAccount userAccount) throws BusinessLogicException {
         if(userAccount.getUnverifiedEmail() == null) {
             throw new BusinessLogicException("errorCode0002");
         }
 
         userAccount.resetConfirmationCode();
         userAccount.setEmailAsVerified();
-        
+
         save(userAccount);
     }
 

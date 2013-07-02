@@ -41,6 +41,7 @@ import org.cejug.yougi.entity.MessageTemplate;
 import org.cejug.yougi.entity.UserAccount;
 import org.cejug.yougi.entity.UserGroup;
 import org.cejug.yougi.entity.EntitySupport;
+import org.cejug.yougi.exception.BusinessLogicException;
 
 /**
  * @author Hildeberto Mendonca - http://www.hildeberto.com
@@ -66,7 +67,7 @@ public class AccessGroupBean {
 
     static final Logger LOGGER = Logger.getLogger(AccessGroupBean.class.getName());
 
-    public static final String ADMIN_GROUP = "leaders";
+    public static final String ADMIN_GROUP = "admins";
     public static final String DEFAULT_GROUP = "members";
 
     public AccessGroup findAccessGroup(String groupId) {
@@ -99,7 +100,7 @@ public class AccessGroupBean {
                                         .getSingleResult();
         }
         catch(Exception nre) {
-            group = new AccessGroup(ADMIN_GROUP,"JUG Leaders Group");
+            group = new AccessGroup(ADMIN_GROUP,"Administrators Group");
             group.setId(EntitySupport.INSTANCE.generateEntityId());
             em.persist(group);
         }
@@ -120,7 +121,7 @@ public class AccessGroupBean {
         }
     }
 
-    public void sendGroupAssignmentAlert(UserAccount userAccount, AccessGroup accessGroup) {
+    public void sendGroupAssignmentAlert(UserAccount userAccount, AccessGroup accessGroup) throws BusinessLogicException {
         MessageTemplate messageTemplate = messageTemplateBean.findMessageTemplate("09JDIIE82O39IDIDOSJCHXUDJJXHCKP0");
         Map<String, Object> values = new HashMap<>();
         values.put("userAccount.firstName", userAccount.getFirstName());

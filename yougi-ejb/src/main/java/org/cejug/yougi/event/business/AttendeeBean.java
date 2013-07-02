@@ -75,12 +75,7 @@ public class AttendeeBean {
     public Boolean isAttending(Event event, UserAccount person) {
         try {
             Attendee attendee = (Attendee) em.createQuery("select a from Attendee a where a.userAccount = :person and a.event = :event").setParameter("person", person).setParameter("event", event).getSingleResult();
-
-            if (attendee != null) {
-                return true;
-            } else {
-                return false;
-            }
+            return attendee != null;
         } catch (NoResultException nre) {
             return false;
         }
@@ -142,11 +137,6 @@ public class AttendeeBean {
      * Confirm the attendance of a list of members in a event.
      */
     public void confirmMembersAttendance(Event event, Attendee[] confirmedAttendees) {
-        // If the received list is empty then nobody attended the event.
-        if (confirmedAttendees == null) {
-            confirmedAttendees = new Attendee[0];
-        }
-
         /* Compares the existing list of attendees with the list of confirmed
          * attendees.*/
         List<Attendee> attendees = findAttendees(event);
@@ -157,13 +147,15 @@ public class AttendeeBean {
 
             /* Check whether the attendee is in the list of confirmed
              * attendees. If yes, then his(er) attendance is confirmed. */
-            for (Attendee confirmedAttendee : confirmedAttendees) {
-                if (attendee.equals(confirmedAttendee)) {
-                    attendee.setAttended(true);
-                    attendee.generateCertificateData();
-                    em.merge(attendee);
-                    confirmed = true;
-                    break;
+            if(confirmedAttendees != null) {
+                for (Attendee confirmedAttendee : confirmedAttendees) {
+                    if (attendee.equals(confirmedAttendee)) {
+                        attendee.setAttended(true);
+                        attendee.generateCertificateData();
+                        em.merge(attendee);
+                        confirmed = true;
+                        break;
+                    }
                 }
             }
 
@@ -190,10 +182,7 @@ public class AttendeeBean {
                                             .setParameter("certificateVenue", certificate.getCertificateVenue())
                                             .getSingleResult();
 
-            if(attendee != null)
-                return true;
-            else
-                return false;
+            return attendee != null;
         }
         catch(NoResultException nre) {
             return false;
