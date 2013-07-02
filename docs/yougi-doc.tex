@@ -455,7 +455,6 @@ You can configure JavaMail directly in the domain.xml file, by copying and pasti
       <property name="mail.smtp.port" value="[port_number]"/>
       <property name="mail.smtp.auth" value="true"/>
       <property name="mail.smtp.password" value="[password]"/>
-      </property>
    </mail-resource>
 </resources>
 \end{verbatim}
@@ -465,8 +464,8 @@ Add the element \textless resource-ref\textgreater \ of this new resource after 
 \begin{verbatim}
 <server name="server" config-ref="server-config">
    ...
-   <resource-ref ref="jdbc/ug"></resource-ref>
-   <resource-ref ref="mail/ug"></resource-ref>
+   <resource-ref ref="jdbc/ug"/>
+   <resource-ref ref="mail/ug"/>
 </server>
 \end{verbatim}
 
@@ -591,13 +590,13 @@ Before using the application, the database should be initialized with some initi
 As explained in the previous chapter, it is not necessary to start from the source code to install and use Yougi. The binary package is available at http://yougi.org/downloads. On the other hand, if the intention is to contribute to the project, a set of other actions are necessary. A potential contributor may:
 
 \begin{itemize}
-\item Be pationate about open source initiatives and technologies.
+\item Be passionate about open source initiatives and technologies.
 \item Be interested in learning Enterprise Java technologies.
-\item Be excited about implementing a solution to manage comunities.
+\item Be excited about implementing a solution to manage communities.
 \item Learn JavaEE, Maven, Arquillian, JUnit, and other technologies used in the project.
 \end{itemize}
 
-If you fell confortable with these principals, this chapter will help you to get started, explaining how to contribute to the source code of the project.
+If you fell comfortable with these principals, this chapter will help you to get started, explaining how to contribute to the source code of the project.
 
 \section{Preparing the Development Environment}
 
