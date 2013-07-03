@@ -2,7 +2,7 @@
 <!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN" "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
 
 <resources>
-    <jdbc-connection-pool driver-classname="" datasource-classname="org.apache.derby.jdbc.ClientDataSource" res-type="javax.sql.DataSource" description="" name="UGPool" ping="true">
+    <jdbc-connection-pool driver-classname="" datasource-classname="org.apache.derby.jdbc.ClientDataSource" res-type="javax.sql.DataSource" name="UGPool" ping="true">
         <property name="User" value="ug_user"/>
         <property name="DatabaseName" value="ug"/>
         <property name="Password" value="ug"/>
@@ -11,9 +11,9 @@
         <property name="connectionAttributes" value=";create=true"/>
     </jdbc-connection-pool>
 
-    <jdbc-resource pool-name="UGPool" description="" jndi-name="jdbc/ug"/>
+    <jdbc-resource pool-name="UGPool" jndi-name="jdbc/ug"/>
 
-    <mail-resource host="localhost" description="" jndi-name="mail/ug" from="" user="ug">
+    <mail-resource host="localhost" jndi-name="mail/ug" from="" user="ug">
         <property name="mail.smtp.port" value="25"/>
     </mail-resource>
 </resources>
