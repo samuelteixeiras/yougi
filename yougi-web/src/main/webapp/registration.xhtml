@@ -39,11 +39,11 @@
                             <h:outputLabel for="lastName" value="#{bundle.lastName} *" styleClass="fieldLabel"/>
 
                             <h:panelGroup>
-                                <h:inputText id="firstName" label="#{bundle.firstName}" required="true" size="40" maxlength="50" value="#{userAccountMBean.userAccount.firstName}"/>
+                                <h:inputText id="firstName" label="#{bundle.firstName}" required="true" size="40" maxlength="50" value="#{userAccountMBean.userAccount.firstName}" validator="#{userAccountMBean.validateFirstName}"/>
                                 <h:message for="firstName" errorClass="errorMessage"/>
                             </h:panelGroup>
                             <h:panelGroup>
-                                <h:inputText id="lastName" label="#{bundle.lastName}" required="true" size="40" maxlength="50" value="#{userAccountMBean.userAccount.lastName}"/>
+                                <h:inputText id="lastName" label="#{bundle.lastName}" required="true" size="40" maxlength="50" value="#{userAccountMBean.userAccount.lastName}" validator="#{userAccountMBean.validateLastName}"/>
                                 <h:message for="lastName" errorClass="errorMessage"/>
                             </h:panelGroup>
 
