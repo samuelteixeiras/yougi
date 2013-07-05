@@ -155,24 +155,6 @@ public class UserAccountMBean implements Serializable {
     }
     // End of privacy composite validation
     
-    // Begignning of user first name validation
-    public void validateFirstName(FacesContext context, UIComponent component, Object value) {
-    	String firstName = (String) value;
-    	if(firstName.length() < 2) {
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, ResourceBundleHelper.INSTANCE.getMessage("errorCode0012"), null));
-    	}
-    }
-    // End of user first name validation
-    
-    // Begignning of user last name validation
-    public void validateLastName(FacesContext context, UIComponent component, Object value) {
-    	String lastName = (String)value;
-    	if(lastName.length() < 2) {
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, ResourceBundleHelper.INSTANCE.getMessage("errorCode0013"), null));
-    	}
-    }
-    // End of user last name validation
-    
     public LocationMBean getLocationMBean() {
         return locationMBean;
     }
