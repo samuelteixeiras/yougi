@@ -44,14 +44,12 @@
                                     <h:outputText value="#{userAccountMBean.userAccount.lastName}"/>
 
                                     <h:outputText value="#{bundle.gender}" styleClass="fieldLabel"/>
-                                    <h:outputText value="#{bundle.birthDate}" styleClass="fieldLabel"/>
+                                    <h:outputText/>
 
                                     <h:outputText value="#{userAccountMBean.userAccount.gender}">
                                         <f:converter converterId="GenderToString"/>
                                     </h:outputText>
-                                    <h:outputText value="#{userAccountMBean.userAccount.birthDate}">
-                                        <f:convertDateTime pattern="#{bundle.formatDate}" timeZone="#{userProfileMBean.timeZone}"/>
-                                    </h:outputText>
+                                    <h:outputText/>
 
                                     <h:outputText value="#{bundle.email}" styleClass="fieldLabel"/>
                                     <h:outputText value="#{bundle.age}" styleClass="fieldLabel"/>
@@ -72,10 +70,10 @@
                                     <h:outputText value="#{userAccountMBean.userAccount.province}"/>
 
                                     <h:outputText value="#{bundle.city}" styleClass="fieldLabel"/>
-                                    <h:outputText value="#{bundle.postalCode}" styleClass="fieldLabel"/>
+                                    <h:outputText/>
 
                                     <h:outputText value="#{userAccountMBean.userAccount.city}"/>
-                                    <h:outputText value="#{userAccountMBean.userAccount.postalCode}"/>
+                                    <h:outputText/>
                                 </h:panelGrid>
                                 <p></p>
                                 <h:panelGrid columns="2">

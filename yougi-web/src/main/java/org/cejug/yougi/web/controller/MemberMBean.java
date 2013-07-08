@@ -250,14 +250,11 @@ public class MemberMBean implements Serializable {
         existingUserAccount.setCountry(this.locationMBean.getCountry());
         existingUserAccount.setProvince(this.locationMBean.getProvince());
         existingUserAccount.setCity(this.locationMBean.getCity());
-
         existingUserAccount.setFirstName(userAccount.getFirstName());
         existingUserAccount.setLastName(userAccount.getLastName());
         existingUserAccount.setGender(userAccount.getGender());
-        existingUserAccount.setBirthDate(userAccount.getBirthDate());
         existingUserAccount.setWebsite(userAccount.getWebsite());
         existingUserAccount.setTwitter(userAccount.getTwitter());
-
         existingUserAccount.setPublicProfile(userAccount.getPublicProfile());
         existingUserAccount.setMailingList(userAccount.getMailingList());
         existingUserAccount.setNews(userAccount.getNews());

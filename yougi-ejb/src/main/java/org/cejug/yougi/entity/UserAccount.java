@@ -21,7 +21,6 @@
 package org.cejug.yougi.entity;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.*;
@@ -57,10 +56,6 @@ public class UserAccount implements Serializable, Identified {
 
     @Column(name="unverified_email")
     private String unverifiedEmail;
-
-    @Temporal(javax.persistence.TemporalType.DATE)
-    @Column(name="birth_date",nullable=false)
-    private Date birthDate;
 
     @Column(name="confirmation_code")
     private String confirmationCode;
@@ -101,9 +96,6 @@ public class UserAccount implements Serializable, Identified {
     @ManyToOne
     @JoinColumn(name="city")
     private City city;
-
-    @Column(name="postal_code")
-    private String postalCode;
 
     @Column(name="timezone")
     private String timeZone;
@@ -182,26 +174,6 @@ public class UserAccount implements Serializable, Identified {
 
     public void setGender(Gender gender) {
         this.gender = gender;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    /**
-     * @return the age of the user based on the informed date of birth. The value
-     * is calculated in runtime.
-     */
-    public int getAge() {
-        if(this.birthDate != null) {
-            Date today = Calendar.getInstance().getTime();
-            return (int)(((((today.getTime() - birthDate.getTime()) / 1000) / 60) / 60) / 24) / 365;
-        }
-        return 0;
     }
 
     /**
@@ -362,14 +334,6 @@ public class UserAccount implements Serializable, Identified {
 
     public void setCity(City city) {
         this.city = city;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
     }
 
     /**
