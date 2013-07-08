@@ -34,7 +34,7 @@
                         <h:panelGrid>
                             <h:outputLabel for="name" value="#{bundle.name} *" styleClass="fieldLabel"/>
                             <h:panelGroup>
-                                <h:inputText id="name" label="#{bundle.name}" required="true" size="20" maxlength="20" value="#{topicMBean.topic.name}"/>
+                                <h:inputText id="name" label="#{bundle.name}" required="true" size="20" maxlength="20" value="#{topicMBean.topic.name}" readonly="#{! empty topicMBean.topic.name}"/>
                                 <h:message for="name" errorClass="errorMessage"/>
                             </h:panelGroup>
 
@@ -54,7 +54,6 @@
                         </h:panelGrid>
                         <h:panelGrid columns="3">
                             <h:commandButton value="#{bundle.save}" action="#{topicMBean.save}" rendered="#{securityBackingMBean.isUserLeader}"/>
-                            <h:commandButton value="#{bundle.remove}" action="#{topicMBean.remove}" rendered="#{securityBackingMBean.isUserLeader}"/>
                             <h:button value="#{bundle.cancel}" outcome="topics"/>
                         </h:panelGrid>
                     </h:form>
