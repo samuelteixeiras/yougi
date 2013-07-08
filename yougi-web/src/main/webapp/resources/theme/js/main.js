@@ -23,6 +23,10 @@ function formatEmail(email) {
     email.value = email.value.toLowerCase();
 }
 
+function confirmAction(message) {
+    return confirm(message);
+}
+
 function back() {
     document.location.history(-1);
 }

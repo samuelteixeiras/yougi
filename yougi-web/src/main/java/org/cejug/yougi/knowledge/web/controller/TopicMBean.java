@@ -45,6 +45,8 @@ public class TopicMBean {
 
     @ManagedProperty(value="#{param.topic}")
     private String topicName;
+    
+    private Boolean topicExistent = Boolean.FALSE;
 
     public TopicMBean() {
         this.topic = new Topic();
@@ -72,11 +74,18 @@ public class TopicMBean {
         }
         return this.topics;
     }
+    
+    public Boolean getExistent() {
+        return this.topicExistent;
+    }
 
     @PostConstruct
     public void load() {
         if(this.topicName != null && !this.topicName.isEmpty()) {
             this.topic = topicBean.findTopic(topicName);
+            if(this.topic != null) {
+                this.topicExistent = true;
+            }
         }
     }
 
