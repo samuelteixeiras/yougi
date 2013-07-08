@@ -263,14 +263,11 @@ public class UserAccountMBean implements Serializable {
             existingUserAccount.setCountry(this.locationMBean.getCountry());
             existingUserAccount.setProvince(this.locationMBean.getProvince());
             existingUserAccount.setCity(this.locationMBean.getCity());
-            existingUserAccount.setPostalCode(userAccount.getPostalCode());
-
             existingUserAccount.setFirstName(userAccount.getFirstName());
             existingUserAccount.setLastName(userAccount.getLastName());
             existingUserAccount.setGender(userAccount.getGender());
             existingUserAccount.setWebsite(userAccount.getWebsite());
             existingUserAccount.setTwitter(userAccount.getTwitter());
-            existingUserAccount.setBirthDate(userAccount.getBirthDate());
             userAccountBean.save(existingUserAccount);
 
             FacesContext context = FacesContext.getCurrentInstance();

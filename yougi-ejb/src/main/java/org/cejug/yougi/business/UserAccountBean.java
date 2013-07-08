@@ -277,10 +277,8 @@ public class UserAccountBean {
                 userAccount.setFirstName(newUserAccount.getFirstName());
                 userAccount.setLastName(newUserAccount.getLastName());
                 userAccount.setGender(newUserAccount.getGender());
-                userAccount.setBirthDate(newUserAccount.getBirthDate());
                 userAccount.setWebsite(newUserAccount.getWebsite());
                 userAccount.setTwitter(newUserAccount.getTwitter());
-                userAccount.setPostalCode(newUserAccount.getPostalCode());
                 userAccount.setMailingList(newUserAccount.getMailingList());
                 userAccount.setPublicProfile(newUserAccount.getPublicProfile());
                 userAccount.setEvent(newUserAccount.getEvent());

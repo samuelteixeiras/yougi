@@ -166,3 +166,7 @@ insert into language values ('fr', 'Français');
 --changeset htmfilho:9
 insert into access_group (id, name, description, user_default) values ('SDHFGSIFUSLEOSJFNMDKELSOEJDKNWJE', 'admins', 'Admins', 0);
 update user_group set group_id = 'SDHFGSIFUSLEOSJFNMDKELSOEJDKNWJE', group_name = 'admins' where group_name = 'leaders';
+
+--changeset htmfilho:10
+alter table user_account drop column birth_date;
+alter table user_account drop column postal_code;
