@@ -39,23 +39,6 @@
                     </modules>
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <tasks>
-                                <copy file="${basedir}/src/main/setup/glassfish-resources_${environment}.xml" toFile="${project.build.directory}/${project.name}-${project.version}/META-INF/glassfish-resources.xml"/>
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
