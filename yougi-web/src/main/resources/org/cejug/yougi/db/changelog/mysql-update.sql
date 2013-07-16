@@ -170,3 +170,13 @@ update user_group set group_id = 'SDHFGSIFUSLEOSJFNMDKELSOEJDKNWJE', group_name 
 --changeset htmfilho:10
 alter table user_account drop column birth_date;
 alter table user_account drop column postal_code;
+
+--changeset htmfilho:11
+create table timezone (
+    id            varchar(50) not null,
+    sign          char(1)     not null,
+    offset_hour   tinyint(2)  not null,
+    offset_minute tinyint(2)  not null,
+    label         varchar(50)     null,
+    default_tz    tinyint(1)      null
+) engine = innodb;
